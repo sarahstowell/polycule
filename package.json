@@ -2,8 +2,12 @@
   "name": "Polycule",
   "version": "0.0.1",
   "description": "Polycule",
+  "private": true,
   "engines": {
     "node": "4.4.5"
+  },
+  "scripts": {
+    "start": "node server.js"
   },
   "dependencies": {
     "bcrypt": "^0.8.7",
