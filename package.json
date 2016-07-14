@@ -1,7 +1,7 @@
 {
-  "name": “Polycule”,
+  "name": "Polycule",
   "version": "0.0.1",
-  "description": “Polycule”,
+  "description": "Polycule",
   "engines": {
     "node": "4.4.5"
   },
