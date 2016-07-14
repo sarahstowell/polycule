@@ -199,7 +199,7 @@ app.get('/login/facebook/callback',
 // Send signup screen
 app.get('/signup', function(req, res) {
     //res.sendFile(__dirname+'/signup.html');
-    res.render('signup', {error: null});
+    res.render('signup', {error: "", username: "", displayName: "", email: "", description: ""});
 });
 
 // Process signup request
