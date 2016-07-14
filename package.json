@@ -2,6 +2,9 @@
   "name": “Polycule”,
   "version": "0.0.1",
   "description": “Polycule”,
+  "engines": {
+    "node": "4.4.5"
+  },
   "dependencies": {
     "bcrypt": "^0.8.7",
     "bcrypt-nodejs": "0.0.3",
