@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- blah -->
+<meta charset="utf-8">
+
+<head>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Sarpanch:900' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+    <link href='style1.css' rel='stylesheet' type='text/css'>
+    
+    <script type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyAy3UMNz_o-eYvVML7C_7XVYo6cdEEVs7Q"></script>
+    <!--
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy3UMNz_o-eYvVML7C_7XVYo6cdEEVs7Q&callback=initMap"
+  type="text/javascript"></script>
+    -->
+
+</head>
+<body>
+    <div id="mainDiv">
+        <h1>polycule</h1>
+        <h2>New user sign-up</h2>
+        <p id="errorMessage"></p>
+
+        <form name="signup" action="/signup" method="post" encType="multipart/form-data" onsubmit="return validateForm()">
+
+            <table>
+                <tr>
+                    <td> <input type="text" placeholder="Unique Username" class="inputBox" name="username" id="username"/></td>
+                    <td rowspan=5 class="rightColumn"> <textarea placeholder="About me (optional)" class="inputArea" name="description"></textarea></td>
+                </tr>
+                <tr>
+                    <td> <input type="text" placeholder="Display Name (10 characters maximum)" maxlength=10 class="inputBox" name="displayName" id="displayName"/></td>
+                </tr>
+                <tr>
+                    <td> <input type="text" placeholder="Email Address" class="inputBox" name="email" id="email"/></td>
+                </tr>
+                <tr>
+                    <td> <input type="password" placeholder="Password" class="inputBox" name="password" id="password"/></td>
+                </tr>
+                <tr>
+                    <td> <input type="password" placeholder="Re-enter Password" class="inputBox" name="password2" id="password2"/></td>
+                </tr>
+                <tr>
+                    <td> <input type="text" placeholder="Town or City" class="inputBox" name="location" id="location"/></td>
+                    <td class="rightColumn" >	
+                        <input type="checkbox" name="messageemail" checked/> Send email on message
+                        <br/>
+      		            <input type="checkbox" name="linkemail" checked/> Send email on link
+                    </td>
+                </tr>
+                <tr>
+	                <td colspan=2 ><strong>Profile picture:</strong> 
+	                	<br/>
+	                	<input type="radio" name="photoType" id="photoTypeCustom" value="custom" checked/> 
+	                	<input type="file" id="photoSelect" value="Profile picture browse..." name="profilePic" accept="image/*"/>
+	                	<br/>
+	                	<input type="radio" name="photoType" id="photoTypeNone" value="none" /> None
+	                </td>
+                </tr>
+                <tr>
+	                <td colspan=2 ><div id="photoArea"></div></td>
+                </tr>
+            </table>
+
+            <input type="number" class="hiddenInput" id="x1" name="x1" />
+            <input type="number" class="hiddenInput" id="y1" name="y1" />
+            <input type="number" class="hiddenInput" id="x2" name="x2" />
+            <input type="number" class="hiddenInput" id="y2" name="y2" />
+
+            <br/>
+            <input type="submit" value="Sign up" id="submitButton"/>
+        </form>
+    </div>
+</body>
+
+<script type="text/javascript" src="signup.js"></script>
