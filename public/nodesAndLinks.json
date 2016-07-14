@@ -1,0 +1,37 @@
+{
+  "nodes":[
+    {"id": 0, "username": "Sarah1984", "name":"Sarah","group":1,"location": "Cambridge, UK","description": "Here is my description, blah blah blah blah blah blah blah", "photo": "0.jpeg"},
+    {"id": 1, "username": "Timothy_username", "name":"Timothy","group":1,"location": "Cambridge, UK", "description": "Here is Timothy's description blah blah blah", "photo": null},
+    {"id": 2, "username": "LindseyDunn", "name":"Lindsey","group":1,"location": "Cambridge, UK", "description": "Here is some stuff about Lindsey", "photo": null},
+    {"id": 3, "username": "DukeCharles345", "name":"Duke","group":1,"location": "Cambridge, UK", "description": "Here is some stuff about Duke, blah blah", "photo": null},
+    {"id": 4, "name":"Chris","group":0, "invited": 0},
+    {"id": 5, "username": "Alex123456", "name":"Alex","group":1,"location": "Cambridge, UK", "photo": null},
+    {"id": 6, "username": "Cheryl765432", "name":"Cheryl","group":1,"location": "Cambridge, UK", "photo": null},
+    {"id": 7, "username": "Beastie3456", "name":"Emily","group":1,"location": "Cambridge, UK", "photo": null},
+    {"id": 8, "username": "Leo56789", "name":"Leo","group":1,"location": "Cambridge, UK", "photo": null},
+    {"id": 9, "username": "Katrine_0986", "name":"Katrine","group":1,"location": "London, UK", "photo": null},
+    {"id": 10, "username": "Dee_666", "name":"Dee","group":1,"location": "London, UK", "photo": null},
+    {"id": 11, "username": "AniaR", "name":"Ania","group":1,"location": "Cambridge, UK", "photo": null},
+    {"id": 12, "username": "David_1988", "name":"David","group":1,"location": "Cambridge, UK", "photo": null},
+    {"id": 14, "username": "Jonty_blah", "name":"Jonty","group":1,"location": "Cambridge, UK", "photo": null},
+    {"id": 15, "username": "Vicky_xxx", "name":"Vicky","group":1,"location": "Cambridge, UK", "photo": null},
+    {"id": 17, "username": "Tom_12345", "name":"Tomathy","group":1,"location":"Cambridge, UK", "photo": null},
+    {"id": 18, "username": "Case_56788", "name":"Case","group":1,"location":"Cambridge, UK", "photo": null}
+  ],
+  "links":[
+    {"sourceId":0,"targetId":1, "confirmed": 1, "startMonth": 5, "startYear": 2013, "end": "Present", "description": "Married", "id": 0, "type": 1},
+    {"sourceId":0,"targetId":4, "confirmed": 1, "startMonth": null, "startYear": null, "end": null, "id": 1, "type": 1},
+    {"sourceId":1,"targetId":2, "confirmed": 1, "startMonth": 2, "startYear": 2014, "end": "Present", "id": 2, "type": 1},
+    {"sourceId":2,"targetId":3, "confirmed": 1, "startMonth": 7, "startYear": 2012, "end": "Present", "id": 3, "type": 1},
+    {"sourceId":5,"targetId":6, "confirmed": 1, "startMonth": 1, "startYear": 2016, "end": "Present", "id": 4, "type": 1},
+    {"sourceId":5,"targetId":7, "confirmed": 1, "startMonth": 5, "startYear": 2013, "end": "Present", "id": 5, "type": 1},
+    {"sourceId":6,"targetId":7, "confirmed": 1, "startMonth": 2, "startYear": 2011, "end": "Present", "id": 6, "type": 1},
+    {"sourceId":8,"targetId":9, "confirmed": 1, "startMonth": 10, "startYear": 2010, "end": "Present", "id": 7, "type": 1},
+    {"sourceId":8,"targetId":10, "confirmed": 1, "startMonth": 2, "startYear": 2014, "end": "Present", "id": 8, "type": 1},
+    {"sourceId":11,"targetId":12, "confirmed": 1, "startMonth": 2, "startYear": 2014, "end": "Present", "id": 9, "type": 1},
+    {"sourceId":14,"targetId":15, "confirmed": 1, "startMonth": 4, "startYear": 2014, "end": "Present", "id": 10, "type": 1},
+    {"sourceId":17,"targetId":18, "confirmed": 1, "startMonth": 8, "startYear": 2015, "end": "Present", "id": 11, "type": 1},
+    {"sourceId":3, "targetId":0, "confirmed": 0, "requestor":3, "id": 12, "type": 1},
+    {"sourceId":1, "targetId":12, "confirmed": 0, "requestor":1, "id": 13, "type": 1}
+  ]
+}

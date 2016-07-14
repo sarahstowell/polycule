@@ -1,0 +1,50 @@
+
+High Priority:
+Update profile photo (ajax?) HIGH PRIORITY
+Facebook signup
+	Get location widget working on facebook signup HIGH PRIORITY
+SSL/ secure login HIGH PRIORITY
+
+Medium Priority:	
+Standard signups
+	Get photo to populate with pug
+	Populate message/link options correctly
+	Validation:
+		Minimum length username/password
+    	Email validation client side
+    	Further server side checks?
+    	Photo type check?
+Check max length of description field
+
+
+
+Knockout for settings/emails/link requests
+
+
+
+Update nodes after new user signup
+
+
+Prevent refresh when editing node?
+
+Stray non-member nodes
+
+
+Low Priority:
+Link/Remove facebook account
+Invite to take up current node
+Delete emails where both reader and sender have deleted
+Delete emails when user deletes account
+Keep name for emails after account is deleted
+Logout when user closes window (unless box ticked)
+Google login
+
+Issues for when there are more users:
+Zoom buttons
+
+Get current user to be displayed in centre (set px, py before calling force layout??)
+Display people in the same town close together
+Create search function
+Add ability to link nodes without dragging 
+Get labels to position nicely
+Make use of facebook friends

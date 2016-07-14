@@ -1,0 +1,78 @@
+doctype html
+html
+	head
+		script(src='http://d3js.org/d3.v3.min.js')
+		link(href='https://fonts.googleapis.com/css?family=Sarpanch:900' rel='stylesheet' type='text/css')
+		link(type='text/css' rel='stylesheet' href="/style1.css")
+		script(type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyAy3UMNz_o-eYvVML7C_7XVYo6cdEEVs7Q")
+	body
+		#mainDiv
+			h1 polycule
+			h2 New user sign-up
+			p(id="errorMessage")=error
+			form(name="signup" action="/signup/facebook" method="post" encType="multipart/form-data" onsubmit="return validateFormFacebook()")
+				table
+					tr
+						td
+							strong Facebook ID:
+							br
+							input(type='text' name='facebookid' value=facebookid id="facebookid" class="inputBox" readonly)
+						td(rowspan=4 class='rightColumn') 
+							strong About Me:
+							br
+							textarea(name='description' class="inputArea" id="description")=description
+					tr
+						td 
+							strong Unique Username:
+							br
+							input(type='text' name='username' value=username class="inputBox" id="username")
+					tr
+						td
+							strong Display name:
+							br
+							input(type='text' name='displayName' value=displayName class='inputBox' id="displayName" maxlength=10)
+					tr
+						td
+							strong Email:
+							br
+							input(type='text' name='email' value=email class='inputBox' id="email")
+					tr
+						td
+							strong Town or City:
+							br
+							input(type='text' name='location' class='inputBox' id='location1' value=location)
+						td(class='rightColumn')
+							strong Email preferences
+							br
+							input(type="checkbox" name="messageemail" checked)
+							span Send email on message
+							br
+							input(type="checkbox" name="linkemail" checked)
+							span Send email on link
+					tr
+						td(colspan=2)
+							strong Profile Picture:
+							br
+							input(type='radio' name="photoType" value="facebook" id="photoTypeFacebook" onclick="photoTypeFacebook();" checked)
+							span Use Facebook profile picture
+							br
+							input(type='radio' name="photoType" id="photoTypeCustom" onclick="photoTypeCustom();" value="custom")
+							input(type="file" id="photoSelect" name="profilePic" accept="image/*" disabled)
+							br
+							input(type='radio' name="photoType" value="none" id="photoTypeNone" onclick="photoTypeNone();" )
+							span None
+
+					tr
+						td(colspan=2)
+							#photoAreaFacebook
+								img(src=profilePic, style="width: 225px")
+							#photoArea(style="display: none")
+				input(type="number" class="hiddenInput" id="x1" name="x1")
+				input(type="number" class="hiddenInput" id="y1" name="y1")
+				input(type="number" class="hiddenInput" id="x2" name="x2")
+				input(type="number" class="hiddenInput" id="y2" name="y2")
+				br
+				input(type='submit' value="Sign up" id="submitButton")
+	script(type="text/javascript" src="/signup.js")
+
+	

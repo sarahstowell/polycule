@@ -1,0 +1,54 @@
+doctype html
+html
+	head
+		script(src='http://d3js.org/d3.v3.min.js')
+		link(href='https://fonts.googleapis.com/css?family=Sarpanch:900' rel='stylesheet' type='text/css')
+		link(type='text/css' rel='stylesheet' href="/style1.css")
+		script(type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyAy3UMNz_o-eYvVML7C_7XVYo6cdEEVs7Q")
+	body
+		#mainDiv
+			h1 polycule
+			h2 New user sign-up
+			p(id="errorMessage")=error
+			form(name="signup" action="/signup" method="post" encType="multipart/form-data" onsubmit="return validateForm()")
+				table
+					tr
+						td 
+							input(type='text' name='username' value=username class="inputBox" id="username" placeholder="Unique Username")
+						td(rowspan=5 class='rightColumn') 
+							textarea(name='description' class="inputArea" placeholder="About me (optional)" id="description")=description
+					tr
+						td 
+							input(type='text' name='displayName' value=displayName class='inputBox' id="displayName" placeholder="Display Name (10 characters maximum)" maxlength=10)
+					tr
+						td 
+							input(type='text' name='email' value=email class='inputBox' id="email" placeholder="Email Address")
+					tr
+						td 
+							input(type='password' name='password' class='inputBox' id="password" placeholder="Password")
+					tr
+						td 
+							input(type='password' name='password2' class='inputBox' id="password2" placeholder="Re-enter Password")
+					tr
+						td 
+							input(type='text' name='location' class='inputBox' id='location' placeholder="Town or City")
+						td(class='rightColumn')
+							input(type="checkbox" name="messageemail" checked)
+							span Send email on message
+							br
+							input(type="checkbox" name="linkemail" checked)
+							span Send email on link
+					tr
+						td(colspan=2)
+							span Profile picture:
+							input(type="file" id="photoSelect" name="profilePic" accept="image/*")
+					tr
+						td(colspan=2)
+							#photoArea
+				input(type="number" class="hiddenInput" id="x1" name="x1")
+				input(type="number" class="hiddenInput" id="y1" name="y1")
+				input(type="number" class="hiddenInput" id="x2" name="x2")
+				input(type="number" class="hiddenInput" id="y2" name="y2")
+				br
+				input(type='submit' value="Sign up" id="submitButton")
+	script(type="text/javascript" src="/signup.js")

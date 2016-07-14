@@ -1,0 +1,5 @@
+node_modules/
+public/photos/Final/
+public/photos/Original/
+
+*.swp

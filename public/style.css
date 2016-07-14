@@ -1,0 +1,504 @@
+/* ===== General ===== */
+html, body {
+    box-sizing: border-box;
+    height: 100%;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    margin: 0px;
+    background-color: #DDDDDD;
+    /*background: linear-gradient(lightblue, darkblue);*/
+}
+
+#wrapper {
+    margin: 0 auto;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    max-width: 1375px;
+    max-height: 1000px;
+}
+
+#bottomContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+/* ===== Top Banner ===== */
+#topBanner {
+    position: relative;
+    height: 71px;
+    padding: 0px;
+    margin: 0px;
+}
+
+h1 {
+    margin-left: 10px;
+    display: inline;
+    color: black;
+    font-family: 'Sarpanch', sans-serif;
+    font-size: 50px;
+}
+
+#linkButton {
+    position: absolute;
+    right: 85px;
+    bottom: 13px;
+}
+
+#linkButton:hover {
+    fill-opacity: 0.5;
+}
+
+#mailButton {
+    position: absolute;
+    right: 47px;
+    bottom: 13px;
+}
+
+#mailButton:hover {
+    fill-opacity: 0.5;
+}
+
+#settingsButton {
+    position: absolute;
+    right: 10px;
+    bottom: 13px;
+}
+
+#settingsButton:hover {
+    fill-opacity: 0.5;
+}
+
+/*
+#helpButton {
+    position: absolute;
+    right: 0px;
+    bottom: 13px;
+}
+*/
+
+.topButtons {
+    /*fill: white;*/
+}
+
+/* ===== Graph ===== */
+#mainsvg {
+    flex: 1;
+    min-width: 425px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 2px solid white;
+    background-color: white;
+}
+
+.node text {
+    font-size: 12px;
+}
+
+.myNode {
+    fill: purple;
+}
+
+.nonUserNode {
+    fill: gray;
+}
+
+.userNode {
+    fill: #3CA0D0;
+}
+
+.selectedNode {
+    stroke: red;
+    stroke-width: 2px;
+}
+
+.link {
+    stroke-width: 4;
+}
+
+.unselectedLink {
+    stroke: gray;
+}
+
+.selectedLink {
+    stroke: red;
+}
+
+.unconfirmedLink {
+    stroke-dasharray: 2,2;
+}
+
+#connectorLine {
+    stroke-width: 4;
+    stroke: red;
+}
+
+/* ===== Side Panel ===== */
+#sidePanel {
+    position: relative;
+    min-width: 324px;
+    min-height: 580px;
+    max-width: 324px;
+    border-radius: 10px;
+    border: 2px solid white;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-top: 1px;
+    background-color: white;
+    /*background: linear-gradient(lightblue, darkblue);*/
+}
+
+h2 {
+    text-align: center;
+}
+
+.standardButton {
+    /*width: 100px;*/
+    height: 25px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    /*margin-bottom: 10px;*/
+    font-size: 12px;
+    font-weight: bold;
+    background-color: lightgray;
+    margin-right: 5px;
+}
+
+.standardButton:hover {
+    background-color: darkgray;
+}
+
+/* ===== Profile display page ===== */
+.name {
+    margin-bottom: 5px;
+}
+.username {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 0;
+}
+
+.profilepic {
+    display: block;
+    margin: 0 auto;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.town {
+    text-align: center;
+    font-weight: bold;
+}
+
+.description {
+    margin-left: 5px;
+}
+
+.pencil {
+    position: absolute;
+    bottom: 20px;
+    left: 145px;
+}
+
+#editnodebutton {
+    position: absolute;
+    bottom: 10px;
+    left: 135px;
+}
+
+#emailInviteEdit {
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: white;  
+    width: 200px;
+    height: 25px;
+    padding: 5px;
+}
+
+#emailInviteButton {
+    margin-left: 5px;
+}
+
+#invitedText {
+    text-align: center;
+}
+
+/* ===== Profile edit page ===== */
+
+.editable { /* For all editing field */
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: white;  
+    width: 90%;
+}
+
+#editName {
+    margin-top: 13px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#editUsername {
+    font-size: 14px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+#photoEditWindow {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 50px;
+    top: 50px;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid black;
+    padding: 10px;
+    max-height: 90%;
+    max-width: 90%;
+}
+
+#editLocation {
+    display: inline-block;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+#editDescription {
+    margin-top: 10px;
+    width: 90%;
+    height: 150px;
+    font-family: sans-serif;
+    padding: 5px;
+    font-size: 14px;
+    resize: none;
+}
+
+#cancelNodeEdit {
+    position: absolute;
+    bottom: 10px;
+    left: 100px;
+}
+
+#saveNodeEdit {
+    position: absolute;
+    bottom: 10px;
+    left: 165px;
+}
+
+.hiddenInput {
+    display: none;
+}
+
+/* ===== Link Edit Page ===== */
+#deleteLinkButton {
+    /*
+    position: absolute;
+    bottom: 10px;
+    left: 30%;
+    */
+}
+
+#editLinkButton {
+/*
+    position: absolute;
+    bottom: 10px;
+    left: 175px;
+*/
+}
+
+.centerDiv {
+    margin: 0 auto;
+    bottom: 20px;
+    text-align: center;
+}
+
+/* ===== Link Edit Page ===== */
+#cancelLinkEdit {
+    position: absolute;
+    bottom: 10px;
+    left: 100px;
+}
+
+#saveLinkEdit {
+    position: absolute;
+    bottom: 10px;
+    left: 165px;
+}
+
+/* ===== Email page ===== */
+.menubutton {
+    width: 150px;
+    border: 1px solid gray;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.menubuttonSelected {
+    width: 150px;
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: none;
+    background-color: white;
+    /*background-color: lightgray;*/
+    border-radius: 5px 5px 0px 0px;
+}
+
+.emailContainer {
+    margin-top: 10px;
+    overflow-y: auto;
+    height: 450px;
+}
+
+/* ===== Inbox and Sent Box ===== */
+.email {
+    /*background-color: lightgray;*/
+    border-bottom: 1px solid gray;
+    margin: 0px;
+    padding: 2px;
+    padding-left: 3px;
+    /*height: 50px;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.email h3 {
+    font-size: 14px;
+    display: inline;
+    margin-top: 5px;
+}
+
+.email p {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.email span {
+    font-size: 14px;
+}
+
+/* ===== Email thread ===== */
+.fullEmail {
+    /*background-color: lightgray;*/
+    border-bottom: 1px solid gray;
+    margin: 0px;
+    padding: 2px;
+    padding-left: 3px;
+}
+
+.fullEmail h3 {
+    font-size: 14px;
+    display: inline;
+    margin-top: 5px;
+}
+
+.fullEmail span {
+    font-size: 13px;
+}
+
+.fullEmail p {
+    font-size: 12px;
+}
+
+
+#replyButton, #deleteButton {
+    margin-top: 10px;
+}
+
+
+/* ===== Write Email ===== */
+#newEmailContent {
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: sans-serif;
+    resize: none;
+}
+
+#newEmailRecipName {
+    display: inline;
+    margin-top: 20px;
+}
+
+#newEmailRecipUsername {
+
+}
+
+/* ====== Link Requests Page ====== */
+
+/* Display Link Requests */
+.linkDates {
+    text-align: center;
+}
+
+.linkDescription {
+    text-align: center;
+}
+
+#linkConfirmation {
+    text-align: center;
+}
+
+.noLinkRequests {
+    text-align: center;
+}
+
+#denyButton, #confirmButton {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* Link Edit page */
+#editStartMonth, #editStartYear {
+    display: inline;
+}
+
+#editLinkDescription {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* ===== Settings ===== */
+.settingsLine {
+    position: relative;
+    border-bottom: 1px solid black;
+    font-size: 12px;
+    margin: 0px;
+    padding: 2px;
+    padding-left: 3px;
+}
+
+.settingsLine h3 {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.changeButton {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+#deleteAccount {
+    margin-top: 10px;
+}
