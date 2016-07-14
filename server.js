@@ -198,7 +198,8 @@ app.get('/login/facebook/callback',
 
 // Send signup screen
 app.get('/signup', function(req, res) {
-    res.sendFile(__dirname+'/signup.html');
+    //res.sendFile(__dirname+'/signup.html');
+    res.render('signup');
 });
 
 // Process signup request
