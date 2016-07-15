@@ -324,7 +324,7 @@ app.get('/logout', function(req, res){
 
 io.sockets.on('connection', function(socket){
   console.log('a user connected');
-  console.log("User": socket.request.session.passport.user);
+  console.log("User: "+socket.request.session.passport.user);
    
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
