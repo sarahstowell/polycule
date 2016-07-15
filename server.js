@@ -5,7 +5,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
 var pgp = require("pg-promise")(/*options*/);
-//var pg = require("pg");
 var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -208,7 +207,6 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 		profilePicEdit(req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
-	    console
 		var photourl = null;
 	}
 
@@ -224,7 +222,6 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 				.then(function(user) {
 					//updateNodes(); SORT THIS OUT!!!
 					// Log user in after signup
-				    console.log(user);
 					req.login(user, function (err) {
 						if ( ! err ){
 							res.redirect('/');
