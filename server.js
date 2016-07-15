@@ -6,8 +6,7 @@ var io = require('socket.io')(http);
 var fs = require('fs');
 var pgp = require("pg-promise")(/*options*/);
 var pg = require("pg");
-var db = new pg.Client(process.env.POSTGRES_CONNECTION_STRING);
-//var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
+var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
 var passport = require('passport');
 //var config = require('oauth');
 var LocalStrategy = require('passport-local').Strategy;
@@ -22,8 +21,6 @@ var path = require('path');
 var multer = require('multer');
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
-
-db.connect();
 
 app.use(helmet());
 
