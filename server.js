@@ -224,6 +224,7 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 				.then(function(user) {
 					//updateNodes(); SORT THIS OUT!!!
 					// Log user in after signup
+				    console.log(user);
 					req.login(user, function (err) {
 						if ( ! err ){
 							res.redirect('/');
