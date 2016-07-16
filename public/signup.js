@@ -1,11 +1,7 @@
-window.alert("signup.js read");
-
 d3.select("#photoSelect")
 	.on("change", photoSelect);
 
 function photoSelect() {
-
-   window.alert("photoSelect function run");
 
   var imgsrc = null;
   var file    = document.getElementById('photoSelect').files[0];
@@ -166,7 +162,6 @@ function initialize() {
 
 // Signup form validation
 var validateForm = function() {
-    window.alert("ValidateForm function run");
 	d3.select(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
 	if (!document.forms["signup"]["username"].value) {
