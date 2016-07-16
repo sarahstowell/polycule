@@ -160,8 +160,8 @@ function initialize() {
 	});
 }
 
-d3.select("#signup")
-	.on("submit", photoSelect);
+document.getElementById("signup").addEventListener("submit", validateForm);
+
 // Signup form validation
 var validateForm = function() {
 	d3.select(".inputBox").style("border", "1px solid gray");
