@@ -556,6 +556,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].location);
 		    
 		// Google town/city autocomplete
+		/*
 		google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
 		function initialize() {
 			var input = document.getElementById('editLocation');
@@ -569,6 +570,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				console.log(place);
 			});
 		}
+		*/
 				
 	    var editDescription = centerdiv.append("textarea")
 		    .attr("id", "editDescription")
