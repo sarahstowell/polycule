@@ -160,7 +160,7 @@ function initialize() {
 	});
 }
 
-document.getElementById("signup").addEventListener("submit", validateForm);
+//document.getElementById("signup").addEventListener("submit", validateForm);
 
 // Signup form validation
 var validateForm = function() {
