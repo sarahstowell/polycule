@@ -1,5 +1,3 @@
-window.alert("Signup js read");
-
 d3.select("#photoSelect")
 	.on("change", photoSelect);
 
@@ -165,6 +163,7 @@ function initialize() {
 // Signup form validation
 var validateForm = function() {
     //alert("("+document.forms["signup"]["x1"].value+", "+document.forms["signup"]["y1"].value+", "+document.forms["signup"]["x2"].value+", "+document.forms["signup"]["y2"].value+")");
+window.alert("Validate form run");
 
 	d3.select(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
