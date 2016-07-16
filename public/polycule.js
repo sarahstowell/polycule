@@ -707,6 +707,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			
 		// user joins two nodes
         function joinNode() {
+        
+            window.alert("MOUSE UP EVENT!");
 
             d3.event.stopPropagation();
 				
