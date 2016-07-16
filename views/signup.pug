@@ -5,13 +5,13 @@ html
 		link(href='https://fonts.googleapis.com/css?family=Sarpanch:900' rel='stylesheet' type='text/css')
 		link(type='text/css' rel='stylesheet' href="/style1.css")
 		script(type="text/javascript" src=googlemapsapi)
-		script(type="text/javascript" src="/signup.js")
+
 	body
 		#mainDiv
 			h1 polycule
 			h2 New user sign-up
 			p(id="errorMessage")=error
-			form(name="signup" action="/signup" method="post" encType="multipart/form-data" onsubmit="return validateForm()")
+			form(name="signup" action="/signup" method="post" encType="multipart/form-data" onsubmit="return validateForm()" id="signup")
 				table
 					tr
 						td 
@@ -57,3 +57,4 @@ html
 				input(type="number" class="hiddenInput" id="y2" name="y2")
 				br
 				input(type='submit' value="Sign up" id="submitButton")
+	script(type="text/javascript" src="/signup.js")
