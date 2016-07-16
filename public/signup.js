@@ -1,3 +1,5 @@
+window.alert("signup.js read");
+
 d3.select("#photoSelect")
 	.on("change", photoSelect);
 
