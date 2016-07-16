@@ -324,16 +324,25 @@ app.get('/logout', function(req, res){
 
 io.sockets.on('connection', function(socket){
   console.log('a user connected');
-  console.log("User: "+socket.request.session.passport.user);
-  console.log("Type: "+typeof socket.request.session.passport.user);
    
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
    
+       console.log("Data Request received");
+   
 	   db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
+	          console.log("Nodes found");
+	          console.log(JSON.stringify(nodes));
 		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.session.passport.user+" OR targetid = "+socket.request.session.passport.user+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
+			  	          console.log("Links found");
+			  	          console.log(JSON.stringify(links));
 			  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.session.passport.user+" AND delrecip = 0) OR (sender = "+socket.request.session.passport.user+" AND delsender = 0) ORDER BY id", [true]).then(function(emails) { 
+				 	          console.log("Emails found");
+				 	          console.log(JSON.stringify(emails));
 				 db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.session.passport.user, [true]).then(function(settings) { 
+		  	     				 	          console.log("Settings found");
+				 	          					console.log(JSON.stringify(settings));     
+		  	          console.log("Data Request received");
 		  
 						var nodesAndLinks = {"nodes": nodes, "links": links, "emails": emails, "settings": settings, "userid": socket.request.session.passport.user};
 						io.emit('nodesAndLinks', nodesAndLinks);
