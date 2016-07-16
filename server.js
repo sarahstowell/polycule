@@ -196,7 +196,7 @@ app.get('/login/facebook/callback',
 
 // Send signup screen
 app.get('/signup', function(req, res) {
-    res.render('signup', {googlemapsapi: process.env.GOOGLE_MAPS_URL, usernameBorderColor: "gray"});
+    res.render('signup', {googlemapsapi: process.env.GOOGLE_MAPS_URL, usernameBorderColor: "border: 1px solid gray"});
 });
 
 // Process signup request
@@ -231,7 +231,7 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 				})
 				.catch(function(err) {
 					if (err.code === '23505') {
-						res.render('signup', { error: "That username is already taken", username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, profilePic: req.session.profilePic, usernameBorderColor: "red"});
+						res.render('signup', { error: "That username is already taken", username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, profilePic: req.session.profilePic, usernameBorderColor: "border: 1px solid red"});
 					} else {
 					    console.log(err);					
 					}
@@ -239,7 +239,7 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 			})
 			.catch(function(err) {
 				if (err.code === '23505') {
-					res.render('signup', { error: "That username is already taken", username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, profilePic: req.session.profilePic, usernameBorderColor: "red"});
+					res.render('signup', { error: "That username is already taken", username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, profilePic: req.session.profilePic, usernameBorderColor: "border: 1px solid red"});
 				} else {
 				    console.log(err);
 				}
