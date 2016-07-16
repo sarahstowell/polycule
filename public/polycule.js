@@ -371,7 +371,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (displayNodeData.photo !== null) {
                 sidepanel.append("img")
                     .attr("class", "profilepic")
-                    .attr("src", "/photos/Final/"+displayNodeData.photo);
+                    .attr("src", "/photos/final/"+displayNodeData.photo);
             }
 
             // Add user location
@@ -487,12 +487,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 			var photoEdit = centerdiv.append("img")
 				.attr("class", "profilepic")
-				.attr("src", "/photos/Final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
+				.attr("src", "/photos/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
 				.attr("id", "profilepicedit")
 				.property("accept", "image/*")
 				.style("cursor", "pointer")
 				.on("click", function() {
-					imgsrc = "/photos/Original/"+nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo;
+					imgsrc = "/photos/original/"+nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo;
 					coords = nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photocoords;
 					addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
 					d3.select("#photoEditWindow").style("display",  "block");
