@@ -707,20 +707,19 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			
 		// user joins two nodes
         function joinNode() {
-        
-            window.alert("MOUSE UP EVENT!");
 
             d3.event.stopPropagation();
 				
             var new_node = d3.select(this)[0][0].__data__.id; // Get index of node user is joining to
-				
+				window.alert("Loggedin: "+loggedin);
+				window.alert("Active node: "+active_node);
             // User joins two nodes	
 		    if (active_node !== new_node && (active_node === loggedin || (nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0 && nodes[arrayObjectIndexOf(nodes, new_node, "id")].member === 0)) && connect1 === 1) {
-
+window.alert("Condition 1 met");
 			    if (nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0 || nodes[arrayObjectIndexOf(nodes, new_node, "id")].member === 0) { confirm = 1; } else {confirm = 0}
-			
+			window.alert("Condition 2 met");
 			    links.push({"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
-  			    window.alert(JSON.stringify(links));
+
   			    // Send new link to server
   			    socket.emit('newLink', {"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin});
   			    			
