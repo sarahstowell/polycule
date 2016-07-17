@@ -1300,6 +1300,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						//settings.username = document.getElementById("newUsername").value;
 						socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value});
 						
+						settingsError.text("Saving...");
+						
 						socket.on('usernameEditOK', function(newSettings) {
 							settings = newSettings;
 							openSettings();
@@ -1347,6 +1349,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					    newSettings.email = document.getElementById("newEmail").value;
 					    
 					    socket.emit("settingsEdit", newSettings);
+					    
+					    settingsError.text("Saving...");
 					    
 						socket.on('settingsUpdate', function(settingsUpdate) {
 							settings = settingsUpdate;
@@ -1411,6 +1415,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						     settingsError.text("New passwords do not match");
 						 } else {
 						     socket.emit("newPassword", {"id": loggedin, "oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
+						     
+						     settingsError.text("Saving...");
 						     
 						     socket.on('passwordUpdated', function() {
 						        openSettings();
