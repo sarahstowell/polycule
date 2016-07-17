@@ -673,7 +673,7 @@ io.sockets.on('connection', function(socket){
                                 .then(function(user) {
                                     console.log("password updated");
                                   	socket.emit('passwordUpdated');    
-                                }
+                                })
                                 .catch(function(err) {
                                     console.log(err);
                                 });
