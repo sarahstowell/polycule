@@ -1297,6 +1297,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						//settings.username = document.getElementById("newUsername").value;
 						socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value});
 						
+						/*
 						socket.on('usernameEditOK', function(newUsername) {
 						    if (username) {
 						        settings.username = newUsername;
@@ -1305,6 +1306,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						        window.alert('That username is already taken')l
 						    }
 						}):
+						*/
 
 						//openSettings();	
 				
