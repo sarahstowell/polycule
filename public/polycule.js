@@ -1333,7 +1333,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.attr("value", "Save")
 					.on("click", function() {
 					    
-					    socket.emit("settingsUpdate", settings);
+					    socket.emit("settingsEdit", settings);
 					    socket.on('settingsUpdate' function() {
 					        //settings.email = document.getElementById("newEmail").value;
 					        openSettings();
@@ -1421,7 +1421,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("id", "emailOnMessage")
 			.on("change", function() { 
 				settings.messageemail = document.getElementById("emailOnMessage").checked;
-				socket.emit('settingsUpdate', settings);
+				socket.emit('settingsEdit', settings);
 			});
 		
 		changeContactPrefs.append("span")
@@ -1435,7 +1435,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("id", "emailOnLink")
 			.on("change", function() { 
 				settings.linkemail = document.getElementById("emailOnLink").checked;
-				socket.emit('settingsUpdate', settings);
+				socket.emit('settingsEdit', settings);
 			});
 		
 		changeContactPrefs.append("span")
