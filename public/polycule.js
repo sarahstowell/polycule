@@ -1406,7 +1406,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.on("click", function() {
 						 // TO BE ADDED - send new password to server
 						 if (!document.getElementById("oldPassword").value || !document.getElementById("newPassword").value || !document.getElementById("newPassword2").value ) {
-						     window.alert("Please enter your current  and new passwords")
+						     settingsError.text("Please enter your current  and new passwords")
 						 } else if (document.getElementById("newPassword").value !== document.getElementById("newPassword2").value) {
 						     settingsError.text("New passwords do not match");
 						 } else {
