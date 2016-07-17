@@ -627,7 +627,7 @@ io.sockets.on('connection', function(socket){
   	    // Update database
   	    db.query("UPDATE nodes SET invited = 1 WHERE id = "+node.id)
   	      	.then(function () {
-  	      	  	db.query("INSERT INTO invited (id, email) = (${id}, ${email})", node)
+  	      	  	db.query("INSERT INTO invited (id, email) VALUES (${id}, ${email})", node)
   	      	        .then(function () {
                          console.log("Node invite updated");
                          updateNodes();
