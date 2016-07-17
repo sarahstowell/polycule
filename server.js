@@ -57,7 +57,7 @@ console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 		});
 	} else {
 		jimp.read("./public/photos/original/"+photo).then(function(image) {
-			image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo);
+			image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
 			console.log("Image read other photo");
 		}).catch(function (err) {
 			console.log(err);
