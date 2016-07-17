@@ -1332,9 +1332,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.attr("type", "button")
 					.attr("value", "Save")
 					.on("click", function() {
-					    settings.email = document.getElementById("newEmail").value;
+					    
 					    socket.emit("settingsUpdate", settings);
-					    openSettings();
+					    socket.on('settingsUpdate' function() {
+					        //settings.email = document.getElementById("newEmail").value;
+					        openSettings();
+					    });
 					});
 		
 			});	
