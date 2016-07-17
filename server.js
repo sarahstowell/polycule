@@ -703,7 +703,7 @@ io.sockets.on('connection', function(socket){
   	        .catch( function(err) {
   	            console.log(err);
   	            if (err.code === '23505') {
-  	                socket.emit('usernameTaken);// Let user know username is taken
+  	                socket.emit('usernameTaken');// Let user know username is taken
   	            }
   	        });
   	});
