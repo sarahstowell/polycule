@@ -88,9 +88,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    restart();
 	});
 	
-	socket.on('settingsUpdate', function(settingsUpdate) {
-	    settings = settingsUpdate;	
-	});
+	//socket.on('settingsUpdate', function(settingsUpdate) {
+	//    settings = settingsUpdate;	
+	//});
 	
   
     // Setup force layout
@@ -1334,10 +1334,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.on("click", function() {
 					    
 					    socket.emit("settingsEdit", settings);
-					    //socket.on('settingsUpdate' function() {
-					    //    settings.email = document.getElementById("newEmail").value;
-					    //    openSettings();
-					    //});
+					    	socket.on('settingsUpdate', function(settingsUpdate) {
+								settings = settingsUpdate;
+								openSettings();	
+							)};
+						});
+
 					});
 		
 			});	
