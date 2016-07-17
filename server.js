@@ -46,7 +46,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 // For Photo Editing ==================================
 var profilePicEdit = function(photo, facebookid, x1, y1, x2, y2) {
-
+console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 	if (facebookid) {
 		jimp.read(photo).then(function(image) {
 			image.write('./public/photos/original/'+facebookid+".jpg");
