@@ -1336,10 +1336,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					   var currentSettings = settings;
 					    
 					    socket.emit("settingsEdit", currentSettings);
-					    	socket.on('settingsUpdate', function(settingsUpdate) {
-								settings = settingsUpdate;
+					    	//socket.on('settingsUpdate', function(settingsUpdate) {
+							//	settings = settingsUpdate;
 								openSettings();	
-							)};
+							//)};
 						});
 
 					});
