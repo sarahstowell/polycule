@@ -686,7 +686,6 @@ io.sockets.on('connection', function(socket){
 		  })
 		  .catch(function(err) {
 			console.log(err);
-			return done(null, false, {message:'Incorrect username'});
 		  });
   	});
   	
