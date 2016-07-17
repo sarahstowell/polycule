@@ -664,11 +664,8 @@ io.sockets.on('connection', function(socket){
 		
 		        bcrypt.compare(passwords.oldPassword, user.hash, function(err, comparison) {
                     if (comparison) {
-                        //return done(null, user);
-                        
                         // Create password hash and save to database
-                        bcrypt.hash(req.body.password, 10, function(err, hash) {
-                        
+                        bcrypt.hash(passwords.newPassword, 10, function(err, hash) {
                             db.query("UPDATE settings SET (hash) = (${hash}) WHERE id=${id} returning id", {"hash":hash, "id":passwords.id})
                                 .then(function(user) {
                                     console.log("password updated");
