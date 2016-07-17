@@ -637,7 +637,7 @@ io.sockets.on('connection', function(socket){
   	});
   	
   	// Settings updated
-  	socket.on('settingsUpdate', function(settings) {
+  	socket.on('settingsEdit', function(settings) {
   	
   	    console.log('Updated settings received');
   	    
