@@ -1306,7 +1306,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						    }
 						}):
 
-						openSettings();	
+						//openSettings();	
 				
 					});
 				
