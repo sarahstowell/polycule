@@ -686,6 +686,28 @@ io.sockets.on('connection', function(socket){
 		  });
   	});
   	
+  	socket.on('usernameEdit', function(newUsername) {
+  	    console.log('Username change requested received');
+  	    db.query("UPDATE settings SET username = ${username} WHERE id = ${id} returning id, username", newUsername)
+  	        .then(function(user) {
+  	          	db.query("UPDATE nodes SET username = ${username} WHERE id = ${id} returning id", user1)
+  	                 .then(function(user1) {
+  	                     socket.emit('usernameEditOK', user.username);
+  	                     updateNodes();
+  	                 })
+  	                 .catch(function(err) {
+  	                     console.log(err);
+  	                 });
+
+  	        })
+  	        .catch( function(err) {
+  	            console.log(err);
+  	            if (err.code === '23505') {
+  	                socket.emit('usernameEditOK', null);// Let user know username is taken
+  	            }
+  	        });
+  	});
+  	
   	
     socket.on('disconnect', function(){
         console.log("User disconnected");	
