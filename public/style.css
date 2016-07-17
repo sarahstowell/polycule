@@ -502,3 +502,9 @@ h2 {
 #deleteAccount {
     margin-top: 10px;
 }
+
+#settingsError {
+    text-align: center;
+    font-size: 12px;
+    color: red;
+}

@@ -1408,7 +1408,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						 if (!document.getElementById("oldPassword").value || !document.getElementById("newPassword").value || !document.getElementById("newPassword2").value ) {
 						     window.alert("Please enter your current  and new passwords")
 						 } else if (document.getElementById("newPassword").value !== document.getElementById("newPassword2").value) {
-						     window.alert("New passwords do not match");
+						     settingsError.text("New passwords do not match");
 						 } else {
 						     socket.emit("newPassword", {"id": loggedin, "oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
 						     
