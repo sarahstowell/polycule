@@ -635,8 +635,6 @@ io.sockets.on('connection', function(socket){
 					.catch(function (error) {
 						 console.log(error);
 					});
-                console.log("Node invite updated");
-                updateNodes();
             })
             .catch(function (error) {
                  console.log(error);
