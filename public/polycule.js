@@ -1295,11 +1295,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.on("click", function() {
 				
 						//settings.username = document.getElementById("newUsername").value;
-						socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value);
+						socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value});
 						
-						socket.on('usernameEditOK', function(username) {
+						socket.on('usernameEditOK', function(newUsername) {
 						    if (username) {
-						        settings.username = username;
+						        settings.username = newUsername;
 						        openSettings();
 						    } else {
 						        window.alert('That username is already taken')l
