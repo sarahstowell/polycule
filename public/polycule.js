@@ -1361,19 +1361,25 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 				changePassword.append("input")
 					.attr("placeholder", "Old password")
-					.attr("type", "text");
+					.attr("type", "text")
+					.attr("id", "oldPassword")
+					.attr("name", "oldPassword");
 				
 				changePassword.append("br");
 				
 				changePassword.append("input")
 					.attr("placeholder", "New password")
-					.attr("type", "text");
+					.attr("type", "text")
+					.attr("id", "newPassword")
+					.attr("name", "newPassword");
 				
 				changePassword.append("br");
 				
 				changePassword.append("input")
 					.attr("placeholder", "Re-enter new password")
-					.attr("type", "text");
+					.attr("type", "text")
+					.attr("id", "newPassword2")
+					.attr("name", "newPassword2");
 				
 				changePassword.append("input")
 					.attr("class", "changeButton")
@@ -1381,7 +1387,22 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.attr("value", "Save")
 					.on("click", function() {
 						 // TO BE ADDED - send new password to server
-					     openSettings();
+						 if document.getElementById("newPassword").value !== document.getElementById("newPassword").value) {
+						     window.alert("New passwords do not match");
+						 } else {
+						     socket.emit("newPassword", {"oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value}, function(data) {
+						     
+						             received = data.result;
+                                     if (received) window.alert("Password updated");
+						     
+						     
+						     });
+						 
+						     openSettings();
+						 
+						 };
+						 
+					     
 					});
 				
 			});
