@@ -50,14 +50,14 @@ var profilePicEdit = function(photo, facebookid, x1, y1, x2, y2) {
 	if (facebookid) {
 		jimp.read(photo).then(function(image) {
 			image.resize(225, 225).quality(100).write('./public/photos/original/'+facebookid+".jpg").write('./public/photos/final/'+facebookid+".jpg");
-			console.log("Image read");
+			console.log("Image read facebook");
 		}).catch(function (err) {
 			console.log(err);
 		});
 	} else {
 		jimp.read("./public/photos/original/"+photo).then(function(image) {
 			image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo);
-			console.log("Image read");
+			console.log("Image read other photo");
 		}).catch(function (err) {
 			console.log(err);
 		});
