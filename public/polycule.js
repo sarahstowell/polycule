@@ -1361,7 +1361,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 				changePassword.append("input")
 					.attr("placeholder", "Old password")
-					.attr("type", "text")
+					.attr("type", "password")
 					.attr("id", "oldPassword")
 					.attr("name", "oldPassword");
 				
@@ -1390,13 +1390,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						 if (document.getElementById("newPassword").value !== document.getElementById("newPassword").value) {
 						     window.alert("New passwords do not match");
 						 } else {
-						     socket.emit("newPassword", {"oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
+						     socket.emit("newPassword", {"id": loggedin, "oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
 						     
 						     socket.on('passwordUpdated', function() {
-						        
-                                window.alert("Password updated");
 						        openSettings();
+						     });
 						     
+						     socket.on('incorrectPassword', function() {
+						         window.alert("Original password is incorrect");
 						     });
 						
 						 }

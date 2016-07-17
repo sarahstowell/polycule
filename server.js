@@ -655,8 +655,39 @@ io.sockets.on('connection', function(socket){
   	
   	// Password changed
   	socket.on('newPassword', function(passwords) {
+  	
   	    console.log("Password change request received");
-  	    socket.emit('passwordUpdated');
+  	
+  	    // Check old password
+  	    return db.one("SELECT id, username, hash FROM settings WHERE id=$1", [passwords.id])
+         .then(function(user) {
+		
+		        bcrypt.compare(passwords.oldPassword, user.hash, function(err, comparison) {
+                    if (comparison) {
+                        //return done(null, user);
+                        
+                        // Create password hash and save to database
+                        bcrypt.hash(req.body.password, 10, function(err, hash) {
+                        
+                            db.query("UPDATE settings SET (hash) = (${hash}) WHERE id=${id} returning id", {"hash":hash, "id":passwords.id})
+                                .then(function(user) {
+                                    console.log("password updated");
+                                  	socket.emit('passwordUpdated');    
+                                }
+                                .catch(function(err) {
+                                    console.log(err);
+                                });
+                        });
+
+                    } else {
+                        socket.emit('incorrectPassword');//What to do if old password is incorrect?
+                    }
+                });
+		  })
+		  .catch(function(err) {
+			console.log(err);
+			return done(null, false, {message:'Incorrect username'});
+		  });
   	});
   	
   	
