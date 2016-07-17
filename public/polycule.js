@@ -1297,8 +1297,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						//settings.username = document.getElementById("newUsername").value;
 						socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value});
 						
-						socket.on('usernameEditOK', function(newUsername) {
-							settings.username = newUsername;
+						socket.on('usernameEditOK', function(newSettings) {
+							settings = newSettings;
 							openSettings();
 						});
 						

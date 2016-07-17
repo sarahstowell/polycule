@@ -692,10 +692,9 @@ io.sockets.on('connection', function(socket){
   	        .then(function(user) {
   	          	db.query("UPDATE nodes SET (username) = (${username}) WHERE id = ${id} returning *", user[0])
   	                 .then(function(user1) {
-  	                     socket.emit('usernameEditOK', user1[0].username);
+  	                     socket.emit('usernameEditOK', user[0]);
   	                     updateNodes();
   	                     console.log('Username updated');
-  	                     console.log(user[0].username);
   	                 })
   	                 .catch(function(err) {
   	                     console.log(err);
