@@ -252,7 +252,7 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
 // Facebook Signup
 app.get('/signup/facebook', function(req, res) {
-    res.render('facebookSignup', { facebookid: req.session.facebookid, username: req.session.username, displayName: req.session.displayName, email: req.session.email, location: req.session.location, profilePic: req.session.profilePic});
+    res.render('facebookSignup', { facebookid: req.session.facebookid, username: req.session.username, displayName: req.session.displayName, email: req.session.email, location: req.session.location, messageemail: "checked", linkemail: "checked", profilePic: req.session.profilePic});
 });
 
 // Process facebook signup request
@@ -288,7 +288,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 			})
 			.catch(function(err) {
 				if (err.code === '23505') {
-					res.render('facebookSignup', { error: "That username is already taken", facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location1, description: req.body.description, profilePic: req.session.profilePic});
+					res.render('facebookSignup', { error: "That username is already taken", facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location1, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic});
 				} else {
 				    console.log(err);
 				}
@@ -296,7 +296,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 		})
 		.catch(function(err) {
 			if (err.code === '23505') {
-				res.render('facebookSignup', { error: "That username is already taken", facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, profilePic: req.session.profilePic});
+				res.render('facebookSignup', { error: "That username is already taken", facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic});
 			} else {
 			    console.log(err);
 			}
