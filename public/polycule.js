@@ -1334,10 +1334,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.on("click", function() {
 					    
 					    socket.emit("settingsEdit", settings);
-					    socket.on('settingsUpdate' function() {
-					        //settings.email = document.getElementById("newEmail").value;
-					        openSettings();
-					    });
+					    //socket.on('settingsUpdate' function() {
+					    //    settings.email = document.getElementById("newEmail").value;
+					    //    openSettings();
+					    //});
 					});
 		
 			});	
