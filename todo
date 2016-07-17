@@ -3,7 +3,7 @@ High Priority:
 Update profile photo (ajax?) HIGH PRIORITY
 Facebook signup
 	Get location widget working on facebook signup HIGH PRIORITY
- 
+Fix form validation for signup
 
 
 
@@ -17,7 +17,7 @@ Standard signups
     	Further server side checks?
     	Photo type check?
 Check max length of description field
-Password change
+
 
 
 
