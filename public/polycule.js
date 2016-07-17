@@ -1261,6 +1261,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 		sidepanel.append("h2")
 			.text("Settings");
+			
+		var settingsError = sidepanel.append("p")
+		    .attr("id", "settingsError");
 		
 		var changeUsername = sidepanel.append("div")
 			.attr("class", "settingsLine");
@@ -1303,7 +1306,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						});
 						
 						socket.on('usernameTaken', function() {
-						    window.alert('That username is already taken');
+						    settingsError.text('That username is already taken');
 						});				
 					});
 				
@@ -1414,7 +1417,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						     });
 						     
 						     socket.on('incorrectPassword', function() {
-						         window.alert("Original password is incorrect");
+						         settingsError.text("Original password is incorrect");
 						     });
 						
 						 }
