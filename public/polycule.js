@@ -1387,7 +1387,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.attr("value", "Save")
 					.on("click", function() {
 						 // TO BE ADDED - send new password to server
-						 if document.getElementById("newPassword").value !== document.getElementById("newPassword").value) {
+						 if (document.getElementById("newPassword").value !== document.getElementById("newPassword").value) {
 						     window.alert("New passwords do not match");
 						 } else {
 						     socket.emit("newPassword", {"oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
@@ -1398,9 +1398,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						        openSettings();
 						     
 						     });
-						 
-						     
-						 
+						
 						 }
 						 
 					     
