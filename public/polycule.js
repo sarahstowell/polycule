@@ -1332,8 +1332,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.attr("type", "button")
 					.attr("value", "Save")
 					.on("click", function() {
+					
+					   var currentSettings = settings;
 					    
-					    socket.emit("settingsEdit", settings);
+					    socket.emit("settingsEdit", currentSettings);
 					    	socket.on('settingsUpdate', function(settingsUpdate) {
 								settings = settingsUpdate;
 								openSettings();	
