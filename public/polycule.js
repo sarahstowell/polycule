@@ -1333,12 +1333,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.attr("value", "Save")
 					.on("click", function() {
 					    socket.emit("settingsEdit", settings);
-					    /*
+					    
 						socket.on('settingsUpdate', function(settingsUpdate) {
-							settings = settingsUpdate;
+							//settings = settingsUpdate;
 							openSettings();	
 						)};
-						*/
+						
 					});
 		
 			});	
