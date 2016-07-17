@@ -1299,6 +1299,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						
 						
 						socket.on('usernameEditOK', function(newUsername) {
+						window.alert(newUsername);
 						    if (newUsername) {
 						        settings.username = newUsername;
 						        openSettings();
