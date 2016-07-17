@@ -1369,7 +1369,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 				changePassword.append("input")
 					.attr("placeholder", "New password")
-					.attr("type", "text")
+					.attr("type", "password")
 					.attr("id", "newPassword")
 					.attr("name", "newPassword");
 				
@@ -1377,7 +1377,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 				changePassword.append("input")
 					.attr("placeholder", "Re-enter new password")
-					.attr("type", "text")
+					.attr("type", "password")
 					.attr("id", "newPassword2")
 					.attr("name", "newPassword2");
 				
@@ -1390,17 +1390,18 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						 if document.getElementById("newPassword").value !== document.getElementById("newPassword").value) {
 						     window.alert("New passwords do not match");
 						 } else {
-						     socket.emit("newPassword", {"oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value}, function(data) {
+						     socket.emit("newPassword", {"oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
 						     
-						             received = data.result;
-                                     if (received) window.alert("Password updated");
-						     
+						     socket.on('passwordUpdated', function() {
+						        
+                                window.alert("Password updated");
+						        openSettings();
 						     
 						     });
 						 
-						     openSettings();
+						     
 						 
-						 };
+						 }
 						 
 					     
 					});

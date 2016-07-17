@@ -655,8 +655,8 @@ io.sockets.on('connection', function(socket){
   	
   	// Password changed
   	socket.on('newPassword', function(passwords) {
-  	
-  	console.log("Password change request received");
+  	    console.log("Password change request received");
+  	    socket.emit('passwordUpdated');
   	});
   	
   	
