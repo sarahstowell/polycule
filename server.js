@@ -50,7 +50,7 @@ var profilePicEdit = function(photo, facebookid, x1, y1, x2, y2) {
 	if (facebookid) {
 		jimp.read(photo).then(function(image) {
 			image.write('./public/photos/original/'+facebookid+".jpg");
-			image.resize(225, 225).quality(100).write('./public/photos/final/'+facebookid+".jpg");
+			image.resize(225, 225).quality(100).write('./public/photos/final/'+facebookid+".jpg", function(err) { console.log(err); });
 			console.log("Image read facebook");
 		}).catch(function (err) {
 			console.log(err);
@@ -327,14 +327,9 @@ io.sockets.on('connection', function(socket){
    socket.on('dataRequest', function() {
        console.log("Data Request received");
 	   db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
-		   console.log("Nodes found");		   
 		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.session.passport.user+" OR targetid = "+socket.request.session.passport.user+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
-			  console.log("Links found");
 			  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.session.passport.user+" AND delrecip = 0) OR (sender = "+socket.request.session.passport.user+" AND delsender = 0) ORDER BY id", [true]).then(function(emails) { 
-				 console.log("Emails found");
-				 db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.session.passport.user, [true]).then(function(settings) { 
-		  		console.log("Settings found");
-		  
+				 db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.session.passport.user, [true]).then(function(settings) { 		  
 						var nodesAndLinks = {"nodes": nodes, "links": links, "emails": emails, "settings": settings, "userid": socket.request.session.passport.user};
 						io.emit('nodesAndLinks', nodesAndLinks);
 				
