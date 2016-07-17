@@ -620,13 +620,21 @@ io.sockets.on('connection', function(socket){
   	});
   	
   	// Node invited
-  	socket.on('nodeInvited', function(id) {
+  	socket.on('nodeInvited', function(node) {
   	
   	    console.log("Node invite update received");
   	
   	    // Update database
-  	    db.query("UPDATE nodes SET invited = 1 WHERE id = "+id)
+  	    db.query("UPDATE nodes SET invited = 1 WHERE id = "+node.id)
   	      	.then(function () {
+  	      	  	db.query("INSERT INTO invited (id, email) = (${id}, ${email})", node)
+  	      	        .then(function () {
+                         console.log("Node invite updated");
+                         updateNodes();
+					})
+					.catch(function (error) {
+						 console.log(error);
+					});
                 console.log("Node invite updated");
                 updateNodes();
             })

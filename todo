@@ -10,7 +10,6 @@ Fix form validation for signup
 Medium Priority:	
 Standard signups
 	Get photo to populate with pug
-	Populate message/link options correctly
 	Validation:
 		Minimum length username/password
     	Email validation client side
