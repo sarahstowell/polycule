@@ -1300,7 +1300,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						socket.on('usernameEditOK', function(newUsername) {
 							settings.username = newUsername;
 							openSettings();
-						}):
+						});
 						
 						socket.on('usernameTaken', function() {
 						    window.alert('That username is already taken');
