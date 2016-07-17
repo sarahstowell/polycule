@@ -49,7 +49,8 @@ var profilePicEdit = function(photo, facebookid, x1, y1, x2, y2) {
 
 	if (facebookid) {
 		jimp.read(photo).then(function(image) {
-			image.resize(225, 225).quality(100).write('./public/photos/original/'+facebookid+".jpg").write('./public/photos/final/'+facebookid+".jpg");
+			image.write('./public/photos/original/'+facebookid+".jpg");
+			image.resize(225, 225).quality(100).write('./public/photos/final/'+facebookid+".jpg");
 			console.log("Image read facebook");
 		}).catch(function (err) {
 			console.log(err);
