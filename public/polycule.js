@@ -1332,12 +1332,16 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					.attr("type", "button")
 					.attr("value", "Save")
 					.on("click", function() {
-					    socket.emit("settingsEdit", settings);
+					    
+					    var newSettings = settings;
+					    newSettings.email = document.getElementById("newEmail").value;
+					    
+					    socket.emit("settingsEdit", newSettings);
 					    
 						socket.on('settingsUpdate', function(settingsUpdate) {
-							//settings = settingsUpdate;
+							settings = settingsUpdate;
 							openSettings();	
-						)};
+						});
 						
 					});
 		
