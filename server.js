@@ -690,12 +690,12 @@ io.sockets.on('connection', function(socket){
   	    console.log('Username change requested received');
   	    db.query("UPDATE settings SET (username) = (${username}) WHERE id = ${id} returning *", newUsername)
   	        .then(function(user) {
-  	            console.log(JSON.stringify(user));
-  	          	db.query("UPDATE nodes SET (username) = (${username}) WHERE id = ${id} returning *", user)
+  	          	db.query("UPDATE nodes SET (username) = (${username}) WHERE id = ${id} returning *", user[0])
   	                 .then(function(user1) {
-  	                     socket.emit('usernameEditOK', user1.username);
+  	                     socket.emit('usernameEditOK', user1[0].username);
   	                     updateNodes();
   	                     console.log('Username updated');
+  	                     console.log(user[0].username);
   	                 })
   	                 .catch(function(err) {
   	                     console.log(err);
