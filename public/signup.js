@@ -173,33 +173,34 @@ var validateForm = function() {
 		d3.select("#username").style("border", "1px solid red");
 		return false;
 		}
-	if (!document.forms["signup"]["displayName"].value) {
+	else if (!document.forms["signup"]["displayName"].value) {
 		d3.select("#errorMessage").text("Please enter a display name");
 		d3.select("#displayName").style("border", "1px solid red");
 		return false;
 		}
-	if (!document.forms["signup"]["password"].value) {
+	else if (!document.forms["signup"]["password"].value) {
 		d3.select("#errorMessage").text("Please enter a password");
 		d3.select("#password").style("border", "1px solid red");
 		d3.select("#password2").style("border", "1px solid red");
 		return false;
 		}
-	if (document.forms["signup"]["password"].value !== document.forms["signup"]["password2"].value) {
+	else if (document.forms["signup"]["password"].value !== document.forms["signup"]["password2"].value) {
 		d3.select("#errorMessage").text("Passwords do not match");
 		d3.select("#password").style("border", "1px solid red");
 		d3.select("#password2").style("border", "1px solid red");
 		return false;
 		}
-	if (!document.forms["signup"]["email"].value) {
+	else if (!document.forms["signup"]["email"].value) {
 		d3.select("#errorMessage").text("Please enter an email address");
 		d3.select("#email").style("border", "1px solid red");
 		return false;
 		}
-	if (!document.forms["signup"]["location"].value) {
+	else if (!document.forms["signup"]["location"].value) {
 		d3.select("#errorMessage").text("Please enter a town or city");
 		d3.select("#location").style("border", "1px solid red");
 		return false;
 		}
+	else { return true; }
 }
 
 // Facebook Signup Form Validation
