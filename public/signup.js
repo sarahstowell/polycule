@@ -227,6 +227,7 @@ var photoTypeCustom = function() {
 }
 
 var photoTypeNone = function() {
+    window.alert("No photo selected");
 	d3.select("#photoAreaFacebook").style("display", "none");
 	d3.select("#photoArea").style("display", "none");
 	d3.select("#photoSelect").property("disabled", true);
@@ -237,27 +238,6 @@ d3.select("#photoTypeCustom").on("click", photoTypeCustom);
 d3.select("#photoTypeNone").on("click", photoTypeNone);
 
 
-
+// Google maps autocomplete
 var locationInput = document.getElementById('location');
 var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
-//var searchBox = new google.maps.places.SearchBox(locationInput, { types: ['(cities)'], region:'EU' });
-//map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationInput);
-
-
-
-// Google town/city autocomplete
-/*
-google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
-function initialize() {
-	var input = document.getElementById('location');
-	var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'EU' });
-	google.maps.event.addListener(autocomplete, 'place_changed', function() {
-		var place = autocomplete.getPlace();
-		if (!place.geometry) {
-			console.log('no location');
-			return;
-		}
-		console.log(place);
-	});
-}
-*/
