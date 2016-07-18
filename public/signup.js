@@ -144,32 +144,7 @@ function photoSelect() {
   if (file) { reader.readAsDataURL(file); }
 }
 
-
-// Google town/city autocomplete
-/*
-google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
-function initialize() {
-	var input = document.getElementById('location');
-	var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'EU' });
-	google.maps.event.addListener(autocomplete, 'place_changed', function() {
-		var place = autocomplete.getPlace();
-		if (!place.geometry) {
-			console.log('no location');
-			return;
-		}
-		console.log(place);
-	});
-}
-*/
-
-//document.getElementById("signup").addEventListener("submit", validateForm);
-
-
 // Signup form validation
-//var validateForm = 
-//document.getElementById("signup").onsubmit = 
-//document.getElementById("signup").addEventListener("submit", 
-
 var validateForm = function() {
     
 	d3.select(".inputBox").style("border", "1px solid gray");
@@ -209,49 +184,6 @@ var validateForm = function() {
 		}
 	else { return true; }
 };
-
-/*
-var validateForm = function() {
-    
-    window.alert("Validate function run");
-    
-	d3.select(".inputBox").style("border", "1px solid gray");
-	d3.select("#errorMessage").text("");		
-	
-	if (!document.["username"].value) {
-		d3.select("#errorMessage").text("Please enter a username");
-		d3.select("#username").style("border", "1px solid red");
-		return false;
-		}
-	if (!document.forms["signup"]["displayName"].value) {
-		d3.select("#errorMessage").text("Please enter a display name");
-		d3.select("#displayName").style("border", "1px solid red");
-		return false;
-		}
-	if (!document.forms["signup"]["password"].value) {
-		d3.select("#errorMessage").text("Please enter a password");
-		d3.select("#password").style("border", "1px solid red");
-		d3.select("#password2").style("border", "1px solid red");
-		return false;
-		}
-	if (document.forms["signup"]["password"].value !== document.forms["signup"]["password2"].value) {
-		d3.select("#errorMessage").text("Passwords do not match");
-		d3.select("#password").style("border", "1px solid red");
-		d3.select("#password2").style("border", "1px solid red");
-		return false;
-		}
-	if (!document.forms["signup"]["email"].value) {
-		d3.select("#errorMessage").text("Please enter an email address");
-		d3.select("#email").style("border", "1px solid red");
-		return false;
-		}
-    if (!document.forms["signup"]["location"].value) {
-		d3.select("#errorMessage").text("Please enter a town or city");
-		d3.select("#location").style("border", "1px solid red");
-		return false;
-		}
-};
-*/
 
 // Facebook Signup Form Validation
 var validateFormFacebook = function() {
@@ -303,3 +235,18 @@ var photoTypeNone = function() {
 d3.select("#photoTypeFacebook").on("click", photoTypeFacebook);
 d3.select("#photoTypeCustom").on("click", photoTypeCustom);
 d3.select("#photoTypeNone").on("click", photoTypeNone);
+
+// Google town/city autocomplete
+google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
+function initialize() {
+	var input = document.getElementById('location');
+	var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'EU' });
+	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+		var place = autocomplete.getPlace();
+		if (!place.geometry) {
+			console.log('no location');
+			return;
+		}
+		console.log(place);
+	});
+}
