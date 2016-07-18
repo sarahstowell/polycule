@@ -170,8 +170,6 @@ function initialize() {
 
 var validateForm = function() {
     
-    window.alert("Validate function run");
-    
 	d3.select(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
 	
