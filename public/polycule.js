@@ -490,7 +490,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				.attr("class", "profilepic")
 				.attr("src", "/photos/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
 				.attr("id", "profilepicedit")
-				.property("accept", "image/*")
+				.property("accept", "image/*");
+				/*
 				.style("cursor", "pointer")
 				.on("click", function() {
 					imgsrc = "/photos/original/"+nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo;
@@ -498,6 +499,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
 					d3.select("#photoEditWindow").style("display",  "block");
 				});
+				*/
 		
 		} else {
 		
