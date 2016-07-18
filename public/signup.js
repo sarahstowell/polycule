@@ -167,6 +167,7 @@ function initialize() {
 //var validateForm = 
 //document.getElementById("signup").onsubmit = 
 //document.getElementById("signup").addEventListener("submit", 
+
 var validateForm = function() {
     
     window.alert("Validate function run");
@@ -174,7 +175,49 @@ var validateForm = function() {
 	d3.select(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
 	
-	if (!document.forms["signup"]["username"].value) {
+	if (!document.getElementById("username").value) {
+		d3.select("#errorMessage").text("Please enter a username");
+		d3.select("#username").style("border", "1px solid red");
+		return false;
+		}
+	if (!document.getElementById("displayName").value) {
+		d3.select("#errorMessage").text("Please enter a display name");
+		d3.select("#displayName").style("border", "1px solid red");
+		return false;
+		}
+	if (!document.getElementById("password").value) {
+		d3.select("#errorMessage").text("Please enter a password");
+		d3.select("#password").style("border", "1px solid red");
+		d3.select("#password2").style("border", "1px solid red");
+		return false;
+		}
+	if (document.getElementById("password").value !== document.getElementById("password2").value) {
+		d3.select("#errorMessage").text("Passwords do not match");
+		d3.select("#password").style("border", "1px solid red");
+		d3.select("#password2").style("border", "1px solid red");
+		return false;
+		}
+	if (!document.getElementById("email").value) {
+		d3.select("#errorMessage").text("Please enter an email address");
+		d3.select("#email").style("border", "1px solid red");
+		return false;
+		}
+    if (!document.getElementById("location").value) {
+		d3.select("#errorMessage").text("Please enter a town or city");
+		d3.select("#location").style("border", "1px solid red");
+		return false;
+		}
+};
+
+/*
+var validateForm = function() {
+    
+    window.alert("Validate function run");
+    
+	d3.select(".inputBox").style("border", "1px solid gray");
+	d3.select("#errorMessage").text("");		
+	
+	if (!document.["username"].value) {
 		d3.select("#errorMessage").text("Please enter a username");
 		d3.select("#username").style("border", "1px solid red");
 		return false;
@@ -207,6 +250,7 @@ var validateForm = function() {
 		return false;
 		}
 };
+*/
 
 // Facebook Signup Form Validation
 var validateFormFacebook = function() {
