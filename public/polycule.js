@@ -559,21 +559,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].location);
 		    
 		// Google town/city autocomplete
-		/*
-		google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
-		function initialize() {
-			var input = document.getElementById('editLocation');
-			var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'EU' });
-			google.maps.event.addListener(autocomplete, 'place_changed', function() {
-				var place = autocomplete.getPlace();
-				if (!place.geometry) {
-					console.log('no location');
-					return;
-				}
-				console.log(place);
-			});
-		}
-		*/
+		var locationInput = document.getElementById('editLocation');
+        var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
 				
 	    var editDescription = centerdiv.append("textarea")
 		    .attr("id", "editDescription")

@@ -2,7 +2,7 @@ High Priority:
 	!!! Update profile photo (ajax?) HIGH PRIORITY
 
 Medium Priority:	
-    Get location widget to favour nearby places
+    
 	Standard signups
 		Get photo to populate with pug
 		Validation:
@@ -28,6 +28,7 @@ Low Priority:
 	Keep name for emails after account is deleted
 	Logout when user closes window (unless box ticked)
 	Google login
+	Check whether location widget favours nearby places outside of UK
 
 Issues for when there are more users:
 	Zoom buttons
