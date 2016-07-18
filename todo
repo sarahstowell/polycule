@@ -1,9 +1,8 @@
 
 High Priority:
-Update profile photo (ajax?) HIGH PRIORITY
-Facebook signup
-	Get location widget working on facebook signup HIGH PRIORITY
-Fix form validation for signup
+!!! Update profile photo (ajax?) HIGH PRIORITY
+!!! Get location widget working HIGH PRIORITY
+!!! Fix form validation for signup
 
 
 
@@ -25,16 +24,14 @@ Knockout for settings/emails/link requests
 
 
 Update nodes after new user signup
-
-
 Prevent refresh when editing node?
-
 Stray non-member nodes
 
 
 Low Priority:
 Link/Remove facebook account
-Invite to take up current node
+Verify email for invites
+Send email to invited node
 Delete emails where both reader and sender have deleted
 Delete emails when user deletes account
 Keep name for emails after account is deleted

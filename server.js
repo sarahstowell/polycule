@@ -19,6 +19,7 @@ var path = require('path');
 var multer = require('multer');
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
+//var nodemailer = require('nodemailer'); INSTALL PACKAGE
 
 app.use(helmet());
 
