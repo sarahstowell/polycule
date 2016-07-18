@@ -559,6 +559,8 @@ io.sockets.on('connection', function(socket){
 							.then(function () {
                                 console.log("Member deleted");
                                 updateNodesLinks();
+                                
+                                // REMOVE ANY FLOATING NON-USER NODES
 
 							})
 							.catch(function (error) {

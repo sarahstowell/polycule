@@ -189,29 +189,29 @@ var validateForm = function() {
 var validateFormFacebook = function() {
 	d3.select(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
-	if (!document.forms["signup"]["username"].value) {
+	if (!document.getElementById("username").value) {
 		d3.select("#errorMessage").text("Please enter a username");
 		d3.select("#username").style("border", "1px solid red");
 		return false;
 		}
-	if (!document.forms["signup"]["displayName"].value) {
+	else if (!document.getElementById("displayName").value) {
 		d3.select("#errorMessage").text("Please enter a display name");
 		d3.select("#displayName").style("border", "1px solid red");
 		return false;
 		}
-	if (!document.forms["signup"]["email"].value) {
+	else if (!document.getElementById("email").value) {
 		d3.select("#errorMessage").text("Please enter an email address");
 		d3.select("#email").style("border", "1px solid red");
 		return false;
 		}
 
-	if (document.forms["signup"]["location"].value === null) {
+	else if (document.getElementById("location").value === null) {
 		d3.select("#errorMessage").text("Please enter a town or city");
 		d3.select("#location").style("border", "1px solid red");
 		return false;
 		}
-
-}
+	else { return true; }
+};
 
 // Photo Select
 var photoTypeFacebook = function() {
