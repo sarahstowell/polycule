@@ -236,7 +236,16 @@ d3.select("#photoTypeFacebook").on("click", photoTypeFacebook);
 d3.select("#photoTypeCustom").on("click", photoTypeCustom);
 d3.select("#photoTypeNone").on("click", photoTypeNone);
 
+
+
+var locationInput = document.getElementById('location');
+var searchBox = new google.maps.places.SearchBox(locationInput);
+//map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationInput);
+
+
+
 // Google town/city autocomplete
+/*
 google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
 function initialize() {
 	var input = document.getElementById('location');
@@ -250,3 +259,4 @@ function initialize() {
 		console.log(place);
 	});
 }
+*/
