@@ -111,7 +111,7 @@ passport.deserializeUser((id, done)=>{
 passport.use('facebook', new FacebookStrategy({
 		clientID        : process.env.FACEBOOK_ID,
 		clientSecret    : process.env.FACEBOOK_SECRET,
-		callbackURL     : 'https://polyculeuk.herokuapp.com/login/facebook/callback',
+		callbackURL     : 'https://polycule.co.uk/login/facebook/callback',
 		profileFields	  : ['id', 'name', 'emails', 'location', 'picture.width(225)'],
 		passReqToCallback: true
 	},  
