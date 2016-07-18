@@ -146,6 +146,7 @@ function photoSelect() {
 
 
 // Google town/city autocomplete
+/*
 google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
 function initialize() {
 	var input = document.getElementById('location');
@@ -159,6 +160,7 @@ function initialize() {
 		console.log(place);
 	});
 }
+*/
 
 //document.getElementById("signup").addEventListener("submit", validateForm);
 
