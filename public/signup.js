@@ -239,7 +239,7 @@ d3.select("#photoTypeNone").on("click", photoTypeNone);
 
 
 var locationInput = document.getElementById('location');
-var searchBox = new google.maps.places.SearchBox(locationInput, { types: ['(cities)'], region:'EU', bounds: defaultBounds });
+var searchBox = new google.maps.places.SearchBox(locationInput, { types: ['(cities)'], region:'EU' });
 //map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationInput);
 
 
