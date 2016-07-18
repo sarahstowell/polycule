@@ -165,9 +165,12 @@ function initialize() {
 
 // Signup form validation
 var validateForm = function() {
+    
     window.alert("Validate function run");
+    
 	d3.select(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
+	
 	if (!document.forms["signup"]["username"].value) {
 		d3.select("#errorMessage").text("Please enter a username");
 		d3.select("#username").style("border", "1px solid red");
