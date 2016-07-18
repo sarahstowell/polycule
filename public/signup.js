@@ -161,9 +161,7 @@ function initialize() {
 }
 
 //document.getElementById("signup").addEventListener("submit", validateForm);
-var testFunc = function() {
-    window.alert("Test");
-};
+
 
 // Signup form validation
 var validateForm = function() {
