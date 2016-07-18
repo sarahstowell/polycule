@@ -1,49 +1,43 @@
 
 High Priority:
-!!! Update profile photo (ajax?) HIGH PRIORITY
-!!! Get location widget working HIGH PRIORITY
-!!! Fix form validation for signup
+	!!! Update profile photo (ajax?) HIGH PRIORITY
+	!!! Get location widget working HIGH PRIORITY
+	!!! Fix form validation for signup
 
 
 
 Medium Priority:	
-Standard signups
-	Get photo to populate with pug
-	Validation:
-		Minimum length username/password
-    	Email validation client side
-    	Further server side checks?
-    	Photo type check?
-Check max length of description field
+	Standard signups
+		Get photo to populate with pug
+		Validation:
+			Minimum length username/password
+			Email validation client side
+			Further server side checks?
+			Photo type check?
+	Check max length of description field
+	Verify email for invites
+	Send email to invited node
+	Link/Remove facebook account
 
-
-
-
-Knockout for settings/emails/link requests
-
-
-
-Update nodes after new user signup
-Prevent refresh when editing node?
-Stray non-member nodes
+	Knockout for settings/emails/link requests
+	Update nodes after new user signup
+	Prevent refresh when editing node?
+	Stray non-member nodes
+	Mixed case usernames?
 
 
 Low Priority:
-Link/Remove facebook account
-Verify email for invites
-Send email to invited node
-Delete emails where both reader and sender have deleted
-Delete emails when user deletes account
-Keep name for emails after account is deleted
-Logout when user closes window (unless box ticked)
-Google login
+	Delete emails where both reader and sender have deleted
+	Delete emails when user deletes account
+	Keep name for emails after account is deleted
+	Logout when user closes window (unless box ticked)
+	Google login
 
 Issues for when there are more users:
-Zoom buttons
-
-Get current user to be displayed in centre (set px, py before calling force layout??)
-Display people in the same town close together
-Create search function
-Add ability to link nodes without dragging 
-Get labels to position nicely
-Make use of facebook friends
+	Zoom buttons
+	Get current user to be displayed in centre (set px, py before calling force layout??)
+	Display people in the same town close together
+	Create search function
+	Add ability to link nodes without dragging 
+	Get labels to position nicely
+	Make use of facebook friends
