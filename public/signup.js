@@ -166,7 +166,8 @@ function initialize() {
 // Signup form validation
 //var validateForm = 
 //document.getElementById("signup").onsubmit = 
-document.getElementById("signup").addEventListener("submit", function() {
+//document.getElementById("signup").addEventListener("submit", 
+var validateForm = function() {
     
     window.alert("Validate function run");
     
