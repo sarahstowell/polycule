@@ -1,8 +1,8 @@
 High Priority:
 	!!! Update profile photo (ajax?) HIGH PRIORITY
-	!!! Get location widget working HIGH PRIORITY
 
 Medium Priority:	
+    Get location widget to favour nearby places
 	Standard signups
 		Get photo to populate with pug
 		Validation:
