@@ -166,7 +166,7 @@ io.use(function(socket, next) {
 app.use(sessionMiddleware);
 
 // Test??
-io.use(sharedsession(sessionMiddleware));
+//io.use(sharedsession(sessionMiddleware));
 
 
 //With Socket.io >= 1.0
