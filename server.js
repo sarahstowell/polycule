@@ -758,6 +758,10 @@ io.sockets.on('connection', function(socket){
 });
 
 
-http.listen(process.env.PORT, function(){
-  console.log('listening on *:' + process.env.PORT);
+//http.listen(process.env.PORT, function(){
+//  console.log('listening on *:' + process.env.PORT);
+//});
+
+lex.listen(process.env.PORT, function () {
+  console.log("ENCRYPT __ALL__ THE DOMAINS!");
 });
