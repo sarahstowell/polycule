@@ -368,7 +368,8 @@ app.get('/logout', function(req, res){
 // =======================================================================================
 // Web Sockets
 io.sockets.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('a user connected: ');
+  console.log(JSON.stringify(socket.request.user));
    
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
