@@ -150,15 +150,15 @@ var sessionMiddleware = session({
     saveUninitialized: true
     });
     
-/*
+
 io.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res, next);
 });
-*/
+
 app.use(sessionMiddleware);
 
 // Test??
-io.use(sharedsession(sessionMiddleware));
+//io.use(sharedsession(sessionMiddleware));
 
 
 app.use(passport.initialize());
