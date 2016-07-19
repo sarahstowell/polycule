@@ -51,14 +51,14 @@ var lex = LEX.create({
 });
 
 var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
-//server.listen(process.env.PORT);
+server.listen(process.env.PORT);
 
 var io = socketIO.listen(server);
 //var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
 //server.listen(process.env.PORT);
 // ----------------------
 
-
+console.log(process.env.PORT);
 
 app.set('view engine', 'pug');
 
@@ -775,5 +775,3 @@ io.sockets.on('connection', function(socket){
 //lex.listen([80], [443, 5001], function () {
 //  console.log("ENCRYPT __ALL__ THE DOMAINS!");
 //});
-
-server.listen(process.env.PORT);
