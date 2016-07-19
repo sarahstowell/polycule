@@ -373,7 +373,7 @@ io.sockets.on('connection', function(socket){
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
        console.log("Data Request received");
-       var userId = parseInt(socket.request.session.passport.user);
+       var userId = parseInt(socket.request.user);
        db.task(function (t) {
            
            return t.batch([
@@ -398,7 +398,7 @@ io.sockets.on('connection', function(socket){
     });
         
   	function updateLinks() {
-  	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.session.passport.user+" OR targetid = "+socket.request.session.passport.user+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
+  	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user+" OR targetid = "+socket.request.user+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 			io.emit('linksUpdate', links);
 			console.log("Updated link data sent");		
 	    }).catch(function (error) {  console.log("ERROR:", error); });
@@ -413,7 +413,7 @@ io.sockets.on('connection', function(socket){
 	
 	function updateNodesLinks() {
 	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
-		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.session.passport.user+" OR targetid = "+socket.request.session.passport.user+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
+		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user+" OR targetid = "+socket.request.user+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 		  
 				var nodesLinksUpdate = {"nodes": nodes, "links": links};
 				io.emit('nodesLinksUpdate', nodesLinksUpdate);
@@ -423,7 +423,7 @@ io.sockets.on('connection', function(socket){
 	}
 	
 	function updateSettings() {
-		db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.session.passport.user, [true]).then(function(settings) { 
+		db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.user, [true]).then(function(settings) { 
 
 			io.emit('settingsUpdate', settings);
 				
@@ -432,7 +432,7 @@ io.sockets.on('connection', function(socket){
 	
 	function updateEmails() {  
 	  
-	  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.session.passport.user+" AND delrecip = 0) OR (sender = "+socket.request.session.passport.user+" AND delsender = 0) ORDER BY id", [true]).then(function(emailUpdate) { 
+	  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.user+" AND delrecip = 0) OR (sender = "+socket.request.user+" AND delsender = 0) ORDER BY id", [true]).then(function(emailUpdate) { 
 
 			io.emit('emailUpdate', emailUpdate);
 	
@@ -465,7 +465,7 @@ io.sockets.on('connection', function(socket){
                 console.log("Email added to database");
                 
                 // Emit updated email data
-                if (socket.request.session.passport.user == email[0].recip || socket.request.session.passport.user == email[0].sender) {
+                if (socket.request.user == email[0].recip || socket.request.user == email[0].sender) {
                     updateEmails();
                 }
 
@@ -487,7 +487,7 @@ io.sockets.on('connection', function(socket){
                 console.log("Email updated as read");
                 
                 // Emit updated email data
-                if (socket.request.session.passport.user == updatedEmail[0].recip || socket.request.session.passport.user == updatedEmail[0].sender) {
+                if (socket.request.user == updatedEmail[0].recip || socket.request.user == updatedEmail[0].sender) {
                     updateEmails();
                 }
 
@@ -510,7 +510,7 @@ io.sockets.on('connection', function(socket){
 						.then(function () {
 							console.log("Email set deleted by sender");
 							
-							if (socket.request.session.passport.user === user1 || socket.request.session.passport.user === user2) {
+							if (socket.request.user === user1 || socket.request.user === user2) {
 							    updateEmails();
 							}
 							
@@ -575,7 +575,7 @@ io.sockets.on('connection', function(socket){
   	    db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed", newLink)
   	      	.then(function (id) {
                 console.log("New link added to database. Id: "+id);
-                if (id[0].confirmed === 1 || id[0].sourceid === socket.request.session.passport.user || id[0].targetid === socket.request.session.passport.user) {
+                if (id[0].confirmed === 1 || id[0].sourceid === socket.request.user || id[0].targetid === socket.request.user) {
                     updateLinks(); // Transmit updated data
                 }
             })
@@ -605,13 +605,13 @@ io.sockets.on('connection', function(socket){
   	
   	    console.log("Node delete received");
   	
-  	    db.query("DELETE FROM links WHERE sourceid = "+socket.request.session.passport.user+" OR targetid = "+socket.request.session.passport.user)
+  	    db.query("DELETE FROM links WHERE sourceid = "+socket.request.user+" OR targetid = "+socket.request.user)
   	        .then(function () {
 
-				db.query("DELETE from nodes WHERE id = "+socket.request.session.passport.user)
+				db.query("DELETE from nodes WHERE id = "+socket.request.user)
 					.then(function () {
 
-						db.query("DELETE from settings WHERE id = "+socket.request.session.passport.user)
+						db.query("DELETE from settings WHERE id = "+socket.request.user)
 							.then(function () {
                                 console.log("Member deleted");
                                 updateNodesLinks();
@@ -710,7 +710,7 @@ io.sockets.on('connection', function(socket){
   	    db.query("UPDATE settings SET (email, messageemail, linkemail) = (${email}, ${messageemail}, ${linkemail}) WHERE id = ${id} returning id", settings)
   	      	.then(function (id) {
                 console.log("Settings updated");
-                if (id[0].id === socket.request.session.passport.user) { updateSettings(); }
+                if (id[0].id === socket.request.user) { updateSettings(); }
             })
             .catch(function (error) {
                  console.log(error);
