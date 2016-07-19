@@ -210,6 +210,12 @@ app.use(passport.session());
 
 app.use(express.static('public'));
 
+app.get('/.well-known/acme-challenge/yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4', function(req, res) {
+    res.send('yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4._SsOmzoRu-75ACKIuAgHI5ZuKK2WiLHO6SZgj33xisw');
+});
+
+
+
 // Send login page =====================================
 app.get('/login', function(req, res){
   res.sendFile(__dirname+'/login.html'); 
