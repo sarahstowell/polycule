@@ -379,9 +379,9 @@ io.sockets.on('connection', function(socket){
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
        console.log("Data Request received");
-       
+       var userId = parseInt(socket.request.session.passport.user);
        db.task(function (t) {
-           var userId = parseInt(socket.request.session.passport.user);
+           
            return t.batch([
                t.any("SELECT * FROM nodes ORDER BY id"),
                t.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = $1 OR targetid = $1 ORDER BY id", userId),
@@ -390,7 +390,6 @@ io.sockets.on('connection', function(socket){
            ]);
        })
            .then(function (data) {
-               console.log(JSON.stringify(data));
                io.emit('nodesAndLinks', {
                    nodes: data[0],
                    links: data[1],
