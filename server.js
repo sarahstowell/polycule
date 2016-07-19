@@ -3,8 +3,8 @@ var app = express();
 var session = require('express-session');
 
 //var http = require('http').Server(app);
-//var io = require('socket.io');//(http);
-var socketIO = require('socket.io');
+var io = require('socket.io');//(http);
+//var socketIO = require('socket.io');
 var LEX = require('letsencrypt-express');//.testing();
 var https = require('http2');
 
