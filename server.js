@@ -4,6 +4,7 @@ var session = require('express-session');
 //var http = require('http').Server(app);
 //var io = require('socket.io');//(http);
 var socketIO = require('socket.io');
+var https = require('http2');
 var fs = require('fs');// NEEDED??
 var pgp = require("pg-promise")(/*options*/);
 var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
