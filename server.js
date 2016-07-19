@@ -1,13 +1,11 @@
 var express = require('express');
 var app = express();
 var session = require('express-session');
-
-//var http = require('http').Server(app);
-//var io = require('socket.io');//(http);
-var socketIO = require('socket.io');
-var LEX = require('letsencrypt-express').testing(); //Note: using staging server url, remove .testing() for production. Using .testing() will overwrite the debug flag with true
-var https = require('http2');
-
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+//var socketIO = require('socket.io');
+//var LEX = require('letsencrypt-express').testing(); //Note: using staging server url, remove .testing() for production. Using .testing() will overwrite the debug flag with true
+//var https = require('http2');
 var fs = require('fs');// NEEDED??
 var pgp = require("pg-promise")(/*options*/);
 var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
@@ -29,10 +27,8 @@ var helmet = require('helmet'); // Security
 app.use(helmet());
 
 // Lets Encrypt ===============================
+/*
 'use strict';
-
-
-
 
 // Change these two lines!
 var DOMAIN = 'polycule.co.uk';
@@ -51,8 +47,6 @@ var lex = LEX.create({
   }
 });
 
-
-/*
 app.use(function (req, res) {
   res.send({ success: true });
 });
@@ -64,8 +58,6 @@ lex.listen([80], [443, 5001], function () {
   var protocol = ('requestCert' in this) ? 'https': 'http';
   console.log("Listening at " + protocol + '://localhost:' + this.address().port);
 });
-*/
-
 
 var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
 server.listen(process.env.PORT, function() {
@@ -73,7 +65,7 @@ server.listen(process.env.PORT, function() {
 });
 
 var io = socketIO.listen(server);
-
+*/
 // =================================================
 
 
@@ -785,9 +777,9 @@ io.sockets.on('connection', function(socket){
 });
 
 
-//http.listen(process.env.PORT, function(){
-//  console.log('listening on *:' + process.env.PORT);
-//});
+http.listen(process.env.PORT, function(){
+  console.log('listening on *:' + process.env.PORT);
+});
 
 //lex.listen([80], [443, 5001], function () {
 //  console.log("ENCRYPT __ALL__ THE DOMAINS!");
