@@ -390,6 +390,7 @@ io.sockets.on('connection', function(socket){
            ]);
        })
            .then(function (data) {
+               console.log(JSON.stringify(data));
                io.emit('nodesAndLinks', {
                    nodes: data[0],
                    links: data[1],
