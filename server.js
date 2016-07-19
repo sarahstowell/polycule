@@ -5,7 +5,7 @@ var session = require('express-session');
 //var http = require('http').Server(app);
 //var io = require('socket.io');//(http);
 var socketIO = require('socket.io');
-var LEX = require('letsencrypt-express');//.testing();
+var LEX = require('letsencrypt-express').testing(); //Note: using staging server url, remove .testing() for production. Using .testing() will overwrite the debug flag with true
 var https = require('http2');
 
 var fs = require('fs');// NEEDED??
@@ -31,8 +31,7 @@ app.use(helmet());
 // Lets Encrypt ===============================
 'use strict';
 
-/* Note: using staging server url, remove .testing() for production
-Using .testing() will overwrite the debug flag with true */ 
+
 
 
 // Change these two lines!
@@ -56,6 +55,7 @@ var lex = LEX.create({
 app.use(function (req, res) {
   res.send({ success: true });
 });
+
 
 lex.onRequest = app;
 /*
