@@ -563,10 +563,10 @@ io.sockets.on('connection', function(socket){
   	    db.query("DELETE FROM links WHERE sourceid = "+socket.handshake.session.passport.user+" OR targetid = "+socket.handshake.session.passport.user)
   	        .then(function () {
 
-				db.query("DELETE from nodes WHERE id = "+socket.request.session.passport.user)
+				db.query("DELETE from nodes WHERE id = "+socket.handshake.session.passport.user)
 					.then(function () {
 
-						db.query("DELETE from settings WHERE id = "+socket.request.session.passport.user)
+						db.query("DELETE from settings WHERE id = "+socket.handshake.session.passport.user)
 							.then(function () {
                                 console.log("Member deleted");
                                 updateNodesLinks();
@@ -665,7 +665,7 @@ io.sockets.on('connection', function(socket){
   	    db.query("UPDATE settings SET (email, messageemail, linkemail) = (${email}, ${messageemail}, ${linkemail}) WHERE id = ${id} returning id", settings)
   	      	.then(function (id) {
                 console.log("Settings updated");
-                if (id[0].id === socket.request.session.passport.user) { updateSettings(); }
+                if (id[0].id === socket.handshake.session.passport.user) { updateSettings(); }
             })
             .catch(function (error) {
                  console.log(error);
