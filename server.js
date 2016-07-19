@@ -3,8 +3,8 @@ var app = express();
 var session = require('express-session');
 
 //var http = require('http').Server(app);
-var io = require('socket.io');//(http);
-//var socketIO = require('socket.io');
+//var io = require('socket.io');//(http);
+var socketIO = require('socket.io');
 var LEX = require('letsencrypt-express');//.testing();
 var https = require('http2');
 
@@ -52,12 +52,14 @@ var lex = LEX.create({
   }
 });
 
-/*
+
 var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
-server.listen(process.env.PORT);
+server.listen(process.env.PORT, function() {
+    console.log("Listening on port: "+process.env.PORT);
+});
 
 var io = socketIO.listen(server);
-*/
+
 // =================================================
 
 
@@ -773,6 +775,6 @@ io.sockets.on('connection', function(socket){
 //  console.log('listening on *:' + process.env.PORT);
 //});
 
-lex.listen([80], [443, 5001], function () {
-  console.log("ENCRYPT __ALL__ THE DOMAINS!");
-});
+//lex.listen([80], [443, 5001], function () {
+//  console.log("ENCRYPT __ALL__ THE DOMAINS!");
+//});
