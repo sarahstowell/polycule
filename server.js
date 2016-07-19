@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var session = require('express-session');
 //var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io');//(http);
 var fs = require('fs');// NEEDED??
 var pgp = require("pg-promise")(/*options*/);
 var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
@@ -46,6 +46,9 @@ var lex = LEX.create({
     }
   }
 });
+
+//var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
+//server.listen(process.env.PORT);
 // ----------------------
 
 
