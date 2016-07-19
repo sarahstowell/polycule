@@ -170,12 +170,12 @@ io.use(sharedsession(sessionMiddleware));
 
 
 //With Socket.io >= 1.0
-/*
+
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,       // the same middleware you registrer in express
   key:          'sessionId',       // the name of the cookie where express/connect stores its session_id
   secret:       '1234567890QWERTY',    // the session_secret to parse the cookie
-  //store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
+  store:        sessionStore,        // we NEED to use a sessionstore. no memorystore please
   success:      onAuthorizeSuccess,  // *optional* callback on success - read more below
   fail:         onAuthorizeFail,     // *optional* callback on fail/error - read more below
 }));
@@ -200,7 +200,7 @@ function onAuthorizeFail(data, message, error, accept){
   // this error will be sent to the user as a special error-package
   // see: http://socket.io/docs/client-api/#socket > error-object
 }
-*/
+
 
 
 
