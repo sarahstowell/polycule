@@ -147,7 +147,7 @@ app.use(cookieParser());
 
 var sessionMiddleware = session({
     store: new pgSession({
-        pg : pg-promise,                                  // Use global pg-module 
+        pg : pg,                                  // Use global pg-module 
         conString : process.env.POSTGRES_CONNECTION_STRING, // Connect using something else than default DATABASE_URL env variable 
         tableName : 'sessionstore'               // Use another table-name than the default "session" one 
     }),
