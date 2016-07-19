@@ -379,20 +379,29 @@ io.sockets.on('connection', function(socket){
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
        console.log("Data Request received");
-	   db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
-		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.session.passport.user+" OR targetid = "+socket.request.session.passport.user+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
-			  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.session.passport.user+" AND delrecip = 0) OR (sender = "+socket.request.session.passport.user+" AND delsender = 0) ORDER BY id", [true]).then(function(emails) { 
-				 db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.session.passport.user, [true]).then(function(settings) { 		  
-						var nodesAndLinks = {"nodes": nodes, "links": links, "emails": emails, "settings": settings, "userid": socket.request.session.passport.user};
-						io.emit('nodesAndLinks', nodesAndLinks);
-				
-					}).catch(function (error) {  console.log("ERROR:", error); });
-				}).catch(function (error) {  console.log("ERROR:", error); });
-			}).catch(function (error1) {  console.log("ERROR:", error1); });
-		}).catch(function (error2) {  console.log("ERROR:", error2); });
-  	
-  	});
-  	
+       
+       db.task(function (t) {
+           var userId = parseInt(socket.request.session.passport.user);
+           return t.batch([
+               t.any("SELECT * FROM nodes ORDER BY id"),
+               t.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = $1 OR targetid = $1 ORDER BY id", userId),
+               t.any("SELECT * FROM emails WHERE (recip = $1 AND delrecip = 0) OR (sender = $1 AND delsender = 0) ORDER BY id", userId),
+               t.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = $1", userId)
+           ]);
+       })
+           .then(function (data) {
+               io.emit('nodesAndLinks', {
+                   nodes: data[0],
+                   links: data[1],
+                   emails: data[2],
+                   settings: data[3],
+                   userid: userId
+               });
+           })
+           .catch(function (error) {
+               console.log("ERROR:", error);
+           });
+        
   	function updateLinks() {
   	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.session.passport.user+" OR targetid = "+socket.request.session.passport.user+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 			io.emit('linksUpdate', links);
