@@ -3,16 +3,16 @@ var app = express();
 var session = require('express-session');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var fs = require('fs');
+var fs = require('fs');// NEEDED??
 var pgp = require("pg-promise")(/*options*/);
 var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
+//var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var sharedsession = require("express-socket.io-session");
+var sharedsession = require("express-socket.io-session"); // NEEDED??
 var jimp = require('jimp');
 var bcrypt = require('bcrypt');
 var path = require('path');
@@ -22,6 +22,33 @@ var helmet = require('helmet'); // Security
 //var nodemailer = require('nodemailer'); INSTALL PACKAGE
 
 app.use(helmet());
+
+// Lets Encrypt
+'use strict';
+
+/* Note: using staging server url, remove .testing() for production
+Using .testing() will overwrite the debug flag with true */ 
+var LEX = require('letsencrypt-express');//.testing();
+
+// Change these two lines!
+var DOMAIN = 'polycule.co.uk';
+var EMAIL = 'sarah@polycule.co.uk';
+
+var lex = LEX.create({
+  configDir: require('os').homedir() + '/letsencrypt/etc'
+, approveRegistration: function (hostname, approve) { // leave `null` to disable automatic registration
+    if (hostname === DOMAIN) { // Or check a database or list of allowed domains
+      approve(null, {
+        domains: [DOMAIN]
+      , email: EMAIL
+      , agreeTos: true
+      });
+    }
+  }
+});
+// ----------------------
+
+
 
 app.set('view engine', 'pug');
 
