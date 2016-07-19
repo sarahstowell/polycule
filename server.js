@@ -327,6 +327,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 	db.one("INSERT INTO nodes (name, username, location, description, photo, photocoords, member) VALUES (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}) returning id ", newNode)
 		.then(function(user) {
 			console.log("Userid after facebook signup: "+JSON.stringify(user));
+			console.log("Userid from session: "+socket.request.session.passport.user);
 			newNode.id = user.id;
 			db.one("INSERT INTO settings (id, username, email, messageemail, linkemail, facebookid) VALUES (${id}, ${username}, ${email}, ${messageemail}, ${linkemail}, ${facebookid}) returning id", newNode)
 			.then(function(user) {
