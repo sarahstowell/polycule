@@ -1,11 +1,13 @@
 var express = require('express');
 var app = express();
 var session = require('express-session');
+
 //var http = require('http').Server(app);
 //var io = require('socket.io');//(http);
 var socketIO = require('socket.io');
 var LEX = require('letsencrypt-express');//.testing();
 var https = require('http2');
+
 var fs = require('fs');// NEEDED??
 var pgp = require("pg-promise")(/*options*/);
 var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
@@ -26,7 +28,7 @@ var helmet = require('helmet'); // Security
 
 app.use(helmet());
 
-// Lets Encrypt
+// Lets Encrypt ===============================
 'use strict';
 
 /* Note: using staging server url, remove .testing() for production
@@ -50,15 +52,14 @@ var lex = LEX.create({
   }
 });
 
+/*
 var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
 server.listen(process.env.PORT);
 
 var io = socketIO.listen(server);
-//var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
-//server.listen(process.env.PORT);
-// ----------------------
+*/
+// =================================================
 
-console.log(process.env.PORT);
 
 app.set('view engine', 'pug');
 
@@ -772,6 +773,6 @@ io.sockets.on('connection', function(socket){
 //  console.log('listening on *:' + process.env.PORT);
 //});
 
-//lex.listen([80], [443, 5001], function () {
-//  console.log("ENCRYPT __ALL__ THE DOMAINS!");
-//});
+lex.listen([80], [443, 5001], function () {
+  console.log("ENCRYPT __ALL__ THE DOMAINS!");
+});
