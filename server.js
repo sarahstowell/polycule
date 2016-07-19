@@ -177,7 +177,7 @@ function onAuthorizeSuccess(data, accept){
 
   // The accept-callback still allows us to decide whether to
   // accept the connection or not.
-  accept(null, true);
+  //accept(null, true);
 
   // OR
 
@@ -191,7 +191,7 @@ function onAuthorizeFail(data, message, error, accept){
   console.log('failed connection to socket.io:', message);
 
   // We use this callback to log all of our failed connections.
-  accept(null, false);
+  //accept(null, false);
 
   // OR
 
