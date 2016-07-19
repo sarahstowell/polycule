@@ -3,9 +3,6 @@ var app = express();
 var session = require('express-session');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-//var socketIO = require('socket.io');
-//var LEX = require('letsencrypt-express').testing(); //Note: using staging server url, remove .testing() for production. Using .testing() will overwrite the debug flag with true
-//var https = require('http2');
 var fs = require('fs');// NEEDED??
 var pgp = require("pg-promise")(/*options*/);
 var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
@@ -26,52 +23,9 @@ var helmet = require('helmet'); // Security
 
 app.use(helmet());
 
-// Lets Encrypt ===============================
-/*
-'use strict';
-
-// Change these two lines!
-var DOMAIN = 'polycule.co.uk';
-var EMAIL = 'sarah@polycule.co.uk';
-
-var lex = LEX.create({
-  configDir: require('os').homedir() + '/letsencrypt/etc'
-, approveRegistration: function (hostname, approve) { // leave `null` to disable automatic registration
-    if (hostname === DOMAIN) { // Or check a database or list of allowed domains
-      approve(null, {
-        domains: [DOMAIN]
-      , email: EMAIL
-      , agreeTos: true
-      });
-    }
-  }
-});
-
-app.use(function (req, res) {
-  res.send({ success: true });
-});
-
-
-lex.onRequest = app;
-
-lex.listen([80], [443, 5001], function () {
-  var protocol = ('requestCert' in this) ? 'https': 'http';
-  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
-});
-
-var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
-server.listen(process.env.PORT, function() {
-    console.log("Listening on port: "+process.env.PORT);
-});
-
-var io = socketIO.listen(server);
-*/
-// =================================================
-
-
 app.set('view engine', 'pug');
 
-
+// Set destination and filename for uploaded photos
 var storage = multer.diskStorage({
   destination: './public/photos/original/',
   filename: function (req, file, cb) {
@@ -81,17 +35,14 @@ var storage = multer.diskStorage({
     })
   }
 })
-
 var upload = multer({ storage: storage })
-
-
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
-// For Photo Editing ==================================
+// Function for Photo Editing ==================================
 var profilePicEdit = function(photo, facebookid, x1, y1, x2, y2) {
 console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 	if (facebookid) {
@@ -190,6 +141,8 @@ passport.use('facebook', new FacebookStrategy({
 
 // SESSIONS ==========================================
 app.use(cookieParser());
+
+
 var sessionMiddleware = session({
     name: 'sessionId',
     secret: '1234567890QWERTY',
@@ -197,12 +150,15 @@ var sessionMiddleware = session({
     saveUninitialized: true
     });
     
-
+/*
 io.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res, next);
 });
-
+*/
 app.use(sessionMiddleware);
+
+// Test??
+io.use(sharedsession(sessionMiddleware));
 
 
 app.use(passport.initialize());
@@ -210,6 +166,7 @@ app.use(passport.session());
 
 app.use(express.static('public'));
 
+// SSL Certificate
 app.get('/.well-known/acme-challenge/yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4', function(req, res) {
     res.send('yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4._SsOmzoRu-75ACKIuAgHI5ZuKK2WiLHO6SZgj33xisw');
 });
@@ -218,27 +175,21 @@ app.get('/.well-known/acme-challenge/yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4
 
 // Send login page =====================================
 app.get('/login', function(req, res){
-  res.sendFile(__dirname+'/login.html'); 
+    res.sendFile(__dirname+'/login.html'); 
 });
 
 // Login verification
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}),
-
-    function(req, res){
-        console.log("Username: "+req.body.username+" id: "+ req.session.passport.user);
-        res.redirect('/');
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), function(req, res){
+    console.log("Username: "+req.body.username+" id: "+ req.session.passport.user);
+    res.redirect('/');
 });
-
 
 // route for facebook authentication and login
 // different scopes while logging in
-
 app.get('/login/facebook', 
-  passport.authenticate('facebook', { scope : ['email', 'user_location'] }
+    passport.authenticate('facebook', { scope : ['email', 'user_location'] }
 ));
 
-
- 
 // handle the callback after facebook has authenticated the user
 app.get('/login/facebook/callback',
   passport.authenticate('facebook', {
@@ -246,7 +197,6 @@ app.get('/login/facebook/callback',
     failureRedirect : '/signup/facebook'
   })
 );
-
 
 // Send signup screen
 app.get('/signup', function(req, res) {
@@ -301,8 +251,6 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 	});
 });
 
-
-
 // Facebook Signup
 app.get('/signup/facebook', function(req, res) {
     res.render('facebookSignup', { facebookid: req.session.facebookid, username: req.session.username, displayName: req.session.displayName, email: req.session.email, location: req.session.location, messageemail: "checked", linkemail: "checked", profilePic: req.session.profilePic});
@@ -356,8 +304,6 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 		});
 });
 
-
-
 app.get('/', function (req, res) {
 
    if (req.isAuthenticated()) {
@@ -373,6 +319,8 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+// =======================================================================================
+// Web Sockets
 io.sockets.on('connection', function(socket){
   console.log('a user connected');
    
@@ -791,7 +739,7 @@ io.sockets.on('connection', function(socket){
     });
 
 });
-
+// ======================================================================================
 
 http.listen(process.env.PORT, function(){
   console.log('listening on *:' + process.env.PORT);
