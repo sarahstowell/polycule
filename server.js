@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var session = require('express-session');
-var http = require('http').Server(app);
+//var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');// NEEDED??
 var pgp = require("pg-promise")(/*options*/);
