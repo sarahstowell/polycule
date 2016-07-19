@@ -4,6 +4,7 @@ var session = require('express-session');
 //var http = require('http').Server(app);
 //var io = require('socket.io');//(http);
 var socketIO = require('socket.io');
+var LEX = require('letsencrypt-express');//.testing();
 var https = require('http2');
 var fs = require('fs');// NEEDED??
 var pgp = require("pg-promise")(/*options*/);
@@ -30,7 +31,7 @@ app.use(helmet());
 
 /* Note: using staging server url, remove .testing() for production
 Using .testing() will overwrite the debug flag with true */ 
-var LEX = require('letsencrypt-express');//.testing();
+
 
 // Change these two lines!
 var DOMAIN = 'polycule.co.uk';
@@ -50,7 +51,7 @@ var lex = LEX.create({
 });
 
 var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
-server.listen(process.env.PORT);
+//server.listen(process.env.PORT);
 
 var io = socketIO.listen(server);
 //var server = https.createServer(lex.httpsOptions, LEX.createAcmeResponder(lex, app));
@@ -774,3 +775,5 @@ io.sockets.on('connection', function(socket){
 //lex.listen([80], [443, 5001], function () {
 //  console.log("ENCRYPT __ALL__ THE DOMAINS!");
 //});
+
+server.listen(process.env.PORT);
