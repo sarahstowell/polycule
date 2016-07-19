@@ -159,10 +159,11 @@ io.use(function(socket, next) {
 app.use(sessionMiddleware);
 
 // Test??
-//io.use(sharedsession(sessionMiddleware));
+io.use(sharedsession(sessionMiddleware));
 
 
 //With Socket.io >= 1.0
+/*
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,       // the same middleware you registrer in express
   key:          'sessionId',       // the name of the cookie where express/connect stores its session_id
@@ -174,27 +175,17 @@ io.use(passportSocketIo.authorize({
 
 function onAuthorizeSuccess(data, accept){
   console.log('successful connection to socket.io');
-
-  // The accept-callback still allows us to decide whether to
-  // accept the connection or not.
-  //accept(null, true);
-
+  //accept(null, true);// The accept-callback still allows us to decide whether to accept the connection or not.
   // OR
-
-  // If you use socket.io@1.X the callback looks different
-  accept();
+  accept();// If you use socket.io@1.X the callback looks different
 }
 
 function onAuthorizeFail(data, message, error, accept){
   if(error)
     throw new Error(message);
   console.log('failed connection to socket.io:', message);
-
-  // We use this callback to log all of our failed connections.
-  //accept(null, false);
-
+  //accept(null, false);// We use this callback to log all of our failed connections.
   // OR
-
   // If you use socket.io@1.X the callback looks different
   // If you don't want to accept the connection
   if(error)
@@ -202,6 +193,7 @@ function onAuthorizeFail(data, message, error, accept){
   // this error will be sent to the user as a special error-package
   // see: http://socket.io/docs/client-api/#socket > error-object
 }
+*/
 
 
 
