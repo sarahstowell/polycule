@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var session = require('express-session');
+var pgSession = require('connect-pg-simple')(session);
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');// NEEDED??
@@ -145,6 +146,11 @@ app.use(cookieParser());
 
 
 var sessionMiddleware = session({
+    store: new pgSession({
+        pg : pg-promise,                                  // Use global pg-module 
+        conString : process.env.POSTGRES_CONNECTION_STRING, // Connect using something else than default DATABASE_URL env variable 
+        tableName : 'sessionstore'               // Use another table-name than the default "session" one 
+    }),
     name: 'sessionId',
     secret: '1234567890QWERTY',
     resave: true,
