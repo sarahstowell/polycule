@@ -385,7 +385,8 @@ io.sockets.on('connection', function(socket){
            ]);
        })
 	   .then(function (data) {
-		   io.emit('nodesAndLinks', {
+	       io.sockets.connected[socket.request.user.id].emai('nodesAndLinks', {
+		   //io.emit('nodesAndLinks', {
 			   nodes: data[0],
 			   links: data[1],
 			   emails: data[2],
