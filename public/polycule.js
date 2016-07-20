@@ -64,7 +64,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     socket.on ('callToUpdateLinks' function() {
         socket.emit('linksRequest');
-    }
+    });
     
     // Update links 
     socket.on('linksUpdate', function(linksUpdate) {
