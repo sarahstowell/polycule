@@ -430,11 +430,13 @@ io.sockets.on('connection', function(socket){
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	}
 	
-	function updateEmails() {  
+	//function updateEmails() {  
+	socket.on('emailRequest', function() {
 	  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.user.id+" AND delrecip = 0) OR (sender = "+socket.request.user.id+" AND delsender = 0) ORDER BY id", [true]).then(function(emailUpdate) {
 			socket.emit('emailUpdate', emailUpdate);
 		}).catch(function (error) {  console.log("ERROR:", error); });
-	}
+	});
+	//}
 	
 	/*
 	function blankNodes() {
@@ -462,7 +464,8 @@ io.sockets.on('connection', function(socket){
                 
                 // Emit updated email data
                 if (socket.request.user.id == email[0].recip || socket.request.user.id == email[0].sender) {
-                    updateEmails();
+                    //updateEmails();
+                    io.sockets.emit('callToUpdateEmail');
                 }
 
             })
@@ -481,12 +484,11 @@ io.sockets.on('connection', function(socket){
   	    db.query("UPDATE emails SET read = 1 WHERE recip = "+recip+" AND sender = "+sender+" returning id, recip, sender")
   	      	.then(function (updatedEmail) {
                 console.log("Email updated as read");
-                
                 // Emit updated email data
                 if (socket.request.user.id == updatedEmail[0].recip || socket.request.user.id == updatedEmail[0].sender) {
-                    updateEmails();
+                    //updateEmails();
+                    io.sockets.emit('callToUpdateEmail');
                 }
-
             })
             .catch(function (error) {
                  console.log(error);
@@ -507,7 +509,8 @@ io.sockets.on('connection', function(socket){
 							console.log("Email set deleted by sender");
 							
 							if (socket.request.user.id === user1 || socket.request.user.id === user2) {
-							    updateEmails();
+							    //updateEmails();
+							    io.sockets.emit('callToUpdateEmail');
 							}
 							
 						})

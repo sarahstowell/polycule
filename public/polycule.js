@@ -31,6 +31,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var nodes = dataPackage.nodes;
 	var links = dataPackage.links;
 	
+	socket.on('callToUpdateEmail', function() {
+	    socket.emit('emailRequest');
+	});
+	
 	socket.on('emailUpdate', function(emailUpdate) { 
 	    emails = emailUpdate; 
 	    checkEmails();
