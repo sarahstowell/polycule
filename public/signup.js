@@ -164,13 +164,13 @@ var validateForm = function(formtype) {
 		d3.select("#displayName").style("border", "1px solid red");
 		return false;
 		}
-	else if (!document.getElementById("password").value && formtype === 2) {
+	else if (formtype === 2 && !document.getElementById("password").value) {
 		d3.select("#errorMessage").text("Please enter a password");
 		d3.select("#password").style("border", "1px solid red");
 		d3.select("#password2").style("border", "1px solid red");
 		return false;
 		}
-	else if (document.getElementById("password").value !== document.getElementById("password2").value && formtype === 2) {
+	else if (formtype === 2 && document.getElementById("password").value !== document.getElementById("password2").value) {
 		d3.select("#errorMessage").text("Passwords do not match");
 		d3.select("#password").style("border", "1px solid red");
 		d3.select("#password2").style("border", "1px solid red");
