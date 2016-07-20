@@ -594,15 +594,16 @@ io.sockets.on('connection', function(socket){
   	
   	    console.log("Node delete received");
   	    
+  	    var deleteUser = socket.request.user.id;
   	    req.logout();
   	
-  	    db.query("DELETE FROM links WHERE sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id)
+  	    db.query("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser)
   	        .then(function () {
 
-				db.query("DELETE from nodes WHERE id = "+socket.request.user.id)
+				db.query("DELETE from nodes WHERE id = $1", deleteUser)
 					.then(function () {
 
-						db.query("DELETE from settings WHERE id = "+socket.request.user.id)
+						db.query("DELETE from settings WHERE id = $1", deleteUser)
 							.then(function () {
                                 console.log("Member deleted");
                                 //updateNodesLinks();
