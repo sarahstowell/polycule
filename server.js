@@ -414,33 +414,22 @@ io.sockets.on('connection', function(socket){
 	
 	//function updateNodesLinks() {
 	socket.on('nodesLinksRequest', function() {
-	
-	  db.task(function (t) {
-           return t.batch([
-               t.any("SELECT * FROM nodes ORDER BY id"),
-               t.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = $1 OR targetid = $1 ORDER BY id", socket.request.user.id),
-           ]);
-       })
-	   .then(function (data) {
-	       socket.emit('nodesLinksUpdate', {
-			   nodes: data[0],
-			   links: data[1],
-		   });
-	   })
-	   .catch(function (error) {
-		   console.log("ERROR:", error);
-	   });
-	
-	/*
-	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
-		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
-				var nodesLinksUpdate = {"nodes": nodes, "links": links};
-				socket.emit('nodesLinksUpdate', nodesLinksUpdate);
-			}).catch(function (error) {  console.log("ERROR:", error); });
-		}).catch(function (error) {  console.log("ERROR:", error); });
-	*/
+        db.task(function (t) {
+            return t.batch([
+                t.any("SELECT * FROM nodes ORDER BY id"),
+                t.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = $1 OR targetid = $1 ORDER BY id", socket.request.user.id),
+            ]);
+        })
+	    .then(function (data) {
+	        socket.emit('nodesLinksUpdate', {
+			    nodes: data[0],
+			    links: data[1],
+		    });
+	    })
+	    .catch(function (error) {
+		    console.log("ERROR:", error);
+	    });
 	});
-	//}
 	
 	function updateSettings() {
 		db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.user.id, [true]).then(function(settings) { 
@@ -604,6 +593,8 @@ io.sockets.on('connection', function(socket){
   	socket.on("nodeDelete", function() {
   	
   	    console.log("Node delete received");
+  	    
+  	    req.logout();
   	
   	    db.query("DELETE FROM links WHERE sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id)
   	        .then(function () {

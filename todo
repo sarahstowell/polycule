@@ -4,6 +4,7 @@ High Priority:
 	!!! Get SSL Certificate working for polycule.co.uk
 	!!! Safari animation issue
 	!!! Chrome layout issue
+	!!! Logout issue
 	Template main index page and take api key out
 	Should google API key be shown in browser of signup forms?
 
