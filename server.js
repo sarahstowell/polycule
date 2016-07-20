@@ -364,6 +364,40 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+
+app.get('/delete', function(req, res){
+    
+    console.log(req.session.passport.user);
+	//var deleteUser = req.session.user;
+	
+	req.logout();
+    res.redirect('/');
+
+/*
+	db.query("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser)
+		.then(function () {
+			db.query("DELETE from nodes WHERE id = $1", deleteUser)
+				.then(function () {
+					db.query("DELETE from settings WHERE id = $1", deleteUser)
+						.then(function () {
+							console.log("Member deleted");
+							io.sockets.emit('callToUpdateNodesLinks');
+							// REMOVE ANY FLOATING NON-USER NODES
+						})
+						.catch(function (error) {
+							 console.log(error);
+						});
+				})
+				.catch(function (error) {
+					 console.log(error);
+				});
+		})
+		.catch(function (error) {
+			 console.log(error);
+		});
+		*/
+});
+
 // =======================================================================================
 // Web Sockets
 io.sockets.on('connection', function(socket){
@@ -593,6 +627,7 @@ io.sockets.on('connection', function(socket){
   	socket.on("nodeDelete", function() {
   	
   	    console.log("Node delete received");
+  	    /*
   	    
   	    var deleteUser = socket.request.user.id;
   	
@@ -617,6 +652,7 @@ io.sockets.on('connection', function(socket){
             .catch(function (error) {
                  console.log(error);
             });
+            */
   	});
 
   	
