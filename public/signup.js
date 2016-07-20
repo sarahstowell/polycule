@@ -149,7 +149,7 @@ function photoSelect() {
 }
 
 // Signup form validation
-var validateForm = function() {
+var validateForm = function(formtype) {
     
 	d3.select(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
@@ -164,13 +164,13 @@ var validateForm = function() {
 		d3.select("#displayName").style("border", "1px solid red");
 		return false;
 		}
-	else if (!document.getElementById("password").value) {
+	else if (!document.getElementById("password").value && formtype === 2) {
 		d3.select("#errorMessage").text("Please enter a password");
 		d3.select("#password").style("border", "1px solid red");
 		d3.select("#password2").style("border", "1px solid red");
 		return false;
 		}
-	else if (document.getElementById("password").value !== document.getElementById("password2").value) {
+	else if (document.getElementById("password").value !== document.getElementById("password2").value && formtype === 2) {
 		d3.select("#errorMessage").text("Passwords do not match");
 		d3.select("#password").style("border", "1px solid red");
 		d3.select("#password2").style("border", "1px solid red");

@@ -10,7 +10,7 @@ html
 			h1 polycule
 			h2 New user sign-up
 			p(id="errorMessage")=error
-			form(name="signup" action="/signup/facebook" method="post" encType="multipart/form-data" onsubmit="return validateFormFacebook();")
+			form(name="signup" action="/signup/facebook" method="post" encType="multipart/form-data" onsubmit="return validateForm(1);")
 				table
 					tr
 						td
