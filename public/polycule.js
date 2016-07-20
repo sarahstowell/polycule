@@ -61,13 +61,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
     };
     
-
-    
-    
     // Collect unconfirmed links which are not requested by current user, for link request folder
     var linkRequests = links.filter(function(d) { if (d.confirmed === 0 && d.requestor !== loggedin) { return true; } else { return false; }});
-        // Highlight button red if there are link requests
-        if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  
+    // Highlight button red if there are link requests
+    if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  
     
     socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
@@ -78,6 +75,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    links = linksUpdate;
 	    var linkRequests = links.filter(function(d) { if (d.confirmed === 0 && d.requestor !== loggedin) { return true; } else { return false; }});
         // Highlight button red if there are link requests
+        window.alert(linkRequests);
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  else { d3.select("#linkButton").attr("fill", "black"); }
 	    restart();
 	});
@@ -993,15 +991,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		        .attr("class", "standardButton")
 		        .on("click", function(d, i) { 
 		            
-			        //linkRequests.splice(i, 1); // Add link to main link dataset
-			        
-			        //restart();
+			        linkRequests.splice(i, 1); // Delete link from link requests
+			        if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			        
 			        // Send link confirmation to server
 			        socket.emit('linkConfirm', d.id);
-			
-					// Check for link requests
-			        //if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			
 			        openLinkRequests();
 		
@@ -1012,13 +1006,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		        .attr("id", "denyButton")
 		        .attr("class", "standardButton")
 		        .on("click", function(d, i) {
-		
-			        //links.splice([arrayObjectIndexOf(links, d.id, "id")], 1); // Delete link from dataset
-			
-			        restart();
-			
 			        linkRequests.splice(i, 1); // Delete Link for link requests
-			
 			        if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
 			
 					// Send link delete to server
