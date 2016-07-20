@@ -403,7 +403,7 @@ io.sockets.on('connection', function(socket){
         
   	function updateLinks() {
   	
-  	io.sockets..emit("linksUpdate", function(socket) {
+  	io.sockets.emit("linksUpdate", function(socket) {
 		db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 		    //client.emit('linksUpdate', links);
 		    //console.log("Updated link data sent");	
