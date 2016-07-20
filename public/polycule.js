@@ -75,7 +75,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    links = linksUpdate;
 	    var linkRequests = links.filter(function(d) { if (d.confirmed === 0 && d.requestor !== loggedin) { return true; } else { return false; }});
         // Highlight button red if there are link requests
-        window.alert(linkRequests);
+        window.alert(JSON.stringify(linkRequests));
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  else { d3.select("#linkButton").attr("fill", "black"); }
 	    restart();
 	});
