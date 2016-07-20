@@ -76,12 +76,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Update links 
     socket.on('linksUpdate', function(linksUpdate) {
 	    links = linksUpdate;
-	        var linkRequests = links.filter(function(d) { if (d.confirmed === 0 && d.requestor !== loggedin) { return true; } else { return false; }});
+	    var linkRequests = links.filter(function(d) { if (d.confirmed === 0 && d.requestor !== loggedin) { return true; } else { return false; }});
         // Highlight button red if there are link requests
-        if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  
-	    window.alert(loggedin);
-	    window.alert("Links: "+JSON.stringify(links));
-	    window.alert("Requests: "+JSON.stringify(linkRequests));
+        if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  else { d3.select("#linkButton").attr("fill", "black"); }
 	    restart();
 	});
 	
@@ -996,9 +993,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		        .attr("class", "standardButton")
 		        .on("click", function(d, i) { 
 		            
-					// Update link data locally
-			        //links[arrayObjectIndexOf(links, d.id, "id")].confirmed = 1;
-			        linkRequests.splice(i, 1); // Add link to main link dataset
+			        //linkRequests.splice(i, 1); // Add link to main link dataset
 			        
 			        //restart();
 			        
@@ -1006,7 +1001,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			        socket.emit('linkConfirm', d.id);
 			
 					// Check for link requests
-			        if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
+			        //if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			
 			        openLinkRequests();
 		
