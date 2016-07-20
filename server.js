@@ -399,7 +399,6 @@ io.sockets.on('connection', function(socket){
   	
   	
   	socket.on('linksRequest', function() {
-  	
   	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 			socket.emit('linksUpdate', links);
 			console.log("Updated link data sent");		
@@ -407,6 +406,7 @@ io.sockets.on('connection', function(socket){
   	
   	});
         
+     /*   
      function updateLinks() {
   	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 			io.emit('linksUpdate', links);
@@ -414,6 +414,7 @@ io.sockets.on('connection', function(socket){
 	    }).catch(function (error) {  console.log("ERROR:", error); });
 
 	}
+	*/
 	
 	function updateNodes() {
   	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
@@ -530,78 +531,55 @@ io.sockets.on('connection', function(socket){
   	
   	// Link Confirmed
   	socket.on("linkConfirm", function(id) {
-  	
   	    console.log("Link confirmation received");
-  	
   	    // Update database
   	    db.query("UPDATE links SET confirmed = 1 WHERE id = "+id)
   	      	.then(function () {
                 console.log("Link confirmed");
-                updateLinks(); // Transmit updated data
+				io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
+
             })
             .catch(function (error) {
                  console.log(error);
             });
-  	
   	});
   	
   	// Link Deleted / Confirmation denied
 	socket.on("linkDelete", function(id) {
-  	
   	    console.log("Link delete received");
-  	    
-  	    //var linkSource = ???
-  	
   	    // Update database
   	    db.query("DELETE from links WHERE id = "+id)
   	      	.then(function () {
                 console.log("Link deleted");
-                
                 // TO BE ADDED - Delete group 0 nodes with no links
-                
-                
-                updateLinks();  // Transmit updated data
-                
+                io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
             })
             .catch(function (error) {
                  console.log(error);
             });
-            
   	});
   	
   	// Link added
   	socket.on("newLink", function(newLink) {
-  	
   	    console.log("New link received");
-  	
   	    // Update database
   	    db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed", newLink)
-  	      	.then(function (id) {
-                console.log("New link added to database. Id: "+id);
-                //if (id[0].confirmed === 1) {
-                    io.sockets.emit('callToUpdateLinks');
-                    //updateLinks(); // 
-                //} else if (id[0].sourceid === socket.request.user.id || id[0].targetid === socket.request.user.id) {
-                //    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
-			    //        socket.emit('linksUpdate', links);
-			    //        console.log("Updated link data sent");		
-				//    }).catch(function (error) {  console.log("ERROR:", error); });
-				//}
+  	    .then(function (id) {
+            console.log("New link added to database. Id: "+id);
+            io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
 		})
 		.catch(function (error) {
 			 console.log(error);
 		});
-  	
   	});
   	
   	// Link details updated
   	socket.on('linkEdit', function(linkEdits) {
-  	
   	  // Update database
   	    db.query('UPDATE links SET (startmonth, startyear) = (${startmonth}, ${startyear}) WHERE id = ${id}', linkEdits)
   	      	.then(function () {
                 console.log("Link updated");
-                updateLinks();
+                io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
             })
             .catch(function (error) {
                  console.log(error);
