@@ -91,7 +91,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	socket.on('nodesLinksUpdate', function(nodesLinksUpdate) {
 		fixedid = nodes.filter(function(d) { if (d.fixed === 1) { return true; } else { return false; }}).id;
 		nodesUpdate = nodesLinksUpdate.nodes;
-	    nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1;
+	    if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
 	    nodes = nodesUpdate;
 	    
 	    links = nodesLinksUpdate.links;
