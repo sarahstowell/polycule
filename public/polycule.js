@@ -288,7 +288,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    scalea=d3.transform(container.attr("transform")).scale;
             // move temporary line
             
-            sidepanel.html("("+JSON.stringify(translatea)+", "+JSON.stringify(scalea));
+            sidepanel.html(JSON.stringify(d3.mouse(this)));
             
 		    active_line					
 			    .attr("x2", (d3.mouse(this)[0]-translatea[0])/scalea[0])
