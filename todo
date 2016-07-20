@@ -1,13 +1,12 @@
 High Priority:
     !!! Setup S3
-	!!! Update profile photo (ajax?) HIGH PRIORITY
+	!!! Update profile photo (ajax?)
 	!!! Get SSL Certificate working for polycule.co.uk
 	!!! Safari animation issue
 	!!! Chrome layout issue
 	!!! Logout issue
 	Template main index page and take api key out
 	Should google API key be shown in browser of signup forms?
-	Fix issue on signup validation red outlines
 
 Medium Priority:	
     

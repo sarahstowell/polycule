@@ -437,21 +437,27 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			        .attr("id", "emailInviteButton")
 			        .attr("class", "standardButton")
 			        .on("click", function() { 
-		
-				        nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
+			        
+			            var inviteEmail = document.getElementById("emailInviteEdit").value;
+			            
+			            if (!inviteEmail || inviteEmail.indexOf("@")<1 || inviteEmail.lastIndexOf(".")<inviteEmail.indexOf("@")+2 || inviteEmail.lastIndexOf(".")+2>=inviteEmail)
+		                {
+		                    d3.select("#emailInviteEdit").style("border", "1px solid red");
+		                } else {
+				            nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
 				        
-				        socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value});	
-		
-		
-				        sidepanel.html("");
+				            socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value});	
+		                    
+				            sidepanel.html("");
 
-				        sidepanel.append("h2")
-					        .text(displayNodeData.name);
+				            sidepanel.append("h2")
+					            .text(displayNodeData.name);
 				
-				        sidepanel.append("p")
-					        .text(displayNodeData.name+" has been invited to join Polycule")
-					        .attr("id", "invitedText");
-				
+				            sidepanel.append("p")
+					            .text(displayNodeData.name+" has been invited to join Polycule")
+					            .attr("id", "invitedText");
+					    }
+
 			        });
 	
 		    } else if (displayNodeData.invited === 1) {

@@ -164,6 +164,16 @@ var validateForm = function(formtype) {
 		d3.select("#displayName").style("border", "1px solid red");
 		return false;
 		}
+	else if (!document.getElementById("email").value) {
+		d3.select("#errorMessage").text("Please enter an email address");
+		d3.select("#email").style("border", "1px solid red");
+		return false;
+		}
+	else if (document.getElementById("email").value.indexOf("@")<1 || document.getElementById("email").value.lastIndexOf(".")<document.getElementById("email").value.indexOf("@")+2 || document.getElementById("email").value.lastIndexOf(".")+2>=document.getElementById("email").value.length) {
+		d3.select("#errorMessage").text("Please enter a valid email address");
+		d3.select("#email").style("border", "1px solid red");
+		return false;
+    }
 	else if (formtype === 2 && !document.getElementById("password").value) {
 		d3.select("#errorMessage").text("Please enter a password");
 		d3.select("#password").style("border", "1px solid red");
@@ -176,16 +186,6 @@ var validateForm = function(formtype) {
 		d3.select("#password2").style("border", "1px solid red");
 		return false;
 		}
-	else if (!document.getElementById("email").value) {
-		d3.select("#errorMessage").text("Please enter an email address");
-		d3.select("#email").style("border", "1px solid red");
-		return false;
-		}
-	else if (document.getElementById("email").value.indexOf("@")<1 || document.getElementById("email").value.lastIndexOf(".")<document.getElementById("email").value.indexOf("@")+2 || document.getElementById("email").value.lastIndexOf(".")+2>=document.getElementById("email").value.length) {
-		d3.select("#errorMessage").text("Please enter a valid email address");
-		d3.select("#email").style("border", "1px solid red");
-		return false;
-    }
     else if (!document.getElementById("location").value) {
 		d3.select("#errorMessage").text("Please enter a town or city");
 		d3.select("#location").style("border", "1px solid red");
