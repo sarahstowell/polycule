@@ -181,6 +181,11 @@ var validateForm = function() {
 		d3.select("#email").style("border", "1px solid red");
 		return false;
 		}
+	else if (document.getElementById("email").value.indexOf("@")<1 || document.getElementById("email").value.lastIndexOf(".")<document.getElementById("email").value.indexOf("@")+2 || document.getElementById("email").value.lastIndexOf(".")+2>=document.getElementById("email").value.length) {
+		d3.select("#errorMessage").text("Please enter a valid email address");
+		d3.select("#email").style("border", "1px solid red");
+		return false;
+    }
     else if (!document.getElementById("location").value) {
 		d3.select("#errorMessage").text("Please enter a town or city");
 		d3.select("#location").style("border", "1px solid red");
