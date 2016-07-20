@@ -405,7 +405,7 @@ io.sockets.on('connection', function(socket){
 			console.log("Updated link data sent");		
 	    }).catch(function (error) {  console.log("ERROR:", error); });
   	
-  	}
+  	});
         
      function updateLinks() {
   	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
