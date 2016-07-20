@@ -371,7 +371,7 @@ io.sockets.on('connection', function(socket){
   console.log('a user connected: ');
   console.log(JSON.stringify(socket.request.user.id));
   console.log('session: ');
-  console.log(JSON.stringify(socket.request.session));
+  console.log(JSON.stringify(socket.id));
    
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
