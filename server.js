@@ -387,7 +387,7 @@ io.sockets.on('connection', function(socket){
            ]);
        })
 	   .then(function (data) {
-	       io.to(socket.id).emit('nodesAndLinks', {
+	       socket.emit('nodesAndLinks', {
 		   //io.emit('nodesAndLinks', {
 			   nodes: data[0],
 			   links: data[1],

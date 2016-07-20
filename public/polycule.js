@@ -1409,7 +1409,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						     settingsError.text("Saving...");
 						     
 						     socket.on('passwordUpdated', function() {
-						        window.alert("Password updated");
 						        openSettings();
 						     });
 						     
