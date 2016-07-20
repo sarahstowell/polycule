@@ -61,11 +61,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
     };
     
+    getLinkRequests();
+    
+    /*
     // Collect unconfirmed links which are not requested by current user, for link request folder
     var linkRequests = links.filter(function(d) { if (d.confirmed === 0 && d.requestor !== loggedin) { return true; } else { return false; }});
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  
-    
+    */
     socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
     });
