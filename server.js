@@ -299,7 +299,7 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
 // Facebook Signup
 app.get('/signup/facebook', function(req, res) {
-    res.render('facebookSignup', { facebookid: req.session.facebookid, username: req.session.username, displayName: req.session.displayName, email: req.session.email, location: req.session.location, messageemail: "checked", linkemail: "checked", profilePic: req.session.profilePic});
+    res.render('facebookSignup', { facebookid: req.session.facebookid, username: req.session.username, displayName: req.session.displayName, email: req.session.email, /*location: req.session.location,*/ messageemail: "checked", linkemail: "checked", profilePic: req.session.profilePic});
 });
 
 // Process facebook signup request
