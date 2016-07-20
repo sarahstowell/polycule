@@ -429,7 +429,7 @@ io.sockets.on('connection', function(socket){
 	function updateSettings() {
 		db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.user.id, [true]).then(function(settings) { 
 
-			io.to(socket.id).emit('settingsUpdate', settings);
+			socket.emit('settingsUpdate', settings);
 				
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	}
@@ -438,7 +438,7 @@ io.sockets.on('connection', function(socket){
 	  
 	  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.user.id+" AND delrecip = 0) OR (sender = "+socket.request.user.id+" AND delsender = 0) ORDER BY id", [true]).then(function(emailUpdate) { 
 
-			io.to(socket.id).emit('emailUpdate', emailUpdate);
+			socket.emit('emailUpdate', emailUpdate);
 	
 		}).catch(function (error) {  console.log("ERROR:", error); });
 		
@@ -579,13 +579,18 @@ io.sockets.on('connection', function(socket){
   	    db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed", newLink)
   	      	.then(function (id) {
                 console.log("New link added to database. Id: "+id);
-                if (id[0].confirmed === 1 || id[0].sourceid === socket.request.user.id || id[0].targetid === socket.request.user.id) {
-                    updateLinks(); // Transmit updated data
-                }
-            })
-            .catch(function (error) {
-                 console.log(error);
-            });
+                if (id[0].confirmed === 1) {
+                    updateLinks(); // 
+                } else if (id[0].sourceid === socket.request.user.id || id[0].targetid === socket.request.user.id) {
+                    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
+			            socket.emit('linksUpdate', links);
+			            console.log("Updated link data sent");		
+				    }).catch(function (error) {  console.log("ERROR:", error); });
+				}
+		})
+		.catch(function (error) {
+			 console.log(error);
+		});
   	
   	});
   	
