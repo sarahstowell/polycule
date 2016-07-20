@@ -284,10 +284,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    //nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=1; // Hold selected node in place
 		
 		    // Undo current zoom level
-		    window.alert("Mouse dragging...");
 		    translatea=d3.transform(container.attr("transform")).translate;
 		    scalea=d3.transform(container.attr("transform")).scale;
             // move temporary line
+            
+            sidepanel.html("("+JSON.stringify(translatea)+", "+JSON.stringify(scalea));
+            
 		    active_line					
 			    .attr("x2", (d3.mouse(this)[0]-translatea[0])/scalea[0])
 			    .attr("y2", (d3.mouse(this)[1]-translatea[1])/scalea[1]);
