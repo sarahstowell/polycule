@@ -1,11 +1,9 @@
 High Priority:
-    !!! Sort out sockets problem!!!
-    !!! Look at link requests issues
-    !!! Get location field working on facebook signup form
 	!!! Update profile photo (ajax?) HIGH PRIORITY
 	!!! Get SSL Certificate working for polycule.co.uk
 	!!! Safari animation issue
 	Template main index page and take api key out
+	Should google API key be shown in browser of signup forms?
 
 Medium Priority:	
     
