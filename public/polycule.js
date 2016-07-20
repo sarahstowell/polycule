@@ -74,6 +74,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     socket.on('linksUpdate', function(linksUpdate) {
 	    links = linksUpdate;
 	    getLinkRequests();
+	    window.alert(loggedin);
 	    window.alert("Links: "+JSON.stringify(links));
 	    window.alert("Requests: "+JSON.stringify(linkRequests));
 	    restart();
