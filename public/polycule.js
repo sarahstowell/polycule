@@ -62,7 +62,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  
     
-    socket.on('callToUpdateLinks' function() {
+    socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
     });
     
