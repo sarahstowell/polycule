@@ -55,16 +55,18 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var getLinkRequests = function() {
 
         // Collect unconfirmed links which are not requested by current user, for link request folder
-        var linkRequests = links.filter(function(d) { if (d.confirmed === 0 && d.requestor !== loggedin) { return true; } else { return false; }});
+        linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  
         
     };
     
+    getLinkRequests();
+    
     // Collect unconfirmed links which are not requested by current user, for link request folder
-    var linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
+    //var linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
     // Highlight button red if there are link requests
-    if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  
+    //if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  
     
     socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
@@ -73,9 +75,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Update links 
     socket.on('linksUpdate', function(linksUpdate) {
 	    links = linksUpdate;
-	    linkRequests = links.filter(function(d) { if (d.confirmed === 0 && d.requestor !== loggedin) { return true; } else { return false; }});
+	    getLinkRequests();
+	    //linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
         // Highlight button red if there are link requests
-        if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  else { d3.select("#linkButton").attr("fill", "black"); }
+        //if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); }  else { d3.select("#linkButton").attr("fill", "black"); }
 	    restart();
 	});
 	
