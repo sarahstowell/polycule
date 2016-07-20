@@ -408,7 +408,7 @@ io.sockets.on('connection', function(socket){
   	
 	socket.on('nodesRequest', function() {
   	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
-			io.emit('nodesUpdate', nodes);
+			socket.emit('nodesUpdate', nodes);
 			console.log("Updated node data sent");		
 	    }).catch(function (error) {  console.log("ERROR:", error); });
 	});
@@ -418,7 +418,7 @@ io.sockets.on('connection', function(socket){
 	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
 		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 				var nodesLinksUpdate = {"nodes": nodes, "links": links};
-				io.emit('nodesLinksUpdate', nodesLinksUpdate);
+				socket.emit('nodesLinksUpdate', nodesLinksUpdate);
 			}).catch(function (error) {  console.log("ERROR:", error); });
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	});
