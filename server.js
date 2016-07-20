@@ -598,20 +598,13 @@ io.sockets.on('connection', function(socket){
   	
   	    db.query("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser)
   	        .then(function () {
-
 				db.query("DELETE from nodes WHERE id = $1", deleteUser)
 					.then(function () {
-
 						db.query("DELETE from settings WHERE id = $1", deleteUser)
 							.then(function () {
                                 console.log("Member deleted");
-                                //updateNodesLinks();
-                                
-                                socket.emit('accountDeleted');
                                 io.sockets.emit('callToUpdateNodesLinks');
-                                //req.logout();
                                 // REMOVE ANY FLOATING NON-USER NODES
-
 							})
 							.catch(function (error) {
 								 console.log(error);
