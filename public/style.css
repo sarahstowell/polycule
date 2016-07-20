@@ -219,6 +219,10 @@ h2 {
     left: 135px;
 }
 
+#emailInviteError {
+    color: red;
+}
+
 #emailInviteEdit {
     border: 1px solid gray;
     border-radius: 5px;

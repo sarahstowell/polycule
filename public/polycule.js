@@ -426,6 +426,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 				var centerDiv = sidepanel.append("div")
 				    .attr("class", "centerDiv");
+				    
+				centerDiv.append("p")
+				    .attr("id", "emailInviteError");
 		
                centerDiv.append("input")
                     .attr("id", "emailInviteEdit")
@@ -443,6 +446,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			            if (!inviteEmail || inviteEmail.indexOf("@")<1 || inviteEmail.lastIndexOf(".")<inviteEmail.indexOf("@")+2 || inviteEmail.lastIndexOf(".")+2>=inviteEmail)
 		                {
 		                    d3.select("#emailInviteEdit").style("border", "1px solid red");
+		                    d3.select("#emailInviteError").text("Please enter a valid email address");
 		                } else {
 				            nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
 				        
