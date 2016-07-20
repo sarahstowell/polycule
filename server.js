@@ -429,7 +429,7 @@ io.sockets.on('connection', function(socket){
 	function updateSettings() {
 		db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.user.id, [true]).then(function(settings) { 
 
-			io.emit('settingsUpdate', settings);
+			io.to(socket.id).emit('settingsUpdate', settings);
 				
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	}
@@ -438,7 +438,7 @@ io.sockets.on('connection', function(socket){
 	  
 	  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.user.id+" AND delrecip = 0) OR (sender = "+socket.request.user.id+" AND delsender = 0) ORDER BY id", [true]).then(function(emailUpdate) { 
 
-			io.emit('emailUpdate', emailUpdate);
+			io.to(socket.id).emit('emailUpdate', emailUpdate);
 	
 		}).catch(function (error) {  console.log("ERROR:", error); });
 		
@@ -738,7 +738,7 @@ io.sockets.on('connection', function(socket){
                             db.query("UPDATE settings SET (hash) = (${hash}) WHERE id=${id} returning id", {"hash":hash, "id":passwords.id})
                                 .then(function(user) {
                                     console.log("password updated");
-                                  	socket.emit('passwordUpdated');    
+                                  	socket.emit('passwordUpdated'); 
                                 })
                                 .catch(function(err) {
                                     console.log(err);
