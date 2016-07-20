@@ -595,7 +595,8 @@ io.sockets.on('connection', function(socket){
   	    console.log("Node delete received");
   	    
   	    var deleteUser = socket.request.user.id;
-  	    req.logout();
+  	    socket.request.session.passport.logout();
+  	    //req.logout();
   	
   	    db.query("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser)
   	        .then(function () {
