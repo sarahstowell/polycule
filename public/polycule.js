@@ -84,6 +84,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    restart();
 	});
 	
+	socket.on('callToUpdateNodesLinks', function() {
+        socket.emit('nodesLinksRequest');
+    });
+	
 	socket.on('nodesLinksUpdate', function(nodesLinksUpdate) {
 		fixedid = nodes.filter(function(d) { if (d.fixed === 1) { return true; } else { return false; }}).id;
 		nodesUpdate = nodesLinksUpdate.nodes;
@@ -95,11 +99,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 	    restart();
 	});
-	
-	//socket.on('settingsUpdate', function(settingsUpdate) {
-	//    settings = settingsUpdate;	
-	//});
-	
   
     // Setup force layout
     var force = d3.layout.force()

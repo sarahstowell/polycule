@@ -406,25 +406,23 @@ io.sockets.on('connection', function(socket){
   	
   	});
   	
-  	
-	
-	//function updateNodes() {
 	socket.on('nodesRequest', function() {
   	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
 			io.emit('nodesUpdate', nodes);
 			console.log("Updated node data sent");		
 	    }).catch(function (error) {  console.log("ERROR:", error); });
 	});
-	//}
 	
-	function updateNodesLinks() {
+	//function updateNodesLinks() {
+	socket.on('nodesLinksRequest', function() {
 	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
 		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 				var nodesLinksUpdate = {"nodes": nodes, "links": links};
 				io.emit('nodesLinksUpdate', nodesLinksUpdate);
 			}).catch(function (error) {  console.log("ERROR:", error); });
 		}).catch(function (error) {  console.log("ERROR:", error); });
-	}
+	});
+	//}
 	
 	function updateSettings() {
 		db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.user.id, [true]).then(function(settings) { 
@@ -595,7 +593,8 @@ io.sockets.on('connection', function(socket){
 						db.query("DELETE from settings WHERE id = "+socket.request.user.id)
 							.then(function () {
                                 console.log("Member deleted");
-                                updateNodesLinks();
+                                //updateNodesLinks();
+                                io.sockets.emit('callToUpdateNodesLinks');
                                 
                                 // REMOVE ANY FLOATING NON-USER NODES
 
@@ -631,7 +630,8 @@ io.sockets.on('connection', function(socket){
                 db.query("INSERT INTO links (sourceid, targetid, confirmed) VALUES (${sourceid}, ${targetid}, ${confirmed}) returning id", newLink)
   	      	        .then(function (id) {
                         console.log("New link added to database. Id: "+id);
-						updateNodesLinks();
+						//updateNodesLinks();
+						io.sockets.emit('callToUpdateNodesLinks');
                         
                     })
                     .catch(function (error) {
@@ -650,7 +650,6 @@ io.sockets.on('connection', function(socket){
   	  	db.query('UPDATE nodes SET (name, location, description) = (${name}, ${location}, ${description}) WHERE id = ${id}', nodeEdits)
   	      	.then(function () {
                 console.log("Node updated");
-                //updateNodes();
                 io.sockets.emit('callToUpdateNodes');
             })
             .catch(function (error) {
@@ -671,7 +670,6 @@ io.sockets.on('connection', function(socket){
   	      	  	db.query("INSERT INTO invited (id, email) VALUES (${id}, ${email})", node)
   	      	        .then(function () {
                          console.log("Node invite updated");
-                         //updateNodes();
                          io.sockets.emit('callToUpdateNodes');
 					})
 					.catch(function (error) {
@@ -741,7 +739,6 @@ io.sockets.on('connection', function(socket){
   	          	db.query("UPDATE nodes SET (username) = (${username}) WHERE id = ${id} returning *", user[0])
   	                 .then(function(user1) {
   	                     socket.emit('usernameEditOK', user[0]);
-  	                     //updateNodes();
   	                     io.sockets.emit('callToUpdateNodes');
   	                     console.log('Username updated');
   	                 })
