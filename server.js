@@ -477,45 +477,23 @@ io.sockets.on('connection', function(socket){
 			socket.emit('emailUpdate', emailUpdate);
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	});
-	//}
-	
-	/*
-	function blankNodes() {
-	
-		   db.any("SELECT id FROM nodes ORDER BY id", [true]).then(function(nodes) { 
-		       db.any("SELECT id, sourceid, targetid FROM links WHERE confirmed = 1 ORDER BY id", [true]).then(function(links) {
-		       
-		       	     var blankNodes = {"nodes": nodes, "links": links};
-				     io.emit('blankNodes', blankNodes);
-				
-			   }).catch(function (error) {  console.log("ERROR:", error); });
-		   }).catch(function (error) {  console.log("ERROR:", error); });
-		   
-	}
-	*/
+
   	
   	// New email received
   	 socket.on('newEmail', function(newEmail) {
-  	
   	      console.log("Email received");
-  	    
   	      db.query("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail)
 			.then(function(email) {
                 console.log("Email added to database");
-                
                 // Emit updated email data
                 if (socket.request.user.id == email[0].recip || socket.request.user.id == email[0].sender) {
                     //updateEmails();
                     io.sockets.emit('callToUpdateEmail');
                 }
-
             })
             .catch(function (error) {
                 console.log(error);
             });
-  	    
-  	      
-  	
   	});
   	
   	// Email read

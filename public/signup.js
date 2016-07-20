@@ -151,7 +151,7 @@ function photoSelect() {
 // Signup form validation
 var validateForm = function(formtype) {
     
-	d3.select(".inputBox").style("border", "1px solid gray");
+	d3.selectAll(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
 	
 	if (!document.getElementById("username").value) {
@@ -187,35 +187,6 @@ var validateForm = function(formtype) {
 		return false;
     }
     else if (!document.getElementById("location").value) {
-		d3.select("#errorMessage").text("Please enter a town or city");
-		d3.select("#location").style("border", "1px solid red");
-		return false;
-		}
-	else { return true; }
-};
-
-// Facebook Signup Form Validation
-
-var validateFormFacebook = function() {
-	d3.select(".inputBox").style("border", "1px solid gray");
-	d3.select("#errorMessage").text("");		
-	if (!document.getElementById("username").value) {
-		d3.select("#errorMessage").text("Please enter a username");
-		d3.select("#username").style("border", "1px solid red");
-		return false;
-		}
-	else if (!document.getElementById("displayName").value) {
-		d3.select("#errorMessage").text("Please enter a display name");
-		d3.select("#displayName").style("border", "1px solid red");
-		return false;
-		}
-	else if (!document.getElementById("email").value) {
-		d3.select("#errorMessage").text("Please enter an email address");
-		d3.select("#email").style("border", "1px solid red");
-		return false;
-		}
-
-	else if (document.getElementById("location").value === null) {
 		d3.select("#errorMessage").text("Please enter a town or city");
 		d3.select("#location").style("border", "1px solid red");
 		return false;

@@ -7,6 +7,7 @@ High Priority:
 	!!! Logout issue
 	Template main index page and take api key out
 	Should google API key be shown in browser of signup forms?
+	Fix issue on signup validation red outlines
 
 Medium Priority:	
     
@@ -15,7 +16,6 @@ Medium Priority:
 		Get photo to populate with pug
 		Validation:
 			Minimum length username/password
-			Email validation client side
 			Further server side checks?
 			Photo type check?
 	Check max length of description field
