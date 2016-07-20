@@ -1,3 +1,7 @@
+// Google maps autocomplete
+var locationInput = document.getElementById('location');
+var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
+
 d3.select("#photoSelect")
 	.on("change", photoSelect);
 
@@ -186,7 +190,7 @@ var validateForm = function() {
 };
 
 // Facebook Signup Form Validation
-/*
+
 var validateFormFacebook = function() {
 	d3.select(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
@@ -213,7 +217,7 @@ var validateFormFacebook = function() {
 		}
 	else { return true; }
 };
-*/
+
 
 // Photo Select
 var photoTypeFacebook = function() {
