@@ -405,23 +405,17 @@ io.sockets.on('connection', function(socket){
 	    }).catch(function (error) {  console.log("ERROR:", error); });
   	
   	});
-        
-     /*   
-     function updateLinks() {
-  	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
-			io.emit('linksUpdate', links);
-			console.log("Updated link data sent");		
-	    }).catch(function (error) {  console.log("ERROR:", error); });
-
-	}
-	*/
+  	
+  	
 	
-	function updateNodes() {
+	//function updateNodes() {
+	socket.on('nodesRequest', function() {
   	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
 			io.emit('nodesUpdate', nodes);
 			console.log("Updated node data sent");		
 	    }).catch(function (error) {  console.log("ERROR:", error); });
-	}
+	});
+	//}
 	
 	function updateNodesLinks() {
 	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
@@ -656,7 +650,8 @@ io.sockets.on('connection', function(socket){
   	  	db.query('UPDATE nodes SET (name, location, description) = (${name}, ${location}, ${description}) WHERE id = ${id}', nodeEdits)
   	      	.then(function () {
                 console.log("Node updated");
-                updateNodes();
+                //updateNodes();
+                io.sockets.emit('callToUpdateNodes');
             })
             .catch(function (error) {
                  console.log(error);
@@ -676,7 +671,8 @@ io.sockets.on('connection', function(socket){
   	      	  	db.query("INSERT INTO invited (id, email) VALUES (${id}, ${email})", node)
   	      	        .then(function () {
                          console.log("Node invite updated");
-                         updateNodes();
+                         //updateNodes();
+                         io.sockets.emit('callToUpdateNodes');
 					})
 					.catch(function (error) {
 						 console.log(error);
@@ -745,7 +741,8 @@ io.sockets.on('connection', function(socket){
   	          	db.query("UPDATE nodes SET (username) = (${username}) WHERE id = ${id} returning *", user[0])
   	                 .then(function(user1) {
   	                     socket.emit('usernameEditOK', user[0]);
-  	                     updateNodes();
+  	                     //updateNodes();
+  	                     io.sockets.emit('callToUpdateNodes');
   	                     console.log('Username updated');
   	                 })
   	                 .catch(function(err) {
