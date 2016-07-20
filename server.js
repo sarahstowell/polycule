@@ -404,7 +404,7 @@ io.sockets.on('connection', function(socket){
   	function updateLinks() {
   	
   	io.sockets.clients.forEach(function(client) {
-  	    console.log(JSON.stringify((client.request.user.id));
+  	    console.log(JSON.stringify(client.request.user.id));
             if (socket != client) {
                 db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 			        client.emit('linksUpdate', links);
