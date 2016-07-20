@@ -367,7 +367,7 @@ app.get('/logout', function(req, res){
 
 app.get('/delete', function(req, res){
     
-    console.log(req.session.passport.user);
+    console.log("User to delete: "+req.session.passport.user);
 	//var deleteUser = req.session.user;
 	
 	req.logout();
