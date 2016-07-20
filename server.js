@@ -368,14 +368,11 @@ app.get('/logout', function(req, res){
 // =======================================================================================
 // Web Sockets
 io.sockets.on('connection', function(socket){
-  console.log('a user connected: ');
-  console.log(JSON.stringify(socket.request.user.id));
-  console.log('session: ');
-  console.log(JSON.stringify(socket.id));
+    console.log('a user connected: '+JSON.stringify(socket.request.user.id);
    
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
-       console.log("Data Request received");
+       console.log("Data request received");
        var userId = parseInt(socket.request.user.id);
        db.task(function (t) {
            
@@ -388,7 +385,6 @@ io.sockets.on('connection', function(socket){
        })
 	   .then(function (data) {
 	       socket.emit('nodesAndLinks', {
-		   //io.emit('nodesAndLinks', {
 			   nodes: data[0],
 			   links: data[1],
 			   emails: data[2],
@@ -412,6 +408,15 @@ io.sockets.on('connection', function(socket){
   	
   	})
   	
+  	
+  	socket.on('callToUpdateLinks', function() {
+  	
+  	  	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
+			io.emit('linksUpdate', links);
+			console.log("Updated link data sent");		
+	    }).catch(function (error) {  console.log("ERROR:", error); });
+  	
+  	}
   	/*io.sockets.clients.forEach(function(client) {
   	    console.log(JSON.stringify(client.request.user.id));
             if (socket != client) {
@@ -430,7 +435,7 @@ io.sockets.on('connection', function(socket){
 			console.log("Updated link data sent");		
 	    }).catch(function (error) {  console.log("ERROR:", error); });
 	    */
-	}
+	//}
 	
 	function updateNodes() {
   	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
@@ -596,7 +601,7 @@ io.sockets.on('connection', function(socket){
   	      	.then(function (id) {
                 console.log("New link added to database. Id: "+id);
                 //if (id[0].confirmed === 1) {
-                    updateLinks(); // 
+                    io.sockets.emit('callToUpdateLinks');//updateLinks(); // 
                 //} else if (id[0].sourceid === socket.request.user.id || id[0].targetid === socket.request.user.id) {
                 //    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 			    //        socket.emit('linksUpdate', links);
