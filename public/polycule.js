@@ -73,6 +73,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    restart();
 	});
 	
+	socket.on('callToUpdateNodes', function() {
+        socket.emit('nodesRequest');
+    });
+	
 	socket.on('nodesUpdate', function(nodesUpdate) {
 	    fixedid = nodes.filter(function(d) { if (d.fixed === 1) { return true; } else { return false; }}).id;
 	    if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
