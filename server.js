@@ -412,7 +412,7 @@ io.sockets.on('connection', function(socket){
   	
   	})
   	
-  	io.sockets.clients.forEach(function(client) {
+  	/*io.sockets.clients.forEach(function(client) {
   	    console.log(JSON.stringify(client.request.user.id));
             if (socket != client) {
                 db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
@@ -422,6 +422,7 @@ io.sockets.on('connection', function(socket){
                 //client.emit('updaterooms', rooms, client.room);
             }
         });
+        */
         
         /*
   	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
