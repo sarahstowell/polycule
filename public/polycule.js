@@ -1458,7 +1458,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.on("click", function() {
 				if (window.confirm("Are you sure you want to delete your account? This action cannot be reversed.")) {
 				    socket.emit('nodeDelete');
-				    window.location = '/logout';
+				    socket.on('accountDeleted', function() {
+				         window.location = '/logout';
+				    });
 				    
 				}
 				

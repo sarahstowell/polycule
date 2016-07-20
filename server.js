@@ -595,8 +595,6 @@ io.sockets.on('connection', function(socket){
   	    console.log("Node delete received");
   	    
   	    var deleteUser = socket.request.user.id;
-  	    socket.request.session.passport.logout();
-  	    //req.logout();
   	
   	    db.query("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser)
   	        .then(function () {
@@ -608,6 +606,8 @@ io.sockets.on('connection', function(socket){
 							.then(function () {
                                 console.log("Member deleted");
                                 //updateNodesLinks();
+                                
+                                socket.emit('accountDeleted');
                                 io.sockets.emit('callToUpdateNodesLinks');
                                 //req.logout();
                                 // REMOVE ANY FLOATING NON-USER NODES
