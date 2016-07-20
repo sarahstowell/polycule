@@ -579,14 +579,14 @@ io.sockets.on('connection', function(socket){
   	    db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed", newLink)
   	      	.then(function (id) {
                 console.log("New link added to database. Id: "+id);
-                if (id[0].confirmed === 1) {
+                //if (id[0].confirmed === 1) {
                     updateLinks(); // 
-                } else if (id[0].sourceid === socket.request.user.id || id[0].targetid === socket.request.user.id) {
-                    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
-			            socket.emit('linksUpdate', links);
-			            console.log("Updated link data sent");		
-				    }).catch(function (error) {  console.log("ERROR:", error); });
-				}
+                //} else if (id[0].sourceid === socket.request.user.id || id[0].targetid === socket.request.user.id) {
+                //    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
+			    //        socket.emit('linksUpdate', links);
+			    //        console.log("Updated link data sent");		
+				//    }).catch(function (error) {  console.log("ERROR:", error); });
+				//}
 		})
 		.catch(function (error) {
 			 console.log(error);
