@@ -221,6 +221,7 @@ h2 {
 
 #emailInviteError {
     color: red;
+    font-size: 12px;
 }
 
 #emailInviteEdit {
