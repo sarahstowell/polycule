@@ -370,6 +370,8 @@ app.get('/logout', function(req, res){
 io.sockets.on('connection', function(socket){
   console.log('a user connected: ');
   console.log(JSON.stringify(socket.request.user.id));
+  console.log('session: ');
+  console.log(JSON.stringify(socket.request.session));
    
    // Initial data request (WORKING)
    socket.on('dataRequest', function() {
