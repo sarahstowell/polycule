@@ -66,6 +66,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     socket.on('linksUpdate', function(linksUpdate) {
 	    links = linksUpdate;
 	    getLinkRequests();
+	    window.alert(JSON.stringify(links));
+	    window.alert(JSON.stringify(linksUpdate));
 	    restart();
 	});
 	

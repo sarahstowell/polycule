@@ -402,10 +402,24 @@ io.sockets.on('connection', function(socket){
     });
         
   	function updateLinks() {
+  	
+  	io.sockets.clients.forEach(function(client) {
+  	    console.log(JSON.stringify((client.request.user.id));
+            if (socket != client) {
+                db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
+			        client.emit('linksUpdate', links);
+			        console.log("Updated link data sent");		
+	            }).catch(function (error) {  console.log("ERROR:", error); });
+                //client.emit('updaterooms', rooms, client.room);
+            }
+        });
+        
+        /*
   	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 			io.emit('linksUpdate', links);
 			console.log("Updated link data sent");		
 	    }).catch(function (error) {  console.log("ERROR:", error); });
+	    */
 	}
 	
 	function updateNodes() {
@@ -418,30 +432,22 @@ io.sockets.on('connection', function(socket){
 	function updateNodesLinks() {
 	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
 		   db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
-		  
 				var nodesLinksUpdate = {"nodes": nodes, "links": links};
 				io.emit('nodesLinksUpdate', nodesLinksUpdate);
-				
 			}).catch(function (error) {  console.log("ERROR:", error); });
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	}
 	
 	function updateSettings() {
 		db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.user.id, [true]).then(function(settings) { 
-
 			socket.emit('settingsUpdate', settings);
-				
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	}
 	
 	function updateEmails() {  
-	  
-	  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.user.id+" AND delrecip = 0) OR (sender = "+socket.request.user.id+" AND delsender = 0) ORDER BY id", [true]).then(function(emailUpdate) { 
-
+	  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.user.id+" AND delrecip = 0) OR (sender = "+socket.request.user.id+" AND delsender = 0) ORDER BY id", [true]).then(function(emailUpdate) {
 			socket.emit('emailUpdate', emailUpdate);
-	
 		}).catch(function (error) {  console.log("ERROR:", error); });
-		
 	}
 	
 	/*
