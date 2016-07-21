@@ -687,7 +687,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .on("mouseup", joinNode);
             
          //node.append("text")
-        node.select("text")
+        node.select("text").remove(); 
+         
+        node.append("text")
             .attr("x", 10)
             .attr("y", 10)
             .text(function(d) { return d.name; });  
