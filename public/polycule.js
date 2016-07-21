@@ -89,13 +89,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        else if (nodesUpdate[i].id > nodes[i].id) 
 	    */
 	    
-	    for (i=0; i<nodesUpdate.length; i++) {
-	        if (arrayObjectIndexOf(nodes, nodesUpdate[i].id !== -1), "id") {
-	            nodesUpdate[i].fixed = nodes[arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id")].fixed;
-	            nodesUpdate[i].x = nodes[arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id")].x;
-	            nodesUpdate[i].y = nodes[arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id")].y;
+		for (i=0; i<nodesUpdate.length; i++) {
+		    i2 = arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id");
+		    if (i2 !== -1) {
+	            nodesUpdate[i].fixed = nodes[i2].fixed;
+	            nodesUpdate[i].x = nodes[i2].x;
+	            nodesUpdate[i].y = nodes[i2].y;
 	        }
-	    }
+	    } 
 	    
 	    
 	    
@@ -114,10 +115,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    //if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
 	    
 		for (i=0; i<nodesUpdate.length; i++) {
-		    if (arrayObjectIndexOf(nodes, nodesUpdate[i].id !== -1), "id") {
-	            nodesUpdate[i].fixed = nodes[arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id")].fixed;
-	            nodesUpdate[i].x = nodes[arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id")].x;
-	             nodesUpdate[i].y = nodes[arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id")].y;
+		    i2 = arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id");
+		    if (i2 !== -1) {
+	            nodesUpdate[i].fixed = nodes[i2].fixed;
+	            nodesUpdate[i].x = nodes[i2].x;
+	            nodesUpdate[i].y = nodes[i2].y;
 	        }
 	    }    
 	    
