@@ -367,13 +367,11 @@ app.get('/logout', function(req, res){
 
 app.get('/delete', function(req, res){
     
-    console.log("Req.session.passport.user: "+req.session.passport.user);
-    console.log("Req.session.user: "+req.session.user);
-	//var deleteUser = req.session.user;
+	var deleteUser = req.session.passport.user;
 
 	req.logout();
     res.redirect('/');
-/*
+
 	db.tx(function (t) {
 			// this = t = transaction protocol context;
 			// this.ctx = transaction config + state context;
