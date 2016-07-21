@@ -20,7 +20,7 @@ var path = require('path');
 var multer = require('multer');
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
-var nodemailer = require('nodemailer'); INSTALL PACKAGE!!
+var nodemailer = require('nodemailer');
 
 app.use(helmet());
 
@@ -39,13 +39,7 @@ var mailOptions = {
     html: '<b>Hello world 🐴</b>' // html body
 };
 
-// send mail with defined transport object
-transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-        return console.log(error);
-    }
-    console.log('Message sent: ' + info.response);
-});
+
 
 
 
@@ -244,7 +238,16 @@ app.get('/.well-known/acme-challenge/yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4
 
 // Send login page =====================================
 app.get('/login', function(req, res){
-    res.sendFile(__dirname+'/login.html'); 
+    res.sendFile(__dirname+'/login.html');
+    
+    // send mail with defined transport object
+transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+});
+     
 });
 
 // Login verification
