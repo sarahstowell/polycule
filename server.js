@@ -28,7 +28,7 @@ app.set('view engine', 'pug');
 
 
 // create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport(process.env.GMAIL'smtps://user%40gmail.com:pass@smtp.gmail.com');
+var transporter = nodemailer.createTransport(process.env.GMAIL);
 
 // setup e-mail data with unicode symbols
 var mailOptions = {
