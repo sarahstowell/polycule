@@ -27,10 +27,8 @@ app.use(helmet());
 app.set('view engine', 'pug');
 
 
-// create reusable transporter object using the default SMTP transport
+// Setup email ---------------------------------------------------------------------------
 var transporter = nodemailer.createTransport(process.env.GMAIL);
-
-// setup e-mail data with unicode symbols
 var mailOptions;
 var mailCreator = function(name, email, from) {
     mailOptions = {
@@ -42,12 +40,7 @@ var mailCreator = function(name, email, from) {
     };
 }
 
-
-
-
-
-
-// Set destination and filename for uploaded photos
+// Set destination and filename for uploaded photos --------------------------------------
 var storage = multer.diskStorage({
   destination: './public/photos/original/',
   filename: function (req, file, cb) {
@@ -58,13 +51,14 @@ var storage = multer.diskStorage({
   }
 })
 var upload = multer({ storage: storage })
+// ---------------------------------------------------------------------------------------
 
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
-// Function for Photo Editing ==================================
+// Function for Photo Editing ------------------------------------------------------------
 var profilePicEdit = function(photo, facebookid, x1, y1, x2, y2) {
 console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 	if (facebookid) {
@@ -86,47 +80,41 @@ console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 };
 
 
-// LOCAL LOGIN STRATEGY ===============================
+// Setup Passport local login strategy ---------------------------------------------------
 passport.use(new LocalStrategy(
-
-  function(username, password, done) {
-
-    return db.one("SELECT id, username, hash FROM settings WHERE username=$1", [username])
-      .then(function(user) {
-		
-		bcrypt.compare(password, user.hash, function(err, comparison) {
-            if (comparison) {
-                return done(null, user);
-            } else {
-                return done(null, false, {message: "Incorrect password"});
-            }
+    function(username, password, done) {
+        return db.one("SELECT id, username, hash FROM settings WHERE username=$1", [username])
+        .then(function(user) {
+		    bcrypt.compare(password, user.hash, function(err, comparison) {
+                if (comparison) {
+                    return done(null, user);
+                } else {
+                    return done(null, false, {message: "Incorrect password"});
+                }
+            });
+        })
+        .catch(function(err) {
+            console.log(err);
+            return done(null, false, {message:'Incorrect username'});
         });
-
-      })
-      .catch(function(err) {
-        console.log(err);
-        return done(null, false, {message:'Incorrect username'});
-      });
 }));
-
 
 passport.serializeUser((user, done)=>{
     done(null, user.id);
-  });
+});
 
 passport.deserializeUser((id, done)=>{
     db.one("SELECT id, username FROM settings WHERE id = $1", [id])
     .then(function(user) {
-      done(null, user);
+        done(null, user);
     })
     .catch(function(err) {
-      console.log(err);
-      done(new Error("User does not exist"));
+        onsole.log(err);
+        done(new Error("User does not exist"));
     })
-  });
- 
- 
-// FACEBOOK LOGIN STRATEGY ===================================== 
+});
+
+// Setup Passport Facebook Login Strategy ------------------------------------------------
 passport.use('facebook', new FacebookStrategy({
 		clientID        : process.env.FACEBOOK_ID,
 		clientSecret    : process.env.FACEBOOK_SECRET,
@@ -146,7 +134,7 @@ passport.use('facebook', new FacebookStrategy({
 				})
 				.catch(function(err) {
 					console.log(err);
-				
+				    // Keep facebook details for signup form
 					req.session.facebookid = profile.id;
 					req.session.displayName = profile.name.givenName;
 					req.session.email = profile.emails[0].value;
@@ -161,13 +149,13 @@ passport.use('facebook', new FacebookStrategy({
       
 
 
-// SESSIONS ==========================================
+// Setup Sessions ------------------------------------------------------------------------
 app.use(cookieParser());
 
+// Setup Postgres session store
 var sessionStore = new pgSession({
-        //pg : pg,                                  // Use global pg-module 
-        conString : process.env.POSTGRES_CONNECTION_STRING, // Connect using something else than default DATABASE_URL env variable 
-        tableName : 'sessionstore'               // Use another table-name than the default "session" one 
+        conString : process.env.POSTGRES_CONNECTION_STRING,
+        tableName : 'sessionstore'
     });
 
 var sessionMiddleware = session({
@@ -178,19 +166,9 @@ var sessionMiddleware = session({
     saveUninitialized: true
     });
     
-/*
-io.use(function(socket, next) {
-    sessionMiddleware(socket.request, socket.request.res, next);
-});
-*/
 app.use(sessionMiddleware);
 
-// Test??
-//io.use(sharedsession(sessionMiddleware));
-
-
-//With Socket.io >= 1.0
-
+// Setup Socket Sessions -----------------------------------------------------------------
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,       // the same middleware you registrer in express
   key:          'sessionId',       // the name of the cookie where express/connect stores its session_id
@@ -220,7 +198,7 @@ function onAuthorizeFail(data, message, error, accept){
   // this error will be sent to the user as a special error-package
   // see: http://socket.io/docs/client-api/#socket > error-object
 }
-
+// ---------------------------------------------------------------------------------------
 
 
 
@@ -232,14 +210,15 @@ app.use(passport.session());
 
 app.use(express.static('public'));
 
-// SSL Certificate
+// SSL Certificate -----------------------------------------------------------------------
 app.get('/.well-known/acme-challenge/yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4', function(req, res) {
     res.send('yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4._SsOmzoRu-75ACKIuAgHI5ZuKK2WiLHO6SZgj33xisw');
 });
 
+// =========================== GET/ POST request Handling ================================
 
 
-// Send login page =====================================
+// Send login page -----------------------------------------------------------------------
 app.get('/login', function(req, res){
     res.sendFile(__dirname+'/login.html');     
 });
@@ -264,12 +243,12 @@ app.get('/login/facebook/callback',
   })
 );
 
-// Send signup screen
+// Send signup screen --------------------------------------------------------------------
 app.get('/signup', function(req, res) {
     res.render('signup', {googlemapsapi: process.env.GOOGLE_MAPS_URL, usernameBorderColor: "border: 1px solid gray", messageemail: "checked", linkemail: "checked"});
 });
 
-// Process signup request
+// Process signup request ----------------------------------------------------------------
 app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
 	if (req.body.photoType === 'custom' && req.file) { 
@@ -318,12 +297,12 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 	});
 });
 
-// Facebook Signup
+// Send Facebook signup  page ------------------------------------------------------------
 app.get('/signup/facebook', function(req, res) {
     res.render('facebookSignup', {googlemapsapi: process.env.GOOGLE_MAPS_URL,  facebookid: req.session.facebookid, username: req.session.username, displayName: req.session.displayName, email: req.session.email, /*location: req.session.location,*/ messageemail: "checked", linkemail: "checked", profilePic: req.session.profilePic});
 });
 
-// Process facebook signup request
+// Process facebook signup request -------------------------------------------------------
 app.post('/signup/facebook', upload.single('profilePic'), function (req, res, next) {
 
 	if (req.body.photoType === 'facebook') {
@@ -411,12 +390,13 @@ app.get('/delete', function(req, res){
 		});
 });
 
-// =======================================================================================
-// Web Sockets
+// ============================= WEB SOCKETS =============================================
+
+// Connection ----------------------------------------------------------------------------
 io.sockets.on('connection', function(socket){
     console.log('a user connected: '+socket.request.user.id);
    
-   // Initial data request (WORKING)
+   // Initial data request ---------------------------------------------------------------
    socket.on('dataRequest', function() {
        console.log("Data request received");
        var userId = parseInt(socket.request.user.id);
@@ -443,7 +423,7 @@ io.sockets.on('connection', function(socket){
 	   });
     });
   	
-  	
+  	// Request for updated link data -----------------------------------------------------
   	socket.on('linksRequest', function() {
   	    db.any("SELECT * FROM links WHERE confirmed = 1 OR sourceid = "+socket.request.user.id+" OR targetid = "+socket.request.user.id+" ORDER BY id", [true]).then(function(links) { //filter unconfirmed links which are not relevant to current user
 			socket.emit('linksUpdate', links);
@@ -452,6 +432,7 @@ io.sockets.on('connection', function(socket){
   	
   	});
   	
+  	// Request for updated node data -----------------------------------------------------
 	socket.on('nodesRequest', function() {
   	    db.any("SELECT * FROM nodes ORDER BY id", [true]).then(function(nodes) { 
 			socket.emit('nodesUpdate', nodes);
@@ -459,7 +440,7 @@ io.sockets.on('connection', function(socket){
 	    }).catch(function (error) {  console.log("ERROR:", error); });
 	});
 	
-	//function updateNodesLinks() {
+	// Request for updated nodes and links data ------------------------------------------
 	socket.on('nodesLinksRequest', function() {
         db.task(function (t) {
             return t.batch([
@@ -478,29 +459,27 @@ io.sockets.on('connection', function(socket){
 	    });
 	});
 	
+	// Update Settings data --------------------------------------------------------------
 	function updateSettings() {
 		db.one("SELECT id, username, email, messageemail, linkemail, facebookid FROM settings WHERE id = "+socket.request.user.id, [true]).then(function(settings) { 
 			socket.emit('settingsUpdate', settings);
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	}
 	
-	//function updateEmails() {  
+	// Request for updated email data ----------------------------------------------------
 	socket.on('emailRequest', function() {
 	  db.any("SELECT * FROM emails WHERE (recip = "+socket.request.user.id+" AND delrecip = 0) OR (sender = "+socket.request.user.id+" AND delsender = 0) ORDER BY id", [true]).then(function(emailUpdate) {
 			socket.emit('emailUpdate', emailUpdate);
 		}).catch(function (error) {  console.log("ERROR:", error); });
 	});
 
-  	
-  	// New email received
+  	// New email received ----------------------------------------------------------------
   	 socket.on('newEmail', function(newEmail) {
   	      console.log("Email received");
   	      db.query("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail)
 			.then(function(email) {
                 console.log("Email added to database");
-                // Emit updated email data
                 if (socket.request.user.id == email[0].recip || socket.request.user.id == email[0].sender) {
-                    //updateEmails();
                     io.sockets.emit('callToUpdateEmail');
                 }
             })
@@ -509,7 +488,7 @@ io.sockets.on('connection', function(socket){
             });
   	});
   	
-  	// Email read
+  	// Email read ------------------------------------------------------------------------
   	socket.on('emailRead', function(recip, sender) {
   	
   	  	// Update database
@@ -528,35 +507,31 @@ io.sockets.on('connection', function(socket){
   	
   	});
   	
-  	// Email deleted
+  	// Email deleted ---------------------------------------------------------------------
   	socket.on('threadDelete', function(user1, user2) {
   	  	  	
   	  	// Update database
   	    db.query("UPDATE emails SET delrecip = 1 WHERE recip = "+user1+" AND sender = "+user2)
   	      	.then(function () {
                 console.log("Email set deleted by recip");
-                
-					db.query("UPDATE emails SET delsender = 1 WHERE recip = "+user2+" AND sender = "+user1)
-						.then(function () {
-							console.log("Email set deleted by sender");
-							
-							if (socket.request.user.id === user1 || socket.request.user.id === user2) {
-							    //updateEmails();
-							    io.sockets.emit('callToUpdateEmail');
-							}
-							
-						})
-						.catch(function (error) {
-							console.log(error);
-						});
-                
+				db.query("UPDATE emails SET delsender = 1 WHERE recip = "+user2+" AND sender = "+user1)
+					.then(function () {
+						console.log("Email set deleted by sender");
+						if (socket.request.user.id === user1 || socket.request.user.id === user2) {
+							io.sockets.emit('callToUpdateEmail');
+						}
+						
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
             })
             .catch(function (error) {
                 console.log(error);
             });
   	});
   	
-  	// Link Confirmed
+  	// Link Confirmed --------------------------------------------------------------------
   	socket.on("linkConfirm", function(id) {
   	    console.log("Link confirmation received");
   	    // Update database
@@ -564,14 +539,13 @@ io.sockets.on('connection', function(socket){
   	      	.then(function () {
                 console.log("Link confirmed");
 				io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
-
             })
             .catch(function (error) {
                  console.log(error);
             });
   	});
   	
-  	// Link Deleted / Confirmation denied
+  	// Link Deleted / Confirmation denied ------------------------------------------------
 	socket.on("linkDelete", function(id) {
   	    console.log("Link delete received");
   	    // Update database
@@ -586,7 +560,7 @@ io.sockets.on('connection', function(socket){
             });
   	});
   	
-  	// Link added
+  	// Link request ----------------------------------------------------------------------
   	socket.on("newLink", function(newLink) {
   	    console.log("New link received");
   	    // Update database
@@ -600,7 +574,7 @@ io.sockets.on('connection', function(socket){
 		});
   	});
   	
-  	// Link details updated
+  	// Link details updated --------------------------------------------------------------
   	socket.on('linkEdit', function(linkEdits) {
   	  // Update database
   	    db.query('UPDATE links SET (startmonth, startyear) = (${startmonth}, ${startyear}) WHERE id = ${id}', linkEdits)
@@ -614,7 +588,7 @@ io.sockets.on('connection', function(socket){
   	
   	});
   	
-  	// Node added
+  	// New (non-member) node added -------------------------------------------------------
   	socket.on('newNode', function(newNode) {
   	
 		console.log("New node received");
@@ -640,7 +614,7 @@ io.sockets.on('connection', function(socket){
             });
   	});
   	
-  	// Node info updated
+  	// Node info updated -----------------------------------------------------------------
   	socket.on('nodeEdit', function(nodeEdits) {
   	  	db.query('UPDATE nodes SET (name, location, description) = (${name}, ${location}, ${description}) WHERE id = ${id}', nodeEdits)
   	      	.then(function () {
@@ -654,7 +628,7 @@ io.sockets.on('connection', function(socket){
   	
   	});
   	
-  	// Node invited
+  	// Node invited ----------------------------------------------------------------------
   	socket.on('nodeInvited', function(node) {
   	
   	    console.log("Node invite update received");
@@ -687,7 +661,7 @@ io.sockets.on('connection', function(socket){
   	
   	});
   	
-  	// Settings updated
+  	// Settings updated ------------------------------------------------------------------
   	socket.on('settingsEdit', function(settings) {
   	
   	    console.log('Updated settings received');
@@ -704,7 +678,7 @@ io.sockets.on('connection', function(socket){
   	
   	});
   	
-  	// Password changed
+  	// Password changed ------------------------------------------------------------------
   	socket.on('newPassword', function(passwords) {
   	
   	    console.log("Password change request received");
@@ -712,7 +686,6 @@ io.sockets.on('connection', function(socket){
   	    // Check old password
   	    return db.one("SELECT id, username, hash FROM settings WHERE id=$1", [passwords.id])
          .then(function(user) {
-		
 		        bcrypt.compare(passwords.oldPassword, user.hash, function(err, comparison) {
                     if (comparison) {
                         // Create password hash and save to database
@@ -728,7 +701,7 @@ io.sockets.on('connection', function(socket){
                         });
 
                     } else {
-                        socket.emit('incorrectPassword');//What to do if old password is incorrect?
+                        socket.emit('incorrectPassword');
                     }
                 });
 		  })
@@ -737,6 +710,7 @@ io.sockets.on('connection', function(socket){
 		  });
   	});
   	
+  	// Username edited -------------------------------------------------------------------
   	socket.on('usernameEdit', function(newUsername) {
   	    console.log('Username change requested received');
   	    db.query("UPDATE settings SET (username) = (${username}) WHERE id = ${id} returning *", newUsername)
@@ -760,7 +734,7 @@ io.sockets.on('connection', function(socket){
   	        });
   	});
   	
-  	
+  	// User disconnects ------------------------------------------------------------------
     socket.on('disconnect', function(){
         console.log("User disconnected");	
         //req.logout();
@@ -776,7 +750,3 @@ io.sockets.on('connection', function(socket){
 http.listen(process.env.PORT, function(){
   console.log('listening on *:' + process.env.PORT);
 });
-
-//lex.listen([80], [443, 5001], function () {
-//  console.log("ENCRYPT __ALL__ THE DOMAINS!");
-//});
