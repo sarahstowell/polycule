@@ -304,7 +304,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    scalea=d3.transform(container.attr("transform")).scale;
             // move temporary line
             
-            sidepanel.html(JSON.stringify(d3.mouse(this)));
+            //sidepanel.html(JSON.stringify(d3.mouse(this))); TEST CODE
             
 		    active_line					
 			    .attr("x2", (d3.mouse(this)[0]-translatea[0])/scalea[0])
@@ -684,11 +684,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .attr("class", function(d) { if (d.id === loggedin) { return "myNode"; } else if (d.member === 1) { return "userNode"; } else { return "nonUserNode"; } })
             .classed("selectedNode", function(d) { if (d.id === active_node) { return true; } else { return false; } })
             .on("mousedown", selectNode)
-            .on("mouseup", joinNode);
-            
-         //node.append("text")
-        node.select("text").remove(); 
-         
+            .on("mouseup", joinNode);      
+
+        node.select("text").remove();       
         node.append("text")
             .attr("x", 10)
             .attr("y", 10)

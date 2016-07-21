@@ -273,6 +273,7 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 					req.login(user, function (err) {
 						if ( ! err ){
 							res.redirect('/');
+							io.emit('callToUpdateNodes');
 						} else {
 							console.log(err);//handle error
 						}
@@ -327,6 +328,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 				req.login(user, function (err) {
 					if ( ! err ){
 						res.redirect('/');
+						io.emit('callToUpdateNodes');
 					} else {
 						console.log(err);//handle error
 					}
