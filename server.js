@@ -83,7 +83,7 @@ var storage = multer.diskStorage({ // https://github.com/expressjs/multer
       }
     });
   }
-}));
+});
 
 
 
