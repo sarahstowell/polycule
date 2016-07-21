@@ -64,8 +64,8 @@ var upload = multer({
         s3: s3,
         //dirname: '/',
         bucket: 'polycule',
-        secretAccessKey: process.env.AWS_SECRET_KEY_ID,
-        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         region: 'europe',
 		  filename: function (req, file, cb) {
 			crypto.pseudoRandomBytes(16, function (err, raw) {
