@@ -32,7 +32,7 @@ var transporter = nodemailer.createTransport(process.env.GMAIL);
 
 // setup e-mail data with unicode symbols
 var mailOptions = {
-    from: '"Sarah Stowell 👥" <sarahstowell84@gmail.com>', // sender address
+    from: '"Sarah Stowell 👥" <sarah@polycule.co.uk>', // sender address
     to: 'sarah@baldock.me', // list of receivers
     subject: 'Hello ✔', // Subject line
     text: 'Hello world 🐴', // plaintext body
