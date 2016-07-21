@@ -685,14 +685,16 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .classed("selectedNode", function(d) { if (d.id === active_node) { return true; } else { return false; } })
             .on("mousedown", selectNode)
             .on("mouseup", joinNode);
-      
-        node.exit().remove();
-      
-        //node.append("text")
+            
+         //node.append("text")
         node.select("text")
             .attr("x", 10)
             .attr("y", 10)
-            .text(function(d) { return d.name; });
+            .text(function(d) { return d.name; });  
+               
+        node.exit().remove();
+      
+
     
         // selectNode function for user selects existing node
         function selectNode() {
