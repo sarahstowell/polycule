@@ -15,7 +15,6 @@ body {
     padding: 0px;
     margin: 0px;
     background-color: #DDDDDD;
-    /*background: linear-gradient(lightblue, darkblue);*/
 }
 
 #wrapper {
@@ -158,7 +157,6 @@ h1 {
     margin-bottom: 10px;
     padding-top: 1px;
     background-color: white;
-    /*background: linear-gradient(lightblue, darkblue);*/
 }
 
 h2 {

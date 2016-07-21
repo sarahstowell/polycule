@@ -20,11 +20,35 @@ var path = require('path');
 var multer = require('multer');
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
-//var nodemailer = require('nodemailer'); INSTALL PACKAGE!!
+var nodemailer = require('nodemailer'); INSTALL PACKAGE!!
 
 app.use(helmet());
 
 app.set('view engine', 'pug');
+
+
+// create reusable transporter object using the default SMTP transport
+var transporter = nodemailer.createTransport(process.env.GMAIL'smtps://user%40gmail.com:pass@smtp.gmail.com');
+
+// setup e-mail data with unicode symbols
+var mailOptions = {
+    from: '"Sarah Stowell 👥" <sarahstowell84@gmail.com>', // sender address
+    to: 'sarah@baldock.me', // list of receivers
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello world 🐴', // plaintext body
+    html: '<b>Hello world 🐴</b>' // html body
+};
+
+// send mail with defined transport object
+transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+});
+
+
+
 
 // Set destination and filename for uploaded photos
 var storage = multer.diskStorage({
