@@ -466,7 +466,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		                } else {
 				            nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
 				        
-				            socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value});	
+				            socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": nodes[arrayObjectIndexOf(nodes, node, "id")].name, "from": nodes[arrayObjectIndexOf(nodes, loggedin, "id")].name});	
 		                    
 				            sidepanel.html("");
 

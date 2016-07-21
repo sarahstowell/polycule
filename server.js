@@ -661,14 +661,14 @@ io.sockets.on('connection', function(socket){
   	
   	    // Update database
   	    db.query("UPDATE nodes SET invited = 1 WHERE id = "+node.id)
-  	      	.then(function () {
+  	      	.then(function (nodeData) {
   	      	  	db.query("INSERT INTO invited (id, email) VALUES (${id}, ${email})", node)
   	      	        .then(function () {
                          console.log("Node invite updated");
                          io.sockets.emit('callToUpdateNodes');
                          
                             // send mail with defined transport object
-                            mailCreator("Sarah", "sarah@baldock.me", "Chris");
+                            mailCreator(node.name, node.email, node.from);
 							transporter.sendMail(mailOptions, function(error, info){
 								if(error){
 									return console.log(error);
