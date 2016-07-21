@@ -101,6 +101,25 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
+
+var upload = multer({
+    storage: s3({
+        dirname: '/',
+        bucket: 'polycule',
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        region: 'europe',
+		  filename: function (req, file, cb) {
+			crypto.pseudoRandomBytes(16, function (err, raw) {
+			  if (err) return cb(err)
+			  cb(null, raw.toString('hex') + path.extname(file.originalname))
+			})
+		  }
+    })
+});
+
+
+
 // Function for Photo Editing ------------------------------------------------------------
 var profilePicEdit = function(photo, facebookid, x1, y1, x2, y2) {
 console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
