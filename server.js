@@ -377,7 +377,7 @@ app.get('/delete', function(req, res){
 			// this.ctx = transaction config + state context;
 			return t.batch([
 				t.none("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser),
-				t.none("DELETE from nodes WHERE id = $1", deleteUser)
+				t.none("DELETE from nodes WHERE id = $1", deleteUser),
 				t.none("DELETE from settings WHERE id = $1", deleteUser)
 			]);
 		})
