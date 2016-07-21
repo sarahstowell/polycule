@@ -19,6 +19,7 @@ var bcrypt = require('bcrypt');
 var path = require('path');
 var multer = require('multer');
 var AWS = require('aws-sdk');
+var s3 = require('multer-s3');
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
 var nodemailer = require('nodemailer');
@@ -47,7 +48,7 @@ var mailCreator = function(name, email, from) {
 
 
 
-
+/*
 var accessKeyId =  process.env.AWS_ACCESS_KEY;
 var secretAccessKey = process.env.AWS_SECRET_KEY;
 
@@ -57,32 +58,21 @@ AWS.config.update({
 });
 
 var s3 = new AWS.S3();
-
-var storage = multer.diskStorage({ // https://github.com/expressjs/multer
-  dest: './public/uploads/', 
-  limits : { fileSize:100000 },
-  filename: function (req, file, cb) {
-    crypto.pseudoRandomBytes(16, function (err, raw) {
-      if (err) return cb(err)
-      cb(null, raw.toString('hex') + path.extname(file.originalname))
+*/
+var upload = multer({
+    storage: s3({
+        dirname: '/',
+        bucket: 'polycule',
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        region: 'europe',
+		  filename: function (req, file, cb) {
+			crypto.pseudoRandomBytes(16, function (err, raw) {
+			  if (err) return cb(err)
+			  cb(null, raw.toString('hex') + path.extname(file.originalname))
+			})
+		  }
     })
-  },
-  onFileUploadData: function (file, data, req, res) {
-    // file : { fieldname, originalname, name, encoding, mimetype, path, extension, size, truncated, buffer }
-    var params = {
-      Bucket: 'polycule',
-      Key: file.name,
-      Body: data
-    };
-
-    s3.putObject(params, function (perr, pres) {
-      if (perr) {
-        console.log("Error uploading data: ", perr);
-      } else {
-        console.log("Successfully uploaded data to myBucket/myKey");
-      }
-    });
-  }
 });
 
 
@@ -101,8 +91,9 @@ var storage = multer.diskStorage({
     })
   }
 })
-*/
+
 var upload = multer({ storage: storage })
+*/
 // ---------------------------------------------------------------------------------------
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies

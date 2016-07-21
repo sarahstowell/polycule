@@ -24,6 +24,7 @@
     "knockout": "^3.4.0",
     "method-override": "^2.3.6",
     "multer": "^1.1.0",
+    "multer-s3": "^2.3.2",
     "nodemailer": "^2.5.0",
     "oauth": "^0.9.14",
     "passport": "^0.3.2",
