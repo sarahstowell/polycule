@@ -89,7 +89,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        else if (nodesUpdate[i].id > nodes[i].id) 
 	    */
 	    
-	    for (i=0; i<nodesUpdate.length); i++) {
+	    for (i=0; i<nodesUpdate.length; i++) {
 	        nodesUpdate[i].fixed = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].fixed;
 	        nodesUpdate[i].x = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].x;
 	        nodesUpdate[i].y = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].y;
@@ -111,7 +111,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		//fixedid = nodes.filter(function(d) { return d.fixed === 1; }).id;
 	    //if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
 	    
-		for (i=0; i<nodesUpdate.length); i++) {
+		for (i=0; i<nodesUpdate.length; i++) {
 	        nodesUpdate[i].fixed = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].fixed;
 	        nodesUpdate[i].x = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].x;
 	        nodesUpdate[i].y = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].y;
