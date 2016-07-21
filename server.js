@@ -241,17 +241,7 @@ app.get('/.well-known/acme-challenge/yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4
 
 // Send login page =====================================
 app.get('/login', function(req, res){
-    res.sendFile(__dirname+'/login.html');
-    
-    // send mail with defined transport object
-    mailCreator("Sarah", "sarah@baldock.me", "Chris");
-transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-        return console.log(error);
-    }
-    console.log('Message sent: ' + info.response);
-});
-     
+    res.sendFile(__dirname+'/login.html');     
 });
 
 // Login verification
@@ -676,6 +666,16 @@ io.sockets.on('connection', function(socket){
   	      	        .then(function () {
                          console.log("Node invite updated");
                          io.sockets.emit('callToUpdateNodes');
+                         
+                            // send mail with defined transport object
+                            mailCreator("Sarah", "sarah@baldock.me", "Chris");
+							transporter.sendMail(mailOptions, function(error, info){
+								if(error){
+									return console.log(error);
+								}
+								console.log('Message sent: ' + info.response);
+							});
+                         
 					})
 					.catch(function (error) {
 						 console.log(error);
