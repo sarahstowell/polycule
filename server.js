@@ -31,13 +31,16 @@ app.set('view engine', 'pug');
 var transporter = nodemailer.createTransport(process.env.GMAIL);
 
 // setup e-mail data with unicode symbols
-var mailOptions = {
-    from: '"Sarah Stowell 👥" <sarah@polycule.co.uk>', // sender address
-    to: 'sarah@baldock.me', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world 🐴', // plaintext body
-    html: '<b>Hello world 🐴</b>' // html body
-};
+var mailOptions;
+var mailCreator = function(name, email, from) {
+    mailOptions = {
+        from: '"Sarah Stowell 👥" <sarahstowell84@gmail.com>', // sender address
+        to: email, // list of receivers
+        subject: 'You have been invited to join Polycule', // Subject line
+        text: 'Hi "+name+", you have been invited by'+from+'to join Polycule, the social network for polyamorous people. Please click on the link below to signup', // plaintext body
+        html: '<h1>Hi '+name+'!</h1> <p>You have been invited by '+from+' to join Polycule, the social network for polyamorous people. Please click on the link below to signup</p>' // html body
+    };
+}
 
 
 
@@ -241,6 +244,7 @@ app.get('/login', function(req, res){
     res.sendFile(__dirname+'/login.html');
     
     // send mail with defined transport object
+    mailCreator("Sarah", "sarah@baldock.me", "Chris");
 transporter.sendMail(mailOptions, function(error, info){
     if(error){
         return console.log(error);
