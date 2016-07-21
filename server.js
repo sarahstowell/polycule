@@ -72,7 +72,7 @@ var upload = multer({
     },
     key: function (req, file, cb) {
       cb(null, Date.now().toString())
-    }
+    },
 		  filename: function (req, file, cb) {
 			crypto.pseudoRandomBytes(16, function (err, raw) {
 			  if (err) return cb(err)
