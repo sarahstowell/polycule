@@ -10,7 +10,7 @@ High Priority:
 
 Medium Priority:
 	
-    Prevent refresh when editing node?
+    
     Update nodes after new user signup
     Login with email address
 	Standard signups
@@ -29,6 +29,7 @@ Medium Priority:
 
 
 Low Priority:
+    Optimise node update algorithm
 	Delete emails where both reader and sender have deleted
 	Delete emails when user deletes account
 	Keep name for emails after account is deleted

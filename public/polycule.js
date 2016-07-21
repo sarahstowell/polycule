@@ -78,16 +78,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
     });
 	
 	socket.on('nodesUpdate', function(nodesUpdate) {
-	/*
-	    fixedid = nodes.filter(function(d) { return d.fixed === 1; }).id;
-	    if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
-	    */
-	    
-	    /*
-	    for (i=0; i<Math.max(nodesUpdate.length, nodes.length); i++) {
-	        if (nodesUpdate[i].id === nodes[i].id) { nodesUpdate[i].x = nodes[i].x; nodesUpdate[i].y = nodes[i].y; nodesUpdate[i].fixed = nodes[i].fixed; } // Update x,y, fixed attributes
-	        else if (nodesUpdate[i].id > nodes[i].id) 
-	    */
 	    
 		for (i=0; i<nodesUpdate.length; i++) {
 		    i2 = arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id");
@@ -97,9 +87,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	            nodesUpdate[i].y = nodes[i2].y;
 	        }
 	    } 
-	    
-	    
-	    
 	    
 	    nodes = nodesUpdate;
 	    restart();
@@ -111,8 +98,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 	socket.on('nodesLinksUpdate', function(nodesLinksUpdate) {
 	    nodesUpdate = nodesLinksUpdate.nodes;
-		//fixedid = nodes.filter(function(d) { return d.fixed === 1; }).id;
-	    //if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
 	    
 		for (i=0; i<nodesUpdate.length; i++) {
 		    i2 = arrayObjectIndexOf(nodes, nodesUpdate[i].id, "id");
@@ -122,9 +107,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	            nodesUpdate[i].y = nodes[i2].y;
 	        }
 	    }    
-	    
-	    
-	    
 	    
 	    nodes = nodesUpdate;
 	    
@@ -706,7 +688,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
       
         node.exit().remove();
       
-        node.append("text")
+        //node.append("text")
+        node.select("text");
             .attr("x", 10)
             .attr("y", 10)
             .text(function(d) { return d.name; });
