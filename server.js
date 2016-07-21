@@ -19,7 +19,7 @@ var bcrypt = require('bcrypt');
 var path = require('path');
 var multer = require('multer');
 var AWS = require('aws-sdk');
-var s3 = require('multer-s3');
+var multerS3 = require('multer-s3');
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
 var nodemailer = require('nodemailer');
@@ -56,12 +56,13 @@ AWS.config.update({
     accessKeyId: accessKeyId,
     secretAccessKey: secretAccessKey
 });
-
-var s3 = new AWS.S3();
 */
+var s3 = new AWS.S3();
+
 var upload = multer({
-    storage: s3({
-        dirname: '/',
+    storage: multerS3({
+        s3: s3,
+        //dirname: '/',
         bucket: 'polycule',
         secretAccessKey: process.env.AWS_SECRET_KEY,
         accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -100,23 +101,6 @@ app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
-
-
-var upload = multer({
-    storage: s3({
-        dirname: '/',
-        bucket: 'polycule',
-        secretAccessKey: process.env.AWS_SECRET_KEY,
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        region: 'europe',
-		  filename: function (req, file, cb) {
-			crypto.pseudoRandomBytes(16, function (err, raw) {
-			  if (err) return cb(err)
-			  cb(null, raw.toString('hex') + path.extname(file.originalname))
-			})
-		  }
-    })
-});
 
 
 
