@@ -67,6 +67,12 @@ var upload = multer({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         region: 'europe',
+            metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
 		  filename: function (req, file, cb) {
 			crypto.pseudoRandomBytes(16, function (err, raw) {
 			  if (err) return cb(err)
