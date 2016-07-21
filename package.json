@@ -10,6 +10,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.4.8",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "connect-pg-simple": "^3.1.0",
