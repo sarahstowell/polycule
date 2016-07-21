@@ -689,7 +689,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         node.exit().remove();
       
         //node.append("text")
-        node.select("text");
+        node.select("text")
             .attr("x", 10)
             .attr("y", 10)
             .text(function(d) { return d.name; });
