@@ -78,8 +78,26 @@ socket.on('nodesAndLinks', function(dataPackage) {
     });
 	
 	socket.on('nodesUpdate', function(nodesUpdate) {
-	    fixedid = nodes.filter(function(d) { if (d.fixed === 1) { return true; } else { return false; }}).id;
+	/*
+	    fixedid = nodes.filter(function(d) { return d.fixed === 1; }).id;
 	    if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
+	    */
+	    
+	    /*
+	    for (i=0; i<Math.max(nodesUpdate.length, nodes.length); i++) {
+	        if (nodesUpdate[i].id === nodes[i].id) { nodesUpdate[i].x = nodes[i].x; nodesUpdate[i].y = nodes[i].y; nodesUpdate[i].fixed = nodes[i].fixed; } // Update x,y, fixed attributes
+	        else if (nodesUpdate[i].id > nodes[i].id) 
+	    */
+	    
+	    for (i=0; i<nodesUpdate.length); i++) {
+	        nodesUpdate[i].fixed = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].fixed;
+	        nodesUpdate[i].x = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].x;
+	        nodesUpdate[i].y = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].y;
+	    }
+	    
+	    
+	    
+	    
 	    nodes = nodesUpdate;
 	    restart();
 	});
@@ -89,9 +107,19 @@ socket.on('nodesAndLinks', function(dataPackage) {
     });
 	
 	socket.on('nodesLinksUpdate', function(nodesLinksUpdate) {
-		fixedid = nodes.filter(function(d) { if (d.fixed === 1) { return true; } else { return false; }}).id;
-		nodesUpdate = nodesLinksUpdate.nodes;
-	    if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
+	    nodesUpdate = nodesLinksUpdate.nodes;
+		//fixedid = nodes.filter(function(d) { return d.fixed === 1; }).id;
+	    //if (fixedid) { nodesUpdate[arrayObjectIndexOf(nodesUpdate, fixedid, "id")].fixed = 1; }
+	    
+		for (i=0; i<nodesUpdate.length); i++) {
+	        nodesUpdate[i].fixed = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].fixed;
+	        nodesUpdate[i].x = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].x;
+	        nodesUpdate[i].y = nodes[arrayObjectIndexOf(nodesUpdate, i, "id")].y;
+	    }    
+	    
+	    
+	    
+	    
 	    nodes = nodesUpdate;
 	    
 	    links = nodesLinksUpdate.links;

@@ -364,7 +364,7 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-
+// User deletes account
 app.get('/delete', function(req, res){
     
 	var deleteUser = req.session.passport.user;
@@ -373,8 +373,6 @@ app.get('/delete', function(req, res){
     res.redirect('/');
 
 	db.tx(function (t) {
-			// this = t = transaction protocol context;
-			// this.ctx = transaction config + state context;
 			return t.batch([
 				t.none("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser),
 				t.none("DELETE from nodes WHERE id = $1", deleteUser),
@@ -382,37 +380,12 @@ app.get('/delete', function(req, res){
 			]);
 		})
 		.then(function (data) {
-			// success;
+			console.log("User account deleted");
 			io.emit('callToUpdateNodesLinks');
 		})
 		.catch(function (error) {
 			console.log("ERROR:", error.message || error);
 		});
-
-
-/*
-	db.query("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser)
-		.then(function () {
-			db.query("DELETE from nodes WHERE id = $1", deleteUser)
-				.then(function () {
-					db.query("DELETE from settings WHERE id = $1", deleteUser)
-						.then(function () {
-							console.log("Member deleted");
-							io.sockets.emit('callToUpdateNodesLinks');
-							// REMOVE ANY FLOATING NON-USER NODES
-						})
-						.catch(function (error) {
-							 console.log(error);
-						});
-				})
-				.catch(function (error) {
-					 console.log(error);
-				});
-		})
-		.catch(function (error) {
-			 console.log(error);
-		});
-		*/
 });
 
 // =======================================================================================
@@ -618,41 +591,6 @@ io.sockets.on('connection', function(socket){
   	
   	});
   	
-  	// Node deleted (NOT TESTED)
-  	/*
-  	socket.on("nodeDelete", function() {
-  	
-  	    console.log("Node delete received");
-  	   
-  	    
-  	    var deleteUser = socket.request.user.id;
-  	
-  	    db.query("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser)
-  	        .then(function () {
-				db.query("DELETE from nodes WHERE id = $1", deleteUser)
-					.then(function () {
-						db.query("DELETE from settings WHERE id = $1", deleteUser)
-							.then(function () {
-                                console.log("Member deleted");
-                                io.sockets.emit('callToUpdateNodesLinks');
-                                // REMOVE ANY FLOATING NON-USER NODES
-							})
-							.catch(function (error) {
-								 console.log(error);
-							});
-					})
-					.catch(function (error) {
-						 console.log(error);
-					});
-            })
-            .catch(function (error) {
-                 console.log(error);
-            });
-           
-  	});
-  	*/
-
-  	
   	// Node added
   	socket.on('newNode', function(newNode) {
   	
@@ -663,26 +601,20 @@ io.sockets.on('connection', function(socket){
   	    db.query("INSERT INTO nodes (name, member, invited) VALUES (${name}, ${member}, ${invited}) returning id", newNode)
   	      	.then(function (id) {
                 console.log("Node added to database: "+id[0].id);
-                
                 newLink = {"sourceid": newNode.sourceid, "targetid": id[0].id, "confirmed": 1};
-                
                 // Update database with new link
                 db.query("INSERT INTO links (sourceid, targetid, confirmed) VALUES (${sourceid}, ${targetid}, ${confirmed}) returning id", newLink)
   	      	        .then(function (id) {
                         console.log("New link added to database. Id: "+id);
-						//updateNodesLinks();
 						io.sockets.emit('callToUpdateNodesLinks');
-                        
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
-                
             })
             .catch(function (error) {
                  console.log(error);
             });
-  	
   	});
   	
   	// Node info updated

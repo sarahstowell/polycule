@@ -4,12 +4,14 @@ High Priority:
 	!!! Get SSL Certificate working for polycule.co.uk
 	!!! Safari animation issue
 	!!! Chrome layout issue
-	!!! Logout issue
+
 	Template main index page and take api key out
 	Should google API key be shown in browser of signup forms?
 
-Medium Priority:	
-    
+Medium Priority:
+	
+    Prevent refresh when editing node?
+    Update nodes after new user signup
     Login with email address
 	Standard signups
 		Get photo to populate with pug
@@ -18,15 +20,12 @@ Medium Priority:
 			Further server side checks?
 			Photo type check?
 	Check max length of description field
-	Verify email for invites
 	Send email to invited node
 	Link/Remove facebook account
-
 	Knockout for settings/emails/link requests
-	Update nodes after new user signup
-	Prevent refresh when editing node?
 	Stray non-member nodes
 	Mixed case usernames?
+	What happens on other screens when user is deleted
 
 
 Low Priority:
