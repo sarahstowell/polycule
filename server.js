@@ -67,9 +67,9 @@ var upload = multer({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         region: 'Ireland',
-        //metadata: function (req, file, cb) {
-        //    cb(null, {fieldName: file.fieldname});
-        //},
+        metadata: function (req, file, cb) {
+            cb(null, {fieldName: "Photo"});
+        },
         //key: function (req, file, cb) {
         //    cb(null, Date.now().toString())
         //},
