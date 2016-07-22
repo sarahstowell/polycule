@@ -66,7 +66,7 @@ var upload = multer({
 		//	    cb(null, raw.toString('hex') + path.extname(file.originalname))
 		//	})
 		//}
-		key: "image1.jpg"
+		key: function() { return "image1.jpg"; }
     })
 });
 
