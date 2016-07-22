@@ -291,13 +291,14 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
     console.log("Response:");
     console.log(this.httpResponse);
 
+/*
 	if (req.body.photoType === 'custom' && req.file) { 
 		profilePicEdit(req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
 		var photourl = null;
 	}
-
+*/
 	bcrypt.hash(req.body.password, 10, function(err, hash) {
 
 		if (req.body.messageemail == "on") { var messageemail = true; } else { var messageemail = false; }
