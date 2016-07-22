@@ -10,7 +10,7 @@ html, body {
 
 body {
     font-family: sans-serif;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     padding: 0px;
     margin: 0px;
@@ -19,7 +19,7 @@ body {
 
 #wrapper {
     margin: 0 auto;
-    display: flex;
+    display: inline-flex;
     flex: 1;
     flex-direction: column;
     max-width: 1375px;
@@ -28,7 +28,7 @@ body {
 
 #bottomContainer {
     flex: 1;
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
 }
 

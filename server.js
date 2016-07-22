@@ -43,20 +43,7 @@ var mailCreator = function(name, email, from) {
 }
 
 
-
-
-
-
-
-/*
-var accessKeyId =  process.env.AWS_ACCESS_KEY;
-var secretAccessKey = process.env.AWS_SECRET_KEY;
-
-AWS.config.update({
-    accessKeyId: accessKeyId,
-    secretAccessKey: secretAccessKey
-});
-*/
+// S3 File uploads -----------------------------------------------------------------------
 var s3 = new AWS.S3();
 
 var upload = multer({
@@ -67,9 +54,9 @@ var upload = multer({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         region: 'Ireland',
-        metadata: function (req, file, cb) {
-            cb(null, {fieldName: "Photo"});
-        },
+        //metadata: function (req, file, cb) {
+        //    cb(null, {fieldName: "Photo"});
+        //},
         //key: function (req, file, cb) {
         //    cb(null, Date.now().toString())
         //},
@@ -81,11 +68,6 @@ var upload = multer({
 		}
     })
 });
-
-
-
-
-
 
 // Set destination and filename for uploaded photos --------------------------------------
 /*
