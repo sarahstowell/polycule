@@ -3,14 +3,12 @@ High Priority:
 	!!! Update profile photo (ajax?)
 	!!! Get SSL Certificate working for polycule.co.uk
 	!!! Safari animation issue
-	!!! Chrome layout issue
 
 	Template main index page and take api key out
 	Should google API key be shown in browser of signup forms?
 
 Medium Priority:
 	
-
     Login with email address
 	Standard signups
 		Get photo to populate with pug
@@ -24,6 +22,7 @@ Medium Priority:
 	Knockout for settings/emails/link requests
 	Stray non-member nodes
 	Mixed case usernames?
+	Fix width of top banner
 
 Low Priority:
     Optimise node update algorithm
