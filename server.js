@@ -44,6 +44,7 @@ var mailCreator = function(name, email, from) {
 
 
 // S3 File uploads -----------------------------------------------------------------------
+/*
 var s3 = new AWS.S3();
 
 var upload = multer({
@@ -69,9 +70,10 @@ var upload = multer({
 		key: function() { return "image1.jpg"; }
     })
 });
+*/
 
 // Set destination and filename for uploaded photos --------------------------------------
-/*
+
 var storage = multer.diskStorage({
   destination: './public/photos/original/',
   filename: function (req, file, cb) {
@@ -83,7 +85,7 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage })
-*/
+
 // ---------------------------------------------------------------------------------------
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
@@ -291,14 +293,14 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
     console.log("Response:");
     console.log(this.httpResponse);
 
-/*
+
 	if (req.body.photoType === 'custom' && req.file) { 
 		profilePicEdit(req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
 		var photourl = null;
 	}
-*/
+
 	bcrypt.hash(req.body.password, 10, function(err, hash) {
 
 		if (req.body.messageemail == "on") { var messageemail = true; } else { var messageemail = false; }

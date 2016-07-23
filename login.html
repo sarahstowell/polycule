@@ -128,51 +128,36 @@ hr {
 </style>
 
 <body onresize="reSize();">
+    <svg id="backsvg" ></svg>
+    <div id="logindiv">
+        <h1>polycule</h1>
+        <form action="/login" method="post" name="loginForm">
+            <input id="username" type="text" name="username" placeholder="Username" class="inputBox"/>
+            <input id="password" type="password" name="password" placeholder="Password" class="inputBox"/>
+            <br/>
+            <!--
+            <input type="checkbox" checked/>
+            <span id="remember">Keep me signed in</span>
+            <br/>
+            -->
+           <input type="submit" value="Login" class="submitButton"/>
+        </form>
 
-<svg id="backsvg" ></svg>
-
-<div id="logindiv">
-<h1>polycule</h1>
-
-<form action="/login" method="post" name="loginForm">
-
-<input id="username" type="text" name="username" placeholder="Username" class="inputBox"/>
-<input id="password" type="password" name="password" placeholder="Password" class="inputBox"/>
-<br/>
-<!--
-<input type="checkbox" checked/>
-<span id="remember">Keep me signed in</span>
-<br/>
--->
-<input type="submit" value="Login" class="submitButton"/>
-
-
-</form>
-
-
-<span style="text-align: center; display: block; margin: 10px;">OR</span>
-
-
-<!--
-<hr/>
-<img src="facebookLogin.png" alt="Continue with Facebook" width="260px">
--->
-<input type="button" value="Login with Facebook" class="facebookButton" onclick='window.location="/login/facebook"'/>
-<!--
-<br/>
-<input type="button" value="Login with Google" class="googleButton"/>
--->
-<hr/>
-
-New to Polycule? <a href="/signup">Sign up</a>
-<!--
-<input type="button" value="Sign up" id="signupButton" onclick="window.location='signUpScreen.html';"/>
--->
-<br/>
-See the <a href="/demo">demo version</a>
-</div>
-
-
+        <span style="text-align: center; display: block; margin: 10px;">OR</span>
+        <input type="button" value="Login with Facebook" class="facebookButton" onclick='window.location="/login/facebook"'/>
+        <!--
+        <br/>
+        <input type="button" value="Login with Google" class="googleButton"/>
+        -->
+        <hr/>
+        New to Polycule? <a href="/signup">Sign up</a>
+        <!--
+        <input type="button" value="Sign up" id="signupButton" onclick="window.location='signUpScreen.html';"/>
+        -->
+        <br/>
+        See the <a href="/demo">demo version</a>
+    </div>
+</body>
 
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script>
