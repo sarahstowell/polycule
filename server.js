@@ -288,10 +288,10 @@ app.get('/signup', function(req, res) {
 // Process signup request ----------------------------------------------------------------
 app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
-    console.log("Request:");
-    console.log(this.request.httpRequest);
-    console.log("Response:");
-    console.log(this.httpResponse);
+    //console.log("Request:");
+    //console.log(this.request.httpRequest);
+    //console.log("Response:");
+    //console.log(this.httpResponse);
 
 
 	if (req.body.photoType === 'custom' && req.file) { 
