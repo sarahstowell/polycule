@@ -32,13 +32,13 @@ app.set('view engine', 'pug');
 // Setup email ---------------------------------------------------------------------------
 var transporter = nodemailer.createTransport(process.env.GMAIL);
 var mailOptions;
-var mailCreator = function(name, email, from) {
+var mailCreator = function(id, name, email, from) {
     mailOptions = {
         from: '"Sarah Stowell 👥" <sarahstowell84@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'You have been invited to join Polycule', // Subject line
         text: 'Hi "+name+", you have been invited by'+from+'to join Polycule, the social network for polyamorous people. Please click on the link below to signup', // plaintext body
-        html: '<h1>Hi '+name+'!</h1> <p>You have been invited by '+from+' to join Polycule, the social network for polyamorous people. Please click on the link below to signup</p>' // html body
+        html: '<h1>Hi '+name+'!</h1> <p>You have been invited by '+from+' to join Polycule, the social network for polyamorous people. Click <a href="polyculeuk.herokuapp.com/join?id="'+id+'">here</a> to signup.</p>' // html body
     };
 }
 
@@ -394,6 +394,10 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 		});
 });
 
+app.get('/join', function(req, res) {
+    res.render('signup');
+}
+
 app.get('/', function (req, res) {
 
    if (req.isAuthenticated()) {
@@ -685,7 +689,7 @@ io.sockets.on('connection', function(socket){
                          io.sockets.emit('callToUpdateNodes');
                          
                             // send mail with defined transport object
-                            mailCreator(node.name, node.email, node.from);
+                            mailCreator(node.id, node.name, node.email, node.from);
 							transporter.sendMail(mailOptions, function(error, info){
 								if(error){
 									return console.log(error);
