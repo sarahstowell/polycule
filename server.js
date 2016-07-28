@@ -396,7 +396,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 
 app.get('/join', function(req, res) {
     //res.render('signup');
-    res.send("User: "+JSON.stringify(req.param));
+    res.send("User: "+JSON.stringify(req.query));
 });
 
 app.get('/', function (req, res) {
