@@ -38,7 +38,7 @@ var mailCreator = function(id, name, email, from) {
         to: email, // list of receivers
         subject: 'You have been invited to join Polycule', // Subject line
         text: 'Hi "+name+", you have been invited by'+from+'to join Polycule, the social network for polyamorous people. Please click on the link below to signup', // plaintext body
-        html: '<h1>Hi '+name+'!</h1> <p>You have been invited by '+from+' to join Polycule, the social network for polyamorous people. Click <a href="polyculeuk.herokuapp.com/join?id="'+id+'">here</a> to signup.</p>' // html body
+        html: '<h1>Hi '+name+'!</h1> <p>You have been invited by '+from+' to join Polycule, the social network for polyamorous people. Click <a href="https://polyculeuk.herokuapp.com/join?id="'+id+'">here</a> to signup.</p>' // html body
     };
 }
 
