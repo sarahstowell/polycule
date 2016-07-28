@@ -44,7 +44,7 @@ var mailCreator = function(id, name, email, from) {
 
 
 // S3 File uploads -----------------------------------------------------------------------
-/*
+
 var s3 = new AWS.S3();
 
 var upload = multer({
@@ -70,10 +70,10 @@ var upload = multer({
 		key: function() { return "image1.jpg"; }
     })
 });
-*/
+
 
 // Set destination and filename for uploaded photos --------------------------------------
-
+/*
 var storage = multer.diskStorage({
   destination: './public/photos/original/',
   filename: function (req, file, cb) {
@@ -85,7 +85,7 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage })
-
+*/
 // ---------------------------------------------------------------------------------------
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
