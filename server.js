@@ -33,6 +33,8 @@ app.set('view engine', 'pug');
 var transporter = nodemailer.createTransport(process.env.GMAIL);
 var mailOptions;
 var mailCreator = function(id, name, email, from) {
+    console.log("Mail creator id: ");
+    console.log(id);
     mailOptions = {
         from: '"Sarah Stowell 👥" <sarahstowell84@gmail.com>', // sender address
         to: email, // list of receivers
@@ -687,6 +689,8 @@ io.sockets.on('connection', function(socket){
   	      	        .then(function () {
                          console.log("Node invite updated");
                          io.sockets.emit('callToUpdateNodes');
+                         console.log("socket invite id: ");
+                         console.log(node.id);
                          
                             // send mail with defined transport object
                             mailCreator(node.id, node.name, node.email, node.from);
