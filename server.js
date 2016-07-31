@@ -51,7 +51,9 @@ var mailCreator = function(id, name, email, from) {
 
 // S3 File uploads -----------------------------------------------------------------------
 
-var s3 = new AWS.S3();
+var s3 = new AWS.S3(params: {
+      Bucket: 'polycule'
+    });
 
 var upload = multer({
     storage: multerS3({
