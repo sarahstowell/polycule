@@ -54,7 +54,7 @@ var mailCreator = function(id, name, email, from) {
 
 var storage = s3({
     destination : function( req, file, cb ) {
-        cb( null, '/' );
+        cb( null, 'original' );
     },
 	filename: function (req, file, cb) {
 		crypto.pseudoRandomBytes(16, function (err, raw) {
