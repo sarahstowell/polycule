@@ -17,8 +17,8 @@ var passportSocketIo = require("passport.socketio");
 var jimp = require('jimp');
 var bcrypt = require('bcrypt');
 var path = require('path');
-var multer = require('multer');
 var AWS = require('aws-sdk');
+var multer = require('multer');
 var multerS3 = require('multer-s3');
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
@@ -64,15 +64,15 @@ var upload = multer({
         //metadata: function (req, file, cb) {
         //    cb(null, {fieldName: "Photo"});
         //},
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString())
-        },
         //key: function (req, file, cb) {
-		//    crypto.pseudoRandomBytes(16, function (err, raw) {
-		//	    if (err) return cb(err)
-		//	    cb(null, raw.toString('hex') + path.extname(file.originalname))
-		//	})
-		//}
+        //    cb(null, Date.now().toString())
+        //},
+        key: function (req, file, cb) {
+		    crypto.pseudoRandomBytes(16, function (err, raw) {
+			    if (err) return cb(err)
+			    cb(null, raw.toString('hex') + path.extname(file.originalname))
+			})
+		}
 		//key: function() { return "image1.jpg"; }
     })
 });
