@@ -53,17 +53,18 @@ var mailCreator = function(id, name, email, from) {
 // S3 File uploads -----------------------------------------------------------------------
 var storage = s3({
     destination : function( req, file, cb ) {
-        cb( null, '/original' );
+        cb( null, '/' );
     },
     //filename    : function( req, file, cb ) {  
     //    cb( null, file.fieldname + '-' + Date.now() ); 
     //},
-	filename: function (req, file, cb) {
-		crypto.pseudoRandomBytes(16, function (err, raw) {
-			if (err) return cb(err)
-			cb(null, raw.toString('hex') + path.extname(file.originalname))
-		})
-	},
+	//filename: function (req, file, cb) {
+	//	crypto.pseudoRandomBytes(16, function (err, raw) {
+	//		if (err) return cb(err)
+	//		cb(null, raw.toString('hex') + path.extname(file.originalname))
+	//	})
+	//},
+	filename: function() { return "image1.jpg"; },
     bucket      : 'polycule',
     region      : 'eu-west-1'
 });
