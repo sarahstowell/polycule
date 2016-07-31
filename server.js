@@ -53,7 +53,7 @@ var mailCreator = function(id, name, email, from) {
 // S3 File uploads -----------------------------------------------------------------------
 var storage = s3({
     destination : function( req, file, cb ) {
-        cb( null, '/' );
+        cb( null, '/original' );
     },
     //filename    : function( req, file, cb ) {  
     //    cb( null, file.fieldname + '-' + Date.now() ); 
