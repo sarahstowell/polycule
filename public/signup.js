@@ -217,8 +217,3 @@ var photoTypeNone = function() {
 d3.select("#photoTypeFacebook").on("click", photoTypeFacebook);
 d3.select("#photoTypeCustom").on("click", photoTypeCustom);
 d3.select("#photoTypeNone").on("click", photoTypeNone);
-
-
-// Google maps autocomplete
-var locationInput = document.getElementById('location');
-var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
