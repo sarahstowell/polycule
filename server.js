@@ -19,7 +19,8 @@ var bcrypt = require('bcrypt');
 var path = require('path');
 var AWS = require('aws-sdk');
 var multer = require('multer');
-var multerS3 = require('multer-s3');
+//var multerS3 = require('multer-s3');
+var s3 = require( 'multer-storage-s3' );
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
 var nodemailer = require('nodemailer');
@@ -50,10 +51,29 @@ var mailCreator = function(id, name, email, from) {
 
 
 // S3 File uploads -----------------------------------------------------------------------
+var storage = s3({
+    destination : function( req, file, cb ) {
+        cb( null, '/' );
+    },
+    //filename    : function( req, file, cb ) {  
+    //    cb( null, file.fieldname + '-' + Date.now() ); 
+    //},
+	filename: function (req, file, cb) {
+		crypto.pseudoRandomBytes(16, function (err, raw) {
+			if (err) return cb(err)
+			cb(null, raw.toString('hex') + path.extname(file.originalname))
+		})
+	}
+    bucket      : 'polycule',
+    region      : 'Ireland'
+});
+var upload = multer({ storage: storage });
 
-var s3 = new AWS.S3(params: {
-      Bucket: 'polycule'
-    });
+
+
+
+/*
+var s3 = new AWS.S3(params: {Bucket: 'polycule'});
 
 var upload = multer({
     storage: multerS3({
@@ -79,7 +99,7 @@ var upload = multer({
 		//key: function() { return "image1.jpg"; }
     })
 });
-
+*/
 
 
 // Set destination and filename for uploaded photos --------------------------------------
