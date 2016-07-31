@@ -28,6 +28,12 @@ app.use(helmet());
 
 app.set('view engine', 'pug');
 
+app.get('*',function(req,res,next){ 
+    if(req.headers['x-forwarded-proto'] !== 'https') 
+        res.redirect('https://polycule.co.uk'+req.url) 
+    else next() 
+})
+
 
 // Setup email ---------------------------------------------------------------------------
 var transporter = nodemailer.createTransport(process.env.GMAIL);
@@ -395,8 +401,15 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 });
 
 app.get('/join', function(req, res) {
-    res.render('join');
-    //res.send("User: "+JSON.stringify(req.query.id));
+    db.one("SELECT * FROM nodes WHERE id="+req.query.id)
+    .then(function(node) {
+        res.render('join', {welcomeMessage: "Welcome, "+req.query.id});
+        //res.send("User: "+JSON.stringify(req.query.id));
+    })
+    .catch(function(err) {
+        console.log(err);
+        res.render('join', {welcomeMessage: "New user signup"});
+    });
 });
 
 app.get('/', function (req, res) {
