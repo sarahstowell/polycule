@@ -58,13 +58,13 @@ var storage = s3({
     //filename    : function( req, file, cb ) {  
     //    cb( null, file.fieldname + '-' + Date.now() ); 
     //},
-	//filename: function (req, file, cb) {
-	//	crypto.pseudoRandomBytes(16, function (err, raw) {
-	//		if (err) return cb(err)
-	//		cb(null, raw.toString('hex') + path.extname(file.originalname))
-	//	})
-	//},
-	filename: function() { return "image1.jpg"; },
+	filename: function (req, file, cb) {
+		crypto.pseudoRandomBytes(16, function (err, raw) {
+			if (err) return cb(err)
+			cb(null, raw.toString('hex') + path.extname(file.originalname))
+		})
+	},
+	//filename: function() { return "image1.jpg"; },
     bucket      : 'polycule',
     region      : 'eu-west-1'
 });
