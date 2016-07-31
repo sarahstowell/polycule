@@ -65,7 +65,7 @@ var storage = s3({
 		})
 	},
     bucket      : 'polycule',
-    region      : 'ireland'
+    region      : 'eu-west-1'
 });
 var upload = multer({ storage: storage });
 
