@@ -64,16 +64,16 @@ var upload = multer({
         //metadata: function (req, file, cb) {
         //    cb(null, {fieldName: "Photo"});
         //},
-        //key: function (req, file, cb) {
-        //    cb(null, Date.now().toString())
-        //},
+        key: function (req, file, cb) {
+            cb(null, Date.now().toString())
+        },
         //key: function (req, file, cb) {
 		//    crypto.pseudoRandomBytes(16, function (err, raw) {
 		//	    if (err) return cb(err)
 		//	    cb(null, raw.toString('hex') + path.extname(file.originalname))
 		//	})
 		//}
-		key: function() { return "image1.jpg"; }
+		//key: function() { return "image1.jpg"; }
     })
 });
 
