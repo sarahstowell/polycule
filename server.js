@@ -63,7 +63,7 @@ var storage = s3({
 			if (err) return cb(err)
 			cb(null, raw.toString('hex') + path.extname(file.originalname))
 		})
-	}
+	},
     bucket      : 'polycule',
     region      : 'Ireland'
 });
