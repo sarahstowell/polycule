@@ -19,8 +19,8 @@ var bcrypt = require('bcrypt');
 var path = require('path');
 var AWS = require('aws-sdk');
 var multer = require('multer');
-//var multerS3 = require('multer-s3');
-var s3 = require( 'multer-storage-s3' );
+var multerS3 = require('multer-s3');
+//var s3 = require( 'multer-storage-s3' );
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
 var nodemailer = require('nodemailer');
@@ -51,6 +51,7 @@ var mailCreator = function(id, name, email, from) {
 
 
 // S3 File uploads -----------------------------------------------------------------------
+/*
 var storage = s3({
     destination : function( req, file, cb ) {
         cb( null, '/' );
@@ -69,21 +70,21 @@ var storage = s3({
     region      : 'eu-west-1'
 });
 var upload = multer({ storage: storage });
+*/
 
 
 
 
-/*
-var s3 = new AWS.S3(params: {Bucket: 'polycule'});
+var s3 = new AWS.S3();
 
 var upload = multer({
     storage: multerS3({
         s3: s3,
         //dirname: '/',
         bucket: 'polycule',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        //region: 'Ireland',
+        //secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        //accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        //region: '',
         //acl: 'public-read',
         //metadata: function (req, file, cb) {
         //    cb(null, {fieldName: "Photo"});
@@ -100,7 +101,7 @@ var upload = multer({
 		//key: function() { return "image1.jpg"; }
     })
 });
-*/
+
 
 
 // Set destination and filename for uploaded photos --------------------------------------
@@ -318,11 +319,6 @@ app.get('/signup', function(req, res) {
 
 // Process signup request ----------------------------------------------------------------
 app.post('/signup', upload.single('profilePic'), function (req, res, next) {
-
-    //console.log("Request:");
-    //console.log(this.request.httpRequest);
-    //console.log("Response:");
-    //console.log(this.httpResponse);
 
 	if (req.body.photoType === 'custom' && req.file) { 
 		profilePicEdit(req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
