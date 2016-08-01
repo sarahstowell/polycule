@@ -364,7 +364,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 
 console.log("Profilepic: "+req.session.profilePic);
 console.log("Facebook id: "+req.session.facebookid);
-console.log("Photo type: "+req.body.photoType):
+console.log("Photo type: "+req.body.photoType);
 
 	if (req.body.photoType === 'facebook') {
 		profilePicEdit(photo=req.session.profilePic, facebookid=req.session.facebookid);
