@@ -152,6 +152,7 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 	} else if (filename) {
 	
 		s3.getObject({Bucket: 'polycule', Key: 'filename'}, function(err, data) {
+            if (data) { console.log(data); }
 
 			jimp.read(data).then(function(image) {
 				//image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
