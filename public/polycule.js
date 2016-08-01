@@ -649,7 +649,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					}
 				};
 				xhttp.open("POST", "/update/photo", true);
-				xhttp.send();
+				xhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+				xhttp.send("Hello");
   			    
 
   			    
