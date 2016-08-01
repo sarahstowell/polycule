@@ -553,17 +553,23 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .on("click", function() {
     		    d3.select("#photoEditWindow").style("display",  "none");
 		    });
+		    
+		var reader1 = new FileReader();
+		
+		var newPhoto;
 		
 		d3.select("#savePhotoEdit")
 			.attr("class", "standardButton")
 		    .on("click", function() {
 		    
-				var reader1 = new FileReader();
+				
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 
 				reader1.onload = function (oFREvent) {
 				
 					//var clip = "polygon("+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px)"
+
+					newPhoto = oFREvent.target.result;
 
 					photoEdit.attr("src", oFREvent.target.result);
 					//photoEdit.style("clip-path", clip);
@@ -636,17 +642,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					}
 				};
   			    
-  			    var reader2 = new FileReader();
-				reader2.readAsDataURL(document.getElementById("photoSelect").files[0]);
+  			    //var reader2 = new FileReader();
+				//reader2.readAsDataURL(document.getElementById("photoSelect").files[0]);
 
-				reader2.onload = function (oFREvent) {
-					photoEdit.attr("src", oFREvent.target.result);
+				//reader2.onload = function (oFREvent) {
+				//	photoEdit.attr("src", oFREvent.target.result);
                     xhttp.open("POST", "/update/photo", true);
-                    //xhttp.setRequestHeader("Content-Type", "text/xml");
-                    //xhttp.send(oFREvent.target.result);
-                    				xhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-				xhttp.send("Hello");
-				};
+                    xhttp.setRequestHeader("Content-Type", "text/xml");
+                    xhttp.send(newPhoto);
+				//};
 				
 
                 // AJAX SEND IMAGE TO SERVER
