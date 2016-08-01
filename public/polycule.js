@@ -641,14 +641,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				};
 				*/
 
-                      			    // AJAX SEND IMAGE TO SERVER
+                // AJAX SEND IMAGE TO SERVER
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (xhttp.readyState == 4 && xhttp.status == 200) {
 					   // Action to be performed when the document is read;
 					}
 				};
-				xhttp.open("GET", "/update/photo", true);
+				xhttp.open("POST", "/update/photo", true);
 				xhttp.send();
   			    
 
