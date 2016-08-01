@@ -31,7 +31,7 @@ app.set('view engine', 'pug');
 
 app.get('*',function(req,res,next){ 
     if(req.headers['x-forwarded-proto'] !== 'https') 
-        res.redirect('https://www.polycule.co.uk'+req.url) 
+        res.redirect('https://polycule.co.uk'+req.url) 
     else next() 
 })
 
