@@ -642,8 +642,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				reader2.onload = function (oFREvent) {
 					photoEdit.attr("src", oFREvent.target.result);
                     xhttp.open("POST", "/update/photo", true);
-                    xhttp.setRequestHeader("Content-Type", "text/xml");
-                    xhttp.send(oFREvent.target.result);
+                    //xhttp.setRequestHeader("Content-Type", "text/xml");
+                    //xhttp.send(oFREvent.target.result);
+                    				xhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+				xhttp.send("Hello");
 				};
 				
 
