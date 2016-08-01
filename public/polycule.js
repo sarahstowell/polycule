@@ -644,7 +644,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    
   			    var oReq = new XMLHttpRequest();
 
-				oReq.open("POST", "/update/photo");
+				oReq.open("GET", "/update/photo");
 				oReq.send();
   			    
 
