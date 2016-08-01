@@ -140,8 +140,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 // Function for Photo Editing ------------------------------------------------------------
 var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
-console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
-console.log(photo);
+    console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 	if (facebookid) {
 		jimp.read(photo).then(function(image) {
 			image.write('./public/photos/original/'+facebookid+".jpg");
@@ -151,19 +150,24 @@ console.log(photo);
 			console.log(err);
 		});
 	} else if (filename) {
-		jimp.read(photo).then(function(image) {
-			//image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
-			image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
-			    if (err) { throw err; }
-			    if (newImage) { console.log("New Image sent to buffer"); }
-			    uploadFile("testimage.jpg", newImage);
-			     
+	
+		s3.getObject({Bucket: 'polycule', Key: 'filename'}, function(err, data) {
+
+			jimp.read(data).then(function(image) {
+				//image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
+				image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
+					if (err) { throw err; }
+					if (newImage) { console.log("New Image sent to buffer"); }
+					uploadFile("testimage.jpg", newImage);
+				 
+				});
+				console.log("Image read other photo");
+			}).catch(function (err) {
+				console.log(err);
 			});
-			console.log("Image read other photo");
-		}).catch(function (err) {
-			console.log(err);
 		});
 	}
+	
 };
 
 
