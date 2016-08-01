@@ -65,6 +65,7 @@ var storage = multerS3({
     region      : 'eu-west-1'
 });
 var upload = multer({ storage: storage });
+var singlePhoto = upload.single('userPhoto');
 // ---------------------------------------------------------------------------------------
 AWS.config.update({/*accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY, */region: 'eu-west-1'});
 var s3 = new AWS.S3()
@@ -417,7 +418,7 @@ app.get('/join', function(req, res) {
 
 app.post('/update/photo', function(req, res) {
     console.log("Updated photo received");
-	upload(req,res,function(err) {
+	singlePhoto(req,res,function(err) {
 	if(err) {
 		return res.end("Error uploading file.");
 	}
