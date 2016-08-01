@@ -141,6 +141,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 // Function for Photo Editing ------------------------------------------------------------
 var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
+console.log(photo);
 	if (facebookid) {
 		jimp.read(photo).then(function(image) {
 			image.write('./public/photos/original/'+facebookid+".jpg");
@@ -338,7 +339,7 @@ app.get('/signup', function(req, res) {
 app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
 	if (req.body.photoType === 'custom' && req.file) { 
-		profilePicEdit(req.session.profilePic, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
+		profilePicEdit(photo=req.session.profilePic, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
 		var photourl = null;
