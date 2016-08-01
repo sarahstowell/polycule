@@ -95,6 +95,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
     console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 	if (facebookid) {
+	    console.log("Facebook route taken");
 	    console.log(photo);
 		jimp.read(photo).then(function(image) {
 			image.getBuffer("image/jpeg", function(err, originalImage) {
@@ -110,6 +111,7 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 			console.log(err);
 		});
 	} else if (filename) {
+	    console.log("Other photo route taken");
 	    console.log(filename);
 		s3.getObject({Bucket: 'polycule', Key: 'original/'+filename}, function(err, data) {
 		    if (err) { console.log(err); }
