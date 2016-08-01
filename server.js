@@ -417,7 +417,6 @@ app.get('/join', function(req, res) {
 
 app.post('/update/photo', function(req, res) {
     console.log("AJAX REceived");
-    console.log("Request: "+JSON.stringify(req));
 });
 
 app.get('/', function (req, res) {
