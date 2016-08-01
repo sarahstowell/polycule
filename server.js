@@ -415,7 +415,7 @@ app.get('/join', function(req, res) {
     });
 });
 
-app.get('/update/photo', function(req, res) {
+app.post('/update/photo', function(req, res) {
     console.log("Request: "+JSON.stringify(req));
 });
 
