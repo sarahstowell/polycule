@@ -526,16 +526,16 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				.attr("class", "profilepic")
 				.attr("src", "https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
 				.attr("id", "profilepicedit")
-				.property("accept", "image/*");
-				/*
+				.property("accept", "image/*")
+				
 				.style("cursor", "pointer")
 				.on("click", function() {
-					imgsrc = "/photos/original/"+nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo;
+					imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo;
 					coords = nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photocoords;
 					addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
 					d3.select("#photoEditWindow").style("display",  "block");
 				});
-				*/
+				
 		
 		} else {
 		
