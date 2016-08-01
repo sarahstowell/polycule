@@ -51,7 +51,6 @@ var mailCreator = function(id, name, email, from) {
 
 
 // S3 File uploads -----------------------------------------------------------------------
-
 var storage = multerS3({
     destination : function( req, file, cb ) {
         cb( null, 'original' );
@@ -67,7 +66,6 @@ var storage = multerS3({
 });
 var upload = multer({ storage: storage });
 // ---------------------------------------------------------------------------------------
-
 AWS.config.update({/*accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY, */region: 'eu-west-1'});
 var s3 = new AWS.S3()
 
@@ -84,53 +82,6 @@ function uploadFile(remoteFilename, buffer) {
     console.log(arguments);
   });
 }
-
-
-/*
-var s3 = new AWS.S3();
-
-var upload = multer({
-    storage: multerS3({
-        s3: s3,
-        //dirname: '/',
-        bucket: 'polycule',
-        //secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        //accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        //region: '',
-        //acl: 'public-read',
-        //metadata: function (req, file, cb) {
-        //    cb(null, {fieldName: "Photo"});
-        //},
-        //key: function (req, file, cb) {
-        //    cb(null, Date.now().toString())
-        //},
-        key: function (req, file, cb) {
-		    crypto.pseudoRandomBytes(16, function (err, raw) {
-			    if (err) return cb(err)
-			    cb(null, raw.toString('hex') + path.extname(file.originalname))
-			})
-		}
-		//key: function() { return "image1.jpg"; }
-    })
-});
-*/
-
-
-
-// Set destination and filename for uploaded photos --------------------------------------
-/*
-var storage = multer.diskStorage({
-  destination: './public/photos/original/',
-  filename: function (req, file, cb) {
-    crypto.pseudoRandomBytes(16, function (err, raw) {
-      if (err) return cb(err)
-      cb(null, raw.toString('hex') + path.extname(file.originalname))
-    })
-  }
-})
-
-var upload = multer({ storage: storage })
-*/
 // ---------------------------------------------------------------------------------------
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
@@ -145,8 +96,14 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
     console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 	if (facebookid) {
 		jimp.read(photo).then(function(image) {
-			image.write('./public/photos/original/'+facebookid+".jpg");
-			image.resize(225, 225).quality(100).write('./public/photos/final/'+facebookid+".jpg", function(err) { console.log(err); });
+			image.getBuffer("image/jpeg", function(err, originalImage) {
+				if (err) { throw err; }
+				uploadFile('original/'+facebookid+'.jpg', originalImage);
+			});
+			image.resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, finalImage) {
+				if (err) { throw err; }
+				uploadFile('final/'+facebookid+'.jpg', finalImage);
+			});
 			console.log("Image read facebook");
 		}).catch(function (err) {
 			console.log(err);
@@ -159,7 +116,6 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
             if (data) { console.log(data); }
 
 			jimp.read(data.Body).then(function(image) {
-				//image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
 				image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
 					if (err) { throw err; }
 					if (newImage) { console.log("New Image sent to buffer"); }

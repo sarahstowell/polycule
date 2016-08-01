@@ -1,8 +1,6 @@
 High Priority:
-    !!! Setup S3
     !!! Resolve photo coordinates issue
 	!!! Update profile photo (ajax?)
-	!!! Get SSL Certificate working for polycule.co.uk
 	!!! Safari animation issue
 
 	Template main index page and take api key out
