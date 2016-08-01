@@ -153,24 +153,24 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 		});
 	} else if (filename) {
 	    console.log(filename);
-		s3.getObject({Bucket: 'polycule', Key: '0d8a53c643fbc7ff52eff87bbf424ecf.jpg'}, function(err, data) {
+		s3.getObject({Bucket: 'polycule', Key: 'original/'+filename}, function(err, data) {
 		    if (err) { console.log(err); }
             if (data) { console.log('image read from s3'); } 
             if (data) { console.log(data); }
-/*
+
 			jimp.read(data).then(function(image) {
 				//image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
 				image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
 					if (err) { throw err; }
 					if (newImage) { console.log("New Image sent to buffer"); }
-					uploadFile("testimage.jpg", newImage);
+					uploadFile('final/'+filename, newImage);
 				 
 				});
 				console.log("Image read other photo");
 			}).catch(function (err) {
 				console.log(err);
 			});
-			*/
+			
 		});
 	}
 	
