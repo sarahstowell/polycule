@@ -644,6 +644,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
   			    // AJAX SEND IMAGE TO SERVER
   			    
+  			    var oReq = new XMLHttpRequest();
+
+				oReq.open("POST", "/update/photo");
+				oReq.send("Hello");
+  			    
 
   			    
   		    });
