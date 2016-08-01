@@ -628,7 +628,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    restart();
   			    
   			    socket.emit('nodeEdit', {"id": node, "name": newName, "location": newLocation, "description": newDescription});
-  			    
+  			    /*
   			    xhttp = new XMLHttpRequest();
   			    
   			    var reader2 = new FileReader();
@@ -639,13 +639,17 @@ socket.on('nodesAndLinks', function(dataPackage) {
                     xhttp.open("POST", "/update/photo", true);
                     xhttp.send(oFREvent.target.result);
 				};
+				*/
 
                       			    // AJAX SEND IMAGE TO SERVER
-  			    
-  			    var oReq = new XMLHttpRequest();
-
-				oReq.open("GET", "/update/photo");
-				oReq.send();
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (xhttp.readyState == 4 && xhttp.status == 200) {
+					   // Action to be performed when the document is read;
+					}
+				};
+				xhttp.open("GET", "/update/photo", true);
+				xhttp.send();
   			    
 
   			    
