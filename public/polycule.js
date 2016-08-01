@@ -527,7 +527,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				.attr("src", "https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
 				.attr("id", "profilepicedit")
 				.property("accept", "image/*")
-				
 				.style("cursor", "pointer")
 				.on("click", function() {
 					imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo;

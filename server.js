@@ -415,6 +415,10 @@ app.get('/join', function(req, res) {
     });
 });
 
+app.get('/update/photo', function(req, res) {
+    console.log("Request: "+JSON.stringify(req));
+});
+
 app.get('/', function (req, res) {
 
    if (req.isAuthenticated()) {

@@ -2,12 +2,10 @@ High Priority:
     !!! Resolve photo coordinates issue
 	!!! Update profile photo (ajax?)
 	!!! Safari animation issue
-
-	Template main index page and take api key out
-	Should google API key be shown in browser of signup forms?
+	!!! Fix www.
 
 Medium Priority:
-	
+	Template main index page and take api key out
     Login with email address
 	Standard signups
 		Get photo to populate with pug
