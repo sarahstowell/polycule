@@ -20,7 +20,7 @@ var path = require('path');
 var AWS = require('aws-sdk');
 var multer = require('multer');
 //var multerS3 = require('multer-s3');
-var s3 = require( 'multer-storage-s3' );
+var multerS3 = require( 'multer-storage-s3' );
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security
 var nodemailer = require('nodemailer');
@@ -52,7 +52,7 @@ var mailCreator = function(id, name, email, from) {
 
 // S3 File uploads -----------------------------------------------------------------------
 
-var storage = s3({
+var storage = multerS3({
     destination : function( req, file, cb ) {
         cb( null, 'original' );
     },
@@ -66,8 +66,22 @@ var storage = s3({
     region      : 'eu-west-1'
 });
 var upload = multer({ storage: storage });
+// ---------------------------------------------------------------------------------------
+var s3 = new AWS.S3()
 
-
+function uploadFile(remoteFilename, buffer) {
+  
+  s3.putObject({
+    ACL: 'public-read',
+    Bucket: 'polycule',
+    Key: remoteFilename,
+    Body: buffer
+    //ContentType: metaData
+  }, function(error, response) {
+    console.log('uploaded file to [' + remoteFilename + ']');
+    console.log(arguments);
+  });
+}
 
 
 /*
@@ -125,7 +139,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 
 // Function for Photo Editing ------------------------------------------------------------
-var profilePicEdit = function(photo, facebookid, x1, y1, x2, y2) {
+var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 	if (facebookid) {
 		jimp.read(photo).then(function(image) {
@@ -135,9 +149,14 @@ console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 		}).catch(function (err) {
 			console.log(err);
 		});
-	} else {
-		jimp.read("./public/photos/original/"+photo).then(function(image) {
-			image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
+	} else if (filename) {
+		jimp.read(photo).then(function(image) {
+			//image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
+			image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
+			    if (err) { throw err; }
+			    uploadFile("testimage.jpg", newImage);
+			     
+			});
 			console.log("Image read other photo");
 		}).catch(function (err) {
 			console.log(err);
@@ -318,7 +337,7 @@ app.get('/signup', function(req, res) {
 app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
 	if (req.body.photoType === 'custom' && req.file) { 
-		profilePicEdit(req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
+		profilePicEdit(req.session.profilePic, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
 		var photourl = null;
@@ -375,7 +394,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 		profilePicEdit(req.session.profilePic, facebookid=req.session.facebookid);
 		var photourl = req.session.facebookid+".jpg";
 	} else if (req.body.photoType === 'custom' && req.file) { 
-		profilePicEdit(req.file.filename, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
+		profilePicEdit(req.session.profilePic, filename=req.file.filename, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
 		var photourl = null;
