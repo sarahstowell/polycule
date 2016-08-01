@@ -67,6 +67,8 @@ var storage = multerS3({
 });
 var upload = multer({ storage: storage });
 // ---------------------------------------------------------------------------------------
+
+AWS.config.update(/*{accessKeyId: 'akid', secretAccessKey: 'secret'}*/{region: 'eu-west-1'});
 var s3 = new AWS.S3()
 
 function uploadFile(remoteFilename, buffer) {
