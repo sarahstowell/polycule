@@ -416,8 +416,14 @@ app.get('/join', function(req, res) {
 });
 
 app.post('/update/photo', function(req, res) {
-    console.log("AJAX Received");
-    console.log(JSON.stringify(req));
+    console.log("Updated photo received");
+	upload(req,res,function(err) {
+	if(err) {
+		return res.end("Error uploading file.");
+	}
+	res.end("File is uploaded");
+	console.log("Filename: "+req.file.filename);
+});
 });
 
 app.get('/', function (req, res) {
