@@ -397,7 +397,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (displayNodeData.photo !== null) {
                 sidepanel.append("img")
                     .attr("class", "profilepic")
-                    .attr("src", "/photos/final/"+displayNodeData.photo);
+                    .attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo);
             }
 
             // Add user location
@@ -524,7 +524,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 			var photoEdit = centerdiv.append("img")
 				.attr("class", "profilepic")
-				.attr("src", "/photos/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
+				.attr("src", "https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
 				.attr("id", "profilepicedit")
 				.property("accept", "image/*");
 				/*
