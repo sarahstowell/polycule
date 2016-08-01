@@ -359,10 +359,10 @@ app.get('/signup/facebook', function(req, res) {
 app.post('/signup/facebook', upload.single('profilePic'), function (req, res, next) {
 
 	if (req.body.photoType === 'facebook') {
-		profilePicEdit(req.session.profilePic, facebookid=req.session.facebookid);
+		profilePicEdit(photo=req.session.profilePic, facebookid=req.session.facebookid);
 		var photourl = req.session.facebookid+".jpg";
 	} else if (req.body.photoType === 'custom' && req.file) { 
-		profilePicEdit(req.session.profilePic, filename=req.file.filename, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
+		profilePicEdit(photo=req.session.profilePic, filename=req.file.filename, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
 		var photourl = null;
