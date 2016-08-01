@@ -94,6 +94,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 // Function for Photo Editing ------------------------------------------------------------
 var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
     console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
+    console.log("Facebook id: "+facebookid);
 	if (facebookid) {
 	    console.log("Facebook route taken");
 	    console.log(photo);
@@ -361,8 +362,8 @@ app.get('/signup/facebook', function(req, res) {
 // Process facebook signup request -------------------------------------------------------
 app.post('/signup/facebook', upload.single('profilePic'), function (req, res, next) {
 
-console.log("Facebook id: ");
-console.log(req.session.facebookid);
+console.log("Profilepic: ");
+console.log(req.session.profilePic);
 
 	if (req.body.photoType === 'facebook') {
 		profilePicEdit(photo=req.session.profilePic, facebookid=req.session.facebookid);
