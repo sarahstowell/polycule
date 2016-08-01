@@ -154,6 +154,7 @@ console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
 			//image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).write('./public/photos/final/'+photo, function(err) { console.log(err); });
 			image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
 			    if (err) { throw err; }
+			    if (newImage) { console.log("New Image sent to buffer"); }
 			    uploadFile("testimage.jpg", newImage);
 			     
 			});
