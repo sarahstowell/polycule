@@ -361,12 +361,13 @@ app.get('/signup/facebook', function(req, res) {
 // Process facebook signup request -------------------------------------------------------
 app.post('/signup/facebook', upload.single('profilePic'), function (req, res, next) {
 
+console.log("Facebook id: ");
+console.log(req.session.facebookid);
+
 	if (req.body.photoType === 'facebook') {
-	    console.log("photo type facebook");
 		profilePicEdit(photo=req.session.profilePic, facebookid=req.session.facebookid);
 		var photourl = req.session.facebookid+".jpg";
 	} else if (req.body.photoType === 'custom' && req.file) { 
-	    console.log("photo type other");
 		profilePicEdit(photo=req.session.profilePic, filename=req.file.filename, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
