@@ -628,8 +628,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    restart();
   			    
   			    socket.emit('nodeEdit', {"id": node, "name": newName, "location": newLocation, "description": newDescription});
-  			    /*
+  			    
   			    xhttp = new XMLHttpRequest();
+  			    xhttp.onreadystatechange = function() {
+					if (xhttp.readyState == 4 && xhttp.status == 200) {
+					   // Action to be performed when the document is read;
+					}
+				};
   			    
   			    var reader2 = new FileReader();
 				reader2.readAsDataURL(document.getElementById("photoSelect").files[0]);
@@ -637,11 +642,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				reader2.onload = function (oFREvent) {
 					photoEdit.attr("src", oFREvent.target.result);
                     xhttp.open("POST", "/update/photo", true);
+                    xhttp.setRequestHeader("Content-Type", "text/xml");
                     xhttp.send(oFREvent.target.result);
 				};
-				*/
+				
 
                 // AJAX SEND IMAGE TO SERVER
+                /*
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -651,7 +658,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				xhttp.open("POST", "/update/photo", true);
 				xhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
 				xhttp.send("Hello");
-  			    
+  			    */
 
   			    
   		    });
