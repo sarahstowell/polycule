@@ -150,7 +150,7 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 			console.log(err);
 		});
 	} else if (filename) {
-	
+	    console.log(filename);
 		s3.getObject({Bucket: 'polycule', Key: 'filename'}, function(err, data) {
             if (data) { console.log('image read from s3'); } 
             if (data) { console.log(data); }
