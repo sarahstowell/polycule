@@ -31,7 +31,7 @@ app.set('view engine', 'pug');
 
 app.get('*',function(req,res,next){ 
     if(req.headers['x-forwarded-proto'] !== 'https') 
-        res.redirect('https://polycule.co.uk'+req.url) 
+        res.redirect('https://www.polycule.co.uk'+req.url) 
     else next() 
 })
 
@@ -93,11 +93,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 // Function for Photo Editing ------------------------------------------------------------
 var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
-    console.log("Image coords: ("+x1+", "+y1+", "+x2+", "+y2+")");
-    console.log("Facebook id: "+facebookid);
+
 	if (facebookid) {
-	    console.log("Facebook route taken");
-	    console.log(photo);
 		jimp.read(photo).then(function(image) {
 			image.getBuffer("image/jpeg", function(err, originalImage) {
 				if (err) { throw err; }
@@ -112,8 +109,6 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 			console.log(err);
 		});
 	} else if (filename) {
-	    console.log("Other photo route taken");
-	    console.log(filename);
 		s3.getObject({Bucket: 'polycule', Key: 'original/'+filename}, function(err, data) {
 		    if (err) { console.log(err); }
             if (data) { console.log('image read from s3'); } 
