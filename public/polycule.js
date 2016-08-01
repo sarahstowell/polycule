@@ -635,14 +635,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				reader2.readAsDataURL(document.getElementById("photoSelect").files[0]);
 
 				reader2.onload = function (oFREvent) {
-			
 					photoEdit.attr("src", oFREvent.target.result);
                     xhttp.open("POST", "/update/photo", true);
                     xhttp.send(oFREvent.target.result);
-					
 				};
 
-  			    // AJAX SEND IMAGE TO SERVER
+                      			    // AJAX SEND IMAGE TO SERVER
   			    
   			    var oReq = new XMLHttpRequest();
 
