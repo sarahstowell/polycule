@@ -415,8 +415,8 @@ app.get('/join', function(req, res) {
     });
 });
 
-app.post('/update/photo', function(req, res) {
-    console.log("AJAX REceived");
+app.get('/update/photo', function(req, res) {
+    console.log("AJAX Received");
 });
 
 app.get('/', function (req, res) {
