@@ -652,6 +652,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				var data = new FormData();
 				//data.append('photo', newPhoto, 'image1.png');
 				data.append('name1', 'hello');
+				data.append('photo', newPhoto);
 				
                     xhttp.open("POST", "/update/photo", true);
                     //xhttp.setRequestHeader("Content-Type", "multipart/form-data");
