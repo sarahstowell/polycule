@@ -529,7 +529,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			img.onload = function () {
 				var canvas = document.getElementById('canvas1');
 				var ctx = canvas.getContext('2d');
-				ctx.drawImage(img);
+				ctx.drawImage(img, 0, 0, 225, 225, 0, 0, 225, 225);
 			}
 	    
 	    
