@@ -563,7 +563,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .on("click", function() {
 		    
 				
-				reader1.readAsArrayBuffer(document.getElementById("photoSelect").files[0]);
+				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 
 				reader1.onload = function (oFREvent) {
 				
@@ -652,7 +652,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				var data = new FormData();
 				//data.append('photo', newPhoto, 'image1.png');
 				data.append('name1', 'hello');
-				data.append('photo', newPhoto, "photo1.png");
+				data.append('photo', document.getElementById("photoSelect").files[0]);
 				
                     xhttp.open("POST", "/update/photo", true);
                     //xhttp.setRequestHeader("Content-Type", "multipart/form-data");
