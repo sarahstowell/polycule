@@ -521,13 +521,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			
 	    // Add user photo
 	    if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {
-	  	    var canvas = centerdiv.append("canvas")
+	  	    centerdiv.append("canvas")
 				.attr("id", "canvas1"); 
 				  
 			var img=document.createElement('img');
 			img.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
 			img.onload = function () {
-				var canvas = document.getElementById('myCanvas');
+				var canvas = document.getElementById('canvas1');
 				var ctx = canvas.getContext('2d');
 				ctx.drawImage(img);
 			}
