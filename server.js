@@ -419,7 +419,7 @@ app.get('/join', function(req, res) {
 app.post('/update/photo', upload.single('photo'), function(req, res) {
 
     var newPhoto = req.body.photo;
-    uploadFile("test1.png", buffer);
+    uploadFile("test1.png", newPhoto);
     console.log("Updated photo received");
 
 	//singlePhoto(req,res,function(err) {
