@@ -418,13 +418,14 @@ app.get('/join', function(req, res) {
 
 app.post('/update/photo', function(req, res) {
     console.log("Updated photo received");
-	singlePhoto(req,res,function(err) {
-	if(err) {
-		return res.end("Error uploading file.");
-	}
-	res.end("File is uploaded");
-	console.log("Filename: "+req.file.filename);
-});
+    console.log(req.body);
+	//singlePhoto(req,res,function(err) {
+	//	if(err) {
+	//		return res.end("Error uploading file.");
+	//	}
+	//	res.end("File is uploaded");
+	//	console.log("Filename: "+req.file.filename);
+	//});
 });
 
 app.get('/', function (req, res) {
