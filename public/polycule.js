@@ -648,13 +648,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				//reader2.onload = function (oFREvent) {
 				//	photoEdit.attr("src", oFREvent.target.result);
 				
-				var file = new Blob(newPhoto, { type: 'image/png' });
+				//var file = new Blob(newPhoto, { type: 'image/png' });
 				var data = new FormData();
-				data.append('photo', file, 'image1.png');
+				data.append('photo', newPhoto, 'image1.png');
 				
                     xhttp.open("POST", "/update/photo", true);
                     xhttp.setRequestHeader("Content-Type", "multipart/form-data");
-                    xhttp.send(newPhoto);
+                    xhttp.send(data);
 				//};
 				
 
