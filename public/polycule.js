@@ -577,7 +577,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					var canvas = document.getElementById("canvas1");
     				var ctx = canvas.getContext("2d");
     				var img = document.getElementById("profilepicedit");
-    				ctx.drawImage(img,50,50, 200, 200);
+    				ctx.drawImage(img,sx=50,sy=50, swidth=50, sheight=50);
 					
 				};
 						    
