@@ -418,7 +418,7 @@ app.get('/join', function(req, res) {
 
 app.post('/update/photo', function(req, res) {
     console.log("Updated photo received");
-    console.log(req.body);
+    console.log("FIles: "+JSON.stringify(req.files));
 	//singlePhoto(req,res,function(err) {
 	//	if(err) {
 	//		return res.end("Error uploading file.");
