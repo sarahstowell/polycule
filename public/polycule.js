@@ -521,6 +521,31 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			
 	    // Add user photo
 	    if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {
+	  	    var canvas = centerdiv.append("canvas")
+				.attr("id", "canvas1"); 
+				  
+			var img=document.createElement('img');
+			img.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
+			img.onload = function () {
+				var canvas = document.getElementById('myCanvas');
+				var ctx = canvas.getContext('2d');
+				ctx.drawImage(img);
+			}
+	    
+	    
+
+		/*			    
+					//var canvas = document.getElementById("canvas1");
+    		var ctx = canvas.getContext("2d");
+    		var img = document.getElementById("profilepicedit");
+    				
+    				var sx = document.getElementById("x1").value;
+    				var sy = document.getElementById("y1").value;
+    			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value;
+    				var sheight = document.getElementById("y2").value-document.getElementById("y1").value;
+    				
+    				ctx.drawImage(img,sx,sy,swidth,sheight,0,0,swidth,sheight);
+	    
 	    
 			var photoEdit = centerdiv.append("img")
 				.attr("class", "profilepic")
@@ -535,7 +560,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
 					d3.select("#photoEditWindow").style("display",  "block");
 				});
-				
+			*/	
 		
 		} else {
 		
@@ -565,7 +590,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				reader1.onload = function (oFREvent) {
 				
 					//var clip = "polygon("+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px)"
-
+/*
 					photoEdit.attr("src", oFREvent.target.result);
 					//photoEdit.style("clip-path", clip);
 					photoEdit.style("width", "225px");
@@ -577,7 +602,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					var canvas = document.getElementById("canvas1");
     				var ctx = canvas.getContext("2d");
     				var img = document.getElementById("profilepicedit");
-    				
+    				*/
     				var sx = document.getElementById("x1").value;
     				var sy = document.getElementById("y1").value;
     			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value;
