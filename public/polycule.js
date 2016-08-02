@@ -644,6 +644,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					};
 				
 					var data = new FormData();
+					data.append('id', node);
 					data.append('x1', document.getElementById("x1").value);
 					data.append('y1', document.getElementById("y1").value);
 					data.append('x2', document.getElementById("x2").value);

@@ -420,10 +420,9 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
     console.log("Updated photo received");
 	profilePicEdit(photo=req.session.photo, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 	var photourl = req.file.filename; 
-	console.log(photourl);
-	console.log(req.body.x1);
+	var photocoords = {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)};
 	
-	//db.one("UPDATE nodes where i
+	db.one("UPDATE nodes SET (photo, photocoords) = ($2, $3) WHERE id = $1", [req.body.id, photourl, photocoords]);
 	
 // Update database with new filename
 // Delete old photo
