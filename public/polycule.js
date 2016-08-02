@@ -635,45 +635,24 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    
   			    socket.emit('nodeEdit', {"id": node, "name": newName, "location": newLocation, "description": newDescription});
   			    
-  			    xhttp = new XMLHttpRequest();
-  			    xhttp.onreadystatechange = function() {
-					if (xhttp.readyState == 4 && xhttp.status == 200) {
-					   // Action to be performed when the document is read;
-					}
-				};
-  			    
-  			    //var reader2 = new FileReader();
-				//reader2.readAsDataURL(document.getElementById("photoSelect").files[0]);
-
-				//reader2.onload = function (oFREvent) {
-				//	photoEdit.attr("src", oFREvent.target.result);
+  			    // Send photo to server
+  			    if (document.getElementById("photoSelect").files[0]) {
+					xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if (xhttp.readyState == 4 && xhttp.status == 200) {
+						}
+					};
 				
-				//var file = new Blob(newPhoto, { type: 'image/png' });
-				var data = new FormData();
-				//data.append('photo', newPhoto, 'image1.png');
-				data.append('name1', 'hello');
-				data.append('photo', document.getElementById("photoSelect").files[0]);
+					var data = new FormData();
+					data.append('x1', document.getElementById("x1").value);
+					data.append('y1', document.getElementById("y1").value);
+					data.append('x2', document.getElementById("x2").value);
+					data.append('y2', document.getElementById("y2").value);
+					data.append('photo', document.getElementById("photoSelect").files[0]);
 				
-                    xhttp.open("POST", "/update/photo", true);
-                    //xhttp.setRequestHeader("Content-Type", "multipart/form-data");
-                    xhttp.send(data);
-				//};
-				
-
-                // AJAX SEND IMAGE TO SERVER
-                /*
-				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function() {
-					if (xhttp.readyState == 4 && xhttp.status == 200) {
-					   // Action to be performed when the document is read;
-					}
-				};
-				xhttp.open("POST", "/update/photo", true);
-				xhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-				xhttp.send("Hello");
-  			    */
-
-  			    
+					xhttp.open("POST", "/update/photo", true);
+					xhttp.send(data);  
+				}			    
   		    });
     }
 

@@ -21,6 +21,7 @@ Medium Priority:
 	Stray non-member nodes
 	Mixed case usernames?
 	Fix width of top banner
+	Delete old photo when user deletes account
 
 Low Priority:
     Optimise node update algorithm

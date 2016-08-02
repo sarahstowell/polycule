@@ -417,10 +417,16 @@ app.get('/join', function(req, res) {
 });
 
 app.post('/update/photo', upload.single('photo'), function(req, res) {
-    //var newPhoto = req.body.photo;
-    //uploadFile("original/"+"testName", newPhoto);
     console.log("Updated photo received");
-    console.log("Files: "+JSON.stringify(req.file));
+	profilePicEdit(photo=req.session.photo, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
+	var photourl = req.file.filename; 
+	console.log(photourl);
+	console.log(req.body.x1);
+	
+	//db.one("UPDATE nodes where i
+	
+// Update database with new filename
+// Delete old photo
 
 });
 
@@ -461,6 +467,9 @@ app.get('/delete', function(req, res){
 		.catch(function (error) {
 			console.log("ERROR:", error.message || error);
 		});
+		
+	// DELETE OLD PHOTO!!!	
+		
 });
 
 // ============================= WEB SOCKETS =============================================
