@@ -633,8 +633,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			
   			    restart();
   			    
-  			    socket.emit('nodeEdit', {"id": node, "name": newName, "location": newLocation, "description": newDescription});
-  			    
   			    // Send photo to server
   			    if (document.getElementById("photoSelect").files[0]) {
 					xhttp = new XMLHttpRequest();
@@ -653,7 +651,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 					xhttp.open("POST", "/update/photo", true);
 					xhttp.send(data);  
-				}			    
+				}
+				
+				socket.emit('nodeEdit', {"id": node, "name": newName, "location": newLocation, "description": newDescription});			    
+  		    
   		    });
     }
 
