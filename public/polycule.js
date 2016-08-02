@@ -520,43 +520,28 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].username);
 			
 	    // Add user photo
-	    if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {
-	  	    centerdiv.append("canvas")
-				.attr("id", "canvas1")
-				.style("cursor", "pointer")
-				.on("click", function() {
-					imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
-					coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
-					addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
-					d3.select("#photoEditWindow").style("display",  "block");
-				}); 
-				
-			var canvas = document.getElementById('canvas1');
-	        var ctx = canvas.getContext('2d');	  
+	    
+		centerdiv.append("canvas")
+			.attr("id", "canvas1")
+			.style("cursor", "pointer")
+			.on("click", function() {
+				imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
+				coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
+				addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
+				d3.select("#photoEditWindow").style("display",  "block");
+			}); 
+			
+		var canvas = document.getElementById('canvas1');
+		var ctx = canvas.getContext('2d');	  
+	        
+	   if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {     
 			var img=document.createElement('img');
 			img.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
 			img.onload = function () {
 				ctx.drawImage(img, 0, 0, 225, 225, 0, 0, 225, 225);
 			}
-	    
-	
-		/*			    
-			var photoEdit = centerdiv.append("img")
-				.attr("class", "profilepic")
-				.attr("src", "https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
-				.attr("id", "profilepicedit")
-				.property("accept", "image/*")
-				.style("cursor", "pointer")
-				.on("click", function() {
-					imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
-					window.alert(imgsrc);
-					coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
-					addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
-					d3.select("#photoEditWindow").style("display",  "block");
-				});
-			*/	
 		
-		} else {
+		} /*else {
 		
 		    centerdiv.append("p")
 		        .text("Add profile picture")
@@ -564,7 +549,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
    	 		        d3.select("#photoEditWindow").style("display",  "block");
 		        });
 		        
-		}
+		}*/
 		
 		
 	    d3.select("#closePhotoEdit")
@@ -582,28 +567,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 				reader1.onload = function (oFREvent) {
-				
-					//var clip = "polygon("+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px)"
-/*
-					photoEdit.attr("src", oFREvent.target.result);
-					//photoEdit.style("clip-path", clip);
-					photoEdit.style("width", "225px");
-					photoEdit.style("height", "225px");
-					
-					centerdiv.append("canvas")
-					    .attr("id", "canvas1");
-					    
-					var canvas = document.getElementById("canvas1");
-    				var ctx = canvas.getContext("2d");
-    				var img = document.getElementById("profilepicedit");
-    				*/
     				var sx = document.getElementById("x1").value;
     				var sy = document.getElementById("y1").value;
     			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value;
     				var sheight = document.getElementById("y2").value-document.getElementById("y1").value;
     				
     				ctx.drawImage(img,sx,sy,swidth,sheight,0,0,225,225);
-					
 				};
 						    
     		    d3.select("#photoEditWindow").style("display",  "none");
