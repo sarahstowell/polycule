@@ -577,7 +577,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					var canvas = document.getElementById("canvas1");
     				var ctx = canvas.getContext("2d");
     				var img = document.getElementById("profilepicedit");
-    				ctx.drawImage(img,sx=50,sy=50, swidth=50, sheight=50, 0, 0, 50, 50);
+    				
+    				var sx = document.getElementById("x1").value;
+    				var sy = document.getElementById("y1").value;
+    			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value;
+    				var sheight = document.getElementById("y2").value-document.getElementById("y1").value;
+    				
+    				ctx.drawImage(img,sx,sy,swidth,sheight,0,0,swidth,sheight);
 					
 				};
 						    
