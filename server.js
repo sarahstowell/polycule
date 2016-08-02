@@ -417,18 +417,11 @@ app.get('/join', function(req, res) {
 });
 
 app.post('/update/photo', upload.single('photo'), function(req, res) {
-
-    var newPhoto = req.body.photo;
-    uploadFile("test1.png", newPhoto);
+    //var newPhoto = req.body.photo;
+    //uploadFile("original/"+"testName", newPhoto);
     console.log("Updated photo received");
+    console.log("Files: "+JSON.stringify(req.file));
 
-	//singlePhoto(req,res,function(err) {
-	//	if(err) {
-	//		return res.end("Error uploading file.");
-	//	}
-	//	res.end("File is uploaded");
-	//	console.log("Filename: "+req.file.filename);
-	//});
 });
 
 app.get('/', function (req, res) {
