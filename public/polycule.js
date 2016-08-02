@@ -530,12 +530,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
 					d3.select("#photoEditWindow").style("display",  "block");
 				}); 
-				  
+				
+			var canvas = document.getElementById('canvas1');
+	        var ctx = canvas.getContext('2d');	  
 			var img=document.createElement('img');
 			img.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
 			img.onload = function () {
-				var canvas = document.getElementById('canvas1');
-				var ctx = canvas.getContext('2d');
 				ctx.drawImage(img, 0, 0, 225, 225, 0, 0, 225, 225);
 			}
 	    
@@ -602,7 +602,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value;
     				var sheight = document.getElementById("y2").value-document.getElementById("y1").value;
     				
-    				ctx.drawImage(img,sx,sy,swidth,sheight,0,0,swidth,sheight);
+    				ctx.drawImage(img,sx,sy,swidth,sheight,0,0,225,225);
 					
 				};
 						    
