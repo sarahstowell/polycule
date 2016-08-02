@@ -539,21 +539,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				ctx.drawImage(img, 0, 0, 225, 225, 0, 0, 225, 225);
 			}
 	    
-	    
-
+	
 		/*			    
-					//var canvas = document.getElementById("canvas1");
-    		var ctx = canvas.getContext("2d");
-    		var img = document.getElementById("profilepicedit");
-    				
-    				var sx = document.getElementById("x1").value;
-    				var sy = document.getElementById("y1").value;
-    			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value;
-    				var sheight = document.getElementById("y2").value-document.getElementById("y1").value;
-    				
-    				ctx.drawImage(img,sx,sy,swidth,sheight,0,0,swidth,sheight);
-	    
-	    
 			var photoEdit = centerdiv.append("img")
 				.attr("class", "profilepic")
 				.attr("src", "https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo)
