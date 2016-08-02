@@ -30,6 +30,7 @@ Low Priority:
 	Logout when user closes window (unless box ticked)
 	Google login
 	Check whether location widget favours nearby places outside of UK
+	Remove user data from session after facebook signup
 
 Issues for when there are more users:
 	Zoom buttons

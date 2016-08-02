@@ -647,6 +647,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 				//reader2.onload = function (oFREvent) {
 				//	photoEdit.attr("src", oFREvent.target.result);
+				window.alert(JSON.stringify(newPhoto));
+				
                     xhttp.open("POST", "/update/photo", true);
                     xhttp.setRequestHeader("Content-Type", "text/xml");
                     xhttp.send(newPhoto);
