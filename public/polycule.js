@@ -563,7 +563,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .on("click", function() {
 		    
 				
-				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
+				reader1.readAsArrayBuffer(document.getElementById("photoSelect").files[0]);
 
 				reader1.onload = function (oFREvent) {
 				
