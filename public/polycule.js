@@ -653,7 +653,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				data.append('photo', newPhoto, 'image1.png');
 				
                     xhttp.open("POST", "/update/photo", true);
-                    xhttp.setRequestHeader("Content-Type", "multipart/form-data");
+                    //xhttp.setRequestHeader("Content-Type", "multipart/form-data");
                     xhttp.send(data);
 				//};
 				
