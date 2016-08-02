@@ -564,12 +564,20 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 				reader1.onload = function (oFREvent) {
 				
-					var clip = "polygon("+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px)"
+					//var clip = "polygon("+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px)"
 
 					photoEdit.attr("src", oFREvent.target.result);
-					photoEdit.style("clip-path", clip);
+					//photoEdit.style("clip-path", clip);
 					photoEdit.style("width", "225px");
 					photoEdit.style("height", "225px");
+					
+					centerdiv.append("canvas")
+					    .attr("id", "canvas1");
+					    
+					var canvas = document.getElementById("canvas1");
+    				var ctx = canvas.getContext("2d");
+    				var img = document.getElementById("scream");
+    				ctx.drawImage(photoEdit,50,50, 200, 200);
 					
 				};
 				
