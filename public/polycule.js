@@ -554,25 +554,20 @@ socket.on('nodesAndLinks', function(dataPackage) {
     		    d3.select("#photoEditWindow").style("display",  "none");
 		    });
 		    
-		var reader1 = new FileReader();
 		
-		var newPhoto;
 		
 		d3.select("#savePhotoEdit")
 			.attr("class", "standardButton")
 		    .on("click", function() {
 		    
-				
+				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
-
 				reader1.onload = function (oFREvent) {
 				
-					//var clip = "polygon("+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px)"
-
-					newPhoto = oFREvent.target.result;
+					var clip = "polygon("+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y1").value+"px, "+document.getElementById("x2").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y2").value+"px, "+document.getElementById("x1").value+"px "+document.getElementById("y1").value+"px)"
 
 					photoEdit.attr("src", oFREvent.target.result);
-					//photoEdit.style("clip-path", clip);
+					photoEdit.style("clip-path", clip);
 					photoEdit.style("width", "225px");
 					photoEdit.style("height", "225px");
 					
