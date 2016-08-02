@@ -416,11 +416,12 @@ app.get('/join', function(req, res) {
     });
 });
 
-app.post('/update/photo', upload.single('profilePic'), function(req, res) {
+app.post('/update/photo', upload.single('photo'), function(req, res) {
+
+    var newPhoto = req.body.photo;
+    uploadFile("test1.png", buffer);
     console.log("Updated photo received");
-    console.log("Files: "+JSON.stringify(req.file));
-    console.log("Body: "+JSON.stringify(req.body));
-    console.log("Session: "+JSON.stringify(req.session));
+
 	//singlePhoto(req,res,function(err) {
 	//	if(err) {
 	//		return res.end("Error uploading file.");
