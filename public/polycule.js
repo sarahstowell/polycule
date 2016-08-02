@@ -576,13 +576,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					    
 					var canvas = document.getElementById("canvas1");
     				var ctx = canvas.getContext("2d");
-    				var img = document.getElementById("scream");
-    				ctx.drawImage(photoEdit,50,50, 200, 200);
+    				var img = document.getElementById("profilepicedit");
+    				ctx.drawImage(img,50,50, 200, 200);
 					
 				};
-				
-		        // UPDATE VARIABLES WITH NEW FILE NAME AND NEW COORDINATES
-		    
+						    
     		    d3.select("#photoEditWindow").style("display",  "none");
 		    });
 		
