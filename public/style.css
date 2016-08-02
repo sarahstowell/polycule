@@ -280,6 +280,12 @@ h2 {
     max-width: 90%;
 }
 
+canvas {
+    display: inline;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
 #editLocation {
     display: inline-block;
     margin: 0 auto;
