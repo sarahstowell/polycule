@@ -407,13 +407,22 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 app.get('/join', function(req, res) {
     db.one("SELECT * FROM nodes WHERE id="+req.query.id)
     .then(function(node) {
+        req.session.inviteId = req.query.id;
+        req.session.inviteName = node.name;
         res.render('join', {welcomeMessage: "Welcome, "+node.name});
-        //res.send("User: "+JSON.stringify(req.query.id));
     })
     .catch(function(err) {
         console.log(err);
         res.render('join', {welcomeMessage: "New user signup"});
     });
+});
+
+app.get('/join/standard', function(req, res) {
+    res.render('signup', {googlemapsapi: process.env.GOOGLE_MAPS_URL, usernameBorderColor: "border: 1px solid gray", messageemail: "checked", linkemail: "checked"});
+});
+
+app.get('/join/facebook', function(req, res) {
+    res.render('facebookSignup', {googlemapsapi: process.env.GOOGLE_MAPS_URL,  facebookid: req.session.facebookid, username: req.session.username, displayName: req.session.inviteName, email: req.session.email, /*location: req.session.location,*/ messageemail: "checked", linkemail: "checked", profilePic: req.session.profilePic});
 });
 
 app.post('/update/photo', upload.single('photo'), function(req, res) {
