@@ -563,7 +563,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .on("click", function() {
     		    d3.select("#photoEditWindow").style("display",  "none");
     		    document.getElementById("photoSelect").value = null;
-    		    img.src=null;
+    		    d3.select("#photoArea").html("");
 		    });
 		    
 		
