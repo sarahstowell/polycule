@@ -538,19 +538,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			var img=document.createElement('img');
 			img.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
 			img.onload = function () {
-				ctx.drawImage(img, 0, 0, 225, 225, 0, 0, 225, 225);
+				ctx.drawImage(img, sx=0, sy=0, swidth=225, sheight=225, x=0, y=0, width=225, height=225);
 			}
 		
-		} /*else {
-		
-		    centerdiv.append("p")
-		        .text("Add profile picture")
-		        .on("click", function() {
-   	 		        d3.select("#photoEditWindow").style("display",  "block");
-		        });
-		        
-		}*/
-		
+		}
 		
 	    d3.select("#closePhotoEdit")
 	    	.attr("class", "standardButton")
@@ -572,7 +563,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value;
     				var sheight = document.getElementById("y2").value-document.getElementById("y1").value;
     				
-    				ctx.drawImage(img,sx,sy,swidth,sheight,0,0,225,225);
+    				ctx.drawImage(img,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 				};
 						    
     		    d3.select("#photoEditWindow").style("display",  "none");
