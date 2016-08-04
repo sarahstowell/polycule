@@ -135,12 +135,12 @@ d3.select("#photoSelect")
 d3.select("#photoTypeCustom").on("click", function() {
 	d3.select("#photoArea").style("display", "inline");
 	d3.select("#photoSelect").property("disabled", false);
-}
+});
 
 d3.select("#photoTypeNone").on("click",  function() {
 	d3.select("#photoArea").style("display", "none");
 	d3.select("#photoSelect").property("disabled", true);
-}
+});
 
 function photoSelect() {
 
