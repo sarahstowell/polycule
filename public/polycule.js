@@ -568,7 +568,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     				
     				window.alert("Sx: "+sx+", Sy: "+sy+", Swidth: "+swidth+", Sheight: "+sheight);
     				
-    				ctx.drawImage(img,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
+    				ctx.drawImage(img,sx=0,sy=0,swidth=225,sheight=225,x=0,y=0,width=225,height=225);
 				};
 						    
     		    d3.select("#photoEditWindow").style("display",  "none");
