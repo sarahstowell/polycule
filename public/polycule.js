@@ -568,6 +568,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     			    var swidth = Math.round(document.getElementById("x2").value-document.getElementById("x1").value*ratio1);
     				var sheight = Math.round(document.getElementById("y2").value-document.getElementById("y1").value*ratio1);
     				
+    				window.alert("x1: "+document.getElementById("x1").value+", y1: "+document.getElementById("y1").value+", x2: "+document.getElementById("x2").value+", y2: "+document.getElementById("y2").value);
     				window.alert("Sx: "+sx+", Sy: "+sy+", Swidth: "+swidth+", Sheight: "+sheight);
     				
     				ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
