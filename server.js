@@ -298,7 +298,7 @@ app.get('/login/facebook/callback',
 
 // Send signup screen --------------------------------------------------------------------
 app.get('/signup', function(req, res) {
-    res.render('signup', {googlemapsapi: process.env.GOOGLE_MAPS_URL, usernameBorderColor: "border: 1px solid gray", displayName: req.session.inviteName, messageemail: "checked", linkemail: "checked"});
+    res.render('signup', {googlemapsapi: process.env.GOOGLE_MAPS_URL, usernameBorderColor: "border: 1px solid gray", /*displayName: req.session.inviteName,*/ messageemail: "checked", linkemail: "checked"});
 });
 
 // Process signup request ----------------------------------------------------------------
@@ -405,9 +405,11 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 });
 
 app.get('/join', function(req, res) {
+    
     db.one("SELECT * FROM nodes WHERE id="+req.query.id)
     .then(function(node) {
         if (node.member === 0) {
+            req.session.cookie.expires = false;
             req.session.inviteId = req.query.id;
             req.session.inviteName = node.name;
             res.render('join', {welcomeMessage: "Welcome, "+req.session.inviteName});
