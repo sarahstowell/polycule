@@ -526,8 +526,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .attr("placeholder", "Unique Username")
 	        .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].username);
 		*/	
+		
 	    // Add user photo
-	    
 		centerdiv.append("canvas")
 			.attr("id", "canvas1")
 			.attr("width", 225)
@@ -571,6 +571,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("class", "standardButton")
 		    .on("click", function() {
 		    
+		        if (document.getElementById("photoType").value="custom") {
+		    
 				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 				reader1.onload = function (oFREvent) {
@@ -583,6 +585,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
     				var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
     				ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 				};
+				
+				}
+				
+				// WHAT TO DO IF USER SELECTS NO PHOTO?
 						    
     		    d3.select("#photoEditWindow").style("display",  "none");
 		    });
