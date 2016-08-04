@@ -649,7 +649,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    restart();
   			    
   			    // Send photo to server
-  			    if (document.getElementById("photoSelect").files[0]) {
+  			    if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
 					xhttp = new XMLHttpRequest();
 					xhttp.onreadystatechange = function() {
 						if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -666,7 +666,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 					xhttp.open("POST", "/update/photo", true);
 					xhttp.send(data);  
-				}
+				} 
+				
+				// WHAT IF PHOTO REMOVED???
 				
 				socket.emit('nodeEdit', {"id": node, "name": newName, "location": newLocation, "description": newDescription});			    
   		    
