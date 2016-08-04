@@ -514,7 +514,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 	    centerdiv.append("p")
             .attr("class", "username")
-            .style("margin-top", "10px")
+            .style("margin-top", "5px")
             .text("("+displayNodeData.username+")");
 	    
 	    /*
