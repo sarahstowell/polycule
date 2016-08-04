@@ -560,10 +560,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 				reader1.onload = function (oFREvent) {
-    				var sx = document.getElementById("x1").value;
-    				var sy = document.getElementById("y1").value;
-    			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value;
-    				var sheight = document.getElementById("y2").value-document.getElementById("y1").value;
+				    if (img.width > 540 || img.height > 1000) { var ratio1 = Math.max(img.width/540, img.height/1000); } else { var ratio1 = 1; }
+    				var sx = document.getElementById("x1").value*ratio1;
+    				var sy = document.getElementById("y1").value*ratio1;
+    			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value*ratio1;
+    				var sheight = document.getElementById("y2").value-document.getElementById("y1").value*ratio1;
     				
     				window.alert("Sx: "+sx+", Sy: "+sy+", Swidth: "+swidth+", Sheight: "+sheight);
     				
