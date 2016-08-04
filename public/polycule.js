@@ -544,7 +544,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
 		
 		} else {
-		    ctx.drawText("Add photo", 50, 110);
+		    ctx.fillText("Add photo", 50, 110);
 		}
 		
 	    d3.select("#closePhotoEdit")
