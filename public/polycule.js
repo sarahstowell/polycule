@@ -587,6 +587,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
     				ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 				};
 				
+				} else if (document.getElementById("photoTypeNone").checked === true) {
+				    ctx.clearRect(0,0,225,225);
+				    ctx.font = "15px sans-serif";
+		            ctx.fillText("Add photo", 80, 120);
 				}
 				
 				// WHAT TO DO IF USER SELECTS NO PHOTO?
