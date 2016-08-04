@@ -572,7 +572,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("class", "standardButton")
 		    .on("click", function() {
 		    
-		        if (document.getElementById("photoType").value="custom") {
+		        if (document.getElementById("photoTypeCustom").checked === true) {
 		    
 				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
