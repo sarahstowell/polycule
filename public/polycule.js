@@ -565,8 +565,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				    if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
     				var sx = Math.round(document.getElementById("x1").value*ratio1);
     				var sy = Math.round(document.getElementById("y1").value*ratio1);
-    			    var swidth = Math.round(document.getElementById("x2").value-document.getElementById("x1").value*ratio1);
-    				var sheight = Math.round(document.getElementById("y2").value-document.getElementById("y1").value*ratio1);
+    			    var swidth = Math.round((document.getElementById("x2").value-document.getElementById("x1").value)*ratio1);
+    				var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
     				
     				window.alert("x1: "+document.getElementById("x1").value+", y1: "+document.getElementById("y1").value+", x2: "+document.getElementById("x2").value+", y2: "+document.getElementById("y2").value);
     				window.alert("Ratio: "+ratio1);
