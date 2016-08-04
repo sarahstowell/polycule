@@ -563,14 +563,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				    var img2 = new Image();
 				    img2.src = oFREvent.target.result;
 				    if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
-    				var sx = document.getElementById("x1").value*ratio1;
-    				var sy = document.getElementById("y1").value*ratio1;
-    			    var swidth = document.getElementById("x2").value-document.getElementById("x1").value*ratio1;
-    				var sheight = document.getElementById("y2").value-document.getElementById("y1").value*ratio1;
+    				var sx = Math.round(document.getElementById("x1").value*ratio1);
+    				var sy = Math.round(document.getElementById("y1").value*ratio1);
+    			    var swidth = Math.round(document.getElementById("x2").value-document.getElementById("x1").value*ratio1);
+    				var sheight = Math.round(document.getElementById("y2").value-document.getElementById("y1").value*ratio1);
     				
     				window.alert("Sx: "+sx+", Sy: "+sy+", Swidth: "+swidth+", Sheight: "+sheight);
     				
-    				ctx.drawImage(img2,sx=0,sy=0,swidth=225,sheight=225,x=0,y=0,width=225,height=225);
+    				ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 				};
 						    
     		    d3.select("#photoEditWindow").style("display",  "none");
