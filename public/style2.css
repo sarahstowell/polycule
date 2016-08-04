@@ -1,0 +1,42 @@
+body {
+    background-color: black;
+    font-family: sans-serif;
+}
+
+h1 {
+    color: black;
+    font-family: 'Sarpanch', sans-serif;
+    font-size: 50px;
+}
+
+.submitButton {
+    width: 260px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: lightgray;
+}
+
+.submitButton:hover {
+    background-color: #BBBBBB;
+}
+
+.facebookButton {
+    width: 260px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #3B5998;
+    margin-bottom: 10px;
+    background-color: #3B5998;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.facebookButton:hover {
+    background-color: lightblue;
+    border: 1px solid lightblue;
+}
