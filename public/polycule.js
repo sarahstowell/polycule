@@ -546,7 +546,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
 		
 		} else {
-		    ctx.font("30px");
+		    ctx.font = "30px";
 		    ctx.fillText("Add photo", 50, 110);
 		}
 		
