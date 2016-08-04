@@ -523,6 +523,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 		centerdiv.append("canvas")
 			.attr("id", "canvas1")
+			.attr("width", 225)
+			.attr("height", 225)
 			.style("cursor", "pointer")
 			.on("click", function() {
 				imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
