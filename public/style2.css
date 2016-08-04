@@ -4,7 +4,6 @@ body {
 }
 
 #mainDiv {
-   position: absolute;
    top: 50px;
    margin: 0 auto;
    background-color: white;
