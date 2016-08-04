@@ -547,9 +547,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		var ctx = canvas.getContext('2d');	  
 	        
 	   if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {     
-			var img=document.createElement('img');
-			img.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
-			img.onload = function () {
+			var img1=document.createElement('img');
+			img1.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
+			img1.onload = function () {
 				ctx.drawImage(img, x=0, y=0, width=225, height=225);
 			}
 		
@@ -563,6 +563,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .on("click", function() {
     		    d3.select("#photoEditWindow").style("display",  "none");
     		    document.getElementById("photoSelect").value = null;
+    		    img.src=null;
 		    });
 		    
 		
