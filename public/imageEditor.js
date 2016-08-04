@@ -131,6 +131,16 @@ var addPhotoEdit = function(imgsrc, x1, y1, x2, y2) {
 
 d3.select("#photoSelect")
 	.on("change", photoSelect);
+	
+d3.select("#photoTypeCustom").on("click", function() {
+	d3.select("#photoArea").style("display", "inline");
+	d3.select("#photoSelect").property("disabled", false);
+}
+
+d3.select("#photoTypeNone").on("click",  function() {
+	d3.select("#photoArea").style("display", "none");
+	d3.select("#photoSelect").property("disabled", true);
+}
 
 function photoSelect() {
 
