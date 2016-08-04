@@ -553,8 +553,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
 		
 		} else {
-		    ctx.font = "20px sans-serif";
-		    ctx.fillText("Add photo", 50, 120);
+		    ctx.font = "15px sans-serif";
+		    ctx.fillText("Add photo", 100, 120);
 		}
 		
 	    d3.select("#closePhotoEdit")
