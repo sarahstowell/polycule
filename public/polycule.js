@@ -511,7 +511,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .attr("placeholder", "Display Name")
 	        .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].name);
 	    
-	    sidepanel.append("p")
+	    centerdiv.append("p")
             .attr("class", "username")
             .text("("+displayNodeData.username+")");
 	    
