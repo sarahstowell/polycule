@@ -538,7 +538,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			var img=document.createElement('img');
 			img.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
 			img.onload = function () {
-				ctx.drawImage(img, /*sx=0, sy=0, swidth=225, sheight=225,*/ x=0, y=0/*, width=225, height=225*/);
+				ctx.drawImage(img, /*sx=0, sy=0, swidth=225, sheight=225,*/ x=0, y=0, width=225, height=225);
 			}
 		
 		}
