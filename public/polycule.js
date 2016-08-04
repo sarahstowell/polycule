@@ -527,9 +527,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("height", 225)
 			.style("cursor", "pointer")
 			.on("click", function() {
-				imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
-				coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
-				addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
+			    if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {
+				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
+				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
+				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
+				}
 				d3.select("#photoEditWindow").style("display",  "block");
 			}); 
 			
