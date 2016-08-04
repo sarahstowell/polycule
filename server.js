@@ -407,7 +407,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 app.get('/join', function(req, res) {
     db.one("SELECT * FROM nodes WHERE id="+req.query.id)
     .then(function(node) {
-        res.render('join', {welcomeMessage: "Welcome, "+req.query.id});
+        res.render('join', {welcomeMessage: "Welcome, "+node.name});
         //res.send("User: "+JSON.stringify(req.query.id));
     })
     .catch(function(err) {
