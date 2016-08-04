@@ -511,6 +511,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .attr("placeholder", "Display Name")
 	        .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].name);
 	    
+	    sidepanel.append("p")
+            .attr("class", "username")
+            .text("("+displayNodeData.username+")");
+	    
+	    /*
 	    centerdiv.append("input")
             .attr("id", "editUsername")
             .attr("class", "editable")
@@ -518,6 +523,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .attr("maxlength", 20)
             .attr("placeholder", "Unique Username")
 	        .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].username);
+	    */
 			
 	    // Add user photo
 	    
