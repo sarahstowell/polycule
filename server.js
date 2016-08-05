@@ -474,7 +474,7 @@ app.get('/delete', function(req, res){
 	db.tx(function (t) {
 			return t.batch([
 				t.none("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser),
-				t.none("DELETE from nodes WHERE id = $1 returning id, photo", deleteUser),
+				t.none("DELETE from nodes WHERE id = $1 returning *", deleteUser),
 				t.none("DELETE from settings WHERE id = $1", deleteUser)
 			]);
 		})
