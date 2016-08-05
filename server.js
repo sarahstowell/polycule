@@ -467,15 +467,24 @@ app.get('/logout', function(req, res){
 app.get('/delete', function(req, res){
     
 	var deleteUser = req.session.passport.user;
-
+	var deletePhoto;
+	/*
+	db.one("SELECT id, photo FROM nodes WHERE id=$1", deleteUser)
+	.then(function(node) {
+	    console.log(JSON.stringify(node));
+	})
+	.catch(function(err) {
+	    console.log(err);
+	});
+*/
 	req.logout();
     res.redirect('/');
 
 	db.tx(function (t) {
 			return t.batch([
-				t.none("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser),
+				t.none("DELETE FROM links WHERE sourceid = $1 OR targetid = $1 returning *", deleteUser),
 				t.none("DELETE from nodes WHERE id = $1 returning *", deleteUser),
-				t.none("DELETE from settings WHERE id = $1", deleteUser)
+				t.none("DELETE from settings WHERE id = $1 returning *", deleteUser)
 			]);
 		})
 		.then(function (data) {
