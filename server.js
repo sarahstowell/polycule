@@ -26,15 +26,14 @@ var helmet = require('helmet'); // Security
 var nodemailer = require('nodemailer');
 
 app.use(helmet());
-
 app.set('view engine', 'pug');
 
+// Redirect all requests to HTTPS --------------------------------------------------------
 app.get('*',function(req,res,next){ 
     if(req.headers['x-forwarded-proto'] !== 'https') 
         res.redirect('https://polycule.co.uk'+req.url) 
     else next() 
 })
-
 
 // Setup email ---------------------------------------------------------------------------
 var transporter = nodemailer.createTransport(process.env.GMAIL);
@@ -48,7 +47,6 @@ var mailCreator = function(id, name, email, from) {
         html: '<h1>Hi '+name+'!</h1> <p>You have been invited by '+from+' to join Polycule, the social network for polyamorous people. Click <a href="https://polycule.co.uk?id='+id+'">here</a> to signup.</p>' // html body
     };
 }
-
 
 // S3 File uploads -----------------------------------------------------------------------
 var storage = multerS3({
@@ -67,11 +65,10 @@ var storage = multerS3({
 var upload = multer({ storage: storage });
 var singlePhoto = upload.single('userPhoto');
 // ---------------------------------------------------------------------------------------
-AWS.config.update({/*accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY, */region: 'eu-west-1'});
+AWS.config.update({region: 'eu-west-1'});
 var s3 = new AWS.S3()
 
 function uploadFile(remoteFilename, buffer) {
-  
   s3.putObject({
     ACL: 'public-read',
     Bucket: 'polycule',
@@ -255,9 +252,6 @@ function onAuthorizeFail(data, message, error, accept){
 
 
 
-
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -327,6 +321,11 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 						if ( ! err ){
 							res.redirect('/');
 							io.emit('callToUpdateNodes');
+							req.session.facebookid = null;
+					        req.session.displayName = null;
+					        req.session.email = null;
+					        req.session.location = null;
+					        req.session.profilePic = null;
 						} else {
 							console.log(err);//handle error
 						}
@@ -409,7 +408,7 @@ app.get('/join', function(req, res) {
     db.one("SELECT * FROM nodes WHERE id="+req.query.id)
     .then(function(node) {
         if (node.member === 0) {
-            req.session.cookie.expires = null;
+            req.session.cookie.expires = false;
             req.session.inviteId = req.query.id;
             req.session.inviteName = node.name;
             res.render('join', {welcomeMessage: "Welcome, "+req.session.inviteName});
@@ -475,11 +474,12 @@ app.get('/delete', function(req, res){
 	db.tx(function (t) {
 			return t.batch([
 				t.none("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser),
-				t.none("DELETE from nodes WHERE id = $1", deleteUser),
+				t.none("DELETE from nodes WHERE id = $1 returning id, photo", deleteUser),
 				t.none("DELETE from settings WHERE id = $1", deleteUser)
 			]);
 		})
 		.then(function (data) {
+		    console.log(JSON.stringify(data));
 			console.log("User account deleted");
 			io.emit('callToUpdateNodesLinks');
 		})
