@@ -471,7 +471,7 @@ app.get('/delete', function(req, res){
 	
 	db.one("SELECT id, photo FROM nodes WHERE id=$1", deleteUser)
 	.then(function(node) {
-	    console.log(JSON.stringify(node));
+	    deletePhoto = node.photo;
 	})
 	.catch(function(err) {
 	    console.log(err);
@@ -488,7 +488,6 @@ app.get('/delete', function(req, res){
 			]);
 		})
 		.then(function (data) {
-		    //console.log(JSON.stringify(data));
 			console.log("User account deleted");
 			io.emit('callToUpdateNodesLinks');
 		})
@@ -496,7 +495,14 @@ app.get('/delete', function(req, res){
 			console.log("ERROR:", error.message || error);
 		});
 		
-	// DELETE OLD PHOTO!!!	
+	s3.deleteObjects({
+        Bucket: 'polycule',
+        Delete: {Objects: [{ Key: 'original/'+deletePhoto}, { Key: 'final/'+deletePhoto },]}
+        }, function(err, data) {
+            if (err)
+                return console.log(err);
+            console.log('Old photos deleted');
+    });
 		
 });
 
