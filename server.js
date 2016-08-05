@@ -409,7 +409,7 @@ app.get('/join', function(req, res) {
     db.one("SELECT * FROM nodes WHERE id="+req.query.id)
     .then(function(node) {
         if (node.member === 0) {
-            req.session.cookie.expires = false;
+            req.session.cookie.expires = null;
             req.session.inviteId = req.query.id;
             req.session.inviteName = node.name;
             res.render('join', {welcomeMessage: "Welcome, "+req.session.inviteName});
