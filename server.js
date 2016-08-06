@@ -445,7 +445,7 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 	    // Update with new photo details
 		db.one("UPDATE nodes SET (photo, photocoords) = ($2, $3) WHERE id = $1", [req.body.id, photourl, photocoords])
 		.then(function() {
-	        photoRemove(oldPhoto); // Delete old photo
+	        photoRemove(oldPhoto.photo); // Delete old photo
 	        io.emit('callToUpdateNodes'); // Refresh nodes data
 		})
 		.catch(function(err) {
