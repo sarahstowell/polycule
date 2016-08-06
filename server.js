@@ -441,7 +441,7 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 	var oldPhoto;
 	
 	
-	db.one("UPDATE nodes x SET (photo, photocoords) = ($2, $3) FROM  (SELECT photo, photocoords) FROM nodes WHERE id = $1 FOR UPDATE) y WHERE  x.id = y.id RETURNING y.photo", [req.body.id, photourl, photocoords])
+	db.one("UPDATE nodes x SET (photo, photocoords) = ($2, $3) FROM  (SELECT photo, photocoords FROM nodes WHERE id = $1 FOR UPDATE) y WHERE  x.id = y.id RETURNING y.photo", [req.body.id, photourl, photocoords])
 	    .then(function(oldPhoto) {
 	        console.log("old photo: "+JSON.stringify(oldPhoto));
 	        io.emit('callToUpdateNodes'); // Refresh nodes data
