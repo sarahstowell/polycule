@@ -159,7 +159,7 @@ passport.deserializeUser((id, done)=>{
         done(null, user);
     })
     .catch(function(err) {
-        onsole.log(err);
+        console.log(err);
         done(new Error("User does not exist"));
     })
 });
@@ -502,6 +502,7 @@ app.get('/delete', function(req, res){
             if (err)
                 return console.log(err);
             console.log('Old photos deleted');
+            console.log(JSON.stringify(data));
     });
 		
 });
