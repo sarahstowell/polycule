@@ -80,6 +80,17 @@ function uploadFile(remoteFilename, buffer) {
     console.log(arguments);
   });
 }
+
+function photoRemove(deletePhoto) {
+	s3.deleteObjects({
+		Bucket: 'polycule',
+		Delete: {Objects: [{ Key: 'original/'+deletePhoto}, { Key: 'final/'+deletePhoto },]}
+		}, function(err, data) {
+			if (err)
+				return console.log(err);
+			console.log('Old photos deleted');
+	});
+}
 // ---------------------------------------------------------------------------------------
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
@@ -435,6 +446,10 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 		db.one("UPDATE nodes SET (photo, photocoords) = ($2, $3) WHERE id = $1", [req.body.id, photourl, photocoords])
 		.then(function() {
 	        console.log(JSON.stringify(oldPhoto));
+	        
+	        //photoRemove(oldPhoto);
+	        
+	        
 	        // Delete old photo
 	        // Refresh nodes data
 	        io.emit('callToUpdateNodes');
@@ -490,17 +505,7 @@ app.get('/delete', function(req, res){
 			console.log("ERROR:", error.message || error);
 		});
 		
-		s3.deleteObjects({
-			Bucket: 'polycule',
-			Delete: {Objects: [{ Key: 'original/'+deletePhoto}, { Key: 'final/'+deletePhoto },]}
-			}, function(err, data) {
-				if (err)
-					return console.log(err);
-				console.log('Old photos deleted');
-				console.log(JSON.stringify(data));
-		});
-	    
-	    
+		photoRemove(deletePhoto);  
 	})
 	.catch(function(err) {
 	    console.log(err);
