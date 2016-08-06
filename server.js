@@ -439,6 +439,13 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 	var photourl = req.file.filename; 
 	var photocoords = {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)};
 	
+	
+	db.one("SELECT * FROM nodes WHERE id = $1", req.body.id)
+	.then(function(photo1) {
+        console.log("photo test: "+JSON.stringify(photo1));
+    })
+    .catch(function(err) { console.log(err); });
+	
 	// Get name of old photo
 	db.one("SELECT * FROM nodes WHERE id = $1", req.body.id)
 	.then(function(oldPhoto) {
