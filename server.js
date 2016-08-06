@@ -467,20 +467,15 @@ app.get('/logout', function(req, res){
 app.get('/delete', function(req, res){
     
 	var deleteUser = req.session.passport.user;
-	var deletePhoto;
-	
-	db.one("SELECT id, photo FROM nodes WHERE id=$1", deleteUser)
-	.then(function(node) {
-	    deletePhoto = node.photo;
-	})
-	.catch(function(err) {
-	    console.log(err);
-	});
 
 	req.logout();
-    res.redirect('/');
-
-	db.tx(function (t) {
+    res.redirect('/');	
+    
+	db.one("SELECT id, photo FROM nodes WHERE id=$1", deleteUser)
+	.then(function(node) {
+	    var deletePhoto = node.photo;
+	    
+	    db.tx(function (t) {
 			return t.batch([
 				t.none("DELETE FROM links WHERE sourceid = $1 OR targetid = $1", deleteUser),
 				t.none("DELETE from nodes WHERE id = $1", deleteUser),
@@ -495,15 +490,22 @@ app.get('/delete', function(req, res){
 			console.log("ERROR:", error.message || error);
 		});
 		
-	s3.deleteObjects({
-        Bucket: 'polycule',
-        Delete: {Objects: [{ Key: 'original/'+deletePhoto}, { Key: 'final/'+deletePhoto },]}
-        }, function(err, data) {
-            if (err)
-                return console.log(err);
-            console.log('Old photos deleted');
-            console.log(JSON.stringify(data));
-    });
+		s3.deleteObjects({
+			Bucket: 'polycule',
+			Delete: {Objects: [{ Key: 'original/'+deletePhoto}, { Key: 'final/'+deletePhoto },]}
+			}, function(err, data) {
+				if (err)
+					return console.log(err);
+				console.log('Old photos deleted');
+				console.log(JSON.stringify(data));
+		});
+	    
+	    
+	})
+	.catch(function(err) {
+	    console.log(err);
+	});
+
 		
 });
 
