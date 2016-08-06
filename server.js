@@ -443,6 +443,30 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 	db.one("SELECT * FROM nodes WHERE id = $1", req.body.id)
 	.then(function(photo1) {
         console.log("photo test: "+JSON.stringify(photo1));
+        
+        db.one("UPDATE nodes SET (photo, photocoords) = ($2, $3) WHERE id = $1", [req.body.id, photourl, photocoords])
+		.then(function() {
+		    console.log("Photo: "+photo1.photo);
+	        //photoRemove(oldPhoto.photo); // Delete old photo
+	        
+	        /*
+			s3.deleteObjects({
+				Bucket: 'polycule',
+				Delete: {Objects: [{ Key: 'original/'+deletePhoto}, { Key: 'final/'+deletePhoto },]}
+				}, function(err, data) {
+					if (err)
+						return console.log(err);
+					console.log('Old photos deleted');
+			});
+			*/
+	        
+	        io.emit('callToUpdateNodes'); // Refresh nodes data
+		})
+		.catch(function(err) {
+	        console.log(err);
+		});	
+        
+        
     })
     .catch(function(err) { console.log(err); });
 	
