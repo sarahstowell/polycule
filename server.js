@@ -440,13 +440,25 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 	var photocoords = {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)};
 	
 	// Get name of old photo
-	db.one("SELECT photo FROM nodes WHERE id=$1", [req.body.id])
+	db.one("SELECT id, photo FROM nodes WHERE id=$1", req.body.id)
 	.then(function(oldPhoto) {
 	    // Update with new photo details
 		db.one("UPDATE nodes SET (photo, photocoords) = ($2, $3) WHERE id = $1", [req.body.id, photourl, photocoords])
 		.then(function() {
 		    console.log("Photo: "+oldPhoto.photo);
 	        //photoRemove(oldPhoto.photo); // Delete old photo
+	        
+	        /*
+			s3.deleteObjects({
+				Bucket: 'polycule',
+				Delete: {Objects: [{ Key: 'original/'+deletePhoto}, { Key: 'final/'+deletePhoto },]}
+				}, function(err, data) {
+					if (err)
+						return console.log(err);
+					console.log('Old photos deleted');
+			});
+			*/
+	        
 	        io.emit('callToUpdateNodes'); // Refresh nodes data
 		})
 		.catch(function(err) {
