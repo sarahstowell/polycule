@@ -3,7 +3,8 @@ High Priority:
 	!!! Fix photo update to show photo immediately
 	!!! Safari animation issue
 	!!! Fix www.
-	Username edit on profile
+	Send email to invited node
+	
 
 Medium Priority:
 	Template main index page and take api key out
@@ -15,15 +16,15 @@ Medium Priority:
 			Further server side checks?
 			Photo type check?
 	Check max length of description field
-	Send email to invited node
+	
 	Link/Remove facebook account
 	Knockout for settings/emails/link requests
 	Stray non-member nodes
 	Mixed case usernames?
 	Fix width of top banner
-	Delete old photo when user deletes account
 
 Low Priority:
+    Allow username edit on profile
     Optimise node update algorithm
 	Delete emails where both reader and sender have deleted
 	Delete emails when user deletes account
@@ -31,7 +32,6 @@ Low Priority:
 	Logout when user closes window (unless box ticked)
 	Google login
 	Check whether location widget favours nearby places outside of UK
-	Remove user data from session after facebook signup
 
 Issues for when there are more users:
 	Zoom buttons

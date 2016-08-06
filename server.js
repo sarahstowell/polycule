@@ -438,7 +438,6 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 	profilePicEdit(photo=req.session.photo, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 	var photourl = req.file.filename; 
 	var photocoords = {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)};
-	var oldPhoto;
 	
 	db.one("UPDATE nodes x SET (photo, photocoords) = ($2, $3) FROM  (SELECT id, photo, photocoords FROM nodes WHERE id = $1 FOR UPDATE) y WHERE  x.id = y.id RETURNING y.photo", [req.body.id, photourl, photocoords])
 	    .then(function(oldPhoto) {
