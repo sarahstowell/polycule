@@ -665,7 +665,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					xhttp.open("POST", "/update/photo", true);
 					xhttp.send(data); 
 					
-					window.alert(document.getElementById("photoSelect").files[0]", "+document.getElementById("x1").value+", "+document.getElementById("y1").value+","+document.getElementById("x2").value+", "+document.getElementById("y2").value);
+					window.alert(document.getElementById("photoSelect").files[0]+", "+document.getElementById("x1").value+", "+document.getElementById("y1").value+","+document.getElementById("x2").value+", "+document.getElementById("y2").value);
 					 
 				} 
 				
