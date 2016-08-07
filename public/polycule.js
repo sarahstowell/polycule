@@ -681,11 +681,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					xhttp.send(data); 
 					
 					xhttp.addEventListener("load", function() {
-					    socket.emit('nodeEdit', newNodeData);
-					    socket.on('nodeEditComplete', function() {
+					    //socket.emit('nodeEdit', newNodeData);
+					    //socket.on('nodeEditComplete', function() {
 						    displayInfo(node);
 						    restart();
-					    });	
+					    //});	
 					});
 										 
 				} else {
