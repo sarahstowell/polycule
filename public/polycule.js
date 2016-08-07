@@ -667,7 +667,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					
 					xhttp.addEventListener("load", function() {
 					    window.alert("File uploaded");
-					};
+					});
 				
 					var data = new FormData();
 					data.append('id', node);
