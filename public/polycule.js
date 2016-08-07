@@ -684,7 +684,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					    //socket.emit('nodeEdit', newNodeData);
 					    //socket.on('nodeEditComplete', function() {
 						    displayInfo(node);
-						    restart();
+						    //restart();
 					    //});	
 					});
 										 
