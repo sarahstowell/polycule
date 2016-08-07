@@ -634,7 +634,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    .on("click", function() {
   		        document.getElementById("photoSelect").value = null;
     		    document.getElementById("photoTypeCustom").checked = true;
-    		    document.getElementById("photoSelect").disabled = false; 
+    		    document.getElementById("photoSelect").disabled = false;
+    		    img2 = null; 
   		        displayInfo(node); 
   		    });
   			
@@ -675,6 +676,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					xhttp.open("POST", "/update/photo", true);
 					xhttp.send(data); 					 
 				}
+				
+				img2 = null;
 				
 				var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
 				
