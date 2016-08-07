@@ -566,6 +566,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     		    document.getElementById("photoSelect").value = null;
     		    document.getElementById("photoTypeCustom").checked = true;
     		    document.getElementById("photoSelect").disabled = false;
+    		    d3.select("#photoArea").style("display", "block");
     		    d3.select("#photoArea").html("");
 		    });
 		    
