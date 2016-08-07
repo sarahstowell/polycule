@@ -653,7 +653,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    nodes[arrayObjectIndexOf(nodes, node, "id")].location = newLocation;
   			    nodes[arrayObjectIndexOf(nodes, node, "id")].description = newDescription;
   		
-  			    displayInfo(node);
+  			    
   			
   			    restart();
   			    
@@ -683,7 +683,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 				if (photoRemove === true) { newNodeData.photoRemove = true; }
 				
-				socket.emit('nodeEdit', newNodeData);			    
+				socket.emit('nodeEdit', newNodeData);
+				
+				centerdiv.append("p")
+				    .style("color", "red")
+				    .text("Saving...");
+				
+				socket.on('nodeEditcomplete', function() {
+				    displayInfo(node);
+				});			    
   		    
   		    });
     }

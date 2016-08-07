@@ -737,6 +737,7 @@ io.sockets.on('connection', function(socket){
 				.then(function () {
 					console.log("Node updated");
 					io.sockets.emit('callToUpdateNodes');
+					socket.emit('nodeEditComplete');
 				})
 				.catch(function (error) {
 					 console.log(error);
@@ -746,6 +747,7 @@ io.sockets.on('connection', function(socket){
 				.then(function () {
 					console.log("Node updated");
 					io.sockets.emit('callToUpdateNodes');
+					socket.emit('nodeEditComplete');
 				})
 				.catch(function (error) {
 					 console.log(error);
