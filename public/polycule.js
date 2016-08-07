@@ -565,6 +565,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     		    d3.select("#photoEditWindow").style("display",  "none");
     		    document.getElementById("photoSelect").value = null;
     		    document.getElementById("photoTypeCustom").checked = true;
+    		    document.getElementById("photoSelect").disabled = false;
     		    d3.select("#photoArea").html("");
 		    });
 		    
@@ -628,7 +629,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    .text("Cancel")
   		    .on("click", function() {
   		        document.getElementById("photoSelect").value = null;
-    		    document.getElementById("photoTypeCustom").checked = true; 
+    		    document.getElementById("photoTypeCustom").checked = true;
+    		    document.getElementById("photoSelect").disabled = false; 
   		        displayInfo(node); 
   		    });
   			
@@ -667,10 +669,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					data.append('photo', document.getElementById("photoSelect").files[0]);
 				
 					xhttp.open("POST", "/update/photo", true);
-					xhttp.send(data); 
-					
-					//window.alert(document.getElementById("photoSelect").files[0]+", "+document.getElementById("x1").value+", "+document.getElementById("y1").value+","+document.getElementById("x2").value+", "+document.getElementById("y2").value);
-					 
+					xhttp.send(data); 					 
 				}
 				
 				var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
