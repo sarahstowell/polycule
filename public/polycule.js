@@ -652,10 +652,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
                 nodes[arrayObjectIndexOf(nodes, node, "id")].name = newName;
   			    nodes[arrayObjectIndexOf(nodes, node, "id")].location = newLocation;
   			    nodes[arrayObjectIndexOf(nodes, node, "id")].description = newDescription;
-  		
+  		        
+  		        img2 = null;
+  				
   				centerdiv.append("p")
 				    .style("color", "red")
-				    .text("Saving...");			    
+				    .text("Saving...");	
+				    		    
+  			    var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
   			    
   			    // Send photo to server
   			    if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
@@ -665,10 +669,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						}
 					};
 					
-					xhttp.addEventListener("load", function() {
-					    window.alert("File uploaded");
-					});
-				
 					var data = new FormData();
 					data.append('id', node);
 					data.append('x1', document.getElementById("x1").value);
@@ -678,24 +678,26 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					data.append('photo', document.getElementById("photoSelect").files[0]);
 				
 					xhttp.open("POST", "/update/photo", true);
-					xhttp.send(data); 					 
-				}
+					xhttp.send(data); 
+					
+					xhttp.addEventListener("load", function() {
+					    socket.emit('nodeEdit', newNodeData);
+					    socket.on('nodeEditComplete', function() {
+						    displayInfo(node);
+						    restart();
+					    });	
+					});
+										 
+				} else {
 				
-				img2 = null;
+					if (photoRemove === true) { newNodeData.photoRemove = true; }
+					socket.emit('nodeEdit', newNodeData);
+					socket.on('nodeEditComplete', function() {
+						displayInfo(node);
+						restart();
+					});	
 				
-				var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
-				
-				if (photoRemove === true) { newNodeData.photoRemove = true; }
-				
-				socket.emit('nodeEdit', newNodeData);
-				
-
-				
-				socket.on('nodeEditComplete', function() {
-				    displayInfo(node);
-				});	
-				
-				restart();		    
+				}		    
   		    
   		    });
     }
