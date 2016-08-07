@@ -536,7 +536,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("height", 225)
 			.style("cursor", "pointer")
 			.on("click", function() {
-			    if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null && typeof(img2) === undefined) {
+			    if (img2.src) {
+			        window.alert("New image");
+			    } else if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null) {
+			        // Draw database photo onto photo edit area
 				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
 				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
 				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
@@ -547,6 +550,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		var canvas = document.getElementById('canvas1');
 		var ctx = canvas.getContext('2d');	  
 	        
+	   // Draw database photo onto profile edit canvas     
 	   if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {     
 			var img1=document.createElement('img');
 			img1.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
