@@ -1,7 +1,7 @@
 High Priority:
     !!! Resolve photo coordinates issue
 	!!! Fix photo update 
-	       Show photo immediately
+	       Show updated photo immediately
 	!!! Safari animation issue
 	!!! Fix www.
 	Send email to invited node
@@ -23,6 +23,7 @@ Medium Priority:
 	Stray non-member nodes
 	Mixed case usernames?
 	Fix width of top banner
+	Make so original photo isn't saved twice
 
 Low Priority:
     Allow username edit on profile

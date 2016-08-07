@@ -732,16 +732,25 @@ io.sockets.on('connection', function(socket){
   	
   	// Node info updated -----------------------------------------------------------------
   	socket.on('nodeEdit', function(nodeEdits) {
-  	  	db.query('UPDATE nodes SET (name, location, description) = (${name}, ${location}, ${description}) WHERE id = ${id}', nodeEdits)
-  	      	.then(function () {
-                console.log("Node updated");
-                io.sockets.emit('callToUpdateNodes');
-            })
-            .catch(function (error) {
-                 console.log(error);
-            });
-  	    
-  	
+		if (nodeEdits.photoRemove === true) {
+			db.query('UPDATE nodes SET (name, location, description, photo, photocoords) = (${name}, ${location}, ${description}, null, null) WHERE id = ${id}', nodeEdits)
+				.then(function () {
+					console.log("Node updated");
+					io.sockets.emit('callToUpdateNodes');
+				})
+				.catch(function (error) {
+					 console.log(error);
+				});	
+		} else {
+			db.query('UPDATE nodes SET (name, location, description) = (${name}, ${location}, ${description}) WHERE id = ${id}', nodeEdits)
+				.then(function () {
+					console.log("Node updated");
+					io.sockets.emit('callToUpdateNodes');
+				})
+				.catch(function (error) {
+					 console.log(error);
+				});
+		}    
   	});
   	
   	// Node invited ----------------------------------------------------------------------
