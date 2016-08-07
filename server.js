@@ -126,7 +126,7 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 			    // Test
 			    image.getBuffer("image/jpeg", function(err, oldImage) {
 					if (err) { throw err; }
-					if (newImage) { console.log("New Image sent to buffer"); }
+					if (oldImage) { console.log("New Image sent to buffer"); }
 					uploadFile('original/'+filename, oldImage);			    
 			    });
 			    //
