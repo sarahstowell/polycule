@@ -590,6 +590,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				    ctx.font = "15px sans-serif";
 		            ctx.fillText("Add photo", 80, 120);
 		            photoRemove = true;
+		            document.getElementById("photoSelect").value = null;
 				}
 						    
     		    d3.select("#photoEditWindow").style("display",  "none");
