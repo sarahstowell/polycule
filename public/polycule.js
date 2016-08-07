@@ -665,9 +665,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						}
 					};
 					
-					//xhttp.addEventListener("load", function() {
-					//    window.alert("File uploaded");
-					//});
+					xhttp.addEventListener("load", function() {
+					    window.alert("File uploaded");
+					});
 				
 					var data = new FormData();
 					data.append('id', node);
@@ -691,7 +691,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 
 				
-				socket.on('nodeEditcomplete', function() {
+				socket.on('nodeEditComplete', function() {
 				    displayInfo(node);
 				});	
 				
