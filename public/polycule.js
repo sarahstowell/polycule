@@ -565,6 +565,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     		    d3.select("#photoEditWindow").style("display",  "none");
     		    document.getElementById("photoSelect").value = null;
     		    document.getElementById("photoTypeCustom").checked === true;
+    		    document.getElementById("photoTypeNone").checked === false;
     		    d3.select("#photoArea").html("");
 		    });
 		    
@@ -628,6 +629,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    .on("click", function() {
   		        document.getElementById("photoSelect").value = null;
     		    document.getElementById("photoTypeCustom").checked === true; 
+    		    document.getElementById("photoTypeNone").checked === false;
   		        displayInfo(node); 
   		    });
   			
