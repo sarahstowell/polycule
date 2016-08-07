@@ -653,9 +653,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    nodes[arrayObjectIndexOf(nodes, node, "id")].location = newLocation;
   			    nodes[arrayObjectIndexOf(nodes, node, "id")].description = newDescription;
   		
-  			    
-  			
-  			    restart();
+  				centerdiv.append("p")
+				    .style("color", "red")
+				    .text("Saving...");			    
   			    
   			    // Send photo to server
   			    if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
@@ -663,6 +663,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					xhttp.onreadystatechange = function() {
 						if (xhttp.readyState == 4 && xhttp.status == 200) {
 						}
+					};
+					
+					xhttp.addEventListener("load", function() {
+					    window.alert("File uploaded");
 					};
 				
 					var data = new FormData();
@@ -685,13 +689,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 				socket.emit('nodeEdit', newNodeData);
 				
-				centerdiv.append("p")
-				    .style("color", "red")
-				    .text("Saving...");
+
 				
 				socket.on('nodeEditcomplete', function() {
 				    displayInfo(node);
-				});			    
+				});	
+				
+				restart();		    
   		    
   		    });
     }
