@@ -564,7 +564,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .on("click", function() {
     		    d3.select("#photoEditWindow").style("display",  "none");
     		    document.getElementById("photoSelect").value = null;
-    		    document.getElementById("photoTypeCustom").checked === true
+    		    document.getElementById("photoTypeCustom").checked === true;
     		    d3.select("#photoArea").html("");
 		    });
 		    
@@ -625,7 +625,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
   	    	.attr("class", "standardButton")
   	    	.attr("id", "cancelNodeEdit")
   		    .text("Cancel")
-  		    .on("click", function() { 
+  		    .on("click", function() {
+  		        document.getElementById("photoSelect").value = null;
+    		    document.getElementById("photoTypeCustom").checked === true; 
   		        displayInfo(node); 
   		    });
   			
