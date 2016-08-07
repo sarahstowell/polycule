@@ -564,11 +564,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .on("click", function() {
     		    d3.select("#photoEditWindow").style("display",  "none");
     		    document.getElementById("photoSelect").value = null;
+    		    document.getElementById("photoTypeCustom").checked === true
     		    d3.select("#photoArea").html("");
 		    });
 		    
-		
-		
 		d3.select("#savePhotoEdit")
 			.attr("class", "standardButton")
 		    .on("click", function() {
@@ -626,7 +625,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
   	    	.attr("class", "standardButton")
   	    	.attr("id", "cancelNodeEdit")
   		    .text("Cancel")
-  		    .on("click", function() { displayInfo(node); });
+  		    .on("click", function() { 
+  		        displayInfo(node); 
+  		    });
   			
   	    sidepanel.append("button")
   	    	.attr("class", "standardButton")
@@ -665,7 +666,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					xhttp.open("POST", "/update/photo", true);
 					xhttp.send(data); 
 					
-					window.alert(document.getElementById("photoSelect").files[0]+", "+document.getElementById("x1").value+", "+document.getElementById("y1").value+","+document.getElementById("x2").value+", "+document.getElementById("y2").value);
+					//window.alert(document.getElementById("photoSelect").files[0]+", "+document.getElementById("x1").value+", "+document.getElementById("y1").value+","+document.getElementById("x2").value+", "+document.getElementById("y2").value);
 					 
 				}
 				
