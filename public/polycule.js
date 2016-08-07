@@ -528,6 +528,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		*/	
 		
 		var photoRemove = false;
+		var img2;
 		
 	    // Add user photo
 		centerdiv.append("canvas")
