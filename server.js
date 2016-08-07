@@ -121,9 +121,15 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 		s3.getObject({Bucket: 'polycule', Key: 'original/'+filename}, function(err, data) {
 		    if (err) { console.log(err); }
             if (data) { console.log('image read from s3'); } 
-            if (data) { console.log(data); }
 
 			jimp.read(data.Body).then(function(image) {
+			    // Test
+			    image.getBuffer("image/jpeg", function(err, oldImage) {
+					if (err) { throw err; }
+					if (newImage) { console.log("New Image sent to buffer"); }
+					uploadFile('original/'+filename, newImage);			    
+			    });
+			    //
 				image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
 					if (err) { throw err; }
 					if (newImage) { console.log("New Image sent to buffer"); }
