@@ -583,7 +583,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					var reader1 = new FileReader();
 					reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 					reader1.onload = function (oFREvent) {
-						var img2 = new Image();
+						img2 = new Image();
 						img2.src = oFREvent.target.result;
 						if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
 						var sx = Math.round(document.getElementById("x1").value*ratio1);
