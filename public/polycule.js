@@ -536,7 +536,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("height", 225)
 			.style("cursor", "pointer")
 			.on("click", function() {
-			    if (img2.src) {
+			    if (img2.src !== null) {
 			        window.alert("New image");
 			    } else if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null) {
 			        // Draw database photo onto photo edit area
