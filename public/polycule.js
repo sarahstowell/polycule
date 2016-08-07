@@ -667,11 +667,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					
 					window.alert(document.getElementById("photoSelect").files[0]+", "+document.getElementById("x1").value+", "+document.getElementById("y1").value+","+document.getElementById("x2").value+", "+document.getElementById("y2").value);
 					 
-				} 
+				}
 				
-				// WHAT IF PHOTO REMOVED???
+				var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
 				
-				socket.emit('nodeEdit', {"id": node, "name": newName, "location": newLocation, "description": newDescription});			    
+				//if (document.getElementById("photoTypeNone").checked === true) { newNodeData.photoRemove = true; }
+				
+				socket.emit('nodeEdit', newNodeData);			    
   		    
   		    });
     }
