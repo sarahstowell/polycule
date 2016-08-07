@@ -537,9 +537,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("height", 225)
 			.style("cursor", "pointer")
 			.on("click", function() {
-			    if (img2) {
-			        window.alert("New image");
-			    } else if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null) {
+                if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null && !(img2)) {
 			        // Draw database photo onto photo edit area
 				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
 				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
