@@ -536,7 +536,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("height", 225)
 			.style("cursor", "pointer")
 			.on("click", function() {
-			    if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null && !(img2)) {
+			    if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null && img2 === null) {
 				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
 				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
 				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
