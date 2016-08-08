@@ -577,7 +577,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("class", "standardButton")
 		    .on("click", function() {
 		    
-		        if (document.getElementById("photoTypeCustom").checked === true) {
+		        if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
 					var reader1 = new FileReader();
 					reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 					reader1.onload = function (oFREvent) {
@@ -681,11 +681,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					xhttp.send(data); 
 					
 					xhttp.addEventListener("load", function() {
-					    //socket.emit('nodeEdit', newNodeData);
-					    //socket.on('nodeEditComplete', function() {
+					    socket.emit('nodeEdit', newNodeData);
+					    socket.on('nodeEditComplete', function() {
 						    displayInfo(node);
-						    //restart();
-					    //});	
+						    restart();
+					    });	
 					});
 										 
 				} else {
