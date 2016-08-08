@@ -267,7 +267,7 @@ h2 {
 
 #photoEditWindow {
     display: none; /* Hidden by default */
-    /*position: fixed;*/ /* Stay in place */
+    position: fixed; /* Stay in place */
     margin: 0 auto;
     z-index: 1; /* Sit on top */
     left: 50px;
