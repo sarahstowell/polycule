@@ -698,6 +698,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 										 
 				} else {
 				
+				    if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
+				        newNodeData.photocoords = {"x1": document.getElementById("x1").value, "y1": document.getElementById("y1").value, "x2": document.getElementById("x2").value, "y2": document.getElementById("y2").value};
+				    }
 					if (photoRemove === true) { newNodeData.photoRemove = true; }
 					socket.emit('nodeEdit', newNodeData);
 					socket.on('nodeEditComplete', function() {

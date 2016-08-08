@@ -732,27 +732,24 @@ io.sockets.on('connection', function(socket){
   	
   	// Node info updated -----------------------------------------------------------------
   	socket.on('nodeEdit', function(nodeEdits) {
+  	    var queryString;
 		if (nodeEdits.photoRemove === true) {
-			db.query('UPDATE nodes SET (name, location, description, photo, photocoords) = (${name}, ${location}, ${description}, null, null) WHERE id = ${id}', nodeEdits)
-				.then(function () {
-					console.log("Node updated");
-					io.sockets.emit('callToUpdateNodes');
-					socket.emit('nodeEditComplete');
-				})
-				.catch(function (error) {
-					 console.log(error);
-				});	
-		} else {
-			db.query('UPDATE nodes SET (name, location, description) = (${name}, ${location}, ${description}) WHERE id = ${id}', nodeEdits)
-				.then(function () {
-					console.log("Node updated");
-					io.sockets.emit('callToUpdateNodes');
-					socket.emit('nodeEditComplete');
-				})
-				.catch(function (error) {
-					 console.log(error);
-				});
-		}    
+		    queryString = 'UPDATE nodes SET (name, location, description, photo, photocoords) = (${name}, ${location}, ${description}, null, null) WHERE id = ${id}';
+		 } else if (nodeEdits.photocoords) {
+		    queryString = 'UPDATE nodes SET (name, location, description, photocoords) = (${name}, ${location}, ${description}, ${photocoords}) WHERE id = ${id}';
+		 } else {
+		    queryString = 'UPDATE nodes SET (name, location, description) = (${name}, ${location}, ${description}) WHERE id = ${id}';
+		 }  
+		
+		db.query(queryString, nodeEdits)
+			.then(function () {
+				console.log("Node updated");
+				io.sockets.emit('callToUpdateNodes');
+				socket.emit('nodeEditComplete');
+			})
+			.catch(function (error) {
+				 console.log(error);
+			});	
   	});
   	
   	// Node invited ----------------------------------------------------------------------
