@@ -419,6 +419,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
                     .on("click", function() { editNode(node); });
 	
             } else {
+            
+                sidepanel.append("button")
+                    .attr("id", "sendMessageButton")
+                    .attr("class", "standardButton")
+                    .test("Send message")
+                    .on("click", function() { writeEmail(node); });
+                    
+                /*
 		
                 var pencil = sidepanel.append("svg")
                     .attr("class", "pencil")
@@ -429,6 +437,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
                 pencil.append("path")
                     .attr("d","M6 0l-1 1 2 2 1-1-2-2zm-2 2l-4 4v2h2l4-4-2-2z");
+                    
+                */
 
             }
 
