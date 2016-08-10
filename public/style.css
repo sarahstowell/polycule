@@ -208,12 +208,6 @@ h2 {
     margin-left: 5px;
 }
 
-.pencil {
-    position: absolute;
-    bottom: 20px;
-    left: 145px;
-}
-
 #sendMessageButton {
     position: absolute;
     bottom: 10px;

@@ -425,19 +425,23 @@ socket.on('nodesAndLinks', function(dataPackage) {
                     .attr("class", "standardButton")
                     .text("Message")
                     .on("click", function() { writeEmail(node); });
-                    
-                /*
-		
-                var pencil = sidepanel.append("svg")
-                    .attr("class", "pencil")
-				    .attr("width", 30)
-				    .attr("height", 30)
-				    .attr("viewBox", "0 0 8 8")
-				    .on("click", function() { writeEmail(node); });
-		
-                pencil.append("path")
-                    .attr("d","M6 0l-1 1 2 2 1-1-2-2zm-2 2l-4 4v2h2l4-4-2-2z");
-                    
+
+                // ADD LINK REQUEST BUTTON
+                
+                var link4 = links.filter(function(d) { if (d.source === loggedin && d.target === node || d.target === loggedin && d.source === node) });
+                
+                window.alert(link4.length);
+                /*    
+                sidepanel.append("button")
+                    .attr("id", "requestLinkButton")
+                    .attr("class", "standardButton")
+                    .text("Request Link")
+                    .on("click", function() {
+                        //links.push({"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
+  			            // Send new link to server
+  			            socket.emit('newLink', {"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin});
+  			            //restart();
+                    });
                 */
 
             }
