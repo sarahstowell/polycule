@@ -428,7 +428,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
                 // ADD LINK REQUEST BUTTON
                 
-                var link4 = links.filter(function(d) { if (d.source === loggedin && d.target === node || d.target === loggedin && d.source === node) });
+                var link4 = links.filter(function(d) { return d.source === loggedin && d.target === node || d.target === loggedin && d.source === node; });
                 
                 window.alert(link4.length);
                 /*    
