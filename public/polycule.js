@@ -423,7 +423,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
                 sidepanel.append("button")
                     .attr("id", "sendMessageButton")
                     .attr("class", "standardButton")
-                    .test("Send message")
+                    .text("Send message")
                     .on("click", function() { writeEmail(node); });
                     
                 /*
