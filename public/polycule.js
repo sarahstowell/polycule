@@ -427,23 +427,22 @@ socket.on('nodesAndLinks', function(dataPackage) {
                     .on("click", function() { writeEmail(node); });
 
                 // ADD LINK REQUEST BUTTON
+                /*
+                var currentLink = links.filter(function(d) { return ((d.sourceid === loggedin && d.targetid === node) || (d.targetid === loggedin && d.sourceid === node)); });
                 
-                var link4 = links.filter(function(d) { return ((d.sourceid === loggedin && d.targetid === node) || (d.targetid === loggedin && d.sourceid === node)); });
-                
-                window.alert(link4.length);
-                /*    
-                sidepanel.append("button")
-                    .attr("id", "requestLinkButton")
-                    .attr("class", "standardButton")
-                    .text("Request Link")
-                    .on("click", function() {
-                        //links.push({"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
-  			            // Send new link to server
-  			            socket.emit('newLink', {"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin});
-  			            //restart();
-                    });
+                if (currentLink.length === 0) {
+					sidepanel.append("button")
+						.attr("id", "requestLinkButton")
+						.attr("class", "standardButton")
+						.text("Request Link")
+						.on("click", function() {
+							//links.push({"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
+							// Send new link to server
+							socket.emit('newLink', {"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin});
+							//restart();
+						});
+                }
                 */
-
             }
 
 	    } else {

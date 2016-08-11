@@ -1,6 +1,7 @@
 High Priority:
     !!! Resolve photo coordinates issue
-	!!! Fix photo update - why does it take so long to load?
+	!!! Fix photo update - why does it take so long to load? 
+	!!! If user adjusts coordinates of profile pic?
 	!!! Safari animation issue
 	!!! Fix www.
 	Send email to invited node
@@ -18,7 +19,7 @@ Medium Priority:
 			Further server side checks?
 			Photo type check?
 	Check max length of description field
-	
+	Link button on profile
 	Link/Remove facebook account
 	Knockout for settings/emails/link requests
 	Stray non-member nodes
