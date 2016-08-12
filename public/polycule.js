@@ -16,6 +16,8 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
     return -1;
 }
 
+
+
 // On receiving data from the server, build visualisation
 socket.on('nodesAndLinks', function(dataPackage) { 
 
@@ -210,6 +212,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     // Select sidepanel for later use
     var sidepanel = d3.select("#sidePanel");
+    var linksModule = d3.select("#linksModule");
+    var emailModule = d3.select("#emailModule");
+    var otherModule = d3.select("#otherModule");
+    
+    function hideModules(module) {
+        if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
+        if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
+        if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
+    }
     
     // Add container for use with zoom function
     var container = d3.select("#container")
@@ -280,13 +291,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
         if (active_node !== null) {
             active_node = null;                 // Deselect active node
-		    d3.select("#sidePanel").html(""); 	// Clear side panel 
+		    hideModules();						// Clear sidepanel
 		    restart();                          // Restart force layout
 	    }		
 	
 	    if (active_link !== null) {
 		    active_link=null;					// Deselect active link
-		    d3.select("#sidePanel").html(""); 	// Clear side panel 
+		    hideModules();						// Clear sidepanel
 		    restart();                          // Restart force layout
 	    }
     }
@@ -377,42 +388,46 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Display user info
     function displayInfo(node) {
     
+        hideModules("other");
+        
+        otherModule.html("");
+        
         displayNodeData = nodes[arrayObjectIndexOf(nodes, node, "id")]
 
-        sidepanel.html("");
+        otherModule.html("");
 	
         // Add Name
-        sidepanel.append("h2")
+        otherModule.append("h2")
             .attr("class", "name")
             .text(displayNodeData.name);
 		
         // Display user info for members
         if (displayNodeData.member === 1) {
         
-            sidepanel.append("p")
+            otherModule.append("p")
                 .attr("class", "username")
                 .text("("+displayNodeData.username+")");
             
             // Add user photo if one is provided
             if (displayNodeData.photo !== null) {
-                sidepanel.append("img")
+                otherModule.append("img")
                     .attr("class", "profilepic")
                     .attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo);
             }
 
             // Add user location
-            sidepanel.append("p")
+            otherModule.append("p")
                 .attr("class", "town")
                 .text(displayNodeData.location);
 
             // Add user description	
-            sidepanel.append("p")
+            otherModule.append("p")
                 .attr("class", "description")
                 .text(displayNodeData.description);
 	
             if (node === loggedin) {
 	
-                sidepanel.append("button")
+                otherModule.append("button")
                     .attr("id", "editnodebutton")
                     .text("Edit")
                     .attr("class", "standardButton")
@@ -420,7 +435,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
             } else {
             
-                sidepanel.append("button")
+                otherModule.append("button")
                     .attr("id", "sendMessageButton")
                     .attr("class", "standardButton")
                     .text("Message")
@@ -449,11 +464,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 		    if (displayNodeData.invited === 0) {
 	
-                sidepanel.append("p")
+                otherModule.append("p")
 			        .attr("class", "description")
 			        .text(displayNodeData.name+" is not yet a member of Polycule. Enter an email address to invite them:");
 		
-				var centerDiv = sidepanel.append("div")
+				var centerDiv = otherModule.append("div")
 				    .attr("class", "centerDiv");
 				    
 				centerDiv.append("p")
@@ -481,12 +496,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				        
 				            socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": nodes[arrayObjectIndexOf(nodes, node, "id")].name, "from": nodes[arrayObjectIndexOf(nodes, loggedin, "id")].name});	
 		                    
-				            sidepanel.html("");
+				            otherModule.html("");
 
-				            sidepanel.append("h2")
+				            otherModule.append("h2")
 					            .text(displayNodeData.name);
 				
-				            sidepanel.append("p")
+				            otherModule.append("p")
 					            .text(displayNodeData.name+" has been invited to join Polycule")
 					            .attr("id", "invitedText");
 					    }
@@ -495,12 +510,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 		    } else if (displayNodeData.invited === 1) {
 	
-			    sidepanel.html("");
+			    otherModule.html("");
 
-			    sidepanel.append("h2")
+			    otherModule.append("h2")
 				    .text(displayNodeData.name);
 				
-			    sidepanel.append("p")
+			    otherModule.append("p")
 				    .text(displayNodeData.name+" has been invited to join Polycule")
 				    .attr("id", "invitedText");
 	
@@ -510,9 +525,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     function editNode(node) {
   	
-	    sidepanel.html("");
+	    hideModules("other");
+	    
+	    otherModule.html("");
 	
-	    centerdiv = sidepanel.append("div")
+	    centerdiv = otherModule.append("div")
 	        .style("text-align", "center");
 	
 	    // Add Name
@@ -648,7 +665,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    .attr("class", "editable")
 		    .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].description);
 
-  	    sidepanel.append("button")
+  	    otherModule.append("button")
   	    	.attr("class", "standardButton")
   	    	.attr("id", "cancelNodeEdit")
   		    .text("Cancel")
@@ -660,7 +677,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		        displayInfo(node); 
   		    });
   			
-  	    sidepanel.append("button")
+  	    otherModule.append("button")
   	    	.attr("class", "standardButton")
   	    	.attr("id", "saveNodeEdit")
   		    .text("Save")
@@ -830,7 +847,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    active_line.attr("visibility", "hidden"); // Hide temporary line
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
   			    active_node = null;					// 
-  			    d3.select("#sidePanel").html(""); 	// Clear side panel
+  			    hideModule(); 						// Clear side panel
   
 			    connect1=null;		// Cancel connector line	
   
@@ -852,7 +869,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    d3.event.stopPropagation();
 		
 		    if (active_node !== null) {
-		
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
   			    active_node = null;	
   			    connect1=null;
@@ -874,30 +890,32 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
   		
-  		    sidepanel.html("");
+  		    hideModules("other");
+  		    
+  		    otherModule.html("");
   		
-  		    sidepanel.append("h2")
+  		    otherModule.append("h2")
   			    .text(linkData.source.name+" & "+linkData.target.name);
   			
   		    if ((linkData.startmonth !== null && linkData.startmonth !== undefined) || (linkData.startyear !== null && linkData.startyear !== undefined)) {
-  			    sidepanel.append("p")
+  			    otherModule.append("p")
   				    .attr("class", "linkDates")
   				    .text("Together since "+months[linkData.startmonth]+" "+linkData.startyear);
   		    }
   		
   		    if (linkData.description !== null) {
-  			    sidepanel.append("p")
+  			    otherModule.append("p")
   				    .attr("class", "linkDescription")
   				    .text(linkData.description);
             }
   			
   		    if (linkData.confirmed === 0) {
-  			    sidepanel.append("p")
+  			    otherModule.append("p")
   				    .attr("id", "linkConfirmation")
   				    .text("This link is awaiting confirmation");
   		    }
   		    
-  		    var centerDiv = sidepanel.append("div")
+  		    var centerDiv = otherModule.append("div")
   		        .attr("class", "centerDiv");
   		
   		    if (linkData.source.id === loggedin || linkData.target.id === loggedin) {
@@ -955,7 +973,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    var linkToDelete = active_link;
   		
   		    active_link = null;
-  		    sidepanel.html("");		// Clear side panel	
+  		    hideModules();		// Clear side panel	
 		    restart();
 		    
 		    // Send link delete to server
@@ -966,9 +984,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
   	
   		    var linkIndex = arrayObjectIndexOf(links, active_link, "id");
 
-  		    sidepanel.html("");
+  		    hideModules("other");
+  		    
+  		    otherModule.html("");
   		
-  		    centerdiv = sidepanel.append("div")
+  		    centerdiv = otherModule.append("div")
 	            .style("text-align", "center");
   		
   		    centerdiv.append("h2")
@@ -1019,13 +1039,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    .property("defaultValue", links[linkIndex].description);
 
   		
-  		    sidepanel.append("button")
+  		    otherModule.append("button")
   			    .text("Cancel")
   			    .attr("class", "standardButton")
   			    .attr("id", "cancelLinkEdit")
   			    .on("click", function() { displayLinkInfo(active_link); });
   			
-  		    sidepanel.append("button")
+  		    otherModule.append("button")
   			    .text("Save")
   			    .attr("id", "saveLinkEdit")
   			    .attr("class", "standardButton")
@@ -1060,18 +1080,20 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
     function openLinkRequests() { 
 
-	    sidepanel.html("");
+	    hideModules("links");
+	    
+	    linksModule.html("");
 	
-	    sidepanel.append("h2")
+	    linksModule.append("h2")
 		    .text("Link Confirmation Requests");
 		
 	    if (linkRequests.length === 0) {
-		    sidepanel.append("p")
+		    linksModule.append("p")
 			    .attr("class", "noLinkRequests")
 			    .text("You have no requests at this time");
 	    } else {
 		
-	        var emailContainer = sidepanel.append("div")
+	        var emailContainer = linksModule.append("div")
 		        .attr("class", "emailContainer");
 
 	        var linkRequestLine = emailContainer.selectAll("div")
@@ -1145,17 +1167,19 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			restart();
 		}
 */
-		sidepanel.html("");
+        hideModules("email");
 
-		sidepanel.append("h2")
+		emailModule.html("");
+
+		emailModule.append("h2")
 			.text("Messages");
 	
-		var inboxButton = sidepanel.append("button")
+		var inboxButton = emailModule.append("button")
 			.attr("class", "menubutton")
 			.text("Inbox")
 			.on("click", function() { openEmails("Inbox"); });
 	
-		var sentButton = sidepanel.append("button")
+		var sentButton = emailModule.append("button")
 			.attr("class", "menubutton")
 			.text("Sent")
 			.on("click", function() { openEmails("Sent"); });
@@ -1200,7 +1224,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
 		}
 
-		var emailContainer = sidepanel.append("div")
+		var emailContainer = emailModule.append("div")
 			.attr("class", "emailContainer");
 
 		var emailLine = emailContainer.selectAll("div")
@@ -1235,22 +1259,24 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		// Update read status of emails on database
 		socket.emit('emailRead', loggedin, thread);
 
-		sidepanel.html("");
+		hideModules("other");
+		
+		otherModule.html("");
 	
-		sidepanel.append("h2")
+		otherModule.append("h2")
 			.text("Messages");
 	
-		sidepanel.append("button")
+		otherModule.append("button")
 			.attr("class", "menubutton")
 			.text("Inbox")
 			.on("click", function() { openEmails("Inbox"); });
 	
-		sidepanel.append("button")
+		otherModule.append("button")
 			.attr("class", "menubutton")
 			.text("Sent")
 			.on("click", function() { openEmails("Sent"); });
 	
-		var emailContainer = sidepanel.append("div")
+		var emailContainer = otherModule.append("div")
 			.attr("class", "emailContainer");
 
 		var emailLine = emailContainer.selectAll("div")
@@ -1265,14 +1291,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.text(function(d) { return d.content; });
 
         if (arrayObjectIndexOf(nodes, thread, "id") !== -1) {
-			sidepanel.append("button")
+			otherModule.append("button")
 				.attr("id", "replyButton")
 				.text("Reply")
 				.attr("class", "standardButton")
 				.on("click", function() { writeEmail(thread); });
 		}
 
-		sidepanel.append("button")
+		otherModule.append("button")
 			.attr("id", "deleteButton")
 			.text("Delete thread")
 			.attr("class", "standardButton")
@@ -1289,44 +1315,46 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 	// ====== Write email =====
 	var writeEmail = function (recipient) {
-
-		sidepanel.html("");
 	
-		sidepanel.append("h2")
+	    hideModules("other");
+
+		otherModule.html("");
+	
+		otherModule.append("h2")
 			.text("Messages");
 	
-		sidepanel.append("button")
+		otherModule.append("button")
 			.attr("class", "menubutton")
 			.text("Inbox")
 			.on("click", function() { openEmails("Inbox"); });
 	
-		sidepanel.append("button")
+		otherModule.append("button")
 			.attr("class", "menubutton")
 			.text("Sent")
 			.on("click", function() { openEmails("Sent"); });
 			
-		sidepanel.append("br");
-		sidepanel.append("br");
+		otherModule.append("br");
+		otherModule.append("br");
 	
-		sidepanel.append("h3")
+		otherModule.append("h3")
 			.attr("id", "newEmailRecipName")
 			.text(nodes[arrayObjectIndexOf(nodes, recipient, "id")].name);
 		
-		sidepanel.append("span")
+		otherModule.append("span")
 			.attr("id", "newEmailRecipUsername")
 			.text(" ("+nodes[arrayObjectIndexOf(nodes, recipient, "id")].username+")");
 		
-		sidepanel.append("textarea")
+		otherModule.append("textarea")
 			.attr("id", "newEmailContent");
 
-		sidepanel.append("button")
+		otherModule.append("button")
 			.text("Cancel")
 			.attr("class", "standardButton")
 			.on("click", function(d) {
 				if (active_node !== null) { displayInfo(active_node); } else { openEmails("Inbox"); }
 			});
 	
-		sidepanel.append("button")
+		otherModule.append("button")
 			.text("Send")
 			.attr("class", "standardButton")
 			.on("click", function() {
@@ -1350,16 +1378,18 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	d3.select("#settingsButton").on("click", openSettings); 		
 
 	function openSettings() {
+	
+	    hideModules("other");
 
-		sidepanel.html("");
+		otherModule.html("");
 
-		sidepanel.append("h2")
+		otherModule.append("h2")
 			.text("Settings");
 			
-		var settingsError = sidepanel.append("p")
+		var settingsError = otherModule.append("p")
 		    .attr("id", "settingsError");
 		
-		var changeUsername = sidepanel.append("div")
+		var changeUsername = otherModule.append("div")
 			.attr("class", "settingsLine");
 		
 		changeUsername.append("h3")
@@ -1408,7 +1438,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 			});
 	
-		var changeEmail = sidepanel.append("div")
+		var changeEmail = otherModule.append("div")
 			.attr("class", "settingsLine");
 		
 		changeEmail.append("h3")
@@ -1455,7 +1485,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 			});	
 	
-		var changePassword = sidepanel.append("div")
+		var changePassword = otherModule.append("div")
 			.attr("class", "settingsLine");
 		
 		changePassword.append("h3")
@@ -1524,7 +1554,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					});
 			});
 	
-		var changeContactPrefs = sidepanel.append("div")
+		var changeContactPrefs = otherModule.append("div")
 			.attr("class", "settingsLine");
 		
 		changeContactPrefs.append("h3")
@@ -1556,7 +1586,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		changeContactPrefs.append("span")
 			.text("Send email when link requested");
 			
-		sidepanel.append("input")
+		otherModule.append("input")
 			.attr("type", "button")
 			.attr("id", "deleteAccount")
 			.attr("value", "Delete account")
@@ -1568,7 +1598,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				}
 			});
 			
-		sidepanel.append("input")
+		otherModule.append("input")
 			.attr("type", "button")
 			.attr("id", "logout")
 			.attr("value", "Sign out")

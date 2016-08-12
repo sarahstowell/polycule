@@ -147,6 +147,12 @@ h1 {
 }
 
 /* ===== Side Panel ===== */
+#linksModule, #emailModule, #otherModule {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
 #sidePanel {
     position: relative;
     min-width: 324px;
