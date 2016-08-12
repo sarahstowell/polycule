@@ -10,6 +10,7 @@
 
 	<script src="//d3js.org/d3.v3.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<script type='text/javascript' src='knockout-3.4.0.js'></script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDlmMrEEwzr4-SOJYVbjG74LdBqyE7GH0&libraries=places "></script>
 	
 </head>
@@ -48,15 +49,18 @@
 		<div id="sidePanel">
 		    <div id="linksModule" style="display: none;">
 		        <h2>Link Confirmation Requests</h2>
-		        <p id="noLinkRequests" style="display: none;">You have no requests at this time</p>
+		        <!--
+		        <p id="noLinkRequests" data-bind="visible: noLinkRequests">You have no requests at this time</p>
+		        -->
 		        <div id="linkRequestsContainer" data-bind="foreach: linkRequests">
-		            <h3 data-bind="text: name"></h3>
-		            <span data-bind="text: username"></span>
+		            <h3 data-bind="text: requestor"></h3>
+		            <span data-bind="text: requestor"></span>
+		            <!--
 		            <br/>
-		            <button id="confirmButton" class="standardButton">Confirm</button>
-		            <button id="denyButton" class="standardButton">Deny</button>
+		            <button id="confirmButton" class="standardButton" data-bind="click: confirmLink">Confirm</button>
+		            <button id="denyButton" class="standardButton" data-bind="click: denyLink">Deny</button>
+		            -->
 		        </div>
-		        
 		    </div>
 		    <div id="emailModule">
 		        <h2>Messages</h2>
