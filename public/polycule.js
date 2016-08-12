@@ -847,7 +847,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    active_line.attr("visibility", "hidden"); // Hide temporary line
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
   			    active_node = null;					// 
-  			    hideModule(); 						// Clear side panel
+  			    hideModules(); 						// Clear side panel
   
 			    connect1=null;		// Cancel connector line	
   
@@ -1089,7 +1089,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 	    if (linkRequests.length === 0) {
 		    linksModule.append("p")
-			    .attr("class", "noLinkRequests")
+			    .attr("id", "noLinkRequests")
 			    .text("You have no requests at this time");
 	    } else {
 		
