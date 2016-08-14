@@ -1,0 +1,24 @@
+{
+  "name": "polycule",
+  "description": "Polycule",
+  "main": "public/polycule.js",
+  "authors": [
+    "sarahstowell <sarah@baldock.me>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "polycule"
+  ],
+  "homepage": "polycule.co.uk",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "^3.4.0"
+  }
+}
