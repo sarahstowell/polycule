@@ -1118,7 +1118,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    
+	    /*
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1177,7 +1177,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 		        });
         }
-        	
+        */	
     }
 
     // ===== Email facility ======
