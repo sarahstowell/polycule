@@ -1103,14 +1103,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	*/
 
     
-    
+    /*
     function appViewModel() { 
         var self=this;
         self.linkRequests = ko.observableArray(linkRequests);
     }
     
     ko.applyBindings(new appViewModel());
-    
+    */
     
     
     d3.select("#linkButton").on("click", openLinkRequests);
@@ -1118,7 +1118,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    /*
+	    
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1177,7 +1177,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 		        });
         }
-        */	
+        	
     }
 
     // ===== Email facility ======
