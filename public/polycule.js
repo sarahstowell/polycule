@@ -1105,17 +1105,17 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			new SeatReservation("Bert", self.availableMeals[0])
 		]);
 	}
-	*/
-
+	
+*/
     
-    /*
+    
     function appViewModel() { 
         var self=this;
         self.linkRequests = ko.observableArray(linkRequests);
     }
     
     ko.applyBindings(new appViewModel());
-    */
+    
     
     
     d3.select("#linkButton").on("click", openLinkRequests);
