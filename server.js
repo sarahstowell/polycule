@@ -389,13 +389,12 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 	var newNode = {"username": req.body.username, "name": req.body.displayName, "location": req.body.location, "description": req.body.description, "photo": photourl, "photocoords": {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)}, "member": 1, "email": req.body.email, "messageemail": messageemail, "linkemail": linkemail, "facebookid": req.session.facebookid};
 	
 	// Determine whether there is an existing node for the new user
-	var signupType;
+	var signupType = null;
 	
 	if (req.session.inviteId) {
 		db.one("SELECT * FROM nodes WHERE id="+req.session.inviteId)
 		.then(function(node) {
 			if (node.member === 0) {
-			    console.log("Signup type is join");
 				signupType = "join";
 			} else {
 				signupType = "signup";
