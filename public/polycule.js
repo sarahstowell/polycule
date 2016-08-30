@@ -455,10 +455,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						.attr("class", "standardButton")
 						.text("Request Link")
 						.on("click", function() {
-							//links.push({"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
+							links.push({"sourceid": loggedin, "targetid": node, "confirmed": 0, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
+							restart();
 							// Send new link to server
 							socket.emit('newLink', {"sourceid": loggedin, "targetid": node, "confirmed": 0, "requestor": loggedin});
-							//restart();
 							displayInfo(node);
 						});
                 }
