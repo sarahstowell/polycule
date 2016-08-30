@@ -387,37 +387,91 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 	if (req.body.messageemail == "on") { var messageemail = true; } else { var messageemail = false; }
 	if (req.body.linkemail == "on") { var linkemail = true; } else { var linkemail = false; }
 	var newNode = {"username": req.body.username, "name": req.body.displayName, "location": req.body.location, "description": req.body.description, "photo": photourl, "photocoords": {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)}, "member": 1, "email": req.body.email, "messageemail": messageemail, "linkemail": linkemail, "facebookid": req.session.facebookid};
-	db.one("INSERT INTO nodes (name, username, location, description, photo, photocoords, member) VALUES (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}) returning id ", newNode)
-		.then(function(user) {
-			newNode.id = user.id;
-			db.one("INSERT INTO settings (id, username, email, messageemail, linkemail, facebookid) VALUES (${id}, ${username}, ${email}, ${messageemail}, ${linkemail}, ${facebookid}) returning id", newNode)
+	
+	
+	if (req.session.inviteId) {
+	
+		db.one("SELECT * FROM nodes WHERE id="+req.session.inviteId)
+			.then(function(node) {
+				if (node.member === 0) {
+					// Update existing node with new member details
+					db.one("UPDATE nodes (name, username, location, description, photo, photocoords, member, invited) = (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}, null) WHERE id = "+req.session.inviteId+"returning *", newNode)
+						.then(function(user) {
+						newNode.id = user.id;
+						db.one("INSERT INTO settings (id, username, email, messageemail, linkemail, facebookid) VALUES (${id}, ${username}, ${email}, ${messageemail}, ${linkemail}, ${facebookid}) returning id", newNode)
+							.then(function(user) {
+								req.session.inviteId = null;
+								//updateNodes(); SORT THIS OUT!!!
+								// Log user in after signup
+								req.login(user, function (err) {
+									if ( ! err ){
+										res.redirect('/');
+										io.emit('callToUpdateNodes');
+									} else {
+										console.log(err);//handle error
+									}
+								})	
+							})
+							.catch(function(err) {
+								console.log(err);
+							}); 				
+					})
+					.catch(function(err) {
+						if (err.code === '23505') {
+							res.render('facebookSignup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic});
+						} else {
+							console.log(err);
+						}
+					});
+				
+				} else {
+					// SIGN UP WITH NEW NODE
+				}
+			})
+			.catch(function(err) {
+				console.log(err);
+				
+				// SIGN UP WITH NEW NODE
+				
+			});
+				
+	} else {
+	
+	    // Sign up with new node
+		db.one("INSERT INTO nodes (name, username, location, description, photo, photocoords, member) VALUES (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}) returning id ", newNode)
 			.then(function(user) {
-				//updateNodes(); SORT THIS OUT!!!
-				// Log user in after signup
-				req.login(user, function (err) {
-					if ( ! err ){
-						res.redirect('/');
-						io.emit('callToUpdateNodes');
+				newNode.id = user.id;
+				db.one("INSERT INTO settings (id, username, email, messageemail, linkemail, facebookid) VALUES (${id}, ${username}, ${email}, ${messageemail}, ${linkemail}, ${facebookid}) returning id", newNode)
+				.then(function(user) {
+					//updateNodes(); SORT THIS OUT!!!
+					// Log user in after signup
+					req.login(user, function (err) {
+						if ( ! err ){
+							res.redirect('/');
+							io.emit('callToUpdateNodes');
+						} else {
+							console.log(err);//handle error
+						}
+					})	
+				})
+				.catch(function(err) {
+					if (err.code === '23505') {
+						res.render('facebookSignup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location1, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic});
 					} else {
-						console.log(err);//handle error
+						console.log(err);
 					}
-				})	
+				}); 				
 			})
 			.catch(function(err) {
 				if (err.code === '23505') {
-					res.render('facebookSignup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location1, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic});
+					res.render('facebookSignup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic});
 				} else {
-				    console.log(err);
+					console.log(err);
 				}
-			}); 				
-		})
-		.catch(function(err) {
-			if (err.code === '23505') {
-				res.render('facebookSignup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, facebookid: req.session.facebookid, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic});
-			} else {
-			    console.log(err);
-			}
-		});
+			});
+		
+	}
+	
 });
 
 app.get('/join', function(req, res) {
