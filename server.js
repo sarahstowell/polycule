@@ -411,7 +411,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 	console.log(signupType);
 	
 	var dbString;
-	if (signupType = "join") { dbString = "UPDATE nodes (name, username, location, description, photo, photocoords, member, invited) = (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}, null) WHERE id = "+req.session.inviteId+"returning *"; }
+	if (signupType === "join") { dbString = "UPDATE nodes (name, username, location, description, photo, photocoords, member, invited) = (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}, null) WHERE id = "+req.session.inviteId+"returning *"; }
 	else { dbString = "INSERT INTO nodes (name, username, location, description, photo, photocoords, member) VALUES (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}) returning id"; }
 	
 	// Sign up with new node
