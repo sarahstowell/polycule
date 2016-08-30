@@ -448,7 +448,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
                 if (currentLink.length === 0) {
                 
                 	d3.select("#sendMessageButton")
-                	    .style("left", "80px");
+                	    .style("left", "75px");
                 
 					otherModule.append("button")
 						.attr("id", "requestLinkButton")

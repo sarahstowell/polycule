@@ -19,12 +19,12 @@ Medium Priority:
 			Further server side checks?
 			Photo type check?
 	Check max length of description field
-	Link button on profile
 	Link/Remove facebook account
 	Knockout for settings/emails/link requests
 	Stray non-member nodes
 	Mixed case usernames?
 	Fix width of top banner
+	Email verification
 	Make so original photo isn't saved twice
 
 Low Priority:
