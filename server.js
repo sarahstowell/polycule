@@ -395,15 +395,15 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 		db.one("SELECT * FROM nodes WHERE id="+req.session.inviteId)
 		.then(function(node) {
 			if (node.member === 0) {
-				    signupType = "join";
-				} else {
-					signupType = "signup";
-				}
-			})
-			.catch(function(err) {
-				console.log(err);
+				signupType = "join";
+			} else {
 				signupType = "signup";
-			});
+			}
+		})
+		.catch(function(err) {
+			console.log(err);
+			signupType = "signup";
+		});
 	} else {
 	    signupType = "signup";
 	}
@@ -445,8 +445,6 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 				console.log(err);
 			}
 		});
-		
-	}
 	
 });
 
