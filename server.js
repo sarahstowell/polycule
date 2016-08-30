@@ -394,7 +394,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 	if (req.session.inviteId) {
 		db.one("SELECT * FROM nodes WHERE id="+req.session.inviteId)
 		.then(function(node) {
-		    console.log("Node found: "+node);
+		    console.log("Node found: "+JSON.stringify(node));
 			if (node.member === 0) {
 				signupType = "join";
 			} else {
