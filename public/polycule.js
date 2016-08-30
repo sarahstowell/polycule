@@ -457,7 +457,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						.on("click", function() {
 							//links.push({"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
 							// Send new link to server
-							socket.emit('newLink', {"sourceid": active_node, "targetid": node, "confirmed": 0, "requestor": loggedin});
+							socket.emit('newLink', {"sourceid": loggedin, "targetid": node, "confirmed": 0, "requestor": loggedin});
 							//restart();
 							displayInfo(node);
 						});
