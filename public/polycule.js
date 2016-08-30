@@ -442,11 +442,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
                     .on("click", function() { writeEmail(node); });
 
                 // ADD LINK REQUEST BUTTON
-                /*
+                
                 var currentLink = links.filter(function(d) { return ((d.sourceid === loggedin && d.targetid === node) || (d.targetid === loggedin && d.sourceid === node)); });
                 
                 if (currentLink.length === 0) {
-					sidepanel.append("button")
+                
+                	d3.select("#sendMessageButton")
+                	    .style("left", "75px");
+                
+					otherModule.append("button")
 						.attr("id", "requestLinkButton")
 						.attr("class", "standardButton")
 						.text("Request Link")
@@ -457,7 +461,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 							//restart();
 						});
                 }
-                */
+                
             }
 
 	    } else {

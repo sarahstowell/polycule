@@ -220,6 +220,11 @@ h2 {
     left: 125px;
 }
 
+#requestLinkButton {
+    position: absolute;
+    bottom: 10px;
+    left: 175px;
+
 #editnodebutton {
     position: absolute;
     bottom: 10px;
