@@ -392,9 +392,9 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 	var signupType;
 	
 	if (req.session.inviteId) {
-	    console.log("select request run");
 		db.one("SELECT * FROM nodes WHERE id="+req.session.inviteId)
 		.then(function(node) {
+		    console.log("Node found: "+node);
 			if (node.member === 0) {
 				signupType = "join";
 			} else {
