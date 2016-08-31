@@ -392,7 +392,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 	var signup = function(type) {
 	
 		var dbString;
-		if (type === "join") { dbString = "UPDATE nodes (name, username, location, description, photo, photocoords, member, invited) = (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}, null) WHERE id = "+req.session.inviteId+"returning *"; }
+		if (type === "join") { dbString = "UPDATE nodes SET (name, username, location, description, photo, photocoords, member, invited) = (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}, null) WHERE id = "+req.session.inviteId+"returning *"; }
 		else { dbString = "INSERT INTO nodes (name, username, location, description, photo, photocoords, member) VALUES (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}) returning id"; }
 	
 		// Sign up with new node
@@ -402,6 +402,7 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 				db.one("INSERT INTO settings (id, username, email, messageemail, linkemail, facebookid) VALUES (${id}, ${username}, ${email}, ${messageemail}, ${linkemail}, ${facebookid}) returning id", newNode)
 				.then(function(user) {
 					req.session.inviteId = null;
+					req.session.inviteName = null;
 					//updateNodes(); SORT THIS OUT!!!
 					// Log user in after signup
 					req.login(user, function (err) {
