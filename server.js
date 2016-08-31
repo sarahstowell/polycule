@@ -519,7 +519,7 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
         });	
 });
 
-app.post('/update/photocoords', upload.single('photo'), function(req, res) {
+app.post('/update/photocoords', upload.single('photo'), function(req, res) { // Alternative to upload???
     console.log("Updated photocoords received");
     
     var photourl = req.body.filename;
@@ -527,11 +527,8 @@ app.post('/update/photocoords', upload.single('photo'), function(req, res) {
     
 	profilePicEdit(filename=photourl, x1=photocoords.x1, y1=photocoords.y1, x2=photocoords.x2, y2=photocoords.y2);
 	
-	console.log("id: "+req.body.id);
-	console.log("x1: "+req.body.x1);
-	console.log("filename: "+req.body.filename);
-	
-	db.one("UPDATE nodes SET photocoords = $2 WHERE id=$1", [req.body.id, photocoords])
+	//db.one("UPDATE nodes SET photocoords = $2 WHERE id=$1", [req.body.id, photocoords])
+	db.one("UPDATE nodes SET photocoords ="+photocoords+" WHERE id="+req.body.id)
 	    .then(function() {
 	        io.emit('callToUpdateNodes'); // Refresh nodes data
 	    })
