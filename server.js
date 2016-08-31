@@ -519,7 +519,7 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
         });	
 });
 
-app.post('/update/photocoords', function(req, res) {
+app.post('/update/photocoords', upload.single('photo'), function(req, res) {
     console.log("Updated photocoords received");
     
     var photourl = req.body.filename;
