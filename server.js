@@ -315,6 +315,8 @@ app.get('/signup', function(req, res) {
 // Process signup request ----------------------------------------------------------------
 app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
+    console.log("Last page: "+req.session.lastPage);
+
 	if (req.body.photoType === 'custom' && req.file) { 
 		profilePicEdit(photo=req.session.profilePic, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
@@ -323,46 +325,72 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 	}
 
 	bcrypt.hash(req.body.password, 10, function(err, hash) {
+	
+	    var signup = function("type") {
 
-		if (req.body.messageemail == "on") { var messageemail = true; } else { var messageemail = false; }
-		if (req.body.linkemail == "on") { var linkemail = true; } else { var linkemail = false; }
-		var newNode = {"username": req.body.username, "name": req.body.displayName, "location": req.body.location, "description": req.body.description, "photo": photourl, "photocoords": {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)}, "member": 1, "email": req.body.email, "messageemail": messageemail, "linkemail": linkemail, "hash": hash};
-		db.one("INSERT INTO nodes (name, username, location, description, photo, photocoords, member) VALUES (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}) returning id ", newNode)
-			.then(function(user) {
-				newNode.id = user.id;
-				db.one("INSERT INTO settings (id, username, email, messageemail, linkemail, hash) VALUES (${id}, ${username}, ${email}, ${messageemail}, ${linkemail}, ${hash}) returning id", newNode)
+			if (req.body.messageemail == "on") { var messageemail = true; } else { var messageemail = false; }
+			if (req.body.linkemail == "on") { var linkemail = true; } else { var linkemail = false; }
+			var newNode = {"username": req.body.username, "name": req.body.displayName, "location": req.body.location, "description": req.body.description, "photo": photourl, "photocoords": {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)}, "member": 1, "email": req.body.email, "messageemail": messageemail, "linkemail": linkemail, "hash": hash};
+			
+			var dbString;
+		    if (type === "join") { dbString = "UPDATE nodes SET (name, username, location, description, photo, photocoords, member, invited) = (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}, null) WHERE id = "+req.session.inviteId+"returning *"; }
+		    else { dbString = "INSERT INTO nodes (name, username, location, description, photo, photocoords, member) VALUES (${name}, ${username}, ${location}, ${description}, ${photo}, ${photocoords}, ${member}) returning id"; }
+			
+			db.one(dbString, newNode)
 				.then(function(user) {
-					//updateNodes(); SORT THIS OUT!!!
-					// Log user in after signup
-					req.login(user, function (err) {
-						if ( ! err ){
-							res.redirect('/');
-							io.emit('callToUpdateNodes');
-							req.session.facebookid = null;
-					        req.session.displayName = null;
-					        req.session.email = null;
-					        req.session.location = null;
-					        req.session.profilePic = null;
+					newNode.id = user.id;
+					db.one("INSERT INTO settings (id, username, email, messageemail, linkemail, hash) VALUES (${id}, ${username}, ${email}, ${messageemail}, ${linkemail}, ${hash}) returning id", newNode)
+					.then(function(user) {
+						req.session.inviteId = null;
+					    req.session.inviteName = null;
+						//updateNodes(); SORT THIS OUT!!!
+						// Log user in after signup
+						req.login(user, function (err) {
+							if ( ! err ){
+								res.redirect('/');
+								io.emit('callToUpdateNodes');
+							} else {
+								console.log(err);//handle error
+							}
+						})	
+					})
+					.catch(function(err) {
+						if (err.code === '23505') {
+							res.render('signup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic, usernameBorderColor: "border: 1px solid red"});
 						} else {
-							console.log(err);//handle error
+							console.log(err);					
 						}
-					})	
+					}); 				
 				})
 				.catch(function(err) {
 					if (err.code === '23505') {
-						res.render('signup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description, messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic, usernameBorderColor: "border: 1px solid red"});
+						res.render('signup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description,  messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic, usernameBorderColor: "border: 1px solid red"});
 					} else {
-					    console.log(err);					
+						console.log(err);
 					}
-				}); 				
+				});
+		}
+		
+		
+		// Determine whether there is an existing node for the new user
+	    if (req.session.inviteId) {
+		    db.one("SELECT * FROM nodes WHERE id="+req.session.inviteId)
+			.then(function(node) {
+				if (node.member === 0) {
+					signup("join");
+				} else {
+					signup("signup");
+				}
 			})
 			.catch(function(err) {
-				if (err.code === '23505') {
-					res.render('signup', { error: "That username is already taken", googlemapsapi: process.env.GOOGLE_MAPS_URL, username: req.body.username, displayName: req.body.displayName, email: req.body.email, location: req.body.location, description: req.body.description,  messageemail: req.body.messageemail, linkemail: req.body.linkemail, profilePic: req.session.profilePic, usernameBorderColor: "border: 1px solid red"});
-				} else {
-				    console.log(err);
-				}
+				console.log(err);
+				signup("signup");
 			});
+		} else {
+			signup("signup");
+		}
+		
+		
 	});
 });
 
@@ -403,6 +431,11 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 				.then(function(user) {
 					req.session.inviteId = null;
 					req.session.inviteName = null;
+					req.session.facebookid = null;
+					req.session.displayName = null;
+					req.session.email = null;
+					req.session.location = null;
+					req.session.profilePic = null;
 					//updateNodes(); SORT THIS OUT!!!
 					// Log user in after signup
 					req.login(user, function (err) {
