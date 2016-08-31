@@ -527,7 +527,9 @@ app.post('/update/photocoords', function(req, res) {
     
 	profilePicEdit(filename=photourl, x1=photocoords.x1, y1=photocoords.y1, x2=photocoords.x2, y2=photocoords.y2);
 	
-	console.log(photocoords);
+	console.log("id: "+req.body.id);
+	console.log("x1: "+req.body.x1);
+	console.log("filename: "+req.body.filename);
 	
 	db.one("UPDATE nodes SET photocoords = $2 WHERE id=$1", [req.body.id, photocoords])
 	    .then(function() {
