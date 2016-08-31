@@ -209,7 +209,6 @@ var photoTypeCustom = function() {
 }
 
 var photoTypeNone = function() {
-window.alert("hello");
 	d3.select("#photoAreaFacebook").style("display", "none");
 	d3.select("#photoArea").style("display", "none");
 	d3.select("#photoSelect").property("disabled", true);
