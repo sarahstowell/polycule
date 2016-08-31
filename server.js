@@ -43,7 +43,7 @@ var mailCreator = function(id, name, email, from) {
         from: '"Sarah Stowell 👥" <sarahstowell84@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'You have been invited to join Polycule', // Subject line
-        text: 'Hi "+name+", you have been invited by'+from+'to join Polycule, the social network for polyamorous people. Please click on the link below to signup', // plaintext body
+        text: 'Hi "+name+", you have been invited by'+from+'to join Polycule, the social network for polyamorous people. Go to https://polycule.co.uk/join?id='+id+" to sign up.", // plaintext body
         html: '<h1>Hi '+name+'!</h1> <p>You have been invited by '+from+' to join Polycule, the social network for polyamorous people. Click <a href="https://polycule.co.uk/join?id='+id+'">here</a> to signup.</p>' // html body
     };
 }
@@ -512,6 +512,23 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 	db.one("UPDATE nodes x SET (photo, photocoords) = ($2, $3) FROM  (SELECT id, photo, photocoords FROM nodes WHERE id = $1 FOR UPDATE) y WHERE  x.id = y.id RETURNING y.photo", [req.body.id, photourl, photocoords])
 	    .then(function(oldPhoto) {
 	        photoRemove(oldPhoto.photo);
+	        io.emit('callToUpdateNodes'); // Refresh nodes data
+	    })
+	    .catch(function(err) { 
+            console.log(err); 
+        });	
+});
+
+app.post('/update/photocoords', function(req, res) {
+    console.log("Updated photocoords received");
+    
+    var photourl = req.body.filename;
+	var photocoords = {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)};
+    
+	profilePicEdit = function(filename=photourl, facebookid, x1=photocoords.x1, y1=photocoords.y1, x2=photocoords.x2, y2=photocoords.y2);
+	
+	db.one("UPDATE nodes SET (photocoords) = ($2) WHERE id=$1", [req.body.id, photocoords])
+	    .then(function() {
 	        io.emit('callToUpdateNodes'); // Refresh nodes data
 	    })
 	    .catch(function(err) { 

@@ -705,7 +705,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
   			    
   			    // Send photo to server
-  			    if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
+  			    if (document.getElementById("photoTypeCustom").checked === true /*&& document.getElementById("photoSelect").files[0]*/ && document.getElementById("x1").value) {
 					xhttp = new XMLHttpRequest();
 					xhttp.onreadystatechange = function() {
 						if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -718,10 +718,22 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					data.append('y1', document.getElementById("y1").value);
 					data.append('x2', document.getElementById("x2").value);
 					data.append('y2', document.getElementById("y2").value);
+					
+					if (document.getElementById("photoSelect").files[0]) {
+					
 					data.append('photo', document.getElementById("photoSelect").files[0]);
 				
 					xhttp.open("POST", "/update/photo", true);
 					xhttp.send(data); 
+					
+					} else {
+					
+					data.append('filename', nodes[arrayObjectIndexOf(nodes, node, "id")].photo);
+					
+					xhttp.open("POST", "/update/photo", true);
+					xhttp.send(data); 
+					
+					}
 					
 					xhttp.addEventListener("load", function() {
 					    socket.emit('nodeEdit', newNodeData);
@@ -732,10 +744,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					});
 										 
 				} else {
-				
+				/*
 				    if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
 				        newNodeData.photocoords = {"x1": document.getElementById("x1").value, "y1": document.getElementById("y1").value, "x2": document.getElementById("x2").value, "y2": document.getElementById("y2").value};
 				    }
+				    */
 					if (photoRemove === true) { newNodeData.photoRemove = true; }
 					socket.emit('nodeEdit', newNodeData);
 					socket.on('nodeEditComplete', function() {
