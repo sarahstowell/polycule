@@ -326,7 +326,7 @@ app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
 	bcrypt.hash(req.body.password, 10, function(err, hash) {
 	
-	    var signup = function("type") {
+	    var signup = function(type) {
 
 			if (req.body.messageemail == "on") { var messageemail = true; } else { var messageemail = false; }
 			if (req.body.linkemail == "on") { var linkemail = true; } else { var linkemail = false; }
