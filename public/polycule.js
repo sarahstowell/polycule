@@ -730,7 +730,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					
 					data.append('filename', nodes[arrayObjectIndexOf(nodes, node, "id")].photo);
 					
-					xhttp.open("POST", "/update/photo", true);
+					xhttp.open("POST", "/update/photocoords", true);
 					xhttp.send(data); 
 					
 					}
