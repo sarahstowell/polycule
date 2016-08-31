@@ -720,19 +720,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					data.append('y2', document.getElementById("y2").value);
 					
 					if (document.getElementById("photoSelect").files[0]) {
-					
-					data.append('photo', document.getElementById("photoSelect").files[0]);
+						data.append('photo', document.getElementById("photoSelect").files[0]);
 				
-					xhttp.open("POST", "/update/photo", true);
-					xhttp.send(data); 
-					
+						xhttp.open("POST", "/update/photo", true);
+						xhttp.send(data); 
 					} else {
+						data.append('filename', nodes[arrayObjectIndexOf(nodes, node, "id")].photo);
 					
-					data.append('filename', nodes[arrayObjectIndexOf(nodes, node, "id")].photo);
-					
-					xhttp.open("POST", "/update/photocoords", true);
-					xhttp.send(data); 
-					
+						xhttp.open("POST", "/update/photocoords", true);
+						xhttp.send(data); 
 					}
 					
 					xhttp.addEventListener("load", function() {
