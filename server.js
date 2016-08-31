@@ -388,26 +388,6 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 	if (req.body.linkemail == "on") { var linkemail = true; } else { var linkemail = false; }
 	var newNode = {"username": req.body.username, "name": req.body.displayName, "location": req.body.location, "description": req.body.description, "photo": photourl, "photocoords": {"x1": parseInt(req.body.x1), "y1": parseInt(req.body.y1), "x2": parseInt(req.body.x2), "y2": parseInt(req.body.y2)}, "member": 1, "email": req.body.email, "messageemail": messageemail, "linkemail": linkemail, "facebookid": req.session.facebookid};
 	
-	// Determine whether there is an existing node for the new user
-	var signupType;
-	
-	if (req.session.inviteId) {
-		db.one("SELECT * FROM nodes WHERE id="+req.session.inviteId)
-		.then(function(node) {
-			if (node.member === 0) {
-				signup("join");
-			} else {
-				signup("signup");
-			}
-		})
-		.catch(function(err) {
-			console.log(err);
-			signup("signup");
-		});
-	} else {
-	    signup("signup");
-	}
-	
 	// Function to add user to database
 	var signup = function(type) {
 	
@@ -448,6 +428,24 @@ app.post('/signup/facebook', upload.single('profilePic'), function (req, res, ne
 					console.log(err);
 				}
 			});
+	}
+	
+	// Determine whether there is an existing node for the new user
+	if (req.session.inviteId) {
+		db.one("SELECT * FROM nodes WHERE id="+req.session.inviteId)
+		.then(function(node) {
+			if (node.member === 0) {
+				signup("join");
+			} else {
+				signup("signup");
+			}
+		})
+		.catch(function(err) {
+			console.log(err);
+			signup("signup");
+		});
+	} else {
+	    signup("signup");
 	}
 	
 });
