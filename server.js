@@ -527,8 +527,8 @@ app.post('/update/photocoords', upload.single('photo'), function(req, res) { // 
     
     console.log("photourl: "+photourl);
     
-	//profilePicEdit(filename=photourl, x1=photocoords.x1, y1=photocoords.y1, x2=photocoords.x2, y2=photocoords.y2);
-	
+	profilePicEdit(photo=null, filename=photourl, x1=photocoords.x1, y1=photocoords.y1, x2=photocoords.x2, y2=photocoords.y2);
+	/*
 			s3.getObject({Bucket: 'polycule', Key: 'original/'+photourl}, function(err, data) {
 				if (err) { console.log(err); }
 				if (data) { console.log('image read from s3'); } 
@@ -553,6 +553,7 @@ app.post('/update/photocoords', upload.single('photo'), function(req, res) { // 
 				});
 			
 			});
+			*/
 	
 	db.one("UPDATE nodes SET (photocoords) = ($2) WHERE id="+req.body.id+" returning *", [req.body.id, photocoords])
 	    .then(function(upd1) {
