@@ -530,26 +530,28 @@ app.post('/update/photocoords', upload.single('photo'), function(req, res) { // 
 	//profilePicEdit(filename=photourl, x1=photocoords.x1, y1=photocoords.y1, x2=photocoords.x2, y2=photocoords.y2);
 	
 			s3.getObject({Bucket: 'polycule', Key: 'original/'+photourl}, function(err, data) {
-		    if (err) { console.log(err); }
-            if (data) { console.log('image read from s3'); } 
+				if (err) { console.log(err); }
+				if (data) { console.log('image read from s3'); } 
 
-			jimp.read(data.Body).then(function(image) {
-			    // Test
-			    image.getBuffer("image/jpeg", function(err, oldImage) {
-					if (err) { throw err; }
-					if (oldImage) { console.log("New Image sent to buffer"); }
-					uploadFile('original/'+photourl, oldImage);			    
-			    });
-			    //
-				image.scaleToFit(540, 1000).crop(photocoords.x1, photocoords.y1, photocoords.x2-photocoords.x1, photocoords.y2-photocoords.y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
-					if (err) { throw err; }
-					if (newImage) { console.log("New Image sent to buffer"); }
-					uploadFile('final/'+photourl, newImage);
+				jimp.read(data.Body).then(function(image) {
+					// Test
+					image.getBuffer("image/jpeg", function(err, oldImage) {
+						if (err) { throw err; }
+						if (oldImage) { console.log("New Image sent to buffer"); }
+						uploadFile('original/'+photourl, oldImage);			    
+					});
+					//
+					image.scaleToFit(540, 1000).crop(photocoords.x1, photocoords.y1, photocoords.x2-photocoords.x1, photocoords.y2-photocoords.y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
+						if (err) { throw err; }
+						if (newImage) { console.log("New Image sent to buffer"); }
+						uploadFile('final/'+photourl, newImage);
 				 
+					});
+					console.log("Image read other photo");
+				}).catch(function (err) {
+					console.log(err);
 				});
-				console.log("Image read other photo");
-			}).catch(function (err) {
-				console.log(err);
+			
 			});
 	
 	db.one("UPDATE nodes SET (photocoords) = ($2) WHERE id="+req.body.id+" returning *", [req.body.id, photocoords])
