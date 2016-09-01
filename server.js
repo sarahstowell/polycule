@@ -527,8 +527,8 @@ app.post('/update/photocoords', upload.single('photo'), function(req, res) { // 
     
 	profilePicEdit(filename=photourl, x1=photocoords.x1, y1=photocoords.y1, x2=photocoords.x2, y2=photocoords.y2);
 	
-	db.one("UPDATE nodes SET (photocoords) = ($2) WHERE id="+req.body.id, [req.body.id, photocoords])
-	    .then(function() {
+	db.one("UPDATE nodes SET (photocoords) = ($2) WHERE id="+req.body.id+" returning *", [req.body.id, photocoords])
+	    .then(function(upd1) {
 	        io.emit('callToUpdateNodes'); // Refresh nodes data
 	    })
 	    .catch(function(err) { 
