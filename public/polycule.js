@@ -719,6 +719,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					data.append('x2', document.getElementById("x2").value);
 					data.append('y2', document.getElementById("y2").value);
 					
+					
+					xhttp.addEventListener("load", function() {
+					    socket.emit('nodeEdit', newNodeData);
+					    //socket.on('nodeEditComplete', function() {
+						    displayInfo(node);
+						    restart();
+					    //});	
+					});
+					
 					if (document.getElementById("photoSelect").files[0]) {
 						data.append('photo', document.getElementById("photoSelect").files[0]);
 				
@@ -731,13 +740,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						xhttp.send(data); 
 					}
 					
-					xhttp.addEventListener("load", function() {
-					    socket.emit('nodeEdit', newNodeData);
-					    //socket.on('nodeEditComplete', function() {
-						    displayInfo(node);
-						    restart();
-					    //});	
-					});
+					
 										 
 				} else {
 				/*
