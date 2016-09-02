@@ -413,7 +413,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
                 otherModule.append("img")
                     .attr("class", "profilepic")
                     .attr("id", "profilepic")
-                    .attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo);
+                    .attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo+"?" + new Date().getTime());
             }
 
             // Add user location
@@ -575,7 +575,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.on("click", function() {
                 if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null && !(img2)) {
 			        // Draw database photo onto photo edit area
-				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
+				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
 				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
 				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
 				}
@@ -588,7 +588,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	   // Draw database photo onto profile edit canvas     
 	   if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {     
 			var img1=document.createElement('img');
-			img1.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
+			img1.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
 			img1.onload = function () {
 				ctx.drawImage(img1, x=0, y=0, width=225, height=225);
 			}
@@ -627,7 +627,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				    };		        
 				} else if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
 					img2 = new Image();
-					img2.src = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
+					img2.src = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
 					if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
 					var sx = Math.round(document.getElementById("x1").value*ratio1);
 					var sy = Math.round(document.getElementById("y1").value*ratio1);
