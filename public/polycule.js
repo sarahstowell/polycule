@@ -627,7 +627,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				    };		        
 				} else if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
 					img2 = new Image();
-					img2.src = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo;
+					img2.src = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
 					if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
 					var sx = Math.round(document.getElementById("x1").value*ratio1);
 					var sy = Math.round(document.getElementById("y1").value*ratio1);
