@@ -412,6 +412,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (displayNodeData.photo !== null) {
                 otherModule.append("img")
                     .attr("class", "profilepic")
+                    .attr("id", "profilepic")
                     .attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo);
             }
 
@@ -724,6 +725,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					    socket.emit('nodeEdit', newNodeData);
 					    //socket.on('nodeEditComplete', function() {
 						    displayInfo(node);
+						    d3.select("#profilepic").attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo);
 						    restart();
 					    //});	
 					});
