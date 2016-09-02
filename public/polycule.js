@@ -725,7 +725,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					    socket.emit('nodeEdit', newNodeData);
 					    //socket.on('nodeEditComplete', function() {
 						    displayInfo(node);
-						    d3.select("#profilepic").attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo);
+						    d3.select("#profilepic").attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo+"#" + new Date().getTime());
 						    restart();
 					    //});	
 					});
