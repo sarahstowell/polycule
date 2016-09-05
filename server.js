@@ -222,8 +222,6 @@ passport.use('facebook', new FacebookStrategy({
     	});
 	})
 );
-      
-
 
 // Setup Sessions ------------------------------------------------------------------------
 app.use(cookieParser());
