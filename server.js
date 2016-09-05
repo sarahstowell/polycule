@@ -150,7 +150,7 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 // Setup Passport local login strategy ---------------------------------------------------
 passport.use(new LocalStrategy(
     function(username, password, done) {
-        return db.one("SELECT id, username, hash FROM settings WHERE username=$1 OR username=$1", [username])
+        return db.one("SELECT id, username, hash FROM settings WHERE username=$1 OR email=$1", [username])
         .then(function(user) {
 		    bcrypt.compare(password, user.hash, function(err, comparison) {
                 if (comparison) {
