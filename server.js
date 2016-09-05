@@ -317,18 +317,18 @@ app.get('/login/reset', function(req, res) {
 app.post('/login/reset', function(req, res) {
 	crypto.pseudoRandomBytes(16, function (err, newp) { // Create new random password 
 	    console.log(newp);
-	    if (err) return cb(err);
-	    bcrypt.hash(req.body.password, 10, function(err, hash) { // Create hash 
+	    if (err) console.log(err);
+	    bcrypt.hash(newp.toString('hex'), 10, function(err, hash) { // Create hash 
 	        console.log(hash);
 	        db.one("UPDATE settings (hash) = ($2) WHERE username=$1 OR email=$1", [req.body.username, hash])
 	            .then(function() {
 	 	// Send password to email address
 	// Render confirmation page
 					console.log("Found user in database");           
-				    res.send("pass: "+newp+" hash: "+hash);
+				    res.send("pass: "+newp.toString('hex')+" hash: "+hash);
 	            })
 	            .catch(function(err) {
-	                console.log(err)
+	                console.log(err);
 	                res.render('reset', {error: "Username or Email not found"});            
 	            });
 	    })
