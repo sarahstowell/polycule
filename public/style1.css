@@ -131,6 +131,6 @@ textarea {
 }
 
 .centerP {
-    text-align: center;
+    margin: auto;
     width: 250px;
 }
