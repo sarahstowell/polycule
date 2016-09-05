@@ -345,7 +345,7 @@ app.post('/login/reset', function(req, res) {
 						console.log('Message sent: ' + info.response);
 					});
 				console.log("Password updated in database");           
-				res.send("Please check your email");
+				res.render("reset2");
 			})
 			.catch(function(err) {
 				console.log(err);
