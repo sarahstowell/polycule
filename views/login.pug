@@ -2,11 +2,9 @@ doctype html
 html
 	head
 		script(type="text/javascript" src="//d3js.org/d3.v3.min.js")
-		script(type="text/javascript" src="/background.js")
 		link(href='https://fonts.googleapis.com/css?family=Sarpanch:900' rel='stylesheet' type='text/css')
 		link(href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css')
 		link(href='/styleLogin.css' rel='stylesheet' type='text/css')
-		
 	body(onresize="reSize();")
 		svg(id="backsvg")
 		div(id="logindiv")
@@ -25,3 +23,4 @@ html
 					br 
 					vgvghv Forgotten your password? 
 					a(href="/login/reset") Click here
+	script(type="text/javascript" src="/background.js")
