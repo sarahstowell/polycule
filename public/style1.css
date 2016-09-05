@@ -113,7 +113,7 @@ textarea {
    border-radius: 10px;
    width: 400px;
    text-align: center;
-   margin-bottom: 50px;
+   padding-bottom: 50px;
 }
 
 #resetButton {
@@ -125,7 +125,6 @@ textarea {
     font-size: 14px;
     font-weight: bold;
     background-color: lightgray;
-    padding-bottom: 50px;
 }
 
 #resetButton:hover {
