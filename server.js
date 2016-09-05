@@ -19,7 +19,6 @@ var bcrypt = require('bcrypt');
 var path = require('path');
 var AWS = require('aws-sdk');
 var multer = require('multer');
-//var multerS3 = require('multer-s3');
 var multerS3 = require( 'multer-storage-s3' );
 var crypto = require('crypto');
 var helmet = require('helmet'); // Security

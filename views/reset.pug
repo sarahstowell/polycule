@@ -1,0 +1,15 @@
+doctype html
+html
+	head
+		script(src='//d3js.org/d3.v3.min.js')
+		link(href='https://fonts.googleapis.com/css?family=Sarpanch:900' rel='stylesheet' type='text/css')
+		link(type='text/css' rel='stylesheet' href="/style1.css")
+	body
+		#mainDiv
+			h1 polycule
+			h2 Forgotten password
+			p Enter your username or password and we will send you an email with a replacement.
+			p(id="errorMessage")=error
+			form(name="signup" action="/signup" method="post" encType="multipart/form-data" onSubmit = "return validateForm(2);" id="signup")
+				input(type="text")
+				input(type="submit")
