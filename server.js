@@ -284,7 +284,8 @@ app.get('/.well-known/acme-challenge/yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4
 
 // Send login page -----------------------------------------------------------------------
 app.get('/login', function(req, res){
-    res.sendFile(__dirname+'/login.html');     
+    //res.sendFile(__dirname+'/login.html'); 
+    res.render('login');    
 });
 
 // Login verification
