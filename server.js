@@ -284,12 +284,15 @@ app.get('/.well-known/acme-challenge/yx8vymXaT7iE7pZ8KGspYl2-sUvDe-jVyCpnnezyB_4
 
 // Send login page -----------------------------------------------------------------------
 app.get('/login', function(req, res){
-	//res.sendFile(__dirname+'/login.html'); 
 	res.render('login', {error: null});
 });
 
+app.get('/login/fail', function(req, res){
+	res.render('login', {error: Incorrect login details});
+});
+
 // Login verification
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), function(req, res){
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login/fail'}), function(req, res){
     console.log("Username: "+req.body.username+" id: "+ req.session.passport.user);
     res.redirect('/');
 });
