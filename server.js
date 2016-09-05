@@ -320,6 +320,7 @@ app.get('/login/facebook/callback',
   })
 );
 
+// Password reset
 app.get('/login/reset', function(req, res) {
     res.render('reset');
 });
@@ -343,10 +344,8 @@ app.post('/login/reset', function(req, res) {
 					}
 						console.log('Message sent: ' + info.response);
 					});
-	
-// Render confirmation page
-				console.log("Found user in database");           
-				res.send("pass: "+newp.toString('hex')+" hash: "+hash);
+				console.log("Password updated in database");           
+				res.send("Please check your email");
 			})
 			.catch(function(err) {
 				console.log(err);

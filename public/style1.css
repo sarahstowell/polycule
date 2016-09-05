@@ -104,3 +104,13 @@ textarea {
     color: red;
     font-weight: bold;
 }
+
+#mainDiv {
+   top: 50px;
+   margin: 0 auto;
+   background-color: white;
+   border: 2px solid white;
+   border-radius: 10px;
+   width: 400px;
+   text-align: center;
+}
