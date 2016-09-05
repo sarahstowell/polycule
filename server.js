@@ -319,8 +319,8 @@ app.post('/login/reset', function(req, res) {
 	    if (err) console.log(err);
 	    bcrypt.hash(newp.toString('hex'), 10, function(err, hash) { // Create hash
 	        console.log(req.body.username); 
-	        db.one("UPDATE settings SET hash = $2 WHERE username=$1 OR email=$1", [req.body.username, hash])
-	            .then(function() {
+	        db.one("UPDATE settings SET hash = $2 WHERE username=$1 OR email=$1 returning *", [req.body.username, hash])
+	            .then(function(user) {
 	 	// Send password to email address
 	// Render confirmation page
 					console.log("Found user in database");           
