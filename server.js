@@ -288,7 +288,7 @@ app.get('/login', function(req, res){
 });
 
 app.get('/login/fail', function(req, res){
-	res.render('login', {error: Incorrect login details});
+	res.render('login', {error: "Incorrect login details"});
 });
 
 // Login verification
