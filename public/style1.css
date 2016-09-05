@@ -129,3 +129,8 @@ textarea {
 #resetButton:hover {
     background-color: darkgray;
 }
+
+.centerP {
+    text-align: center;
+    width: 250px;
+}
