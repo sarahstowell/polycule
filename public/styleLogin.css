@@ -1,0 +1,111 @@
+.node {
+    fill: black;
+    stroke: white;
+    stroke-width: 1.5px;
+}
+
+.link {
+    stroke: white;
+    stroke-width: 4;	
+}
+
+body {
+    margin: 0;
+    background-color: black;
+    font-family: 'Noto sans', sans-serif;
+    font-size: 14px;
+}
+
+#backsvg {
+    background-color: black;
+}
+
+h1 {
+    color: black;
+    font-family: 'Sarpanch', sans-serif;
+    font-size: 50px;
+}
+
+#logindiv {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    width: 400px;
+    height: 450px; /*height: 500px;*/
+    text-align: center;
+}
+
+#remember {
+    font-size: 13px;
+    text-align: left;
+}
+
+.inputBox {
+    border-radius: 5px;
+    border: 1px solid gray;
+    height: 25px;
+    width: 250px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.submitButton {
+    width: 260px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: lightgray;
+}
+
+.submitButton:hover {
+    background-color: #BBBBBB;
+}
+
+.googleButton {
+    width: 260px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid red;
+    margin-bottom: 10px;
+    background-color: red;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.facebookButton {
+    width: 260px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #3B5998;
+    margin-bottom: 10px;
+    background-color: #3B5998;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.facebookButton:hover {
+    background-color: lightblue;
+    border: 1px solid lightblue;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+}
+
+hr {
+    width: 90%;
+    color: lightgray;
+}
