@@ -12,6 +12,7 @@ html
 		div(id="logindiv")
 			h1 polycule
 			form(action="/login" method="post" name="loginForm")
+				p(id="errorMessage")=error
 				input(id="username" type="text" name="username" placeholder="Username or Email" class="inputBox")
 				input(id="password" type="password" name="password" placeholder="Password" class="inputBox")
 				br
