@@ -324,7 +324,7 @@ app.post('/login/reset', function(req, res) {
 				    res.send("pass: "+newp+" hash: "+hash);
 	            })
 	            .catch(function() {
-	                res.render('reset', {error: "Username or Email not found");            
+	                res.render('reset', {error: "Username or Email not found"});            
 	            });
 	    })
 	})
