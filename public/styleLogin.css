@@ -109,3 +109,9 @@ hr {
     width: 90%;
     color: lightgray;
 }
+
+span {
+	text-align: center; 
+	display: block; 
+	margin: 10px;
+}
