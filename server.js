@@ -317,7 +317,8 @@ app.get('/login/reset', function(req, res) {
 app.post('/login/reset', function(req, res) {
 	crypto.pseudoRandomBytes(16, function (err, newp) { // Create new random password 
 	    if (err) console.log(err);
-	    bcrypt.hash(newp.toString('hex'), 10, function(err, hash) { // Create hash 
+	    bcrypt.hash(newp.toString('hex'), 10, function(err, hash) { // Create hash
+	        console.log(req.body.username); 
 	        db.one("UPDATE settings SET hash = $2 WHERE username=$1 OR email=$1", [req.body.username, hash])
 	            .then(function() {
 	 	// Send password to email address
