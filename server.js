@@ -329,24 +329,29 @@ app.post('/login/reset', function(req, res) {
 	    if (err) console.log(err);
 	    bcrypt.hash(newp.toString('hex'), 10, function(err, hash) { // Create hash
 	        console.log(req.body.username); 
-	        db.one("UPDATE settings SET hash = $2 WHERE username=$1 OR email=$1 returning *", [req.body.username, hash])
-	            .then(function(node) {
-	                mailPasswordCreator(node.name, node.email, newp.toString('hex'));
-					transporter.sendMail(mailPassword, function(error, info){ // Send password to email address
-						if(error){
-							return console.log(error);
-						}
-							console.log('Message sent: ' + info.response);
-						});
-	 	
-	// Render confirmation page
-					console.log("Found user in database");           
-				    res.send("pass: "+newp.toString('hex')+" hash: "+hash);
-	            })
-	            .catch(function(err) {
-	                console.log(err);
-	                res.render('reset', {error: "Username or Email not found"});            
-	            });
+	        db.tx(function(t) {
+	            return t.batch([
+	                t.one("UPDATE settings SET hash = $2 WHERE username=$1 OR email=$1 returning *", [req.body.username, hash]),
+	                t.one("SELECT * FROM nodes WHERE username=$1", [req.body.username])
+	            ]);
+			})
+			.then(function(node) {
+				mailPasswordCreator(node[1].name, node[0].email, newp.toString('hex'));
+				transporter.sendMail(mailPassword, function(error, info){ // Send password to email address
+					if(error){
+						return console.log(error);
+					}
+						console.log('Message sent: ' + info.response);
+					});
+	
+// Render confirmation page
+				console.log("Found user in database");           
+				res.send("pass: "+newp.toString('hex')+" hash: "+hash);
+			})
+			.catch(function(err) {
+				console.log(err);
+				res.render('reset', {error: "Username or Email not found"});            
+			});
 	    })
 	})
 });
