@@ -125,6 +125,7 @@ textarea {
     font-size: 14px;
     font-weight: bold;
     background-color: lightgray;
+    padding-bottom: 50px;
 }
 
 #resetButton:hover {
