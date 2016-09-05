@@ -92,6 +92,7 @@ function photoRemove(deletePhoto) {
 }
 // ---------------------------------------------------------------------------------------
 
+app.use(bodyParser);
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -317,7 +318,7 @@ app.get('/login/reset', function(req, res) {
 app.post('/login/reset', function(req, res) {
     console.log("Username: "+req.body.username);
 	crypto.pseudoRandomBytes(16, function (err, newp) { // Create new random password 
-	    if (err) return cb(err)
+	    if (err) return cb(err);
 	    bcrypt.hash(req.body.password, 10, function(err, hash) { // Create hash 
 	        db.one("UPDATE settings (hash) = ($2) WHERE username=$1 OR email=$1", [req.body.username, hash])
 	            .then(function() {
