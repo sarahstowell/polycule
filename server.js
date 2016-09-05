@@ -318,14 +318,14 @@ app.post('/login/reset', function(req, res) {
 	crypto.pseudoRandomBytes(16, function (err, newp) { // Create new random password 
 	    bcrypt.hash(req.body.password, 10, function(err, hash) { // Create hash 
 	        db.one("UPDATE settings (hash) = ($2) WHERE username=$1 OR email=$1", [username, hash])
-	            .then(
+	            .then(function() {
 	 	// Send password to email address
 	// Render confirmation page           
 				    res.send("pass: "+newp+" hash: "+hash);
-	            )
-	            .catch(
+	            })
+	            .catch(function() {
 	                res.render('reset', {error: "Username or Email not found");            
-	            );
+	            });
 	    })
 	})
 });
