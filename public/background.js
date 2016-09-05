@@ -1,3 +1,5 @@
+window.alert("file read");
+
 var width = window.innerWidth-50;
 var height = window.innerHeight-50;
 
