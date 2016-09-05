@@ -310,6 +310,10 @@ app.get('/login/facebook/callback',
   })
 );
 
+app.get('/login/reset', function(req, res) {
+    res.render('reset');
+});
+
 // Send signup screen --------------------------------------------------------------------
 app.get('/signup', function(req, res) {
     res.render('signup', {googlemapsapi: process.env.GOOGLE_MAPS_URL, usernameBorderColor: "border: 1px solid gray", displayName: req.session.inviteName, messageemail: "checked", linkemail: "checked"});
