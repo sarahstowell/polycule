@@ -332,7 +332,7 @@ app.post('/login/reset', function(req, res) {
 	        console.log(req.body.username); 
 	        db.one("UPDATE settings SET hash = $2 WHERE username=$1 OR email=$1 returning *", [req.body.username, hash])
 			.then(function(node) {
-			    db.one("SELECT * FROM nodes WHERE id=$1@", [node.id]);
+			    db.one("SELECT * FROM nodes WHERE id=$1", [node.id]);
 			    .then(function(node2) {
 					mailPasswordCreator(node2.name, node.email, newp.toString('hex'));
 					transporter.sendMail(mailPassword, function(error, info){ // Send password to email address
