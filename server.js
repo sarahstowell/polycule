@@ -315,8 +315,7 @@ app.get('/login/reset', function(req, res) {
 });
 
 app.post('/login/reset', function(req, res) {
-    console.log("Username: "+req.body.username);
-    console.log("Username2: "+req.body.reset.username);
+
 	crypto.pseudoRandomBytes(16, function (err, newp) { // Create new random password 
 	    if (err) return cb(err);
 	    bcrypt.hash(req.body.password, 10, function(err, hash) { // Create hash 
