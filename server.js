@@ -314,6 +314,22 @@ app.get('/login/reset', function(req, res) {
     res.render('reset');
 });
 
+app.post('/login/reset', function(req, res) {
+	crypto.pseudoRandomBytes(16, function (err, newp) { // Create new random password 
+	    bcrypt.hash(req.body.password, 10, function(err, hash) { // Create hash 
+	        db.one("UPDATE settings (hash) = ($2) WHERE username=$1 OR email=$1", [username, hash])
+	            .then(
+	 	// Send password to email address
+	// Render confirmation page           
+				    res.send("pass: "+newp+" hash: "+hash);
+	            )
+	            .catch(
+	                res.render('reset', {error: "Username or Email not found");            
+	            );
+	    })
+	})
+});
+
 // Send signup screen --------------------------------------------------------------------
 app.get('/signup', function(req, res) {
     res.render('signup', {googlemapsapi: process.env.GOOGLE_MAPS_URL, usernameBorderColor: "border: 1px solid gray", displayName: req.session.inviteName, messageemail: "checked", linkemail: "checked"});
