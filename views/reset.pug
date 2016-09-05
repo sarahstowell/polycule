@@ -8,7 +8,7 @@ html
 		#resetDiv
 			h1 polycule
 			h2 Forgotten your password?
-			p(style="width: 250px;") Enter your username or email address and we will send you an email with a replacement.
+			p(style="width: 250px;text-align: center;") Enter your username or email address and we will send you an email with a replacement.
 			p(id="errorMessage")=error
 			form(name="reset" action="/login/reset" method="post" id="reset")
 				input(type="text" class="inputBox" placeholder="Username or Email" id="username" name="username")
