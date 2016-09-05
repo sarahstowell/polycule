@@ -36,14 +36,24 @@ app.get('*',function(req,res,next){
 
 // Setup email ---------------------------------------------------------------------------
 var transporter = nodemailer.createTransport(process.env.GMAIL);
-var mailOptions;
+var mailInvite;
 var mailCreator = function(id, name, email, from) {
-    mailOptions = {
-        from: '"Sarah Stowell 👥" <sarahstowell84@gmail.com>', // sender address
+    mailInvite = {
+        from: '"Polycule" <sarahstowell84@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'You have been invited to join Polycule', // Subject line
-        text: 'Hi "+name+", you have been invited by'+from+'to join Polycule, the social network for polyamorous people. Go to https://polycule.co.uk/join?id='+id+" to sign up.", // plaintext body
+        text: 'Hi '+name+'\n You have been invited by'+from+'to join Polycule, the social network for polyamorous people. Go to https://polycule.co.uk/join?id='+id+' to sign up.', // plaintext body
         html: '<h1>Hi '+name+'!</h1> <p>You have been invited by '+from+' to join Polycule, the social network for polyamorous people. Click <a href="https://polycule.co.uk/join?id='+id+'">here</a> to signup.</p>' // html body
+    };
+}
+var mailPassword;
+var mailPasswordCreator = function(name, email, pass) {
+    mailPassword = {
+        from: '"Polycule" <sarahstowell84@gmail.com>', // sender address
+        to: email,
+        subject: "New password for polycule.co.uk",
+        text: "Hi "+name+"\n Here is your new password for polycule.co.uk:\n"+pass+"\n Remember to change your password to something more memorable as soon as you login.",
+        html: "<h1>Hi "+name+"!</h1> <p>Here is your new password for polycule.co.uk:</p><p>"+pass+"</p><p>Remember to change your password to something more memorable as soon as you login.</p>"
     };
 }
 
@@ -315,13 +325,20 @@ app.get('/login/reset', function(req, res) {
 });
 
 app.post('/login/reset', function(req, res) {
-	crypto.pseudoRandomBytes(16, function (err, newp) { // Create new random password 
+	crypto.pseudoRandomBytes(10, function (err, newp) { // Create new random password 
 	    if (err) console.log(err);
 	    bcrypt.hash(newp.toString('hex'), 10, function(err, hash) { // Create hash
 	        console.log(req.body.username); 
 	        db.one("UPDATE settings SET hash = $2 WHERE username=$1 OR email=$1 returning *", [req.body.username, hash])
-	            .then(function(user) {
-	 	// Send password to email address
+	            .then(function(node) {
+	                mailPasswordCreator(node.name, node.email, newp.toString('hex'));
+					transporter.sendMail(mailPassword, function(error, info){ // Send password to email address
+						if(error){
+							return console.log(error);
+						}
+							console.log('Message sent: ' + info.response);
+						});
+	 	
 	// Render confirmation page
 					console.log("Found user in database");           
 				    res.send("pass: "+newp.toString('hex')+" hash: "+hash);
@@ -890,7 +907,7 @@ io.sockets.on('connection', function(socket){
                          io.sockets.emit('callToUpdateNodes');                                                  
                             // send mail with defined transport object
                             mailCreator(node.id, node.name, node.email, node.from);
-							transporter.sendMail(mailOptions, function(error, info){
+							transporter.sendMail(mailInvite, function(error, info){
 								if(error){
 									return console.log(error);
 								}
