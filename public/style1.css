@@ -113,6 +113,7 @@ textarea {
    border-radius: 10px;
    width: 400px;
    text-align: center;
+   margin-bottom: 50px;
 }
 
 #resetButton {
