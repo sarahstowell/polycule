@@ -1,5 +1,3 @@
-window.alert("file read");
-
 var width = window.innerWidth-50;
 var height = window.innerHeight-50;
 
@@ -26,6 +24,8 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
 
 d3.json("exampleData.json", function(error, graph) {
 	if (error) throw error;
+	
+	if (graph) { window.alert("file read"); }
 
 	var links = graph.links;
 	var nodes = graph.nodes;
