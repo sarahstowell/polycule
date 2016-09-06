@@ -861,6 +861,7 @@ io.sockets.on('connection', function(socket){
   	    })
   	    //db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed, requestor", newLink)
   	    .then(function (data) {
+  	        console.log(JSON.stringify(data));
             console.log("New link added to database. Id: "+data[0].id);
             io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
             
