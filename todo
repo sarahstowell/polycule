@@ -10,6 +10,7 @@ High Priority:
 	
 
 Medium Priority:
+    Email on link/message
 	Template main index page and take api key out
 	Standard signups
 		Get photo to populate with pug
@@ -25,7 +26,7 @@ Medium Priority:
 	Fix width of top banner
 	Email verification
 	Make so original photo isn't saved twice
-	Password reset
+	
 
 Low Priority:
     Allow username edit on profile
@@ -36,6 +37,7 @@ Low Priority:
 	Logout when user closes window (unless box ticked)
 	Google login
 	Check whether location widget favours nearby places outside of UK
+	Password reset link
 
 Issues for when there are more users:
 	Zoom buttons

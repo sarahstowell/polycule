@@ -57,6 +57,28 @@ var mailPasswordCreator = function(name, email, pass) {
     };
 }
 
+var mailLink;
+var mailLinkCreator = function(name, email, from) {
+    mailLink = {
+        from: '"Polycule" <sarahstowell84@gmail.com>', // sender address
+        to: email,
+        subject: "Request to link at polycule.co.uk",
+        text: "Hi "+name+"\n "+from+" says they are linked with you. Login at polycule.co.uk to confirm or deny.",
+        html: "<h1>Hi "+name+"!</h1> <p>"+from+"says they are linked with you. <a href='https://polycule.co.uk'>Login</a> to confirm or deny.</p>"
+    };
+}
+
+var mailMessage;
+var mailMessageCreator = function(name, email, from) {
+    mailMessage = {
+        from: '"Polycule" <sarahstowell84@gmail.com>', // sender address
+        to: email,
+        subject: "You have a new message at polycule.co.uk",
+        text: "Hi "+name+"\n "+from+" send you a new message at polycule.co.uk. Login to read it",
+        html: "<h1>Hi "+name+"!</h1> <p>"+from+" sent you a new message at polycule.co.uk. <a href='https://polycule.co.uk'>Login</a> to read it.</p>"
+    };
+}
+
 // S3 File uploads -----------------------------------------------------------------------
 var storage = multerS3({
     destination : function( req, file, cb ) {
@@ -741,6 +763,9 @@ io.sockets.on('connection', function(socket){
                 console.log("Email added to database");
                 if (socket.request.user.id == email[0].recip || socket.request.user.id == email[0].sender) {
                     io.sockets.emit('callToUpdateEmail');
+                    
+                    // INSERT NODEMAILER CODE HERE
+                    
                 }
             })
             .catch(function (error) {
@@ -824,10 +849,31 @@ io.sockets.on('connection', function(socket){
   	socket.on("newLink", function(newLink) {
   	    console.log("New link received");
   	    // Update database
-  	    db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed", newLink)
-  	    .then(function (id) {
-            console.log("New link added to database. Id: "+id);
+  	    
+        if (newLink.sourceid !== newLink.requestor) { var linkTo = newLink.sourceid; } else { var linkTo = newLink.targetid; }
+         	    
+  	    db.tx(funtion(t) {
+  	        return t.batch([
+  	          	db.one("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed, requestor", newLink),
+  	          	db.many("SELECT id, names FROM nodes WHERE id = ${sourceid} OR id = ${targetid}", newLink),
+  	          	db.one("SELECT id, email FROM settings WHERE id=$1", [linkTo])
+  	        ])
+  	    })
+  	    //db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed, requestor", newLink)
+  	    .then(function (data) {
+            console.log("New link added to database. Id: "+data[0].id);
             io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
+            
+			mailLinkCreator(data[1].filter(function(d) { return d.id === linkTo; }).name, data[2].email, data[1].filter(function(d) { return d.id === newLink.requestor; }).name);
+			transporter.sendMail(mailLink, function(error, info){
+				if(error){
+					return console.log(error);
+				}
+				console.log('Message sent: ' + info.response);
+			});
+    };
+}
+            
 		})
 		.catch(function (error) {
 			 console.log(error);
