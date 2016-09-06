@@ -766,14 +766,11 @@ io.sockets.on('connection', function(socket){
 					db.one("SELECT id, email, messageemail FROM settings WHERE id=${recip}", newEmail)
 				])
 			})
-  	      
-  	      //db.query("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail)
 			.then(function(data) {
                 console.log("Email added to database");
                 if (socket.request.user.id == data[0].recip || socket.request.user.id == data[0].sender) {
                     io.sockets.emit('callToUpdateEmail');
                  }   
-
 				if (data[2].messageemail === true) {
 					mailMessageCreator(data[1].filter(function(d) { return d.id === newEmail.recip; })[0].name, data[2].email, data[1].filter(function(d) { return d.id === newEmail.sender; })[0].name);
 					transporter.sendMail(mailMessage, function(error, info){
@@ -783,8 +780,6 @@ io.sockets.on('connection', function(socket){
 						console.log('Message sent: ' + info.response);
 					});    
 				}  
-                    
-                
             })
             .catch(function (error) {
                 console.log(error);
