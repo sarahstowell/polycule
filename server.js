@@ -864,11 +864,12 @@ io.sockets.on('connection', function(socket){
   	        console.log(JSON.stringify(data));
             console.log("New link added to database. Id: "+data[0].id);
             io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
-            
-            console.log("linkemail: "+data[2].linkemail);
+
+            console.log("data[1]: "+data[1]);
+            console.log("data[1].filter... : "+data[1].filter(function(d) { return d.id === linkTo; }));
+            console.log("name: "+data[1].filter(function(d) { return d.id === linkTo; }).name);
             
             if (data[2].linkemail === true) {
-                console.log("Evaluated as true");
 				mailLinkCreator(data[1].filter(function(d) { return d.id === linkTo; }).name, data[2].email, data[1].filter(function(d) { return d.id === newLink.requestor; }).name);
 				transporter.sendMail(mailLink, function(error, info){
 					if(error){
