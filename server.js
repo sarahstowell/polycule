@@ -852,7 +852,7 @@ io.sockets.on('connection', function(socket){
   	    
         if (newLink.sourceid !== newLink.requestor) { var linkTo = newLink.sourceid; } else { var linkTo = newLink.targetid; }
          	    
-  	    db.tx(funtion(t) {
+  	    db.tx(function(t) {
   	        return t.batch([
   	          	db.one("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed, requestor", newLink),
   	          	db.many("SELECT id, names FROM nodes WHERE id = ${sourceid} OR id = ${targetid}", newLink),
