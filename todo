@@ -10,7 +10,6 @@ High Priority:
 	
 
 Medium Priority:
-    Email on link/message
 	Template main index page and take api key out
 	Standard signups
 		Get photo to populate with pug
@@ -29,6 +28,7 @@ Medium Priority:
 	
 
 Low Priority:
+    Make emails more attractive
     Allow username edit on profile
     Optimise node update algorithm
 	Delete emails where both reader and sender have deleted

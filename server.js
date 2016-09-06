@@ -74,8 +74,8 @@ var mailMessageCreator = function(name, email, from) {
         from: '"Polycule" <sarahstowell84@gmail.com>', // sender address
         to: email,
         subject: "You have a new message at polycule.co.uk",
-        text: "Hi "+name+"\n "+from+" sent you a new message at polycule.co.uk. Login to read it",
-        html: "<h1>Hi "+name+"!</h1> <p>"+from+" sent you a new message at polycule.co.uk. <a href='https://polycule.co.uk'>Login</a> to read it.</p>"
+        text: "Hi "+name+"\n "+from+" sent you a new message. Login at polycule.co.uk to read it.",
+        html: "<h1>Hi "+name+"!</h1> <p>"+from+" sent you a new message. Login at <a href='https://polycule.co.uk'>polycule.co.uk</a> to read it.</p>"
     };
 }
 
