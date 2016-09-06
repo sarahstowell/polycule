@@ -767,7 +767,7 @@ io.sockets.on('connection', function(socket){
 				])
 			})
   	      
-  	      db.query("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail)
+  	      //db.query("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail)
 			.then(function(data) {
                 console.log("Email added to database");
                 if (socket.request.user.id == data[0].recip || socket.request.user.id == data[0].sender) {
