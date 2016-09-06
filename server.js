@@ -761,7 +761,7 @@ io.sockets.on('connection', function(socket){
   	      
 			db.tx(function(t) {
 				return t.batch([
-  	                db.one("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail)
+  	                db.one("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail),
 					db.many("SELECT id, name FROM nodes WHERE id = ${recip} OR id = ${sender}", newEmail),
 					db.one("SELECT id, email, messageemail FROM settings WHERE id=${recip}", newEmail)
 				])
