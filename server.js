@@ -758,15 +758,33 @@ io.sockets.on('connection', function(socket){
   	// New email received ----------------------------------------------------------------
   	 socket.on('newEmail', function(newEmail) {
   	      console.log("Email received");
+  	      
+			db.tx(function(t) {
+				return t.batch([
+  	                db.one("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail)
+					db.many("SELECT id, name FROM nodes WHERE id = ${recip} OR id = ${sender}", newEmail),
+					db.one("SELECT id, email, messageemail FROM settings WHERE id=${recip}", newEmail)
+				])
+			})
+  	      
   	      db.query("INSERT INTO emails (id, recip, sender, read, delrecip, delsender, content) VALUES (DEFAULT, ${recip}, ${sender}, ${read}, ${delrecip}, ${delsender}, ${content}) returning id, recip, sender", newEmail)
-			.then(function(email) {
+			.then(function(data) {
                 console.log("Email added to database");
-                if (socket.request.user.id == email[0].recip || socket.request.user.id == email[0].sender) {
+                if (socket.request.user.id == data[0].recip || socket.request.user.id == data[0].sender) {
                     io.sockets.emit('callToUpdateEmail');
+                 }   
+
+				if (data[2].messageemail === true) {
+					mailMessageCreator(data[1].filter(function(d) { return d.id === newEmail.recip; })[0].name, data[2].email, data[1].filter(function(d) { return d.id === newEmail.sender; })[0].name);
+					transporter.sendMail(mailMessage, function(error, info){
+						if(error){
+							return console.log(error);
+						}
+						console.log('Message sent: ' + info.response);
+					});    
+				}  
                     
-                    // INSERT NODEMAILER CODE HERE
-                    
-                }
+                
             })
             .catch(function (error) {
                 console.log(error);
@@ -859,7 +877,6 @@ io.sockets.on('connection', function(socket){
   	          	db.one("SELECT id, email, linkemail FROM settings WHERE id=$1", [linkTo])
   	        ])
   	    })
-  	    //db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed, requestor", newLink)
   	    .then(function (data) {
   	        console.log(JSON.stringify(data));
             console.log("New link added to database. Id: "+data[0].id);
