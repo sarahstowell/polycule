@@ -864,16 +864,15 @@ io.sockets.on('connection', function(socket){
             console.log("New link added to database. Id: "+data[0].id);
             io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
             
-			mailLinkCreator(data[1].filter(function(d) { return d.id === linkTo; }).name, data[2].email, data[1].filter(function(d) { return d.id === newLink.requestor; }).name);
-			transporter.sendMail(mailLink, function(error, info){
-				if(error){
-					return console.log(error);
-				}
-				console.log('Message sent: ' + info.response);
-			});
-//    };
-//}
-            
+            if (data[2].linkemail === TRUE) {
+				mailLinkCreator(data[1].filter(function(d) { return d.id === linkTo; }).name, data[2].email, data[1].filter(function(d) { return d.id === newLink.requestor; }).name);
+				transporter.sendMail(mailLink, function(error, info){
+					if(error){
+						return console.log(error);
+					}
+					console.log('Message sent: ' + info.response);
+				});    
+			}        
 		})
 		.catch(function (error) {
 			 console.log(error);
