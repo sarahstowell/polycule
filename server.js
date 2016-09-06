@@ -856,7 +856,7 @@ io.sockets.on('connection', function(socket){
   	        return t.batch([
   	          	db.one("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed, requestor", newLink),
   	          	db.many("SELECT id, name FROM nodes WHERE id = ${sourceid} OR id = ${targetid}", newLink),
-  	          	db.one("SELECT id, email FROM settings WHERE id=$1", [linkTo])
+  	          	db.one("SELECT id, email, linkemail FROM settings WHERE id=$1", [linkTo])
   	        ])
   	    })
   	    //db.query("INSERT INTO links (sourceid, targetid, confirmed, requestor) VALUES (${sourceid}, ${targetid}, ${confirmed}, ${requestor}) returning id, sourceid, targetid, confirmed, requestor", newLink)
