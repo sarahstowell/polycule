@@ -1121,7 +1121,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	}
 	
 */
-  /*  
+   
     
     function appViewModel() { 
         var self=this;
@@ -1130,7 +1130,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     ko.applyBindings(new appViewModel());
     
-    */
+    
     
     d3.select("#linkButton").on("click", openLinkRequests);
 	

@@ -1,5 +1,4 @@
-High Priority:
-    !!! Resolve photo coordinates issue
+High Priority (Before Poly Day):
 	!!! Fix photo update - why does it take so long to load? 
 	!!! If user adjusts coordinates of profile pic?
 	!!! Safari animation issue
@@ -9,8 +8,9 @@ High Priority:
 	Phone friendly version
 	
 
-Medium Priority:
-	Template main index page and take api key out
+Medium Priority (Hopefully before Poly Day):
+    Make so that selecting location from list is compulsory
+	Make emails more attractive
 	Standard signups
 		Get photo to populate with pug
 		Validation:
@@ -23,20 +23,22 @@ Medium Priority:
 	Stray non-member nodes
 	Mixed case usernames?
 	Fix width of top banner
-	Email verification
-	Make so original photo isn't saved twice
 	
+	Invite facebook friends
+	Facebook like/share button
+	Logout when user closes window (unless box ticked)
 
-Low Priority:
-    Make emails more attractive
+Low Priority (after PolyDay):
+    Email verification
+    Template main index page and take api key out
+    Make so original photo isn't saved twice
     Allow username edit on profile
     Optimise node update algorithm
 	Delete emails where both reader and sender have deleted
 	Delete emails when user deletes account
 	Keep name for emails after account is deleted
-	Logout when user closes window (unless box ticked)
 	Google login
-	Check whether location widget favours nearby places outside of UK
+	Get location widget to favour nearby places
 	Password reset link
 
 Issues for when there are more users:
@@ -44,6 +46,5 @@ Issues for when there are more users:
 	Get current user to be displayed in centre (set px, py before calling force layout??)
 	Display people in the same town close together
 	Create search function
-	Add ability to link nodes without dragging 
 	Get labels to position nicely
-	Make use of facebook friends
+	
