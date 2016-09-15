@@ -1098,7 +1098,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
 // Overall viewmodel for this screen, along with initial state
 function appViewModel() {
-    var self = this;
+    //var self = this;
 /*
     // Non-editable catalog data - would come from the server
     self.availableMeals = [
@@ -1108,11 +1108,11 @@ function appViewModel() {
     ];    
 */
     // Editable data
-    self.linkRequests2 = ko.observableArray(linkRequests);
+    this.linkRequests2 = ko.observableArray(linkRequests);
     
-    self.confirmLink = function() {};
+    this.confirmLink = function() {};
     
-    self.denyLink = function() {};
+    this.denyLink = function() {};
 }
 
 ko.applyBindings(new appViewModel());
