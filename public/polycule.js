@@ -1118,6 +1118,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			
 		// Send link delete to server
 		socket.emit('linkDelete', this.linkRequests2.id);
+    };
     }
     
     ko.applyBindings(new viewModel());
