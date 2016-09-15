@@ -1122,13 +1122,32 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 */
    
-    
+    /*
     function appViewModel() { 
         var self=this;
         self.linkRequests = ko.observableArray(linkRequests);
     }
     
     ko.applyBindings(new appViewModel());
+    
+    */
+
+// Overall viewmodel for this screen, along with initial state
+function appViewModel() {
+    var self = this;
+/*
+    // Non-editable catalog data - would come from the server
+    self.availableMeals = [
+        { mealName: "Standard (sandwich)", price: 0 },
+        { mealName: "Premium (lobster)", price: 34.95 },
+        { mealName: "Ultimate (whole zebra)", price: 290 }
+    ];    
+*/
+    // Editable data
+    self.linkRequests2 = ko.observableArray(linkRequests);
+}
+
+ko.applyBindings(new appViewModel());
     
     
     
@@ -1137,7 +1156,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    
+	    /*
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1196,7 +1215,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 		        });
         }
-        	
+        	*/
     }
 
     // ===== Email facility ======
