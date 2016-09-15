@@ -1095,9 +1095,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 
     // ===== Link Requests =====
-var confirmLink = function() { window.alert("Confirm"); };
-    
-var denyLink = function() { window.alert("Deny"); };
+
 // Overall viewmodel for this screen, along with initial state
 function appViewModel() {
     //var self = this;
@@ -1112,10 +1110,10 @@ function appViewModel() {
     // Editable data
     this.linkRequests2 = ko.observableArray(linkRequests);
     
-
+    this.confirmLink = function() { window.alert("Confirm"); };
+    
+    this.denyLink = function() { window.alert("Deny"); };
 }
-
-
 
 ko.applyBindings(new appViewModel());
     
