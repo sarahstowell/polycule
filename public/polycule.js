@@ -1110,9 +1110,24 @@ function appViewModel() {
     // Editable data
     this.linkRequests2 = ko.observableArray(linkRequests);
     
-    this.confirmLink = function() { window.alert("Confirm"); };
+    this.confirmLink = function() { 
     
-    this.denyLink = function() { window.alert("Deny"); };
+    	linkRequests.splice(i, 1); // Delete link from link requests
+		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
+			        
+		// Send link confirmation to server
+		socket.emit('linkConfirm', d.id);
+			
+		//openLinkRequests();
+    };
+    
+    this.denyLink = function() { 
+    	linkRequests.splice(i, 1); // Delete Link for link requests
+		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
+			
+		// Send link delete to server
+		socket.emit('linkDelete', d.id);
+    };
 }
 
 ko.applyBindings(new appViewModel());
