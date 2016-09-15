@@ -1102,7 +1102,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
 
 // Overall viewmodel for this screen, along with initial state
-function appViewModel() {
+//function appViewModel() {
     //var self = this;
 /*
     // Non-editable catalog data - would come from the server
