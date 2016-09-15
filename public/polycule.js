@@ -1096,6 +1096,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 
     // ===== Link Requests =====
+    
+    var viewModel = ko.mapping.fromJS(linkRequests);
+    ko.applyBindings(new viewModel());
+    
 
 // Overall viewmodel for this screen, along with initial state
 function appViewModel() {
@@ -1108,6 +1112,7 @@ function appViewModel() {
         { mealName: "Ultimate (whole zebra)", price: 290 }
     ];    
 */
+/*
     // Editable data
     this.linkRequests2 = ko.observableArray(linkRequests);
     
@@ -1132,6 +1137,7 @@ function appViewModel() {
 }
 
 ko.applyBindings(new appViewModel());
+*/
     
     
     
