@@ -1146,7 +1146,7 @@ ko.applyBindings(new appViewModel());
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    
+	    /*
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1205,7 +1205,7 @@ ko.applyBindings(new appViewModel());
 		
 		        });
         }
-        	
+      */  	
     }
 
     // ===== Email facility ======
