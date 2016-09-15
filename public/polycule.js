@@ -1096,42 +1096,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // ===== Link Requests =====
     
-    // Class to represent a row in the seat reservations grid
-    /*
-	function linkRequestNames(name, username) {
-		var self = this;
-		self.name = name;
-		self.username = ko.observable(username);
-	}
-
-	// Overall viewmodel for this screen, along with initial state
-	function appViewModel() {
-		var self = this;
-
-		// Non-editable catalog data - would come from the server
-		self.nodes = nodes;
-		
-		self.requests = linkRequests;
-
-		// Editable data
-		self.linkRequests = ko.observableArray([
-			new SeatReservation("Steve", self.availableMeals[0]),
-			new SeatReservation("Bert", self.availableMeals[0])
-		]);
-	}
-	
-*/
-   
-    /*
-    function appViewModel() { 
-        var self=this;
-        self.linkRequests = ko.observableArray(linkRequests);
-    }
-    
-    ko.applyBindings(new appViewModel());
-    
-    */
-
 // Overall viewmodel for this screen, along with initial state
 function appViewModel() {
     var self = this;
@@ -1145,6 +1109,10 @@ function appViewModel() {
 */
     // Editable data
     self.linkRequests2 = ko.observableArray(linkRequests);
+    
+    self.confirmLink = function() {};
+    
+    self.denyLink = function() {};
 }
 
 ko.applyBindings(new appViewModel());
