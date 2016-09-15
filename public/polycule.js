@@ -1110,10 +1110,12 @@ function appViewModel() {
     // Editable data
     this.linkRequests2 = ko.observableArray(linkRequests);
     
-    this.confirmLink = function() { window.alert("Confirm"); };
-    
-    this.denyLink = function() { window.alert("Deny"); };
+
 }
+
+var confirmLink = function() { window.alert("Confirm"); };
+    
+var denyLink = function() { window.alert("Deny"); };
 
 ko.applyBindings(new appViewModel());
     
