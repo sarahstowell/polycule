@@ -1098,6 +1098,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // ===== Link Requests =====
     
     var viewModel = ko.mapping.fromJS(linkRequests);
+    
+    viewModel.confirmLink = function() { window.alert("Confirm"); };
+    viewModel.denyLink = function() { window.alert("Deny"); };
+    
     ko.applyBindings(new viewModel());
     
 
