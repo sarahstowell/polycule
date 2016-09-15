@@ -1098,8 +1098,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // ===== Link Requests =====
     
-    //var viewModel = ko.mapping.fromJS(linkRequests);
-    
+/*    
     function viewModel() {
     
     ko.mapping.fromJS(linkRequests, {}, linkRequests);
@@ -1123,44 +1122,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     ko.applyBindings(new viewModel());
     
-
-// Overall viewmodel for this screen, along with initial state
-//function appViewModel() {
-    //var self = this;
-/*
-    // Non-editable catalog data - would come from the server
-    self.availableMeals = [
-        { mealName: "Standard (sandwich)", price: 0 },
-        { mealName: "Premium (lobster)", price: 34.95 },
-        { mealName: "Ultimate (whole zebra)", price: 290 }
-    ];    
 */
-/*
-    // Editable data
-    this.linkRequests2 = ko.observableArray(linkRequests);
-    
-    this.confirmLink = function() { 
-    
-    	linkRequests.splice(i, 1); // Delete link from link requests
-		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
-			        
-		// Send link confirmation to server
-		socket.emit('linkConfirm', d.id);
-			
-		//openLinkRequests();
-    };
-    
-    this.denyLink = function() { 
-    	linkRequests.splice(this.linkRequests2.id, 1); // Delete Link for link requests
-		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
-			
-		// Send link delete to server
-		socket.emit('linkDelete', this.linkRequests2.id);
-    };
-}
 
-ko.applyBindings(new appViewModel());
-*/
     
     
     
@@ -1169,7 +1132,7 @@ ko.applyBindings(new appViewModel());
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    /*
+	    
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1228,7 +1191,7 @@ ko.applyBindings(new appViewModel());
 		
 		        });
         }
-      */  	
+       	
     }
 
     // ===== Email facility ======
