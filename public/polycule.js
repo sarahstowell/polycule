@@ -57,6 +57,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var getLinkRequests = function() {
         // Collect unconfirmed links which are not requested by current user, for link request folder
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
+        
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
     };
@@ -1122,11 +1123,11 @@ function appViewModel() {
     };
     
     this.denyLink = function() { 
-    	linkRequests.splice(i, 1); // Delete Link for link requests
+    	linkRequests.splice(this.linkRequests2.id, 1); // Delete Link for link requests
 		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
 			
 		// Send link delete to server
-		socket.emit('linkDelete', d.id);
+		socket.emit('linkDelete', this.linkRequests2.id);
     };
 }
 
@@ -1139,7 +1140,7 @@ ko.applyBindings(new appViewModel());
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    /*
+	    
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1198,7 +1199,7 @@ ko.applyBindings(new appViewModel());
 		
 		        });
         }
-        	*/
+        	
     }
 
     // ===== Email facility ======
