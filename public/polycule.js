@@ -57,6 +57,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var getLinkRequests = function() {
         // Collect unconfirmed links which are not requested by current user, for link request folder
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
+        linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
         ko.mapping.fromJS(linkRequests, viewModel);
         
         // Highlight button red if there are link requests
