@@ -1106,7 +1106,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
     ko.mapping.fromJS(linkRequests, {}, linkRequests);
     
     self.confirmLink = function() { 
-    window.alert("Confirm"); 
         self.linkRequests.remove(this);
         //linkRequests.splice(i, 1); // Delete link from link requests
 		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
