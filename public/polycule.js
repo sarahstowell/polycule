@@ -1098,31 +1098,35 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // ===== Link Requests =====
     
-/*    
+
     function viewModel() {
+    
+    var self = this;
     
     ko.mapping.fromJS(linkRequests, {}, linkRequests);
     
-    this.confirmLink = function() { 
+    self.confirmLink = function() { 
     window.alert("Confirm"); 
-        linkRequests.splice(i, 1); // Delete link from link requests
+        self.linkRequests.remove(this);
+        //linkRequests.splice(i, 1); // Delete link from link requests
 		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			        
 		// Send link confirmation to server
-		socket.emit('linkConfirm', d.id);
+		socket.emit('linkConfirm', this.id);
     };
-    this.denyLink = function() { 
+    self.denyLink = function() { 
+        self.linkRequests.remove(this);
         linkRequests.splice(this.linkRequests2.id, 1); // Delete Link for link requests
 		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
 			
 		// Send link delete to server
-		socket.emit('linkDelete', this.linkRequests2.id);
+		socket.emit('linkDelete', this.id);
     };
     }
     
     ko.applyBindings(new viewModel());
     
-*/
+
 
     
     
@@ -1132,7 +1136,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    
+	    /*
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1191,7 +1195,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 		        });
         }
-       	
+       	*/
     }
 
     // ===== Email facility ======
