@@ -21,26 +21,6 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
 // On receiving data from the server, build visualisation
 socket.on('nodesAndLinks', function(dataPackage) { 
 
-    function viewModel() {
-		var self = this;
-	
-		//ko.mapping.fromJS(linkRequests, {}, self);
-	    self.linkRequests = ko.observableArray(linkRequests);
-	
-		self.confirmLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
-			socket.emit('linkConfirm', this.id);
-		};
-		self.denyLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
-			// Send link delete to server
-			socket.emit('linkDelete', this.id);
-		};
-    }
-    
-    ko.applyBindings(new viewModel());
-
-
     // Node index of current user
     var loggedin = dataPackage.userid;
     
@@ -78,8 +58,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Collect unconfirmed links which are not requested by current user, for link request folder
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
-        //ko.mapping.fromJS(linkRequests, viewModel);
-        viewModel.linkRequests(linkRequests);
+        ko.mapping.fromJS(linkRequests, viewModel);
+        //viewModel.linkRequests(linkRequests);
         
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
@@ -1120,7 +1100,24 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // ===== Link Requests =====
     
-
+    function viewModel() {
+		var self = this;
+	
+		//ko.mapping.fromJS(linkRequests, {}, self);
+	    self.linkRequests = ko.observableArray(linkRequests);
+	
+		self.confirmLink = function() { 
+			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
+			socket.emit('linkConfirm', this.id);
+		};
+		self.denyLink = function() { 
+			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
+			// Send link delete to server
+			socket.emit('linkDelete', this.id);
+		};
+    }
+    
+    ko.applyBindings(new viewModel());
 
     
 
@@ -1133,7 +1130,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    /*
+	    
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1192,7 +1189,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 		        });
         }
-      */ 	
+      	
     }
 
     // ===== Email facility ======
