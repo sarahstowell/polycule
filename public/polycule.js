@@ -57,7 +57,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var getLinkRequests = function() {
         // Collect unconfirmed links which are not requested by current user, for link request folder
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
-        ko.mapping.fromJS(linkRequests, {}, viewModel);
+        ko.mapping.fromJS(linkRequests, viewModel);
         
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
