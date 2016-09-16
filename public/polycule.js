@@ -1098,7 +1098,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // ===== Link Requests =====
     
-
+/*
     function viewModel() {
     
     var self = this;
@@ -1124,8 +1124,32 @@ socket.on('nodesAndLinks', function(dataPackage) {
     }
     
     ko.mapping.fromJS(linkRequests, viewModel);
+  */  
     
-    ko.applyBindings(new viewModel());
+    var viewModel = {
+    
+    confirmLink: function() { 
+        //linkRequests.remove(this);
+        //linkRequests.splice(i, 1); // Delete link from link requests
+		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
+			        
+		// Send link confirmation to server
+		socket.emit('linkConfirm', this.id);
+    },
+    denyLink: function() { 
+        //linkRequests.remove(this);
+        //linkRequests.splice(this.linkRequests2.id, 1); // Delete Link for link requests
+		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
+			
+		// Send link delete to server
+		socket.emit('linkDelete', this.id);
+    }
+    }
+    
+    ko.mapping.fromJS(linkRequests, viewModel);
+    
+    
+    ko.applyBindings(viewModel);
     
 
 
