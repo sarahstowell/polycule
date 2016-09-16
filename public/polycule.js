@@ -57,7 +57,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var getLinkRequests = function() {
         // Collect unconfirmed links which are not requested by current user, for link request folder
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
-        ko.mapping.fromJS(linkRequests, {}, self.linkRequests);
+        ko.mapping.fromJS(linkRequests, {}, linkRequests);
         
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
@@ -1103,10 +1103,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     var self = this;
     
-    ko.mapping.fromJS(linkRequests, {}, self.linkRequests);
+    ko.mapping.fromJS(linkRequests, {}, linkRequests);
     
     self.confirmLink = function() { 
-        self.linkRequests.remove(this);
+        linkRequests.remove(this);
         //linkRequests.splice(i, 1); // Delete link from link requests
 		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			        
@@ -1114,7 +1114,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		socket.emit('linkConfirm', this.id);
     };
     self.denyLink = function() { 
-        self.linkRequests.remove(this);
+        linkRequests.remove(this);
         linkRequests.splice(this.linkRequests2.id, 1); // Delete Link for link requests
 		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
 			
