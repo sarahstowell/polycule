@@ -1098,7 +1098,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // ===== Link Requests =====
     
-
+/*
     function viewModel() {
     
     var self = this;
@@ -1125,7 +1125,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     ko.applyBindings(new viewModel());
     
-
+*/
 
     
     
@@ -1135,7 +1135,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    /*
+	    
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1194,7 +1194,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 		        });
         }
-       	*/
+       	
     }
 
     // ===== Email facility ======
