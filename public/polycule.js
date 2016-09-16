@@ -1106,7 +1106,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     ko.mapping.fromJS(linkRequests, {}, linkRequests);
     
     self.confirmLink = function() { 
-        linkRequests.remove(this);
+        //linkRequests.remove(this);
         //linkRequests.splice(i, 1); // Delete link from link requests
 		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			        
@@ -1114,8 +1114,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		socket.emit('linkConfirm', this.id);
     };
     self.denyLink = function() { 
-        linkRequests.remove(this);
-        linkRequests.splice(this.linkRequests2.id, 1); // Delete Link for link requests
+        //linkRequests.remove(this);
+        //linkRequests.splice(this.linkRequests2.id, 1); // Delete Link for link requests
 		if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
 			
 		// Send link delete to server
