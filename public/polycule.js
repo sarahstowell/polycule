@@ -1173,6 +1173,7 @@ ko.applyBindings(viewModel);
     
     ko.applyBindings(new viewModel());
     */
+    /*
     function viewModel() {
     
         var self = this;
@@ -1190,7 +1191,7 @@ ko.applyBindings(viewModel);
 		};
     }
     ko.applyBindings(new viewModel());
-
+*/
     
 
 
