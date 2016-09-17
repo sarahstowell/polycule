@@ -63,8 +63,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
         //ko.mapping.fromJS(linkRequests, {}, viewModel);
-
-        if (viewModel) { viewModel.linkRequests = ko.observableArray(linkRequests); ko.applyBindings(viewModel); }
+        //if (viewModel) { viewModel.linkRequests = ko.observableArray(linkRequests); }
         
         
         // Highlight button red if there are link requests
@@ -92,7 +91,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
     }
     */
-    
+    /*
     var viewModel =  {
     
         linkRequests: ko.observableArray(linkRequests),
@@ -109,7 +108,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     }
     
     ko.applyBindings(viewModel);
-    
+    */
     
     
     socket.on('callToUpdateLinks', function() {
@@ -1222,7 +1221,7 @@ ko.applyBindings(viewModel);
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    /*
+	    
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1281,7 +1280,7 @@ ko.applyBindings(viewModel);
 		
 		        });
         }
-      	*/
+      	
     }
 
     // ===== Email facility ======
