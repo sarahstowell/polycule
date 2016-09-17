@@ -59,7 +59,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
         ko.mapping.fromJS(linkRequests, viewModel);
-        //viewModel.linkRequests(linkRequests);
         
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
@@ -1103,8 +1102,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function viewModel() {
 		var self = this;
 	
-		//ko.mapping.fromJS(linkRequests, {}, self);
-	    self.linkRequests = ko.observableArray(linkRequests);
+		ko.mapping.fromJS(linkRequests, {}, self);
 	
 		self.confirmLink = function() { 
 			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
@@ -1130,7 +1128,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function openLinkRequests() { 
 
 	    hideModules("links");
-	    
+	    /*
 	    linksModule.html("");
 	
 	    linksModule.append("h2")
@@ -1189,7 +1187,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 		        });
         }
-      	
+      	*/
     }
 
     // ===== Email facility ======
