@@ -73,7 +73,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     getLinkRequests();
     
     
-    
+    /*
     function viewModel() {
     
         var self = this;
@@ -90,7 +90,24 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			socket.emit('linkDelete', this.id);
 		};
     }
-    ko.applyBindings(new viewModel());
+    */
+    
+    var viewModel =  {
+    
+        linkRequests: ko.observableArray(linkRequests),
+        
+        confirmLink: function() { 
+			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
+			socket.emit('linkConfirm', this.id);
+		},
+		denyLink: function() { 
+			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
+			// Send link delete to server
+			socket.emit('linkDelete', this.id);
+		}
+    }
+    
+    ko.applyBindings(viewModel);
     
     
     
