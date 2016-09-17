@@ -56,9 +56,7 @@
 		        <div id="linkRequestsContainer" class="email" data-bind="foreach: linkRequests">
 		            <h3 data-bind="text: requestorname"></h3>
 		            <span data-bind="text: requestorusername"></span>
-		            
 		            <br/>
-		            
 		            <button id="confirmButton" class="standardButton" data-bind="click: $parent.confirmLink">Confirm</button>
 		            <button id="denyButton" class="standardButton" data-bind="click: $parent.denyLink" >Deny</button>
 		            
@@ -66,7 +64,15 @@
 		    </div>
 		    <div id="emailModule">
 		        <h2>Messages</h2>
-		        
+		        <button class="menubutton" data-bind="click: openInbox">Inbox</button>
+		        <button class="menubutton" data-bind="click: openSent">Sent</button>
+		        <div class="emailContainer">
+		            <div class="email" data-bind="foreach: emails">
+		                <h3 data-bind="text: name"></h3>
+		                <span data-bind="text: username"></span>
+		                <p data-bind="text: content"></p>
+		            </div>
+		        </div>
 		    </div>
 		    <div id="otherModule">
 		    </div>
