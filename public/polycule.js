@@ -1104,7 +1104,7 @@ var mapping = {
         //customize at the root level.  
         var innerModel = ko.mapping.fromJS(options.linkRequests);
 
-        inenerModel.confirmLink = function() { 
+        innerModel.confirmLink = function() { 
 			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			socket.emit('linkConfirm', this.id);
 		};
