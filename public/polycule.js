@@ -1127,7 +1127,7 @@ ko.applyBindings(viewModel);
     function viewModel() {
 		var self = this;
 	
-		ko.mapping.fromJS(linkRequests, {}, self);
+		ko.mapping.fromJS(linkRequests, {}, linkRequests);
 	
 		self.confirmLink = function() { 
 			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
