@@ -1098,11 +1098,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 
     // ===== Link Requests =====
-    /*
+    
 var mapping = {
     create: function (options) {
         //customize at the root level.  
-        var innerModel = ko.mapping.fromJS(options.data);
+        var innerModel = ko.mapping.fromJS(options.linkRequests);
 
         innerModel.confirmLink = function() { 
 			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
@@ -1122,8 +1122,8 @@ var viewModel = ko.mapping.fromJS(linkRequests, mapping);
 
 //use this as our model bindings
 ko.applyBindings(viewModel);
-    */
     
+    /*
     function viewModel() {
 		var self = this;
 	
@@ -1145,7 +1145,7 @@ ko.applyBindings(viewModel);
     
     ko.applyBindings(new viewModel());
 
-    
+    */
 
 
     
