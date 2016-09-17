@@ -64,7 +64,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
         //ko.mapping.fromJS(linkRequests, {}, viewModel);
 
-        if (viewModel !== undefined) { viewModel.linkRequests(linkRequests); }
+        if (viewModel) { viewModel.linkRequests = ko.observableArray(linkRequests); }
         
         // Highlight button red if there are link requests
         if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
