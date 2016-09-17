@@ -22,23 +22,7 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
 socket.on('nodesAndLinks', function(dataPackage) { 
 
 
-    function viewModel() {
-    
-        var self = this;
-        
-        self.linkRequests = ko.observableArray(linkRequests);
-        
-        self.confirmLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
-			socket.emit('linkConfirm', this.id);
-		};
-		self.denyLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
-			// Send link delete to server
-			socket.emit('linkDelete', this.id);
-		};
-    }
-    ko.applyBindings(new viewModel());
+
 
 
     // Node index of current user
@@ -79,7 +63,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
         //ko.mapping.fromJS(linkRequests, {}, viewModel);
-        window.alert(linkRequests);
         if (viewModel) { viewModel.linkRequests(linkRequests); }
         
         // Highlight button red if there are link requests
@@ -87,6 +70,28 @@ socket.on('nodesAndLinks', function(dataPackage) {
     };
     
     getLinkRequests();
+    
+    
+    
+        function viewModel() {
+    
+        var self = this;
+        
+        self.linkRequests = ko.observableArray(linkRequests);
+        
+        self.confirmLink = function() { 
+			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
+			socket.emit('linkConfirm', this.id);
+		};
+		self.denyLink = function() { 
+			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
+			// Send link delete to server
+			socket.emit('linkDelete', this.id);
+		};
+    }
+    ko.applyBindings(new viewModel());
+    
+    
     
     socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
