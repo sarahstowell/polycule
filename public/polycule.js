@@ -1098,7 +1098,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 
     // ===== Link Requests =====
-    
+    /*
 var mapping = {
     create: function (options) {
         //customize at the root level.  
@@ -1122,8 +1122,8 @@ var viewModel = ko.mapping.fromJS(linkRequests, mapping);
 
 //use this as our model bindings
 ko.applyBindings(viewModel);
+    */
     
-    /*
     function viewModel() {
 		var self = this;
 	
@@ -1141,7 +1141,7 @@ ko.applyBindings(viewModel);
     }
     
     ko.applyBindings(new viewModel());
-*/
+
     
 
 
