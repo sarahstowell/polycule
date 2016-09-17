@@ -1140,7 +1140,7 @@ ko.applyBindings(viewModel);
 		};
     }
     
-    ko.mapping.fromJS(linkRequests, {}, viewModel);
+    //ko.mapping.fromJS(linkRequests, {}, viewModel);
     
     ko.applyBindings(new viewModel());
 
