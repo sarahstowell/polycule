@@ -62,6 +62,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Collect unconfirmed links which are not requested by current user, for link request folder
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
+        
         window.alert(JSON.stringify(linkRequests));
         
         if (viewModel) { ko.mapping.fromJS(linkRequests, viewModel); }
@@ -94,7 +95,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     */
     var viewModel = ko.mapping.fromJS(linkRequests);
         
-    ko.applyBindings(new viewModel());
+    ko.applyBindings(viewModel);
     /*
     function viewModel() {
     
