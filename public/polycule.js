@@ -99,6 +99,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			socket.emit('linkConfirm', this.id);
 		};
+		
+	viewModel.denyLink = function() { 
+			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
+			// Send link delete to server
+			socket.emit('linkDelete', this.id);
+		};
         
     ko.applyBindings(viewModel);
     /*
