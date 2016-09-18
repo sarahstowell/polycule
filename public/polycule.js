@@ -76,10 +76,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
     getLinkRequests();
     
     
-    var viewModel = function() {
+    var viewModel1 = function() {
 		var self = this;
 	
-		ko.mapping.fromJS(linkRequests, {}, self.linkRequests);
+		ko.mapping.fromJS(linkRequests, {}, self);
 		//self.linkRequests = ko.mapping.fromJS(linkRequests);
 	
 		self.confirmLink = function() { 
@@ -93,7 +93,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
     }
     
-    
+    var viewModel = new viewModel1();
     //var viewModel = ko.mapping.fromJS(linkRequests);
     
 
