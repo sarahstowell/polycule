@@ -76,7 +76,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests: ko.observableArray(linkRequests),
         
         noLinkRequests: ko.computed(function() {
-            if (linkRequests().length === 0) { return true; } else { return false; }
+            if (viewModel.linkRequests().length === 0) { return true; } else { return false; }
         }, this),
         
         confirmLink: function() { 
@@ -1126,54 +1126,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 
     // ===== Link Requests =====
-    /*
-var mapping = {
-    create: function (options) {
-        //customize at the root level.  
-        var innerModel = ko.mapping.fromJS(options.linkRequests);
 
-        innerModel.confirmLink = function() { 
-            window.alert("Confirm");
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
-			socket.emit('linkConfirm', this.id);
-		};
-		innerModel.denyLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
-			// Send link delete to server
-			socket.emit('linkDelete', this.id);
-		};
 
-        return innerModel;
-    }
-}
-
-var viewModel = ko.mapping.fromJS(linkRequests, mapping);
-
-//use this as our model bindings
-ko.applyBindings(viewModel);
-    */
-    /*
-    function viewModel() {
-		var self = this;
-	
-		ko.mapping.fromJS(linkRequests, {}, self);
-		//self.linkRequests = ko.mapping.fromJS(linkRequests);
-	
-		self.confirmLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
-			socket.emit('linkConfirm', this.id);
-		};
-		self.denyLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
-			// Send link delete to server
-			socket.emit('linkDelete', this.id);
-		};
-    }
-    
-    //ko.mapping.fromJS(linkRequests, {}, viewModel);
-    
-    ko.applyBindings(new viewModel());
-    */
     /*
     function viewModel() {
     
