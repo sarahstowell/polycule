@@ -79,7 +79,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var viewModel = function() {
 		var self = this;
 	
-		ko.mapping.fromJS(linkRequests, {}, self);
+		ko.mapping.fromJS(linkRequests, {}, self.linkRequests);
 		//self.linkRequests = ko.mapping.fromJS(linkRequests);
 	
 		self.confirmLink = function() { 
@@ -92,7 +92,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			socket.emit('linkDelete', this.id);
 		};
     }
-    
     
     
     //var viewModel = ko.mapping.fromJS(linkRequests);
