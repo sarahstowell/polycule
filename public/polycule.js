@@ -64,7 +64,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
         window.alert(JSON.stringify(linkRequests));
         
-        ko.mapping.fromJS(linkRequests, viewModel);
+        ko.mapping.fromJSON(linkRequests, viewModel);
         //if (viewModel) { viewModel.linkRequests = ko.observableArray(linkRequests); }
         
         
@@ -92,7 +92,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
     }
     */
-    var viewModel = ko.mapping.fromJS(linkRequests);
+    var viewModel = ko.mapping.fromJSON(linkRequests);
         
     ko.applyBindings(new viewModel());
     /*
