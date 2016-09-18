@@ -93,6 +93,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
     }
     
+    
+    
     //var viewModel = ko.mapping.fromJS(linkRequests);
     
 
