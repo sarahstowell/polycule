@@ -50,10 +50,8 @@
 		<div id="sidePanel">
 		    <div id="linksModule" style="display: none;">
 		        <h2>Link Confirmation Requests</h2>
-		        
-		        <p id="noLinkRequests" data-bind="test: linkRequests().length">You have no requests at this time</p>
-		        
 		        <div id="linkRequestsContainer" class="email" data-bind="foreach: linkRequests">
+		            <p id="noLinkRequests" data-bind="text: linkRequests().length">You have no requests at this time</p>
 		            <h3 data-bind="text: requestorname"></h3>
 		            <span data-bind="text: requestorusername"></span>
 		            <br/>
