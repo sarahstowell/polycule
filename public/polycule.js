@@ -93,10 +93,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     ko.applyBindings(viewModel);
     
-            viewModel.noLinkRequests =  ko.computed(function() {
-            if (linkRequests().length === 0) { return true; } else { return false; }
-        }, this),
-    
     
     socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
