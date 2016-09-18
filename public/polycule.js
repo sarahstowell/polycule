@@ -64,7 +64,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});
         window.alert(JSON.stringify(linkRequests));
         
-        ko.mapping.fromJS(linkRequests, {}, viewModel);
+        ko.mapping.fromJS(linkRequests, viewModel);
         //if (viewModel) { viewModel.linkRequests = ko.observableArray(linkRequests); }
         
         
