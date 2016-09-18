@@ -72,6 +72,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     getLinkRequests();
     
+    /*
     function viewModel() {
 		var self = this;
 	
@@ -88,6 +89,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			socket.emit('linkDelete', this.id);
 		};
     }
+    */
+    var viewModel = ko.mapping.fromJS(linkRequests);
         
     ko.applyBindings(new viewModel());
     /*
