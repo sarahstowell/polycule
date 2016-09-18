@@ -65,7 +65,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (viewModel) { viewModel.linkRequests(linkRequests); }
         
         // Highlight button red if there are link requests
-        if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
+        //if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
     };
     
     getLinkRequests();
