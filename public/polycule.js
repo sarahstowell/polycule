@@ -94,6 +94,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
     }
     */
     var viewModel = ko.mapping.fromJS(linkRequests);
+    
+    viewModel.confirmLink = function() { 
+			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
+			socket.emit('linkConfirm', this.id);
+		};
         
     ko.applyBindings(viewModel);
     /*
