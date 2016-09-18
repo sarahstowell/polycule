@@ -66,7 +66,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         window.alert(JSON.stringify(linkRequests));
         
         //if (viewModel) { ko.mapping.fromJS(linkRequests, viewModel); }
-        //if (viewModel) { viewModel.linkRequests = ko.observableArray(linkRequests); }
+        if (viewModel) { viewModel.linkRequests = ko.observableArray(linkRequests); }
         
         
         // Highlight button red if there are link requests
