@@ -75,9 +75,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
         linkRequests: ko.observableArray(linkRequests),
         
-        noLinkRequests: ko.computed(function() {
-            if ($parent.linkRequests().length === 0) { return true; } else { return false; }
-        }, this),
+        //noLinkRequests: ko.computed(function() {
+        //    if (linkRequests().length === 0) { return true; } else { return false; }
+        //}, this),
         
         confirmLink: function() { 
 			//if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
@@ -90,8 +90,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		}
     }
     
+
     ko.applyBindings(viewModel);
     
+            viewModel.noLinkRequests =  ko.computed(function() {
+            if (linkRequests().length === 0) { return true; } else { return false; }
+        }, this),
     
     
     socket.on('callToUpdateLinks', function() {
