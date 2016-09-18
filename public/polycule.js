@@ -65,7 +65,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
         window.alert(JSON.stringify(linkRequests));
         
-        if (viewModel) { ko.mapping.fromJS(linkRequests, viewModel); }
+        //if (viewModel) { ko.mapping.fromJS(linkRequests, viewModel); }
         //if (viewModel) { viewModel.linkRequests = ko.observableArray(linkRequests); }
         
         
@@ -75,7 +75,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     getLinkRequests();
     
-    
+    /*
     var viewModel1 = function() {
 		var self = this;
 	
@@ -99,6 +99,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
         
     ko.applyBindings(viewModel);
+    */
     /*
     function viewModel() {
     
@@ -117,7 +118,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
     }
     */
-    /*
+    
     var viewModel =  {
     
         linkRequests: ko.observableArray(linkRequests),
@@ -134,7 +135,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     }
     
     ko.applyBindings(viewModel);
-    */
+    
     
     
     socket.on('callToUpdateLinks', function() {
