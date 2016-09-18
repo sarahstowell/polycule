@@ -76,7 +76,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests: ko.observableArray(linkRequests),
         
         noLinkRequests: ko.computed(function() {
-            if (viewModel.linkRequests().length === 0) { return true; } else { return false; }
+            if ($parent.linkRequests().length === 0) { return true; } else { return false; }
         }, this),
         
         confirmLink: function() { 
