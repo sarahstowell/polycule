@@ -68,7 +68,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     getLinkRequests();
     
     // Knockout view model
-    function ViewModel(linkData, emailData) {
+    function ViewModel(linkData, emailData, loggedin) {
         var self = this;
         self.linkRequests = ko.observableArray(linkData);
         self.confirmLink = function() { 
@@ -80,9 +80,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.currentFolder = ko.observable("Inbox");
 		self.openFolder = function(folder) { self.currentFolder(folder); };
 		self.emails = ko.observable(emailData);
+        self.currentFolderData = ko.observableArray(self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) }));
     }
     
-    var viewModel = new ViewModel(linkRequests, emails);
+    var viewModel = new ViewModel(linkRequests, emails, loggedin);
     
     ko.applyBindings(viewModel);
     // -------------------------
