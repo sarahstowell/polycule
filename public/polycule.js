@@ -69,26 +69,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     };
     
     getLinkRequests();
-
-    /*
-    var viewModel =  {
     
-        linkRequests: ko.observableArray(linkRequests),
-        
-        //noLinkRequests: ko.computed(function() {
-        //    if (linkRequests().length === 0) { return true; } else { return false; }
-        //}, this),
-        
-        confirmLink: function() { 
-			socket.emit('linkConfirm', this.id);
-		},
-		denyLink: function() { 
-			socket.emit('linkDelete', this.id);
-		}
-    }
-    */
-    
-    function ViewModel(data) =  {
+    function ViewModel(data) {
     
         var self = this;
         
@@ -1144,98 +1126,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 
     // ===== Link Requests =====
-
-
-    /*
-    function viewModel() {
-    
-        var self = this;
-        
-        self.linkRequests = ko.observableArray(linkRequests);
-        
-        self.confirmLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
-			socket.emit('linkConfirm', this.id);
-		};
-		self.denyLink = function() { 
-			if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
-			// Send link delete to server
-			socket.emit('linkDelete', this.id);
-		};
-    }
-    ko.applyBindings(new viewModel());
-*/
-    
-
-
-    
-    
-    
     d3.select("#linkButton").on("click", openLinkRequests);
 	
     function openLinkRequests() { 
-
 	    hideModules("links");
-	    /*
-	    linksModule.html("");
-	
-	    linksModule.append("h2")
-		    .text("Link Confirmation Requests");
-		
-	    if (linkRequests.length === 0) {
-		    linksModule.append("p")
-			    .attr("id", "noLinkRequests")
-			    .text("You have no requests at this time");
-	    } else {
-		
-	        var emailContainer = linksModule.append("div")
-		        .attr("class", "emailContainer");
-
-	        var linkRequestLine = emailContainer.selectAll("div")
-		        .data(linkRequests)
-	        .enter().insert("div", ":first-child")
-		        .attr("class", "email");
-	
-	        linkRequestLine.append("h3")
-		        .text(function(d) { return nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; });
-		
-	        linkRequestLine.append("span")
-		        .text(function(d) { return " ("+nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username+")"; });
-		
-	        linkRequestLine.append("br");
-		
-	        linkRequestLine.append("button")
-		        .text("Confirm")
-		        .attr("id", "confirmButton")
-		        .attr("class", "standardButton")
-		        .on("click", function(d, i) { 
-		            
-			        linkRequests.splice(i, 1); // Delete link from link requests
-			        if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
-			        
-			        // Send link confirmation to server
-			        socket.emit('linkConfirm', d.id);
-			
-			        openLinkRequests();
-		
-		        });
-		
-	        linkRequestLine.append("button")
-		        .text("Deny")
-		        .attr("id", "denyButton")
-		        .attr("class", "standardButton")
-		        .on("click", function(d, i) {
-			        linkRequests.splice(i, 1); // Delete Link for link requests
-			        if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
-			
-					// Send link delete to server
-					socket.emit('linkDelete', d.id);
-			
-			        openLinkRequests();
-		
-		        });
-        }
-      	*/
     }
 
     // ===== Email facility ======
