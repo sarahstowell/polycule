@@ -67,31 +67,25 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     getLinkRequests();
     
+    // Knockout view model
     function ViewModel(linkData, emailData) {
-    
         var self = this;
-        
         self.linkRequests = ko.observableArray(linkData);
-        
         self.confirmLink = function() { 
 			socket.emit('linkConfirm', this.id);
 		};
 		self.denyLink = function() { 
 			socket.emit('linkDelete', this.id);
 		};
-		
 		self.currentFolder = ko.observable("Inbox");
-		
 		self.openFolder = function(folder) { self.currentFolder(folder); };
-		
 		self.emails = ko.observable(emailData);
     }
     
     var viewModel = new ViewModel(linkRequests, emails);
     
-
     ko.applyBindings(viewModel);
-    
+    // -------------------------
     
     socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
