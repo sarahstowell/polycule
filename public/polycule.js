@@ -70,7 +70,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     getLinkRequests();
 
-    
+    /*
     var viewModel =  {
     
         linkRequests: ko.observableArray(linkRequests),
@@ -80,15 +80,33 @@ socket.on('nodesAndLinks', function(dataPackage) {
         //}, this),
         
         confirmLink: function() { 
-			//if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link requests remain, dehighlight link request button  
 			socket.emit('linkConfirm', this.id);
 		},
 		denyLink: function() { 
-			//if (linkRequests.length === 0) { d3.select("#linkButton").attr("fill", "black"); }  // If no more link request remain, dehighlight link request button
-			// Send link delete to server
 			socket.emit('linkDelete', this.id);
 		}
     }
+    */
+    
+    function ViewModel(data) =  {
+    
+        var self = this;
+        
+        self.linkRequests = ko.observableArray(data);
+        
+        //noLinkRequests: ko.computed(function() {
+        //    if (linkRequests().length === 0) { return true; } else { return false; }
+        //}, this),
+        
+        self.confirmLink = function() { 
+			socket.emit('linkConfirm', this.id);
+		};
+		self.denyLink = function() { 
+			socket.emit('linkDelete', this.id);
+		};
+    }
+    
+    var viewModel = new ViewModel(linkRequests);
     
 
     ko.applyBindings(viewModel);
