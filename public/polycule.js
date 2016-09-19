@@ -63,22 +63,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests = links.filter(function(d) { return d.confirmed === 0 && d.requestor !== loggedin; });
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});        
         if (viewModel) { viewModel.linkRequests(linkRequests); }
-        
-        // Highlight button red if there are link requests
-        //if (linkRequests.length > 0) { d3.select("#linkButton").attr("fill", "red"); } else { d3.select("#linkButton").attr("fill", "black"); }  
     };
     
     getLinkRequests();
     
-    function ViewModel(data) {
+    function ViewModel(linkData) {
     
         var self = this;
         
-        self.linkRequests = ko.observableArray(data);
-        
-        //noLinkRequests: ko.computed(function() {
-        //    if (linkRequests().length === 0) { return true; } else { return false; }
-        //}, this),
+        self.linkRequests = ko.observableArray(linkData);
         
         self.confirmLink = function() { 
 			socket.emit('linkConfirm', this.id);
@@ -86,6 +79,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.denyLink = function() { 
 			socket.emit('linkDelete', this.id);
 		};
+		
+		self.currentFolder = ko.observable("Inbox");
+		
+		self.openFolder = function(folder) { self.currentFolder(folder); };
     }
     
     var viewModel = new ViewModel(linkRequests);
@@ -1158,7 +1155,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		}
 */
         hideModules("email");
-
+/*
 		emailModule.html("");
 
 		emailModule.append("h2")
@@ -1238,7 +1235,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 		emailLine.append("p")
 			.text(function(d) { return d.content; });
-
+*/
 	}
 
 	// ===== Opening selected email thread =====
