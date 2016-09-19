@@ -67,7 +67,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     getLinkRequests();
     
-    function ViewModel(linkData) {
+    function ViewModel(linkData, emailData) {
     
         var self = this;
         
@@ -83,9 +83,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.currentFolder = ko.observable("Inbox");
 		
 		self.openFolder = function(folder) { self.currentFolder(folder); };
+		
+		self.emails = ko.observable(emailData);
     }
     
-    var viewModel = new ViewModel(linkRequests);
+    var viewModel = new ViewModel(linkRequests, emails);
     
 
     ko.applyBindings(viewModel);
