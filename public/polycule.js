@@ -82,7 +82,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
 		self.currentFolder = ko.observable("Inbox");
 		
-		self.openFolder = function(folder) { self.currentFolder(folder); };
+		self.openFolder = function(folder) { self.currentFolder(folder); window.alert(self.currentFolder(); };
     }
     
     var viewModel = new ViewModel(linkRequests);
