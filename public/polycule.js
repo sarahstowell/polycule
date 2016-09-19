@@ -79,8 +79,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
 		self.currentFolder = ko.observable("Inbox");
 		self.openFolder = function(folder) { self.currentFolder(folder); };
-		//self.emails = ko.observableArray(emailData);
-        self.currentFolderData = ko.observableArray(emailData.filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) }));
+		self.emails = ko.observableArray(emailData);
+        self.currentFolderData = ko.computed(function() { return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })});
     }
     
     var viewModel = new ViewModel(linkRequests, emails, loggedin);
