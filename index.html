@@ -64,8 +64,8 @@
 		    </div>
 		    <div id="emailModule" style="display: none;">
 		        <h2>Messages</h2>
-		        <button class="menubutton" data-bind="click: openFolder('Inbox'), css: {menubuttonSelected: openFolder === 'Inbox'}">Inbox</button>
-		        <button class="menubutton" data-bind="clcck: openFolder('Sent'), css: {menubuttonSelected: openFolder === 'Sent'}">Sent</button>
+		        <button class="menubutton" data-bind="click: openFolder('Inbox'), css: {menubutton: openFolder !== 'Inbox'; menubuttonSelected: openFolder === 'Inbox'}">Inbox</button>
+		        <button class="menubutton" data-bind="click: openFolder('Sent'), css: {menubutton: openFolder !== 'Sent'; menubuttonSelected: openFolder === 'Sent'}">Sent</button>
 		        <div class="emailContainer">
 		            <div class="email">
 		                <h3 ></h3>
