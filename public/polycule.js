@@ -83,6 +83,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.currentFolderData = ko.computed(function() { 
         	return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
         });
+        
+        self.openFolder('Inbox');
     }
     
     var viewModel = new ViewModel(linkRequests, emails, loggedin);
