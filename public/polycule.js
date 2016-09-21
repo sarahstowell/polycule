@@ -77,7 +77,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.denyLink = function() { 
 			socket.emit('linkDelete', this.id);
 		};
-		self.currentFolder = ko.observable("Inbox");
+		self.currentFolder = ko.observable("Sent");
 		self.openFolder = function(folder) { self.currentFolder(folder); };
 		self.emails = ko.observableArray(emailData);
         self.currentFolderData = ko.computed(function() { 
