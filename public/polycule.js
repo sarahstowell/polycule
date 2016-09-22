@@ -62,10 +62,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 	socket.on('emailUpdate', function(emailUpdate) { 
 	    emails = emailUpdate; 
-	    checkEmails();
 	    emailThreader();
 	    viewModel.emails(emails);
-	    window.alert(JSON.stringify(emails));
 	});
   
     // Function for creating source and target variables in links dataset for use with force layout
@@ -119,7 +117,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
                 var newEmail = {"recip": self.currentThread(), "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": content};
 			    socket.emit("newEmail", newEmail);
 			    document.getElementById("emailTypeBox").value=null;
-			    document.getElementById("emailContainer").scrollTop = document.getElementById("emailContainer").scrollHeight - document.getElementById("emailContainer").innerHeight;
+			    //document.getElementById("emailContainer").scrollTop = document.getElementById("emailContainer").scrollHeight - document.getElementById("emailContainer").innerHeight;
 			}
         }
     }
