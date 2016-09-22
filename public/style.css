@@ -391,7 +391,7 @@ canvas {
     margin-top: 10px;
     overflow-y: auto;
     /*height: 450px;*/
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .emailTypeBox {
