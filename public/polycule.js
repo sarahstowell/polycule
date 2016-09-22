@@ -84,7 +84,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             //return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
 
         
-        	var emails1 = self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
+        	var emails1 = self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) });
         
         	var emails2 = [];
 
