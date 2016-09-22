@@ -64,8 +64,10 @@
 		    </div>
 		    <div id="emailModule" style="display: none;">
 		        <h2>Messages</h2>
-		        <span id="backToMessages" data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }"><</span>
+		        <span id="backToMessages" data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Back to messages</span>
+		        <!--
 		        <span style="text-align: center;" data-bind="text: currentThread()"></span>
+		        -->
 		        <div class="emailContainer" data-bind="foreach: currentFolderData">
 		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? 'lightgray' : null }, click: $parent.openThread.bind($data)">
 		                <h3 data-bind="text: $root.currentThread() === 0 ? threadName : senderName"></h3>
