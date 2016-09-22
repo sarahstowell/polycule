@@ -104,7 +104,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				} else { 
 					emails2[arr1] = emails[i]; 
 				}
-				window.alert("EMails2, iter: "+i+": "+JSON.stringify(emails2);
+				window.alert("Emails2, iter: "+i+": "+JSON.stringify(emails2);
 
 			}
 			
