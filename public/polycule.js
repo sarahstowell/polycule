@@ -21,10 +21,6 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
 // On receiving data from the server, build visualisation
 socket.on('nodesAndLinks', function(dataPackage) { 
 
-
-
-
-
     // Node index of current user
     var loggedin = dataPackage.userid;
     
@@ -503,9 +499,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
                     .attr("id", "sendMessageButton")
                     .attr("class", "standardButton")
                     .text("Message")
-                    .on("click", function() { writeEmail(node); });
+                    .on("click", function() { 
+                        //writeEmail(node); 
+                        viewModel.currentThread(node);
+                        hideModules("email");
+                    });
 
-                // ADD LINK REQUEST BUTTON
                 
                 var currentLink = links.filter(function(d) { return ((d.sourceid === loggedin && d.targetid === node) || (d.targetid === loggedin && d.sourceid === node)); });
                 
