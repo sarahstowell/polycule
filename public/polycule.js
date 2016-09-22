@@ -46,19 +46,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    // Create indicator for most recent message in thread
 	    var threads = [];
 		var i;
-		
-			for (i=0; i<emails.length; i++) {
-			//window.alert(i+" "+emails[i]);
-			
-				if (threads.indexOf(emails[i].thread) === -1) { 
-					threads.push(emails[i].thread);
-					emails[i].latest = 1;
-				} else { 
-					emails[i].latest = 0;
-				}
-				
+		for (i=emails.length; i>=0; i--) {			
+			if (threads.indexOf(emails[i].thread) === -1) { 
+				threads.push(emails[i].thread);
+				emails[i].latest = 1;
+			} else { 
+				emails[i].latest = 0;
 			}
-	    
+		}
 	}
 	emailThreader();
 	
@@ -1211,7 +1206,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		}
 */
         hideModules("email");
-
+/*
 		emailModule.html("");
 
 		emailModule.append("h2")
@@ -1291,7 +1286,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 		emailLine.append("p")
 			.text(function(d) { return d.content; });
-
+*/
 	}
 
 	// ===== Opening selected email thread =====
