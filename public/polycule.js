@@ -109,7 +109,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             window.alert("Emails1: "+JSON.stringify(emails1));
 */        
              
-
+/*
 
         	var emails2 = [];
 
@@ -131,7 +131,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			return emails2;
 			
 			//return emails1;
-		
+		*/
         });
         
         self.openFolder('Inbox');
