@@ -37,9 +37,17 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    // Create thread number
 	    emails = emails.map(function(d) { 
 	        if (d.recip === loggedin) { d.thread = d.sender;} else { d.thread = d.recip; }
-	        d.threadName = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].name;
-	        d.threadUsername = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].username;
-	        d.senderName = nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name;
+	        if (nodes[arrayObjectIndexOf(nodes, d.thread, "id")]) { 
+	            d.threadName = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].name; 
+	            d.threadUsername = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].username; 
+	        } else { 
+	            d.threadName = "Old User"; 
+	        }
+	        if (nodes[arrayObjectIndexOf(nodes, d.sender, "id")]) { 
+	            d.senderName = nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name;
+	        } else {
+	            d.senderName = "Old User";
+	        }
 	        return d;
 	    }); 	    
 	    // Create indicator for most recent message in thread
