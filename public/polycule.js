@@ -105,9 +105,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (self.currentThread() === 0) { return self.emails().filter(function(d) { return d.latest === 1; }); }
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
-        self.openThread = function(thread) {
-            window.alert(JSON.stringify(thread));
-            self.currentThread(thread);
+        self.openThread = function(data) {
+            window.alert(JSON.stringify(data.thread));
+            self.currentThread(data.thread);
         };
     }
     
