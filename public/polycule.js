@@ -39,6 +39,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        if (d.recip === loggedin) { d.thread = d.sender;} else { d.thread = d.recip; }
 	        d.threadName = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].name;
 	        d.threadUsername = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].username;
+	        d.senderName = nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name;
 	        return d;
 	    }); 	    
 	    // Create indicator for most recent message in thread
