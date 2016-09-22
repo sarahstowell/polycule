@@ -91,11 +91,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			var i;
 			for (i=0; i<emails1.length; i++) {
 
-				//if (self.currentFolder() === 'Inbox') {
+				if (self.currentFolder() === 'Inbox') {
 					var arr1 = arrayObjectIndexOf(emails2, emails1[i].sender, "sender");
-				//} else if (self.currentFolder() === 'Sent') {
-				//	var arr1 = arrayObjectIndexOf(emails2, emails1[i].recip, "recip");
-				//}
+				} else if (self.currentFolder() === 'Sent') {
+					var arr1 = arrayObjectIndexOf(emails2, emails1[i].recip, "recip");
+				}
 		
 				if (arr1 === -1) { 
 					emails2.push(emails[i]);
