@@ -394,6 +394,14 @@ canvas {
     height: 100%;
 }
 
+.emailTypeBox {
+
+}
+
+.emailSendButton {
+
+}
+
 /* ===== Inbox and Sent Box ===== */
 .email {
     /*background-color: lightgray;*/
