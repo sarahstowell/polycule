@@ -107,7 +107,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         });
         self.openThread = function(data) {
             self.currentThread(data.thread);
-            window.alert(self.currentThread);
+            window.alert(self.currentThread());
         };
     }
     
