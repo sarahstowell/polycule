@@ -133,6 +133,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			    //document.getElementById("emailContainer").scrollTop = document.getElementById("emailContainer").scrollHeight - document.getElementById("emailContainer").innerHeight;
 			}
         }
+        // To be added: Thread delete option
+        //socket.emit('threadDelete', loggedin, thread);
     }
     
     var viewModel = new ViewModel(linkRequests, emails, loggedin);
@@ -1182,242 +1184,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // ===== Email facility ======
 
-	// For checking if there are any unread messages and if so, highlight mail symbol red
-	/*
-	var checkEmails = function () {
-
-		d3.select("#mailButton")
-			.on("click", function() { openEmails("Inbox"); })
-			.attr("fill", function(d) { 
-				newEmails = emails.filter(function(d) { if (d.recip === loggedin && d.read === 0) { return true; } else { return false; }});
-				if (newEmails.length > 0) { return "red"; } else { return "black"; } 
-			});
-	}
-	*/
-
-	// check for unread mails on loading
-	//checkEmails();
-
-		d3.select("#mailButton").on("click", function() { openEmails(); });
+	d3.select("#mailButton").on("click", function() { openEmails(); });
 
 	// For opening inbox or sent box
 	var openEmails = function () {
-/*
-		if (active_node !== null || active_link !== null) {
-			active_node = null;
-			active_link = null;
-			restart();
-		}
-*/
         viewModel.currentThread(0);
         hideModules("email");
     }
-/*
-		emailModule.html("");
-
-		emailModule.append("h2")
-			.text("Messages");
-	
-		var inboxButton = emailModule.append("button")
-			.attr("class", "menubutton")
-			.text("Inbox")
-			.on("click", function() { openEmails("Inbox"); });
-	
-		var sentButton = emailModule.append("button")
-			.attr("class", "menubutton")
-			.text("Sent")
-			.on("click", function() { openEmails("Sent"); });
-	
-		if (box === "Inbox") {
-
-			inboxButton.attr("class", "menubuttonSelected");
-
-			myEmails = emails.filter(function(d) { if (d.recip === loggedin){ return true; } else { return false; }});	// Get emails for current user only NEEDS TO BE MADE SECURE
-
-			myEmails2 = [];
-
-			for (i=0; i<myEmails.length; i++) {
-
-				var arr1 = arrayObjectIndexOf(myEmails2, myEmails[i].sender, "sender");
-		
-				if (arr1 === -1) { 
-					myEmails2.push(myEmails[i]);
-				} else { 
-					myEmails2[arr1] = myEmails[i]; 
-				}
-
-			}
-
-		} else if (box === "Sent") {
-
-			sentButton.attr("class", "menubuttonSelected");
-
-			myEmails = emails.filter(function(d) { if (d.sender === loggedin){ return true; } else { return false; }});	
-	
-			myEmails2 = [];
-
-			for (i=0; i<myEmails.length; i++) {
-
-				var arr1 = arrayObjectIndexOf(myEmails2, myEmails[i].recip, "recip");
-
-				if (arr1 === -1) { 
-					myEmails2.push(myEmails[i]);
-				} else { 
-					myEmails2[arr1] = myEmails[i]; 
-				}
-			}
-		}
-
-		var emailContainer = emailModule.append("div")
-			.attr("class", "emailContainer");
-
-		var emailLine = emailContainer.selectAll("div")
-			.data(myEmails2)
-		.enter().insert("div", ":first-child")
-			.attr("class", "email")
-			.style("background-color", function(d) { if (box === "Inbox" && d.read === 0) { return "lightgray"; } else { return null; }})
-		.on("click", function(d) { if (box === "Inbox") { openThread(d.sender); } else if (box === "Sent") { openThread(d.recip); }});
-
-		if (box === "Inbox") {
-			emailLine.append("h3")
-				.text(function(d) { if (arrayObjectIndexOf(nodes, d.sender, "id") !== -1) { return nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name; } else { return "Old User"; } });
-			emailLine.append("span")
-				.text(function(d) { if (arrayObjectIndexOf(nodes, d.sender, "id") !== -1) { return " ("+nodes[arrayObjectIndexOf(nodes, d.sender, "id")].username+")"; } else { return ""; } });
-		} else if (box === "Sent") {
-			emailLine.append("h3")
-				.text(function(d) { if (arrayObjectIndexOf(nodes, d.recip, "id") !== -1) { return nodes[arrayObjectIndexOf(nodes, d.recip, "id")].name; } else { return "Old User"; } });
-			emailLine.append("span")
-				.text(function(d) { if (arrayObjectIndexOf(nodes, d.recip, "id") !== -1) { return " ("+nodes[arrayObjectIndexOf(nodes, d.recip, "id")].username+")"; } else { return ""; } });
-		}
-	
-		emailLine.append("p")
-			.text(function(d) { return d.content; });
-*/
-	//}
-
-	// ===== Opening selected email thread =====
-	/*
-	var openThread = function(thread) {
-
-		var threadEmails  = emails.filter(function(d) { if ((d.sender === thread && d.recip === loggedin) || (d.sender === loggedin && d.recip === thread)) { return true; } else { return false; } });
-		
-		// Update read status of emails on database
-		socket.emit('emailRead', loggedin, thread);
-
-		hideModules("other");
-		
-		otherModule.html("");
-	
-		otherModule.append("h2")
-			.text("Messages");
-	
-		otherModule.append("button")
-			.attr("class", "menubutton")
-			.text("Inbox")
-			.on("click", function() { openEmails("Inbox"); });
-	
-		otherModule.append("button")
-			.attr("class", "menubutton")
-			.text("Sent")
-			.on("click", function() { openEmails("Sent"); });
-	
-		var emailContainer = otherModule.append("div")
-			.attr("class", "emailContainer");
-
-		var emailLine = emailContainer.selectAll("div")
-			.data(threadEmails)
-		.enter().insert("div", ":first-child")
-			.attr("class", "fullEmail");
-
-		emailLine.append("h3")
-			.text(function(d) { if (arrayObjectIndexOf(nodes, d.sender, "id") !== -1) { return nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name; } else { return "Old User"; } } );
-	
-		emailLine.append("p")
-			.text(function(d) { return d.content; });
-
-        if (arrayObjectIndexOf(nodes, thread, "id") !== -1) {
-			otherModule.append("button")
-				.attr("id", "replyButton")
-				.text("Reply")
-				.attr("class", "standardButton")
-				.on("click", function() { writeEmail(thread); });
-		}
-
-		otherModule.append("button")
-			.attr("id", "deleteButton")
-			.text("Delete thread")
-			.attr("class", "standardButton")
-			.on("click", function() {
-				for (i=0; i<threadEmails.length; i++) {
-					emails.splice(arrayObjectIndexOf(emails, threadEmails[i].id, "id"), 1);
-				}
-				socket.emit('threadDelete', loggedin, thread);
-				openEmails("Inbox");
-	
-			});
-	
-	}
-
-	// ====== Write email =====
-	var writeEmail = function (recipient) {
-	
-	    hideModules("other");
-
-		otherModule.html("");
-	
-		otherModule.append("h2")
-			.text("Messages");
-	
-		otherModule.append("button")
-			.attr("class", "menubutton")
-			.text("Inbox")
-			.on("click", function() { openEmails("Inbox"); });
-	
-		otherModule.append("button")
-			.attr("class", "menubutton")
-			.text("Sent")
-			.on("click", function() { openEmails("Sent"); });
-			
-		otherModule.append("br");
-		otherModule.append("br");
-	
-		otherModule.append("h3")
-			.attr("id", "newEmailRecipName")
-			.text(nodes[arrayObjectIndexOf(nodes, recipient, "id")].name);
-		
-		otherModule.append("span")
-			.attr("id", "newEmailRecipUsername")
-			.text(" ("+nodes[arrayObjectIndexOf(nodes, recipient, "id")].username+")");
-		
-		otherModule.append("textarea")
-			.attr("id", "newEmailContent");
-
-		otherModule.append("button")
-			.text("Cancel")
-			.attr("class", "standardButton")
-			.on("click", function(d) {
-				if (active_node !== null) { displayInfo(active_node); } else { openEmails("Inbox"); }
-			});
-	
-		otherModule.append("button")
-			.text("Send")
-			.attr("class", "standardButton")
-			.on("click", function() {
-				
-				// Add new email to local emails database
-				//emails.push({"id": emails[emails.length-1].id+1, "recip": recipient, "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": document.getElementById("newEmailContent").value});
-	
-				// Send new email to server
-				var newEmail = {"recip": recipient, "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": document.getElementById("newEmailContent").value};
-				socket.emit("newEmail", newEmail);
-				
-				// After sending, open inbox or go back to active node
-				//if (active_node !== null) { displayInfo(active_node); } else { openEmails("Inbox"); }
-				openEmails("Inbox");
-	
-			});
-	};
-	*/
 
     // ====== Settings ======
  
@@ -1655,31 +1428,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			
 			
 	}	
-	
-	
-
-/* ===== Help Facility ===== */
-/*
-    d3.select("#helpButton").on("click", openContact); 
-
-    function openContact() {
-    
-    	sidepanel.html("");
-
-        sidepanel.append("h2")
-    	    .text("Help");
-    	
-        sidepanel.append("textarea")
-        	.attr("width", "100%");
-        	
-        sidepanel.append("br");
-    
-        sidepanel.append("input")
-    	    .attr("type", "button")
-    	    .attr("value", "Send");    	
-
-    }
-*/
 
 });
 

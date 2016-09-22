@@ -400,6 +400,7 @@ canvas {
     bottom: 40px;
     width: 300px;
     resize: none;
+    font-family: sans-serif;
 }
 
 .emailSendButton {
