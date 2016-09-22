@@ -37,6 +37,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var nodes = dataPackage.nodes;
 	var links = dataPackage.links;
 	
+	function emailThreader() {
+	    emails = emails.map(function(d) { 
+	        if (d.recip === loggedin) { d.thread = d.sender; } else { d.thread = d.recip; }
+	    }); 
+	}
+	emailThreader();
+	
 	socket.on('callToUpdateEmail', function() {
 	    socket.emit('emailRequest');
 	});
@@ -80,35 +87,36 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.currentFolder = ko.observable("Inbox");
 		self.openFolder = function(folder) { self.currentFolder(folder); };
 		self.emails = ko.observableArray(emailData);
+		//self.emails().thread
         self.currentFolderData = ko.computed(function() { 
-            return self.emails();
+            //return self.emails();
             //return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
             //return ko.utils.arrayFilter(self.emails(), function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) });
         /*
             window.alert("Emails1: "+JSON.stringify(emails1));
-        
+*/        
+             
+
+
         	var emails2 = [];
 
 			var i;
-			for (i=0; i<emails1.length; i++) {
+			for (i=0; i<self.emails().length; i++) {
 
-				if (self.currentFolder() === 'Inbox') {
-					var arr1 = arrayObjectIndexOf(emails2, emails1[i].sender, "sender");
-				} else if (self.currentFolder() === 'Sent') {
-					var arr1 = arrayObjectIndexOf(emails2, emails1[i].recip, "recip");
-				}
+				var arr1 = arrayObjectIndexOf(emails2, self.emails()[i].thread, "thread");
+
 		
 				if (arr1 === -1) { 
-					emails2.push(emails[i]);
+					emails2.push(self.emails()[i]);
 				} else { 
-					emails2[arr1] = emails[i]; 
+					emails2[arr1] = self.emails()[i]; 
 				}
 				window.alert("Emails2: "+JSON.stringify(emails2));
 
 			}
 			
 			return emails2;
-			*/
+			
 			//return emails1;
 		
         });
