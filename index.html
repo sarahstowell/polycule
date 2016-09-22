@@ -33,7 +33,7 @@
 		</svg>
 
 		<svg id="mailButton" class="topButtons" width="30" height="30" viewBox="0 0 8 8">
-		  <path d="M0 0v1l4 2 4-2v-1h-8zm0 2v4h8v-4l-4 2-4-2z" transform="translate(0 1)" />
+		  <path d="M0 0v1l4 2 4-2v-1h-8zm0 2v4h8v-4l-4 2-4-2z" transform="translate(0 1)" data-bind="style: { fill: newEmails().length > 0 ? 'red' : 'black' }" />
 		</svg>
 
 		<svg id="linkButton" class="topButtons" width="30" height="30" viewBox="0 0 8 8" data-bind="style: { fill: linkRequests().length > 0 ? 'red' : 'black' }">
@@ -66,7 +66,7 @@
 		        <h2>Messages</h2>
 		        <h3 data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Back</h3>
 		        <div class="emailContainer" data-bind="foreach: currentFolderData">
-		            <div class="email" data-bind="style: {backgroundColor: read === 0 ? 'lightgray' : null }, click: $parent.openThread.bind($data)">
+		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? 'lightgray' : null }, click: $parent.openThread.bind($data)">
 		                <h3 data-bind="text: sender"></h3>
 		                <span data-bind="text: sender"></span>
 		                <p data-bind="text: content"></p>

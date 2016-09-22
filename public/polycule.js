@@ -46,6 +46,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			if (threads.indexOf(emails[i].thread) === -1) { 
 				threads.push(emails[i].thread);
 				emails[i].latest = 1;
+				if (emails[i].read === 0 && emails[i].recip === loggedin) { emails[i].newFlag = 1; }
 			} else { 
 				emails[i].latest = 0;
 			}
@@ -98,6 +99,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
 		// Emails
 		self.emails = ko.observableArray(emailData);
+		self.newEmails = ko.computed(function() {
+		    self.emails().filter(function(d) { return d.newFlag === 1; });
+		});
 		self.currentThread = ko.observable(0);
         self.currentFolderData = ko.computed(function() { 
             if (self.currentThread() === 0) { return self.emails().filter(function(d) { return d.latest === 1; }).reverse(); }
@@ -1165,6 +1169,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // ===== Email facility ======
 
 	// For checking if there are any unread messages and if so, highlight mail symbol red
+	/*
 	var checkEmails = function () {
 
 		d3.select("#mailButton")
@@ -1174,9 +1179,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				if (newEmails.length > 0) { return "red"; } else { return "black"; } 
 			});
 	}
+	*/
 
 	// check for unread mails on loading
-	checkEmails();
+	//checkEmails();
 
 	// For opening inbox or sent box
 	var openEmails = function (box) {
