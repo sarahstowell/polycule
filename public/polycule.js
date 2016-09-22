@@ -62,7 +62,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				}
 				
 			}
-	    window.alert(emails);
+	    window.alert(JSON.stringify(emails));
 	    
 	}
 	emailThreader();
