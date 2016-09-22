@@ -399,6 +399,7 @@ canvas {
     position: absolute;
     bottom: 40px;
     width: 300px;
+    resize: none;
 }
 
 .emailSendButton {
