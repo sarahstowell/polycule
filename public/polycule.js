@@ -48,7 +48,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 			var i;
 			for (i=0; i<self.emails().length; i++) {
-				if (threads.indexOf(emails[i].thread === -1) { 
+				if (threads.indexOf(emails[i].thread) === -1) { 
 					threads.push(emails[i].thread);
 					emails[i].latest = 1;
 				} else { 
