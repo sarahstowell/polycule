@@ -64,7 +64,7 @@
 		    </div>
 		    <div id="emailModule" style="display: none;">
 		        <h2>Messages</h2>
-		        <h3 data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Messages</h3>
+		        <h3 data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Back</h3>
 		        <div class="emailContainer" data-bind="foreach: currentFolderData">
 		            <div class="email" data-bind="style: {backgroundColor: read === 0 ? 'lightgray' : null }, click: $parent.openThread.bind($data)">
 		                <h3 data-bind="text: sender"></h3>
@@ -72,6 +72,8 @@
 		                <p data-bind="text: content"></p>
 		            </div>
 		        </div>
+		        <textarea data-bind="visible: currentThread() !== 0"></textarea>
+		        <button data-bind="visible: currentThread() !== 0"></button>
 		        
 		    </div>
 		    <div id="otherModule">
