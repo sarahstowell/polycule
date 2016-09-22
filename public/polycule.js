@@ -108,6 +108,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.openThread = function(data) {
             self.currentThread(data.thread);
         };
+        self.sendMessage = function() {
+            var content = document.getElementById("emailTypeBox").value;
+            if (content) {
+                var newEmail = {"recip": self.currentThread(), "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": content};
+			    socket.emit("newEmail", newEmail);
+			}
+        }
     }
     
     var viewModel = new ViewModel(linkRequests, emails, loggedin);
