@@ -100,7 +100,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		// Emails
 		self.emails = ko.observableArray(emailData);
 		self.newEmails = ko.computed(function() {
-		    self.emails().filter(function(d) { return d.newFlag === 1; });
+		    return self.emails().filter(function(d) { return d.newFlag === 1; });
 		});
 		self.currentThread = ko.observable(0);
         self.currentFolderData = ko.computed(function() { 
