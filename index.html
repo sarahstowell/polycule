@@ -67,7 +67,7 @@
 		        <span id="backToMessages" data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Back to messages</span>
 		        <div class="emailContainer" data-bind="foreach: currentFolderData">
 		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? 'lightgray' : null }, click: $parent.openThread.bind($data)">
-		                <h3 data-bind="text: $root.currentThread() === 0 ? threadName : sender"></h3>
+		                <h3 data-bind="text: $root.currentThread() === 0 ? threadName : senderName"></h3>
 		                <span data-bind="visible: $root.currentThread() === 0, text: '('+threadUsername+')'"></span>
 		                <p data-bind="text: content"></p>
 		            </div>
