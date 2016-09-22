@@ -1216,7 +1216,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		}
 */
         hideModules("email");
-/*
+
 		emailModule.html("");
 
 		emailModule.append("h2")
@@ -1296,7 +1296,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 		emailLine.append("p")
 			.text(function(d) { return d.content; });
-*/
+
 	}
 
 	// ===== Opening selected email thread =====
