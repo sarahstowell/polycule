@@ -55,6 +55,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	}
 	emailThreader();
 	
+	
 	socket.on('callToUpdateEmail', function() {
 	    socket.emit('emailRequest');
 	});
@@ -64,6 +65,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    checkEmails();
 	    emailThreader();
 	    viewModel.emails(emails);
+	    window.alert(JSON.stringify(emails));
 	});
   
     // Function for creating source and target variables in links dataset for use with force layout
@@ -1185,8 +1187,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	// check for unread mails on loading
 	//checkEmails();
 
-		d3.select("#mailButton")
-			.on("click", function() { openEmails("Inbox"); });
+		d3.select("#mailButton").on("click", function() { openEmails(); });
 
 	// For opening inbox or sent box
 	var openEmails = function () {
