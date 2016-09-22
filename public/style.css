@@ -390,7 +390,8 @@ canvas {
 .emailContainer {
     margin-top: 10px;
     overflow-y: auto;
-    height: 450px;
+    /*height: 450px;*/
+    height: 100%;
 }
 
 /* ===== Inbox and Sent Box ===== */
