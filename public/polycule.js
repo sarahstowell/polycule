@@ -1185,6 +1185,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	// check for unread mails on loading
 	//checkEmails();
 
+		d3.select("#mailButton")
+			.on("click", function() { openEmails("Inbox"); });
+
 	// For opening inbox or sent box
 	var openEmails = function () {
 /*
