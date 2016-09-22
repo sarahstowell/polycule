@@ -1178,7 +1178,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			restart();
 		}
 */
-        viewModel.opnThread(0);
+        viewModel.openThread(0);
         hideModules("email");
 /*
 		emailModule.html("");
