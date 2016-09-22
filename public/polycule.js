@@ -90,6 +90,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Knockout view model
     function ViewModel(linkData, emailData, loggedin) {
         var self = this;
+        // Link Requests
         self.linkRequests = ko.observableArray(linkData);
         self.confirmLink = function() { 
 			socket.emit('linkConfirm', this.id);
@@ -97,14 +98,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.denyLink = function() { 
 			socket.emit('linkDelete', this.id);
 		};
-		self.currentFolder = ko.observable("Inbox");
-		self.openFolder = function(folder) { self.currentFolder(folder); };
+		// Emails
 		self.emails = ko.observableArray(emailData);
         self.currentFolderData = ko.computed(function() { 
             return self.emails().filter(function(d) { return d.latest === 1; });
         });
-        
-        self.openFolder('Inbox');
     }
     
     var viewModel = new ViewModel(linkRequests, emails, loggedin);

@@ -64,9 +64,6 @@
 		    </div>
 		    <div id="emailModule" style="display: none;">
 		        <h2>Messages</h2>
-		        <!--
-		        <button data-bind="click: openFolder.bind('Inbox'), css: {menubutton: currentFolder() !== 'Inbox', menubuttonSelected: currentFolder() === 'Inbox'}">Inbox</button><button data-bind="click: openFolder.bind('Sent'), css: {menubutton: currentFolder() !== 'Sent', menubuttonSelected: currentFolder() === 'Sent'}">Sent</button>
-		        -->
 		        <div class="emailContainer" data-bind="foreach: currentFolderData">
 		            <div class="email" data-bind="style: {backgroundColor: read === 0 && $root.currentFolder() === 'Inbox' ? 'lightgray' : null }">
 		                <h3 data-bind="text: sender"></h3>
