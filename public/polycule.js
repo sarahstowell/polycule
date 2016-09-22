@@ -100,9 +100,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
 		// Emails
 		self.emails = ko.observableArray(emailData);
+		self.currentThread = ko.observable(0);
         self.currentFolderData = ko.computed(function() { 
-            return self.emails().filter(function(d) { return d.latest === 1; });
+            if (self.currentThread() === 0) { return self.emails().filter(function(d) { return d.latest === 1; }); }
+            else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
+        self.openThread = function(thread) {
+            self.currentThread(thread);
+        };
     }
     
     var viewModel = new ViewModel(linkRequests, emails, loggedin);

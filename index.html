@@ -65,7 +65,7 @@
 		    <div id="emailModule" style="display: none;">
 		        <h2>Messages</h2>
 		        <div class="emailContainer" data-bind="foreach: currentFolderData">
-		            <div class="email" data-bind="style: {backgroundColor: read === 0 ? 'lightgray' : null }">
+		            <div class="email" data-bind="style: {backgroundColor: read === 0 ? 'lightgray' : null }, click: $parent.openThread.bind($data.thread)">
 		                <h3 data-bind="text: sender"></h3>
 		                <span data-bind="text: sender"></span>
 		                <p data-bind="text: content"></p>
