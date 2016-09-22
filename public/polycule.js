@@ -42,13 +42,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    emails = emails.map(function(d) { 
 	        if (d.recip === loggedin) { d.thread = d.sender;} else { d.thread = d.recip; }
 	        return d;
-	    }); 
-	    
-	    //window.alert(emails);
-	    
+	    }); 	    
 	    // Create indicator for most recent message in thread
 	    var threads = [];
-
 		var i;
 		
 			for (i=0; i<emails.length; i++) {
@@ -62,7 +58,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				}
 				
 			}
-	    window.alert(JSON.stringify(emails));
 	    
 	}
 	emailThreader();
