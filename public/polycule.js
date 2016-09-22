@@ -107,7 +107,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         });
         self.openThread = function(data) {
             self.currentThread(data.thread);
-            window.alert(self.currentThread());
         };
     }
     
@@ -1181,7 +1180,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 */
         viewModel.currentThread(0);
         hideModules("email");
-/*
+
 		emailModule.html("");
 
 		emailModule.append("h2")
@@ -1261,7 +1260,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 		emailLine.append("p")
 			.text(function(d) { return d.content; });
-*/
+
 	}
 
 	// ===== Opening selected email thread =====

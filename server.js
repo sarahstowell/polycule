@@ -27,12 +27,14 @@ var nodemailer = require('nodemailer');
 app.use(helmet());
 app.set('view engine', 'pug');
 
+if (!process.env.DEBUG) {
 // Redirect all requests to HTTPS --------------------------------------------------------
 app.get('*',function(req,res,next){ 
     if(req.headers['x-forwarded-proto'] !== 'https') 
         res.redirect('https://polycule.co.uk'+req.url) 
     else next() 
 })
+}
 
 // Setup email ---------------------------------------------------------------------------
 var transporter = nodemailer.createTransport(process.env.GMAIL);
