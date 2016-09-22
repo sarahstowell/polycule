@@ -83,8 +83,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.currentFolderData = ko.computed(function() { 
             //return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
 
-        
-        	var emails1 = self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) });
+            var emails0 = self.emails();
+        	var emails1 = emails0.filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) });
         
             window.alert("Emails1: "+JSON.stringify(emails1));
         
