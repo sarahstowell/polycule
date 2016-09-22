@@ -40,10 +40,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	function emailThreader() {
 	    // Create thread number
 	    emails = emails.map(function(d) { 
-	        if (d.recip === loggedin) { d.thread = d.sender; } else { d.thread = d.recip; }
+	        if (d.recip === loggedin) { d.thread = d.sender;} else { d.thread = d.recip; }
+	        return d;
 	    }); 
 	    
-	    window.alert(emails);
+	    //window.alert(emails);
 	    
 	    // Create indicator for most recent message in thread
 	    var threads = [];
@@ -51,15 +52,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		var i;
 		
 			for (i=0; i<emails.length; i++) {
-			window.alert(i+" "+emails[i]);
-			/*
+			//window.alert(i+" "+emails[i]);
+			
 				if (threads.indexOf(emails[i].thread) === -1) { 
 					threads.push(emails[i].thread);
 					emails[i].latest = 1;
 				} else { 
 					emails[i].latest = 0;
 				}
-				*/
+				
 			}
 	    
 	    
