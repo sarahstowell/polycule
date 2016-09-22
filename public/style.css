@@ -393,7 +393,6 @@ canvas {
     overflow-y: auto;
 	height: 400px;
     /*height: 100%;*/
-
 }
 
 .emailTypeBox {
@@ -413,6 +412,11 @@ canvas {
     font-size: 12px;
     font-weight: bold;
     background-color: lightgray;
+}
+
+#backToMessages {
+    font-weight: bold;
+    font-size: 14px;
 }
 
 /* ===== Inbox and Sent Box ===== */
