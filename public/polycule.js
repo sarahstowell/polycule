@@ -115,6 +115,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (content) {
                 var newEmail = {"recip": self.currentThread(), "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": content};
 			    socket.emit("newEmail", newEmail);
+			    document.getElementById("emailTypeBox").value=null;
 			}
         }
     }
