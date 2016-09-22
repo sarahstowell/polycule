@@ -46,7 +46,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    // Create indicator for most recent message in thread
 	    var threads = [];
 		var i;
-		for (i=emails.length; i>=0; i--) {			
+		for (i=emails.length-1; i>=0; i--) {			
 			if (threads.indexOf(emails[i].thread) === -1) { 
 				threads.push(emails[i].thread);
 				emails[i].latest = 1;
@@ -102,36 +102,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.emails = ko.observableArray(emailData);
         self.currentFolderData = ko.computed(function() { 
             return self.emails().filter(function(d) { return d.latest === 1; });
-            //return self.emails();
-            //return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
-            //return ko.utils.arrayFilter(self.emails(), function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) });
-        /*
-            window.alert("Emails1: "+JSON.stringify(emails1));
-*/        
-             
-/*
-
-        	var emails2 = [];
-
-			var i;
-			for (i=0; i<self.emails().length; i++) {
-
-				var arr1 = arrayObjectIndexOf(emails2, self.emails()[i].thread, "thread");
-
-		
-				if (arr1 === -1) { 
-					emails2.push(self.emails()[i]);
-				} else { 
-					emails2[arr1] = self.emails()[i]; 
-				}
-				//window.alert("Emails2: "+JSON.stringify(emails2));
-
-			}
-			
-			return emails2;
-			
-			//return emails1;
-		*/
         });
         
         self.openFolder('Inbox');
