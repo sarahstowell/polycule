@@ -121,7 +121,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
         self.openThread = function(data) {
-            socket.emit('emailRead', loggedin, thread);
+            socket.emit('emailRead', loggedin, data.thread);
             self.currentThread(data.thread);
         };
         self.sendMessage = function() {
