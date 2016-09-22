@@ -54,7 +54,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		}
 	}
 	emailThreader();
-	window.alert(JSON.stringify(emails));
 	
 	socket.on('callToUpdateEmail', function() {
 	    socket.emit('emailRequest');
@@ -1187,7 +1186,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	//checkEmails();
 
 	// For opening inbox or sent box
-	var openEmails = function (box) {
+	var openEmails = function () {
 /*
 		if (active_node !== null || active_link !== null) {
 			active_node = null;
@@ -1197,6 +1196,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 */
         viewModel.currentThread(0);
         hideModules("email");
+    }
 /*
 		emailModule.html("");
 
@@ -1278,7 +1278,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		emailLine.append("p")
 			.text(function(d) { return d.content; });
 */
-	}
+	//}
 
 	// ===== Opening selected email thread =====
 	/*
