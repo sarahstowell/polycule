@@ -64,6 +64,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	socket.on('emailUpdate', function(emailUpdate) { 
 	    emails = emailUpdate; 
 	    checkEmails();
+	    emailThreader();
+	    viewModel.emails(emails);
 	});
   
     // Function for creating source and target variables in links dataset for use with force layout
