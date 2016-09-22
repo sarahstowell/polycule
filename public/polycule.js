@@ -106,7 +106,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
         self.openThread = function(data) {
-            window.alert(JSON.stringify(data.thread));
             self.currentThread(data.thread);
         };
     }
@@ -1179,6 +1178,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			restart();
 		}
 */
+        viewModel.opnThread(0);
         hideModules("email");
 /*
 		emailModule.html("");
