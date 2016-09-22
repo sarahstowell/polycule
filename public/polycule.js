@@ -46,9 +46,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			if (threads.indexOf(emails[i].thread) === -1) { 
 				threads.push(emails[i].thread);
 				emails[i].latest = 1;
-				if (emails[i].read === 0 && emails[i].recip === loggedin) { emails[i].newFlag = 1; }
+				if (emails[i].read === 0 && emails[i].recip === loggedin) { emails[i].newFlag = 1; } else {emails[i].newFlag = 0; }
 			} else { 
 				emails[i].latest = 0;
+				emails[i].newFlag = 0;
 			}
 		}
 	}
