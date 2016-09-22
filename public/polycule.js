@@ -1179,7 +1179,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			restart();
 		}
 */
-        viewModel.openThread(0);
+        viewModel.currentThread(0);
         hideModules("email");
 /*
 		emailModule.html("");
