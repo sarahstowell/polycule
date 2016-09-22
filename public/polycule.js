@@ -54,6 +54,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		}
 	}
 	emailThreader();
+	window.alert(JSON.stringify(emails));
 	
 	socket.on('callToUpdateEmail', function() {
 	    socket.emit('emailRequest');
