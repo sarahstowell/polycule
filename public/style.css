@@ -395,11 +395,11 @@ canvas {
 }
 
 .emailTypeBox {
-
+    width: 100%;
 }
 
 .emailSendButton {
-
+    width: 100%;
 }
 
 /* ===== Inbox and Sent Box ===== */
