@@ -106,6 +106,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
         self.openThread = function(thread) {
+            window.alert(thread);
             self.currentThread(thread);
         };
     }
