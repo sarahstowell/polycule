@@ -81,9 +81,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.openFolder = function(folder) { self.currentFolder(folder); };
 		self.emails = ko.observableArray(emailData);
         self.currentFolderData = ko.computed(function() { 
-            return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
+            //return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
 
-        /*
+        
         	var emails1 = self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
         
         	var emails2 = [];
@@ -101,7 +101,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
 			
 			return emails2;
-		*/	
+		
         });
         
         self.openFolder('Inbox');
