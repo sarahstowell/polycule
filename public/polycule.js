@@ -38,9 +38,25 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var links = dataPackage.links;
 	
 	function emailThreader() {
+	    // Create thread number
 	    emails = emails.map(function(d) { 
 	        if (d.recip === loggedin) { d.thread = d.sender; } else { d.thread = d.recip; }
 	    }); 
+	    
+	    // Create indicator for most recent message in thread
+	    var threads = [];
+
+			var i;
+			for (i=0; i<self.emails().length; i++) {
+				if (threads.indexOf(emails[i].thread === -1) { 
+					threads.push(emails[i].thread);
+					emails[i].latest = 1;
+				} else { 
+					emails[i].latest = 0;
+				}
+			}
+	    
+	    
 	}
 	emailThreader();
 	
@@ -87,8 +103,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		self.currentFolder = ko.observable("Inbox");
 		self.openFolder = function(folder) { self.currentFolder(folder); };
 		self.emails = ko.observableArray(emailData);
-		//self.emails().thread
         self.currentFolderData = ko.computed(function() { 
+            return self.emails().filter(function(d) { return d.latest === 1; });
             //return self.emails();
             //return self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) })
             //return ko.utils.arrayFilter(self.emails(), function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) });
@@ -111,7 +127,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				} else { 
 					emails2[arr1] = self.emails()[i]; 
 				}
-				window.alert("Emails2: "+JSON.stringify(emails2));
+				//window.alert("Emails2: "+JSON.stringify(emails2));
 
 			}
 			
