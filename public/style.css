@@ -397,13 +397,13 @@ canvas {
 .emailTypeBox {
     position: absolute;
     bottom: 30px;
-    width: 100%;
+    width: 304px;
 }
 
 .emailSendButton {
     position: absolute;
     bottom: 10px;
-    width: 100%;
+    width: 304px;
 }
 
 /* ===== Inbox and Sent Box ===== */
