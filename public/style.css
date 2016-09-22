@@ -395,10 +395,14 @@ canvas {
 }
 
 .emailTypeBox {
+    position: absolute;
+    bottom: 30px;
     width: 100%;
 }
 
 .emailSendButton {
+    position: absolute;
+    bottom: 10px;
     width: 100%;
 }
 
