@@ -41,7 +41,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	            d.threadName = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].name; 
 	            d.threadUsername = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].username; 
 	        } else { 
-	            d.threadName = "Old User"; 
+	            d.threadName = "Old User";
+	            d.threadUsername = ""; 
 	        }
 	        if (nodes[arrayObjectIndexOf(nodes, d.sender, "id")]) { 
 	            d.senderName = nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name;
