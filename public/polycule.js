@@ -43,17 +43,23 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        if (d.recip === loggedin) { d.thread = d.sender; } else { d.thread = d.recip; }
 	    }); 
 	    
+	    window.alert(emails);
+	    
 	    // Create indicator for most recent message in thread
 	    var threads = [];
 
-			var i;
+		var i;
+		
 			for (i=0; i<emails.length; i++) {
+			window.alert(i+" "+emails[i]);
+			/*
 				if (threads.indexOf(emails[i].thread) === -1) { 
 					threads.push(emails[i].thread);
 					emails[i].latest = 1;
 				} else { 
 					emails[i].latest = 0;
 				}
+				*/
 			}
 	    
 	    
