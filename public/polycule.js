@@ -500,7 +500,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
                     .attr("class", "standardButton")
                     .text("Message")
                     .on("click", function() { 
-                        //writeEmail(node); 
                         viewModel.currentThread(node);
                         hideModules("email");
                     });
@@ -1274,6 +1273,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	}
 
 	// ===== Opening selected email thread =====
+	/*
 	var openThread = function(thread) {
 
 		var threadEmails  = emails.filter(function(d) { if ((d.sender === thread && d.recip === loggedin) || (d.sender === loggedin && d.recip === thread)) { return true; } else { return false; } });
@@ -1394,6 +1394,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 			});
 	};
+	*/
 
     // ====== Settings ======
  

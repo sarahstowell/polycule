@@ -388,6 +388,7 @@ canvas {
 }
 
 .emailContainer {
+    border-top: 2px solid black;
     margin-top: 10px;
     overflow-y: auto;
 	height: 400px;
