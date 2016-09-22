@@ -86,6 +86,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
         	var emails1 = self.emails().filter(function(d) { return (self.currentFolder() === 'Inbox' && d.recip === loggedin) || ( self.currentFolder() === 'Sent' && d.recip !== loggedin) });
         
+            window.alert(JSON.stringify(emails1));
+        
         	var emails2 = [];
 
 			var i;
@@ -102,6 +104,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				} else { 
 					emails2[arr1] = emails[i]; 
 				}
+				window.alert(JSON.stringify(emails2);
 
 			}
 			
