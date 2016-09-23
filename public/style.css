@@ -438,6 +438,11 @@ canvas {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.email:hover {
+    cursor: pointer;
+}
+
 .email h3 {
     font-size: 14px;
     display: inline;
