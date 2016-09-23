@@ -170,8 +170,6 @@ h1 {
     margin-bottom: 10px;
     padding-top: 1px;
     background-color: white;
-    display: flex;
-    flex-direction: column;
 }
 
 h2 {
@@ -398,9 +396,8 @@ canvas {
     border-top: 2px solid black;
     margin-top: 10px;
     overflow-y: auto;
-	/*height: 400px;*/
-    /*height: 100%;*/
-    flex-grow: 1;
+	height: 400px;
+
 }
 
 .emailTypeBox {
