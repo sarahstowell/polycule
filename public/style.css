@@ -422,6 +422,10 @@ canvas {
     background-color: lightgray;
 }
 
+.emailSendButton:hover {
+    background-color: gray;
+}
+
 #backToMessages {
     font-weight: bold;
     font-size: 14px;
