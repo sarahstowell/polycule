@@ -134,6 +134,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // To be added: Thread delete option
         //socket.emit('threadDelete', loggedin, thread);
         
+        // Settings
+        self.settings = ko.observable(settings);
+        
         // Nodes
         self.nodes = ko.observableArray(nodes);
         self.activeNode = ko.observable(active_node);

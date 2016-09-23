@@ -83,6 +83,27 @@
 		        <button class="emailSendButton" data-bind="visible: currentThread() !== 0, click: sendMessage">Send</button>
 		    </div>
 		    
+		    <div id="settingsModule" style="display: none">
+		        <h2>Settings</h2>
+		        <div class="settingsLine">
+		            <h3>Unique Username</h3>
+		            <p data-bind="text: settings.username"></p>
+		        </div>
+		        <div class="settingsLine">
+		            <h3>Contact Email</h3>
+		            <p data-bind="text: settings.email"></p>
+		        </div>
+		        <div class=settingsLine">
+		            <h3>Password</h3>
+		            <p>***</p>
+		        </div>
+		        <div class=settingsLine">
+		            <h3>Contact Preferences</h3>
+		            <input type="checkbox">
+		            <input type="checkbox">
+		        </div>
+		    </div>
+		    
 		    <div id="nodeModule" style="display: none;">
 		        <h2 class="name"></h2>
 		        <p class="username"></p>
