@@ -34,6 +34,10 @@ body {
     flex-direction: row;
 }
 
+.pointy:hover { 
+    cursor: pointer; 
+}
+
 /* ===== Top Banner ===== */
 #topBanner {
     position: relative;
@@ -186,6 +190,7 @@ h2 {
 
 .standardButton:hover {
     background-color: darkgray;
+    cursor: pointer;
 }
 
 /* ===== Profile display page ===== */

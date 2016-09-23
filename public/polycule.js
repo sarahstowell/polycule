@@ -1,9 +1,6 @@
 // Open websocket connection
 var socket = io();
 
-// Request data from server
-socket.emit('dataRequest'); 
-
 // Get width and height of SVG as displayed, so that force layout can use them
 var width = document.getElementById('mainsvg').getBoundingClientRect().width;
 var height = document.getElementById('mainsvg').getBoundingClientRect().height;
@@ -16,7 +13,8 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
     return -1;
 }
 
-
+// Request data from server
+socket.emit('dataRequest'); 
 
 // On receiving data from the server, build visualisation
 socket.on('nodesAndLinks', function(dataPackage) { 
@@ -135,6 +133,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
         }
         // To be added: Thread delete option
         //socket.emit('threadDelete', loggedin, thread);
+        
+        // Nodes
+        self.nodes = ko.observableArray(nodes);
+        self.activeNode = ko.observable(active_node);
+        
+        // Links
     }
     
     var viewModel = new ViewModel(linkRequests, emails, loggedin);
