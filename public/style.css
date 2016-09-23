@@ -171,6 +171,7 @@ h1 {
     padding-top: 1px;
     background-color: white;
     display: flex;
+    flex-direction: column;
 }
 
 h2 {
