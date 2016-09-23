@@ -482,6 +482,16 @@ canvas {
     margin-top: 10px;
 }
 
+.threadName {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.threadUsername {
+     font-weight: bold;
+     font-size: 14px;
+}
+
 
 /* ===== Write Email ===== */
 #newEmailContent {
