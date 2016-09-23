@@ -485,11 +485,12 @@ canvas {
 .threadName {
     font-weight: bold;
     font-size: 14px;
+    text-align: center;
 }
 
 .threadUsername {
-     font-weight: bold;
      font-size: 14px;
+     text-align: center;
 }
 
 
