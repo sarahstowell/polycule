@@ -66,9 +66,11 @@
 		    <div id="emailModule" style="display: none;">
 		        <h2>Messages</h2>
 		        <span id="backToMessages" class="pointy" data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Chats</span>
+		        <!--
 		        <br/>
 		        <span class="threadName" data-bind="visible: currentThread() !== 0, text: currentFolderData()[0].threadName"></span>
 				<span class="threadUsername" style="text-align: center;" data-bind="visible: currentThread() !== 0, text: '('+currentFolderData()[0].threadName+')'"></span>
+		        -->
 		        <div class="emailContainer" data-bind="foreach: currentFolderData">
 		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? 'lightgray' : null }, click: $parent.openThread.bind($data)">
 		                <h3 data-bind="text: $root.currentThread() === 0 ? threadName : senderName"></h3>
