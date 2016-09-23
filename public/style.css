@@ -406,6 +406,7 @@ canvas {
     width: 300px;
     resize: none;
     font-family: sans-serif;
+    border-radius: 5px;
 }
 
 .emailSendButton {
