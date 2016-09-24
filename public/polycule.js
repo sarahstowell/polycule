@@ -47,6 +47,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        } else {
 	            d.senderName = "Old User";
 	        }
+	        d.fromServer = 1;
 	        return d;
 	    }); 	    
 	    // Create indicator for most recent message in thread
@@ -126,6 +127,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             var content = document.getElementById("emailTypeBox").value;
             if (content) {
                 var newEmail = {"recip": self.currentThread(), "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": content};
+			    self.emails.push(newEmail);
 			    socket.emit("newEmail", newEmail);
 			    document.getElementById("emailTypeBox").value=null;
 			    //document.getElementById("emailContainer").scrollTop = document.getElementById("emailContainer").scrollHeight - document.getElementById("emailContainer").innerHeight;
@@ -277,6 +279,24 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 	    restart();
 	});
+	
+	// Select sidepanel for later use
+    var sidepanel = d3.select("#sidePanel");
+    var linksModule = d3.select("#linksModule");
+    var emailModule = d3.select("#emailModule");
+    var settingsModule = d3.select("#settingsModule");
+    var otherModule = d3.select("#otherModule");
+    
+    function hideModules(module) {
+        if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
+        if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
+        if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
+        if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
+    }
+    
+    d3.select("#linkButton").on("click", function() { hideModules("links"); });
+	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
+	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
     // Setup force layout
     var force = d3.layout.force()
@@ -370,19 +390,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
      
     /*zoom1.event(zoomin);*/
     
-    // Select sidepanel for later use
-    var sidepanel = d3.select("#sidePanel");
-    var linksModule = d3.select("#linksModule");
-    var emailModule = d3.select("#emailModule");
-    var settingsModule = d3.select("#settingsModule");
-    var otherModule = d3.select("#otherModule");
-    
-    function hideModules(module) {
-        if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
-        if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
-        if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
-        if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
-    }
+
     
     // Add container for use with zoom function
     var container = d3.select("#container")
@@ -1258,29 +1266,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   
 
 
-    // ===== Link Requests =====
-    d3.select("#linkButton").on("click", function() { hideModules("links"); });
-	
-    //function openLinkRequests() { 
-	//    ;
-    //}
 
-    // ===== Email facility ======
+ 		
 
-	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
-
-	// For opening inbox or sent box
-	//var openEmails = function () {
-    //    viewModel.currentThread(0);
-    //    hideModules("email");
-    //}
-
-    // ====== Settings ======
- 
-	d3.select("#settingsButton").on("click", function() { hideModules("settings"); }); 		
-
-	//function openSettings() {
-	
-	//    hideModules("settings");
-	//}
 });
