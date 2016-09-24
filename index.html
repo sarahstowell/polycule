@@ -104,6 +104,11 @@
 		            <input type="checkbox">
 		            <input type="checkbox">
 		        </div>
+		        <input type="button" id="deleteAccount" class="standardButton" value="Delete Account" onclick="
+		            if (window.confirm('Are you sure you want to delete your account? This action cannot be reversed.')) {
+				        window.location = '/delete';
+				    }">
+		        <input type="button" id="logout" class="standardButton" value="Logout" onclick="window.location = '/logout';">
 		    </div>
 		    <!-- Node Display -->
 		    <div id="nodeModule" style="display: none;">
