@@ -137,6 +137,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Settings
         self.settings = ko.observable(settings);
         self.settingsError = ko.observable();
+        self.usernameEditing = ko.observable(false);
         
         // Nodes
         /*
