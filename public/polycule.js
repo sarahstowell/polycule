@@ -192,6 +192,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		viewModel.settings(settings);
 		viewModel.emailEditing(false);
 		viewModel.settingsError(null);	
+		window.alert("Settings updated");
 	});
 	
 	socket.on('usernameTaken', function() {
