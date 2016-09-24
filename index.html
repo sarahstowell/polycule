@@ -46,8 +46,9 @@
 		    <g id="container"></g>
 		    <g id="zoomin"></g>
 		</svg>
-
+		
 		<div id="sidePanel">
+			<!-- Link Requests -->
 		    <div id="linksModule" style="display: none;">
 		        <h2>Link Confirmation Requests</h2>
 		        <p id="noLinkRequests" data-bind="visible: linkRequests().length === 0">You have no requests at this time</p>
@@ -62,7 +63,7 @@
 		            
 		        </div>
 		    </div>
-		    
+		    <!-- Email -->
 		    <div id="emailModule" style="display: none;">
 		        <h2>Messages</h2>
 		        <span id="backToMessages" class="pointy" data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Chats</span>
@@ -82,7 +83,7 @@
 		        <br/>
 		        <button class="emailSendButton" data-bind="visible: currentThread() !== 0, click: sendMessage">Send</button>
 		    </div>
-		    
+		    <!-- Settings -->
 		    <div id="settingsModule" style="display: none">
 		        <h2>Settings</h2>
 		        <div class="settingsLine">
@@ -103,24 +104,24 @@
 		            <input type="checkbox">
 		        </div>
 		    </div>
-		    
+		    <!-- Node Display -->
 		    <div id="nodeModule" style="display: none;">
-		        <h2 class="name"></h2>
-		        <p class="username"></p>
+		        <h2 class="name" data-bind="text: activeNodeData().name"></h2>
+		        <p class="username" data-bind="text: activeNodeData().username"></p>
 		        <!--
 		        <img class="profilePic" id="profilePic"/>
 		        -->
-		        <p class="town"></p>
-		        <p class="description"></p>
+		        <p class="town" data-bind="text: activeNodeData().location"></p>
+		        <p class="description" data-bind="text: activeNodeData().description"></p>
 		        <button id="editnodebutton" class=standardButton" ></button>
 		        <button id="sendMessageButton" class="standardButton"></button>
 		        <button id="requestLinkButton" class="standardButton"></button>
 		        
-		        <p class="description"> is not yet a member of Polycule. Enter an email address to invite them:</p>
-		        <input type="email" id="emailInviteEdit"/>
-		        <input type="submit" id="emailInviteButton" class="standardButton" value="Invite"/>
+		        <p class="description" data-bind="visible: activeNodeData().member === 0 && activeNodeData().invited === 0, text:  activeNodeData().name+'is not yet a member of Polycule. Enter an email address to invite them:'"></p>
+		        <input type="email" id="emailInviteEdit" data-bind="visible: activeNodeData().member === 0 && activeNodeData().invited === 0"/>
+		        <input type="submit" id="emailInviteButton" class="standardButton" value="Invite" data-bind="visible: activeNodeData().member === 0 && activeNodeData().invited === 0"/>
 		        
-		        <p id="invitedText">has been invited to join Polycule</p>
+		        <p id="invitedText" data-bind="visible: activeNodeData().member === 0 && activeNodeData().invited === 1, text: activeNodeData().name+' has been invited to join Polycule'"></p>
 		    </div>
 		    
 		    <div id="otherModule">

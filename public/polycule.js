@@ -140,6 +140,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Nodes
         self.nodes = ko.observableArray(nodes);
         self.activeNode = ko.observable(active_node);
+        self.activeNodeData = ko.computed(function() {
+            return self.nodes().filter(function(d) { return d.id === self.activeNode(); }
+        });
         
         // Links
     }
@@ -305,6 +308,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function hideModules(module) {
         if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
         if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
+        if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
         if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
     }
     
@@ -1205,7 +1209,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 	function openSettings() {
 	
-	    hideModules("other");
+	    hideModules("settings");
+	    //hideModules("other");
 
 		otherModule.html("");
 
