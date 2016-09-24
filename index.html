@@ -151,7 +151,7 @@
 		        <p class="linkDescription"></p>
 		        <p id="linkConfirmation" data-bind="visible: activeLinkData().confirmed === 0">This link is awaiting confirmation</p>
 		        <div class="centerDiv">
-		            <button id="editLinkButton" class="standardButton" data-bind="visible: activeLinkData().sourceid === loggedin || activeLinkData().targetid === loggedin"></button>
+		            <button id="editLinkButton" class="standardButton" data-bind="visible: activeLinkData().sourceid === user() || activeLinkData().targetid === user()"></button>
 		            <button id="confirmLinkButton" class="standardButton" data-bind="visible: activeLinkData().confirmed === 0"></button>
 		            <button id="deleteLinkbutton" class="standardButton"></button>
 		        </div>
