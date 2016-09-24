@@ -66,17 +66,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	}
 	emailThreader();
 	
-	
-	socket.on('callToUpdateEmail', function() {
-	    socket.emit('emailRequest');
-	});
-	
-	socket.on('emailUpdate', function(emailUpdate) { 
-	    emails = emailUpdate; 
-	    emailThreader();
-	    viewModel.emails(emails);
-	});
-  
     // Function for creating source and target variables in links dataset for use with force layout
     var getLinkSource = function() {
         for (i=0; i<links.length; i++) {
@@ -197,6 +186,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
     ko.applyBindings(viewModel);
     // -------------------------
     
+    socket.on('callToUpdateEmail', function() {
+	    socket.emit('emailRequest');
+	});
+	
+	socket.on('emailUpdate', function(emailUpdate) { 
+	    emails = emailUpdate; 
+	    emailThreader();
+	    viewModel.emails(emails);
+	});
     
 	socket.on('usernameEditOK', function(newSettings) {
 		settings = newSettings;
