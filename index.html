@@ -102,11 +102,11 @@
 		        <div class="settingsLine">
 		            <h3>Password</h3>
 		            <p data-bind="visible: !passwordEditing()">***</p>
-		            <input type="password" id="oldPassword" data-bind="visible: passwordEditing() && !settings().facebookid">
+		            <input type="password" id="oldPassword" placeholder="Old Password" data-bind="visible: passwordEditing() && !settings().facebookid">
 		            <br data-bind="visible: passwordEditing()">
-		            <input type="password" id="newPassword" data-bind="visible: passwordEditing()">
+		            <input type="password" id="newPassword" placeholder="New Password" data-bind="visible: passwordEditing()">
 		            <br data-bind="visible: passwordEditing()">
-		            <input type="password" id="newPassword2" data-bind="visible: passwordEditing()">
+		            <input type="password" id="newPassword2" placeholder="Confirm New Password" data-bind="visible: passwordEditing()">
 		            <input type="button" class="changeButton" value="Edit" data-bind="value: passwordEditing() ? 'Save' : 'Edit', click: passwordEditClick">
 		        </div>
 		        <div class="settingsLine">
