@@ -151,6 +151,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (self.emailEditing() === false) {
                 self.emailEditing(true);
             } else {
+   				var newSettings = settings;
    				newSettings.email = document.getElementById("newEmail").value;
 			    socket.emit("settingsEdit", newSettings); 
 				settingsError.text("Saving...");             
