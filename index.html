@@ -95,8 +95,9 @@
 		        </div>
 		        <div class="settingsLine">
 		            <h3>Contact Email</h3>
-		            <p data-bind="text: settings().email"></p>
-		            <input type="button" class="changeButton" value="Edit">
+		            <p data-bind="text: settings().email, visible: !emailEditing()"></p>
+		            <input type="email" id="newEmail" placeholder="New Email Address" data-bind="value: settings().email, visible: emailEditing()">
+		            <input type="button" class="changeButton" value="Edit" data-bind="value: emailEditing() ? 'Save' : 'Edit', click: emailEditClick">
 		        </div>
 		        <div class="settingsLine">
 		            <h3>Password</h3>

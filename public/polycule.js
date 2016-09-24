@@ -146,7 +146,16 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				self.settingsError("Saving...");
             }
         };
-        
+        self.emailEditing = ko.observable(false);
+        self.emailEditClick = function() {
+            if (self.emailEditing() === false) {
+                self.emailEditing(true);
+            } else {
+   				newSettings.email = document.getElementById("newEmail").value;
+			    socket.emit("settingsEdit", newSettings); 
+				settingsError.text("Saving...");             
+            }
+        };
         // Nodes
         /*
         self.nodes = ko.observableArray(nodes);
@@ -170,6 +179,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		viewModel.settings(settings);
 		viewModel.usernameEditing(false);
 		viewModel.settingsError(null);
+	});
+	
+	socket.on('settingsUpdate', function(settingsUpdate) {
+		settings = settingsUpdate;
+		viewModel.settings(settings);
+		viewModel.emailEditing(false);
+		viewModel.settingsError(null);	
 	});
 	
 	socket.on('usernameTaken', function() {
