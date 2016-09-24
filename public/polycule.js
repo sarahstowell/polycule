@@ -88,7 +88,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Knockout view model
     function ViewModel(linkData, emailData, loggedin) {
         var self = this;
-        var self.user = ko.observable(loggedin);
+        //var self.user = ko.observable(loggedin);
         // Link Requests
         self.linkRequests = ko.observableArray(linkData);
         self.confirmLink = function() { 
