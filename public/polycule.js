@@ -181,7 +181,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.links = ko.observableArray(links);
         self.activeLink = ko.observable(active_link);
         self.activeLinkData = ko.computed(function() {
-            return JSON.stringify(self.links().filter(function(d) { return d.id === self.activeLink(); }));
+            var var1 = self.links().filter(function(d) { return d.id === self.activeLink(); });
+            return var1[0];
         });
         self.linksEditing = ko.observable(false);
     }
