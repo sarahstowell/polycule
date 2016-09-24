@@ -158,6 +158,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
             }
         };
         self.passwordEditing = ko.observable(false);
+        self.passwordEditClick = function() {
+            if (self.passwordEditing() === false) {
+                self.passwordEditing(true);
+            } else {
+                self.passwordEditing(false);
+            }
+        }
         self.emailPrefClick = function() {
         		settings.messageemail = document.getElementById("emailOnMessage").checked;
         		settings.linkemail = document.getElementById("emailOnLink").checked;
