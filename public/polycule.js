@@ -162,7 +162,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (self.passwordEditing() === false) {
                 self.passwordEditing(true);
             } else {
-                self.passwordEditing(false);
+				 if (!document.getElementById("oldPassword").value || !document.getElementById("newPassword").value || !document.getElementById("newPassword2").value ) {
+					 self.settingsError("Please enter your current and new passwords")
+				 } else if (document.getElementById("newPassword").value !== document.getElementById("newPassword2").value) {
+					 self.settingsError("New passwords do not match");
+				 } else {
+					 socket.emit("newPassword", {"id": loggedin, "oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
+					 self.settingsError("Saving...");
+				 }
             }
         };
         self.emailPrefClick = function() {
@@ -205,6 +212,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 	socket.on('usernameTaken', function() {
 		viewModel.settingsError('That username is already taken');
+	});
+	
+    socket.on('passwordUpdated', function() {
+		viewModel.passwordEditing(false);
+		viewModel.settingsError(null);
+	});
+	 
+	socket.on('incorrectPassword', function() {
+		settingsError.text("Original password is incorrect");
 	});	
     
     socket.on('callToUpdateLinks', function() {
