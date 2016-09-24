@@ -159,7 +159,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.emailPrefClick = function() {
         		settings.messageemail = document.getElementById("emailOnMessage").checked;
-        		settings.linkemail = document.getElementById("emailOnMessage").checked;
+        		settings.linkemail = document.getElementById("emailOnLink").checked;
 				socket.emit('settingsEdit', settings);
 		};
         // Nodes
