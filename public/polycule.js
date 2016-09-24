@@ -303,6 +303,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var sidepanel = d3.select("#sidePanel");
     var linksModule = d3.select("#linksModule");
     var emailModule = d3.select("#emailModule");
+    var settingsModule = d3.select("#settingsModule");
     var otherModule = d3.select("#otherModule");
     
     function hideModules(module) {
