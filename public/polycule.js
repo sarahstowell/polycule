@@ -138,6 +138,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.settings = ko.observable(settings);
         self.settingsError = ko.observable();
         self.usernameEditing = ko.observable(false);
+        self.usernameEditClick = function() {
+            if (self.usernameEditing() === false) { 
+                self.usernameEditing(true); 
+            } else {
+				socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value});	
+				self.settingsError("Saving...");
+            }
+        };
         
         // Nodes
         /*
@@ -155,6 +163,18 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     ko.applyBindings(viewModel);
     // -------------------------
+    
+    
+	socket.on('usernameEditOK', function(newSettings) {
+		settings = newSettings;
+		viewModel.settings(settings);
+		viewModel.usernameEditing(false);
+		viewModel.settingsError();
+	});
+	
+	socket.on('usernameTaken', function() {
+		viewModel.settingsError('That username is already taken');
+	});	
     
     socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
