@@ -1255,7 +1255,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         force.start();
     }
     
-    
+  }  
 
 
     // ===== Link Requests =====
