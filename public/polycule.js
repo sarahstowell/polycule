@@ -164,7 +164,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             } else {
                 self.passwordEditing(false);
             }
-        }
+        };
         self.emailPrefClick = function() {
         		settings.messageemail = document.getElementById("emailOnMessage").checked;
         		settings.linkemail = document.getElementById("emailOnLink").checked;

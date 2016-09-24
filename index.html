@@ -107,7 +107,7 @@
 		            <input type="password" id="newPassword" data-bind="visible: passwordEditing()">
 		            <br data-bind="visible: passwordEditing()">
 		            <input type="password" id="newPassword2" data-bind="visible: passwordEditing()">
-		            <input type="button" class="changeButton" value="Edit" data-bind="value: passwordEditing() ? 'Save' : 'Edit'">
+		            <input type="button" class="changeButton" value="Edit" data-bind="value: passwordEditing() ? 'Save' : 'Edit', click: passwordEditClick">
 		        </div>
 		        <div class="settingsLine">
 		            <h3>Contact Preferences</h3>
