@@ -154,7 +154,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
    				var newSettings = settings;
    				newSettings.email = document.getElementById("newEmail").value;
 			    socket.emit("settingsEdit", newSettings); 
-				settingsError.text("Saving...");             
+				self.settingsError("Saving...");             
             }
         };
         // Nodes
