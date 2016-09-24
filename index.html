@@ -91,7 +91,7 @@
 		            <h3>Unique Username</h3>
 		            <p data-bind="text: settings().username, visible: !usernameEditing()"></p>
 		            <input type="text" id="newUsername" placeholder="New Username" data-bind="value: settings().username, visible: usernameEditing()">
-		            <input type="button" class="changeButton" value="Edit" data-bind="value: usernameEditing() ? 'Save' : 'Edit'">
+		            <input type="button" class="changeButton" value="Edit" data-bind="value: usernameEditing() ? 'Save' : 'Edit', click: function() { usernameEditing(true);}">
 		        </div>
 		        <div class="settingsLine">
 		            <h3>Contact Email</h3>
