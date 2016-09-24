@@ -1259,260 +1259,27 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 
     // ===== Link Requests =====
-    d3.select("#linkButton").on("click", openLinkRequests);
+   // d3.select("#linkButton").on("click", openLinkRequests);
 	
-    function openLinkRequests() { 
-	    hideModules("links");
-    }
+    //function openLinkRequests() { 
+	//    hideModules("links");
+    //}
 
     // ===== Email facility ======
 
-	d3.select("#mailButton").on("click", function() { openEmails(); });
+	//d3.select("#mailButton").on("click", function() { openEmails(); });
 
 	// For opening inbox or sent box
-	var openEmails = function () {
-        viewModel.currentThread(0);
-        hideModules("email");
-    }
+	//var openEmails = function () {
+    //    viewModel.currentThread(0);
+    //    hideModules("email");
+    //}
 
     // ====== Settings ======
  
-	d3.select("#settingsButton").on("click", openSettings); 		
+	//d3.select("#settingsButton").on("click", openSettings); 		
 
-	function openSettings() {
+	//function openSettings() {
 	
-	    hideModules("settings");
-	    //hideModules("other");
-
-		otherModule.html("");
-
-		otherModule.append("h2")
-			.text("Settings");
-			
-		var settingsError = otherModule.append("p")
-		    .attr("id", "settingsError");
-		
-		var changeUsername = otherModule.append("div")
-			.attr("class", "settingsLine");
-		
-		changeUsername.append("h3")
-			.text("Unique Username");
-		
-		changeUsername.append("html")
-			.text(settings.username);
-		
-		changeUsername.append("input")
-			.attr("class", "changeButton")
-			.attr("type", "button")
-			.attr("value", "Edit")
-			.on("click", function() {
-		
-				changeUsername.html("");
-		
-				changeUsername.append("h3")
-					.text("Unique Username");
-		
-				changeUsername.append("input")
-					.attr("id", "newUsername")
-					.attr("type", "text")
-					.attr("placeholder", "New username")
-					.property("defaultValue", settings.username);
-		
-				changeUsername.append("input")
-					.attr("class", "changeButton")
-					.attr("type", "button")
-					.attr("value", "Save")
-					.on("click", function() {
-				
-						//settings.username = document.getElementById("newUsername").value;
-						socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value});
-						
-						settingsError.text("Saving...");
-						
-						socket.on('usernameEditOK', function(newSettings) {
-							settings = newSettings;
-							openSettings();
-						});
-						
-						socket.on('usernameTaken', function() {
-						    settingsError.text('That username is already taken');
-						});				
-					});
-				
-			});
-	
-		var changeEmail = otherModule.append("div")
-			.attr("class", "settingsLine");
-		
-		changeEmail.append("h3")
-			.text("Contact Email");
-		
-		changeEmail.append("html")
-			.text(settings.email);
-		
-		changeEmail.append("input")
-			.attr("class", "changeButton")
-			.attr("type", "button")
-			.attr("value", "Edit")
-			.on("click", function() {
-		
-				changeEmail.html("");
-		
-				changeEmail.append("h3")
-					.text("Contact Email");
-		
-				changeEmail.append("input")
-					.attr("type", "email")
-					.property("defaultValue", settings.email)
-					.attr("id", "newEmail");
-		
-				changeEmail.append("input")
-					.attr("class", "changeButton")
-					.attr("type", "button")
-					.attr("value", "Save")
-					.on("click", function() {
-					    
-					    var newSettings = settings;
-					    newSettings.email = document.getElementById("newEmail").value;
-					    
-					    socket.emit("settingsEdit", newSettings);
-					    
-					    settingsError.text("Saving...");
-					    
-						socket.on('settingsUpdate', function(settingsUpdate) {
-							settings = settingsUpdate;
-							openSettings();	
-						});
-						
-					});
-		
-			});	
-	
-		var changePassword = otherModule.append("div")
-			.attr("class", "settingsLine");
-		
-		changePassword.append("h3")
-			.text("Password");
-		
-		changePassword.append("html")
-			.text("**********");
-		
-		changePassword.append("input")
-			.attr("class", "changeButton")
-			.attr("type", "button")
-			.attr("value", "Edit")
-			.on("click", function() {
-		
-				changePassword.html("");
-		
-				changePassword.append("h3")
-					.text("Password");
-				
-				changePassword.append("input")
-					.attr("placeholder", "Old password")
-					.attr("type", "password")
-					.attr("id", "oldPassword")
-					.attr("name", "oldPassword");
-				
-				changePassword.append("br");
-				
-				changePassword.append("input")
-					.attr("placeholder", "New password")
-					.attr("type", "password")
-					.attr("id", "newPassword")
-					.attr("name", "newPassword");
-				
-				changePassword.append("br");
-				
-				changePassword.append("input")
-					.attr("placeholder", "Re-enter new password")
-					.attr("type", "password")
-					.attr("id", "newPassword2")
-					.attr("name", "newPassword2");
-				
-				changePassword.append("input")
-					.attr("class", "changeButton")
-					.attr("type", "button")
-					.attr("value", "Save")
-					.on("click", function() {
-						 // TO BE ADDED - send new password to server
-						 if (!document.getElementById("oldPassword").value || !document.getElementById("newPassword").value || !document.getElementById("newPassword2").value ) {
-						     settingsError.text("Please enter your current  and new passwords")
-						 } else if (document.getElementById("newPassword").value !== document.getElementById("newPassword2").value) {
-						     settingsError.text("New passwords do not match");
-						 } else {
-						     socket.emit("newPassword", {"id": loggedin, "oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
-						     
-						     settingsError.text("Saving...");
-						     
-						     socket.on('passwordUpdated', function() {
-						        openSettings();
-						     });
-						     
-						     socket.on('incorrectPassword', function() {
-						         settingsError.text("Original password is incorrect");
-						     });
-						
-						 }
-					});
-			});
-	
-		var changeContactPrefs = otherModule.append("div")
-			.attr("class", "settingsLine");
-		
-		changeContactPrefs.append("h3")
-			.text("Contact Preferences");
-		
-		changeContactPrefs.append("input")
-			.attr("type", "checkbox")
-			.property("checked", settings.messageemail)
-			.attr("id", "emailOnMessage")
-			.on("change", function() { 
-				settings.messageemail = document.getElementById("emailOnMessage").checked;
-				socket.emit('settingsEdit', settings);
-			});
-		
-		changeContactPrefs.append("span")
-			.text("Send email when message received");
-		
-		changeContactPrefs.append("br");	
-		
-		changeContactPrefs.append("input")
-			.attr("type", "checkbox")
-			.property("checked", settings.linkemail)
-			.attr("id", "emailOnLink")
-			.on("change", function() { 
-				settings.linkemail = document.getElementById("emailOnLink").checked;
-				socket.emit('settingsEdit', settings);
-			});
-		
-		changeContactPrefs.append("span")
-			.text("Send email when link requested");
-			
-		otherModule.append("input")
-			.attr("type", "button")
-			.attr("id", "deleteAccount")
-			.attr("value", "Delete account")
-			.attr("class", "standardButton")
-			.on("click", function() {
-				if (window.confirm("Are you sure you want to delete your account? This action cannot be reversed.")) {
-				    //socket.emit('nodeDelete');
-				    window.location = '/delete';
-				}
-			});
-			
-		otherModule.append("input")
-			.attr("type", "button")
-			.attr("id", "logout")
-			.attr("value", "Sign out")
-			.attr("class", "standardButton")
-			.on("click", function() {
-			    window.location = '/logout';
-			});
-			
-			
-	}	
-
-});
-
-
+	//    hideModules("settings");
+	//}
