@@ -1255,19 +1255,19 @@ socket.on('nodesAndLinks', function(dataPackage) {
         force.start();
     }
     
-});  
+  
 
 
     // ===== Link Requests =====
-   // d3.select("#linkButton").on("click", openLinkRequests);
+    d3.select("#linkButton").on("click", function() { hideModules("links"); });
 	
     //function openLinkRequests() { 
-	//    hideModules("links");
+	//    ;
     //}
 
     // ===== Email facility ======
 
-	//d3.select("#mailButton").on("click", function() { openEmails(); });
+	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
 
 	// For opening inbox or sent box
 	//var openEmails = function () {
@@ -1277,9 +1277,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // ====== Settings ======
  
-	//d3.select("#settingsButton").on("click", openSettings); 		
+	d3.select("#settingsButton").on("click", function() { hideModules("settings"); }); 		
 
 	//function openSettings() {
 	
 	//    hideModules("settings");
 	//}
+});
