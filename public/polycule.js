@@ -1075,6 +1075,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		
   		    // Set active link number
   		    active_link = active_link_data.id;
+  		    viewModel.activeLink(active_link);
   		
 		    // Display link info in side panel
 		    displayLinkInfo(active_link);
