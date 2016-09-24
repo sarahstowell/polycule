@@ -568,6 +568,10 @@ canvas {
     margin-top: 5px;
 }
 
+.settingsLine p {
+    margin-bottom: 5px;
+}
+
 .changeButton {
     position: absolute;
     right: 5px;
