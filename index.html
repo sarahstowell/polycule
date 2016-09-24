@@ -145,6 +145,18 @@
 		    </div>
 		    -->
 		    
+		    <div id="linkInfoModule" style="display:none;">
+		        <h2></h2>
+		        <p class="linkDates"></p>
+		        <p class="linkDescription"></p>
+		        <p id="linkConfirmation" data-bind="visible: activeLinkData().confirmed === 0">This link is awaiting confirmation</p>
+		        <div class="centerDiv">
+		            <button id="editLinkButton" class="standardButton" data-bind="visible: activeLinkData().sourceid === loggedin || activeLinkData().targetid === loggedin"></button>
+		            <button id="confirmLinkButton" class="standardButton" data-bind="visible: activeLinkData().confirmed === 0"></button>
+		            <button id="deleteLinkbutton" class="standardButton"></button>
+		        </div>
+		    </div>
+		    
 		    <div id="otherModule">
 		    </div>
 		</div>

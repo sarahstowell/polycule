@@ -31,6 +31,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var nodes = dataPackage.nodes;
 	var links = dataPackage.links;
 	
+	// Function for sorting emails into threads and finding most recent message in the thread
 	function emailThreader() {
 	    // Create thread number
 	    emails = emails.map(function(d) { 
@@ -47,7 +48,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        } else {
 	            d.senderName = "Old User";
 	        }
-	        d.fromServer = 1;
+	        d.fromServer = 1; // To flag messages that have reached server to distinguish from new ones written by user
 	        return d;
 	    }); 	    
 	    // Create indicator for most recent message in thread
@@ -73,8 +74,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
             links[i].target = arrayObjectIndexOf(nodes, links[i].targetid, "id");
         }
     }
-    
-    // Create source and target variables on startup
     getLinkSource();
     
     // Get link requests from links dataset and check for links
@@ -84,7 +83,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});        
         if (viewModel) { viewModel.linkRequests(linkRequests); }
     };
-    
     getLinkRequests();
     
     // Knockout view model
@@ -179,6 +177,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
         */
         
         // Links
+        self.links = ko.observableArray(links);
+        self.activeLink = ko.observable(active_link);
+        self.activeLinkData = ko.computed(function() {
+            return self.links().filter(function(d) { return d.id === self.activeLink(); });
+        });
+        self.linksEditing = ko.observable(false);
     }
     
     var viewModel = new ViewModel(linkRequests, emails, loggedin);
