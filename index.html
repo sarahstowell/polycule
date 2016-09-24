@@ -106,10 +106,10 @@
 		        </div>
 		        <div class="settingsLine">
 		            <h3>Contact Preferences</h3>
-		            <input type="checkbox" id="emailOnMessage" data-bind="checked: settings().messageemail">
+		            <input type="checkbox" id="emailOnMessage" data-bind="checked: settings().messageemail, click: emailPrefClick">
 		            <span>Send email when message received</span>
 		            <br/>
-		            <input type="checkbox" id="emailOnLink" data-bind="checked: settings().linkemail">
+		            <input type="checkbox" id="emailOnLink" data-bind="checked: settings().linkemail, click: emailPrefClick">
 		            <span>Send email when link requested</span>
 		        </div>
 		        <input type="button" id="deleteAccount" class="standardButton" value="Delete Account" onclick="
