@@ -169,7 +169,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		settings = newSettings;
 		viewModel.settings(settings);
 		viewModel.usernameEditing(false);
-		viewModel.settingsError();
+		viewModel.settingsError(null);
 	});
 	
 	socket.on('usernameTaken', function() {
