@@ -139,11 +139,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.settingsError = ko.observable();
         
         // Nodes
+        /*
         self.nodes = ko.observableArray(nodes);
         self.activeNode = ko.observable(active_node);
         self.activeNodeData = ko.computed(function() {
             return self.nodes().filter(function(d) { return d.id === self.activeNode(); });
         });
+        */
         
         // Links
     }
