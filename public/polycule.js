@@ -1213,8 +1213,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 	function openSettings() {
 	
-	    //hideModules("settings");
-	    hideModules("other");
+	    hideModules("settings");
+	    //hideModules("other");
 
 		otherModule.html("");
 
