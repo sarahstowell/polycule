@@ -73,7 +73,7 @@
 				<span class="threadUsername" style="text-align: center;" data-bind="visible: currentThread() !== 0, text: '('+currentFolderData()[0].threadName+')'"></span>
 		        -->
 		        <div class="emailContainer" data-bind="foreach: currentFolderData">
-		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? 'lightgray' : null, color: fromServer === 1 ? 'black' : 'gray' }, click: $parent.openThread.bind($data)">
+		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? '#222222' : null, color: fromServer === 1 ? 'black' : 'gray' }, click: $parent.openThread.bind($data)">
 		                <h3 data-bind="text: $root.currentThread() === 0 ? threadName : senderName"></h3>
 		                <span data-bind="visible: $root.currentThread() === 0, text: threadUsername === '' ? '' : '('+threadUsername+')'"></span>
 		                <p data-bind="text: content"></p>
