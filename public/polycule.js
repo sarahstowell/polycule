@@ -479,11 +479,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .style("min-width", "0px")
 	        .style("padding", "0px")
 	        .style("border", "none")
-	        //.duration(1000)
-	      //.transition()
+	        .duration(500)
+	      .transition()
 	        .style("margin-left", "0px");
-	        //.duration(30)
-	        //.delay(970);
+	        .duration(30)
+	        .delay(470);
 
 	        
 	    resizeForceLayout();
