@@ -169,7 +169,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
 	
         // Nodes
-        
         self.nodes = ko.observableArray(nodes);
         self.activeNode = ko.observable(active_node);
         self.activeNodeData = ko.computed(function() {
@@ -200,7 +199,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var viewModel = new ViewModel(linkRequests, emails, loggedin);
     
     ko.applyBindings(viewModel);
-    // -------------------------
+    
+    // Data Updates -------------------------
     
     socket.on('callToUpdateEmail', function() {
 	    socket.emit('emailRequest');
@@ -315,6 +315,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     d3.select("#linkButton").on("click", function() { hideModules("links"); });
 	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
 	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
+  
+    // Data Visualisation ----------------------
   
     // Setup force layout
     var force = d3.layout.force()
