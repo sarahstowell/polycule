@@ -485,12 +485,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .duration(30)
 	        .delay(970);
 	        
-	    var width = document.getElementById('mainsvg').getBoundingClientRect().width;
-        var height = document.getElementById('mainsvg').getBoundingClientRect().height;
-	
-	    force.size([width, height]);
-	
-	    restart();
+	    resizeForceLayout();
 	};
 	
 	var showSidepanel = function() {
@@ -505,13 +500,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .style("border", "2px solid white")
 	        .duration(1000);
 
-	        
-	    var width = document.getElementById('mainsvg').getBoundingClientRect().width;
-        var height = document.getElementById('mainsvg').getBoundingClientRect().height;
-	
-	    force.size([width, height]);
-	
-	    restart();
+	    resizeForceLayout();
 	};
 	
 
@@ -1152,6 +1141,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
   		
+  		    showSidepanel();
   		    //hideModules("linkInfo");
   		    hideModules("other");
   		    
