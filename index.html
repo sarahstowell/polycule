@@ -137,7 +137,7 @@
 		        
 		        <p class="description" data-bind="visible: activeNodeData()[0].member === 0 && activeNodeData()[0].invited === 0, text:  activeNodeData()[0].name+' is not yet a member of Polycule. Enter an email address to invite them:'"></p>
 		        <p id="emailInviteError" data-bind="visible: activeNodeData()[0].member === 0 && activeNodeData()[0].invited === 0 && emailInviteError(), text: emailInviteError()"></p>
-		        <input type="email" id="emailInviteEdit" data-bind="visible: activeNodeData()[0].member === 0 && activeNodeData()[0].invited === 0, style: {border: emailInviteError() ? 'red' : 'gray'}"/>
+		        <input type="email" id="emailInviteEdit" data-bind="visible: activeNodeData()[0].member === 0 && activeNodeData()[0].invited === 0, style: {border: emailInviteError() ? '1px solid red' : '1px solid gray'}"/>
 		        <input type="submit" id="emailInviteButton" class="standardButton" value="Invite" data-bind="visible: activeNodeData()[0].member === 0 && activeNodeData()[0].invited === 0, click: inviteButtonClick"/>
 		        
 		        <p id="invitedText" data-bind="visible: activeNodeData()[0].member === 0 && activeNodeData()[0].invited === 1, text: activeNodeData()[0].name+' has been invited to join Polycule'"></p>
