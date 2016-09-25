@@ -38,19 +38,7 @@ h1 {
     text-align: center;
 }
 
-@media only screen and (max-device-width: 500px) {
-  #logindiv {
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    border-radius: 0px;
-  }
-  
-  .inputBox {
-      width: 90%;
-  }
-}
+
 
 #remember {
     font-size: 13px;
@@ -134,4 +122,15 @@ span {
     color: red;
     font-weight: bold;
     font-size: 12px;
+}
+
+@media only screen and (max-device-width: 500px) {
+  #logindiv {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+  }
+  
 }
