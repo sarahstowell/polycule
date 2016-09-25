@@ -580,8 +580,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Display user info
     function displayInfo(node) {
     
-        hideModules("node");
-        //hideModules("other");
+        //hideModules("node");
+        hideModules("other");
         
         otherModule.html("");
         
