@@ -481,7 +481,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .style("border", "none")
 	        .duration(500)
 	      .transition()
-	        .style("margin-left", "0px");
+	        .style("margin-left", "0px")
 	        .duration(30)
 	        .delay(470);
 
