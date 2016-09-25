@@ -491,6 +491,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }
 	    
 	    hideModules(); // Clear sidepanel 
+	    sidepanel.transition().attr("width", 0).duration(1);
 	    
     }
 
