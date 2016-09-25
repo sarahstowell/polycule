@@ -502,6 +502,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .style("margin-left", "0px")
 	        .duration(30)
 	        .delay(970);
+	        
+	    width = document.getElementById('mainsvg').getBoundingClientRect().width;
+        height = document.getElementById('mainsvg').getBoundingClientRect().height;
+	
+	    force.size([width, height]);
+	
+	    restart();
 	    
     }
 
