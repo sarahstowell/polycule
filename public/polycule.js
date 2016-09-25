@@ -503,8 +503,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .duration(30)
 	        .delay(970);
 	        
-	    width = document.getElementById('mainsvg').getBoundingClientRect().width;
-        height = document.getElementById('mainsvg').getBoundingClientRect().height;
+	    var width = document.getElementById('mainsvg').getBoundingClientRect().width;
+        var height = document.getElementById('mainsvg').getBoundingClientRect().height;
 	
 	    force.size([width, height]);
 	
