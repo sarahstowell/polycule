@@ -129,12 +129,11 @@
 		        <h2 class="name" data-bind="text: activeNodeData()[0].name"></h2>
 		        <p class="username" data-bind="text: activeNodeData()[0].username"></p>
 		        
-		        <img class="profilePic" id="profilePic"/>
-		        
+		        <img class="profilepic" id="profilepic" data-bind="visible: activeNodeData()[0].photo, attr: {src: 'https://polycule.s3.amazonaws.com/final/'+displayNodeData.photo+'?' + new Date().getTime()}"/>
 		        <p class="town" data-bind="text: activeNodeData()[0].location"></p>
 		        <p class="description" data-bind="text: activeNodeData()[0].description"></p>
 		        <button id="editnodebutton" class="standardButton" data-bind="visible: activeNodeData()[0].id === user">Edit</button>
-		        <button id="sendMessageButton" class="standardButton" data-bind="visible: activeNodeData()[0].id !== user">Send Message</button>
+		        <button id="sendMessageButton" class="standardButton" data-bind="visible: activeNodeData()[0].id !== user">Message</button>
 		        <button id="requestLinkButton" class="standardButton" >Request Link</button>
 		        
 		        <p class="description" data-bind="visible: activeNodeData()[0].member === 0 && activeNodeData()[0].invited === 0, text:  activeNodeData()[0].name+'is not yet a member of Polycule. Enter an email address to invite them:'"></p>
