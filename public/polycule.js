@@ -474,7 +474,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     var hideSidepanel = function() {
 
-	    sidepanel//.transition()
+	    sidepanel.transition()
 	        .style("width", "0px")
 	        .style("min-width", "0px")
 	        .style("padding", "0px")
