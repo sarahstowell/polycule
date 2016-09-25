@@ -288,6 +288,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var linksModule = d3.select("#linksModule");
     var emailModule = d3.select("#emailModule");
     var settingsModule = d3.select("#settingsModule");
+    var nodeModule = d3.select("#nodeModule");
     var linkInfoModule = d3.select("#linkInfoModule");
     var otherModule = d3.select("#otherModule");
     
@@ -295,6 +296,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
         if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
         if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
+        if (module === "node") { nodeModule.style("display", "block"); } else { nodeModule.style("display", "none"); }
         if (module === "linkInfo") { linkInfoModule.style("display", "block"); } else { linkInfoModule.style("display", "none"); }
         if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
     }
@@ -563,7 +565,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Display user info
     function displayInfo(node) {
     
-        hideModules("other");
+        hideModules("node");
+        //hideModules("other");
         
         otherModule.html("");
         
@@ -1087,8 +1090,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
   		
-  		    hideModules("linkInfo");
-  		    //hideModules("other");
+  		    //hideModules("linkInfo");
+  		    hideModules("other");
   		    
   		    otherModule.html("");
   		
