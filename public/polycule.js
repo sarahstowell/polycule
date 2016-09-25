@@ -474,16 +474,17 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     var hideSidepanel = function() {
 
-	    sidepanel.transition()
+	    sidepanel//.transition()
 	        .style("width", "0px")
 	        .style("min-width", "0px")
 	        .style("padding", "0px")
 	        .style("border", "none")
-	        .duration(1000)
-	      .transition()
-	        .style("margin-left", "0px")
-	        .duration(30)
-	        .delay(970);
+	        //.duration(1000)
+	      //.transition()
+	        .style("margin-left", "0px");
+	        //.duration(30)
+	        //.delay(970);
+
 	        
 	    resizeForceLayout();
 	};
@@ -612,7 +613,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // Display user info
     function displayInfo(node) {
-        showSidepanel();
+        //showSidepanel();
         //hideModules("node");
         hideModules("other");
         
