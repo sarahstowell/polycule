@@ -328,16 +328,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
         .on("tick", tick);
         
     // Change size of force layout when window is resized
-    window.addEventListener('resize', function() {
-
+    var resizeForceLayout = function() {
         var width = document.getElementById('mainsvg').getBoundingClientRect().width;
         var height = document.getElementById('mainsvg').getBoundingClientRect().height;
-	
 	    force.size([width, height]);
-	
 	    restart();
-
-    } , true);    
+	};
+    
+    window.addEventListener('resize', resizeForceLayout, true);    
 	
     var emailColor = d3.scale.ordinal()
 	    .range(["lightgray", "white"])
@@ -474,24 +472,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    // mouseDown function deselect node or link
-    function mouseDown() {
+    var hideSidepanel = function() {
 
-        if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
-
-        if (active_node !== null) {
-            active_node = null;                 // Deselect active node
-            viewModel.activeNode(null);		   
-		    restart();                          // Restart force layout
-	    }		
-	
-	    if (active_link !== null) {
-		    active_link=null;					// Deselect active link
-		    restart();                          // Restart force layout
-	    }
-	    
-	    hideModules(); // Clear sidepanel 
-	    
 	    sidepanel.transition()
 	        .style("width", "0px")
 	        .style("min-width", "0px")
@@ -509,7 +491,50 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    force.size([width, height]);
 	
 	    restart();
+	};
+	
+	var showSidepanel = function() {
+	
+		sidepanel.transition()
+		    .style("margin-left", "10px")
+	        .duration(30)
+	     .transition()
+	        .style("width", "324px")
+	        .style("min-width", "324px")
+	        .style("padding", "10px")
+	        .style("border", "2px solid white")
+	        .duration(1000);
+
+	        
+	    var width = document.getElementById('mainsvg').getBoundingClientRect().width;
+        var height = document.getElementById('mainsvg').getBoundingClientRect().height;
+	
+	    force.size([width, height]);
+	
+	    restart();
+	};
+	
+
+
+    // mouseDown function deselect node or link
+    function mouseDown() {
+
+        if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
+
+        if (active_node !== null) {
+            active_node = null;                 // Deselect active node
+            viewModel.activeNode(null);		   
+		    restart();                          // Restart force layout
+	    }		
+	
+	    if (active_link !== null) {
+		    active_link=null;					// Deselect active link
+		    restart();                          // Restart force layout
+	    }
 	    
+	    hideModules(); // Clear sidepanel 
+	    hideSidepanel();
+
     }
 
 
