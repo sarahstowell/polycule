@@ -175,6 +175,17 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.activeNodeData = ko.computed(function() {
             return self.nodes().filter(function(d) { return d.id === self.activeNode(); });
         });
+        self.emailInviteError = ko.observable();
+        self.inviteButtonClick = function() {
+			var inviteEmail = document.getElementById("emailInviteEdit").value;
+			if (!inviteEmail || inviteEmail.indexOf("@")<1 || inviteEmail.lastIndexOf(".")<inviteEmail.indexOf("@")+2 || inviteEmail.lastIndexOf(".")+2>=inviteEmail)
+			{
+				self.emailInviteError("Please enter a valid email address");
+			} else {
+				//nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
+				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": nodes[arrayObjectIndexOf(nodes, node, "id")].name, "from": nodes[arrayObjectIndexOf(nodes, loggedin, "id")].name});	
+			}
+        };
         
         
         // Links
