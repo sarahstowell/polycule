@@ -491,6 +491,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }
 	    
 	    hideModules(); // Clear sidepanel 
+	    
 	    sidepanel.transition()
 	        .style("width", "0px")
 	        .style("min-width", "0px")
@@ -500,7 +501,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	      .transition()
 	        .style("margin-left", "0px")
 	        .duration(30)
-	        .delay(1000);
+	        .delay(9970);
 	    
     }
 
