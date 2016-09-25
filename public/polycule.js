@@ -499,7 +499,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .duration(1000)
 	      .transition()
 	        .style("margin-left", "0px")
-	        .duration(50)
+	        .duration(30)
 	        .delay(1000);
 	    
     }
