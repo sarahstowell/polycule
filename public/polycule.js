@@ -196,7 +196,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.linksEditing = ko.observable(false);
     }
     
-    var viewModel = new ViewModel(linkRequests, emails, nodeData, loggedin);
+    var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin);
     
     ko.applyBindings(viewModel);
     
