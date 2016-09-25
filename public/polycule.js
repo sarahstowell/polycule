@@ -182,7 +182,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				self.emailInviteError("Please enter a valid email address");
 			} else {
 				//nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
-				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": activeNodeData()[0].name, "from": nodeData[arrayObjectIndexOf(nodeData, user, "id")].name});	
+				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": self.activeNodeData()[0].name, "from": nodeData[arrayObjectIndexOf(nodeData, user, "id")].name});	
 			}
         };
         
