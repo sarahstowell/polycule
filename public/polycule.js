@@ -86,7 +86,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     getLinkRequests();
     
     // Knockout view model
-    function ViewModel(linkData, emailData, nodes, loggedin) {
+    function ViewModel(linkData, emailData, nodeData, loggedin) {
         var self = this;
         self.user = loggedin;
         // Link Requests
@@ -182,7 +182,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				self.emailInviteError("Please enter a valid email address");
 			} else {
 				//nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
-				//socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": activeNodeData()[0].name, "from": nodes[arrayObjectIndexOf(nodes, loggedin, "id")].name});	
+				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": activeNodeData()[0].name, "from": nodeData[arrayObjectIndexOf(nodeData, user, "id")].name});	
 			}
         };
         
@@ -196,7 +196,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.linksEditing = ko.observable(false);
     }
     
-    var viewModel = new ViewModel(linkRequests, emails, loggedin);
+    var viewModel = new ViewModel(linkRequests, emails, nodeData, loggedin);
     
     ko.applyBindings(viewModel);
     
