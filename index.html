@@ -146,7 +146,7 @@
 		    -->
 		    <!-- Link Display -->
 		    <div id="linkInfoModule" style="display:none;">
-		        <h2 data-bind="text: activeLinkData()[0].id"></h2>
+		        <h2 data-bind="text: JSON.stringify(activeLinkData())"></h2>
 		        <p class="linkDates" data-bind="text: 'Together since '+activeLinkData().startmonth+' '+activeLinkData().startyear, visible: activeLinkData().startyear"></p>
 		        <p class="linkDescription" data-bind="text: activeLinkData().description, visible: activeLinkData().description"></p>
 		        <p id="linkConfirmation" data-bind="visible: activeLinkData().confirmed === 0">This link is awaiting confirmation</p>
