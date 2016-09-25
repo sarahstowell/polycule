@@ -468,7 +468,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
         if (active_node !== null) {
             active_node = null;                 // Deselect active node
-		    hideModules();						// Clear sidepanel
+            viewModel.activeNode(null);
+		    hideModules();						// Clear sidepanel    
 		    restart();                          // Restart force layout
 	    }		
 	
@@ -531,6 +532,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    var old_node = active_node;
   			    
   			    active_node = new_node;					// Clear active node
+                viewModel.activeNode(active_node);
 
   			    displayInfo(active_node);
 
@@ -1005,6 +1007,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    }
 				
             active_node = d3.select(this)[0][0].__data__.id;
+            viewModel.activeNode(active_node);
 		
             displayInfo(active_node);		// Display user info in side panel
 		
@@ -1045,7 +1048,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    			
   			    active_line.attr("visibility", "hidden"); // Hide temporary line
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
-  			    active_node = null;					// 
+  			    active_node = null;
+  			    viewModel.activeNode(null);					// 
   			    hideModules(); 						// Clear side panel
   
 			    connect1=null;		// Cancel connector line	
@@ -1070,6 +1074,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    if (active_node !== null) {
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
   			    active_node = null;	
+  			    viewModel.activeNode(null);
   			    connect1=null;
   		    }
   		
