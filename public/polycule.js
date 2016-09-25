@@ -481,16 +481,17 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
         if (active_node !== null) {
             active_node = null;                 // Deselect active node
-            viewModel.activeNode(null);
-		    hideModules();						// Clear sidepanel    
+            viewModel.activeNode(null);		   
 		    restart();                          // Restart force layout
 	    }		
 	
 	    if (active_link !== null) {
 		    active_link=null;					// Deselect active link
-		    hideModules();						// Clear sidepanel
 		    restart();                          // Restart force layout
 	    }
+	    
+	    hideModules(); // Clear sidepanel 
+	    
     }
 
 
