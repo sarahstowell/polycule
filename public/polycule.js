@@ -472,6 +472,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+/*
     var hideSidepanel = function() {
 
 	    sidepanel.transition()
@@ -503,6 +504,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 	    resizeForceLayout();
 	};
+	*/
 	
 
 
@@ -523,7 +525,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }
 	    
 	    hideModules(); // Clear sidepanel 
-	    hideSidepanel();
+	    //hideSidepanel();
 
     }
 
@@ -613,7 +615,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // Display user info
     function displayInfo(node) {
-        //showSidepanel();
+
         //hideModules("node");
         hideModules("other");
         
