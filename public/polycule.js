@@ -612,7 +612,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // Display user info
     function displayInfo(node) {
-    
+        showSidepanel();
         //hideModules("node");
         hideModules("other");
         
@@ -1140,8 +1140,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    function displayLinkInfo(link) { 
 	    
 		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
-  		
-  		    showSidepanel();
+  		    
   		    //hideModules("linkInfo");
   		    hideModules("other");
   		    
