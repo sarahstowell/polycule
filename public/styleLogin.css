@@ -38,6 +38,12 @@ h1 {
     text-align: center;
 }
 
+@media screen and (max-width: 500px) {
+  #logindiv {
+    width: 100%;
+  }
+}
+
 #remember {
     font-size: 13px;
     text-align: left;
