@@ -86,7 +86,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     getLinkRequests();
     
     // Knockout view model
-    function ViewModel(linkData, emailData, loggedin) {
+    function ViewModel(linkData, emailData, nodes, loggedin) {
         var self = this;
         self.user = loggedin;
         // Link Requests
@@ -182,7 +182,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				self.emailInviteError("Please enter a valid email address");
 			} else {
 				//nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
-				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": nodes[arrayObjectIndexOf(nodes, node, "id")].name, "from": nodes[arrayObjectIndexOf(nodes, loggedin, "id")].name});	
+				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": activeNodeData()[0].name, "from": nodes[arrayObjectIndexOf(nodes, loggedin, "id")].name});	
 			}
         };
         
