@@ -149,6 +149,10 @@ h1 {
     stroke-dasharray: 2,2;
 }
 
+.link:hover, .unselectedLink:hover, .selectedLink:hover, .unconfirmedLink:hover {
+    cursor:pointer;
+}
+
 #connectorLine {
     stroke-width: 4;
     stroke: red;
