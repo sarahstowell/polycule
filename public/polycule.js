@@ -1151,8 +1151,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
   		    
-  		    //hideModules("linkInfo");
-  		    hideModules("other");
+  		    hideModules("linkInfo");
+  		    //hideModules("other");
   		    
   		    otherModule.html("");
   		
