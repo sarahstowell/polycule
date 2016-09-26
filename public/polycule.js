@@ -529,7 +529,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }
 	    
 	    hideModules(); // Clear sidepanel 
-	    hideSidepanel();
+	    //hideSidepanel();
 
     }
 
@@ -620,9 +620,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Display user info
     function displayInfo(node) {
 
-        sidepanel.style("display", "block");
+        //sidepanel.style("display", "block");
         
-	    resizeForceLayout();
+	    //resizeForceLayout();
         //hideModules("node");
         hideModules("other");
         
