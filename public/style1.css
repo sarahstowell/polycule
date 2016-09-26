@@ -135,3 +135,13 @@ textarea {
     margin: auto;
     width: 250px;
 }
+
+@media only screen and (max-device-width: 500px) {
+  #resetDiv {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+  }
+}
