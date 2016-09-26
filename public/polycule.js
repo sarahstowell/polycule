@@ -620,7 +620,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Display user info
     function displayInfo(node) {
 
-        showSidepanel();
+        sidepanel.style("display", "block");
+        
+	    resizeForceLayout();
         //hideModules("node");
         hideModules("other");
         
