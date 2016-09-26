@@ -472,9 +472,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-/*
-    var hideSidepanel = function() {
 
+    var hideSidepanel = function() {
+/*
 	    sidepanel.transition()
 	        .style("width", "0px")
 	        .style("min-width", "0px")
@@ -485,13 +485,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .style("margin-left", "0px")
 	        .duration(30)
 	        .delay(470);
-
+*/
+        sidepanel.style("display", "none");
 	        
 	    resizeForceLayout();
 	};
 	
 	var showSidepanel = function() {
-	
+	/*
 		sidepanel.transition()
 		    .style("margin-left", "10px")
 	        .duration(30)
@@ -501,10 +502,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .style("padding", "10px")
 	        .style("border", "2px solid white")
 	        .duration(1000);
+*/
 
+        sidepanel.style("display", "block");
+        
 	    resizeForceLayout();
 	};
-	*/
+	
 	
 
 
@@ -525,7 +529,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }
 	    
 	    hideModules(); // Clear sidepanel 
-	    //hideSidepanel();
+	    hideSidepanel();
 
     }
 
