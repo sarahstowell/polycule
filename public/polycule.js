@@ -620,6 +620,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Display user info
     function displayInfo(node) {
 
+        showSidepanel();
         //hideModules("node");
         hideModules("other");
         
