@@ -1167,9 +1167,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
   		    
-  		    hideModules("linkInfo");
-  		    //hideModules("other");
-  		    /*
+  		    //hideModules("linkInfo");
+  		    hideModules("other");
+  		    
   		    otherModule.html("");
   		
   		    otherModule.append("h2")
@@ -1237,9 +1237,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
   				    .attr("id", "deleteLinkButton")
   				    .on("click", deleteLink);
   			}
-  	*/
+  	
   	    }	
-/*
+
   	    function deleteLink() {
   		
   		    var deleteLinkIndex = arrayObjectIndexOf(links, active_link, "id");
@@ -1346,7 +1346,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    });
   			
         }
-        */
+        
   	
         force.start();
     }
