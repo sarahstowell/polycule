@@ -186,7 +186,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
         };
         
-        
         // Links
         self.links = ko.observableArray(links);
         self.activeLink = ko.observable(active_link);
@@ -209,7 +208,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    hideModules();		// Clear side panel	
 		    restart();
 	   };
-	   self.linksEditing = ko.observable(false);
+	   self.linkEditing = ko.observable(false);
     }
     
     var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin);
