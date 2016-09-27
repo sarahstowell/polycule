@@ -166,10 +166,10 @@
 		        <p id="linkConfirmation" data-bind="visible: confirmed !== 1">This link is awaiting confirmation</p>
 		        <div class="centerDiv">
 		            <input type="text" id="editLinkDescription" class="editable" data-bind="visible: $root.linkEditing(), value: description" placeholder="Description">
-		            <button id="editLinkButton" class="standardButton" data-bind="visible: !$root.linkEditing() && (sourceid === $root.user || targetid === $root.user, click: function() { $root.linkEditing(true); })">Edit Details</button>
+		            <button id="editLinkButton" class="standardButton" data-bind="visible: !$root.linkEditing() && (sourceid === $root.user || targetid === $root.user)">Edit Details</button>
 		            <button id="confirmLinkButton" class="standardButton" data-bind="click: $root.confirmLink, visible: !$root.linkEditing() && confirmed !== 1 && requestor !== $root.user">Confirm</button>
 		            <button id="deleteLinkbutton" class="standardButton" data-bind="click: $root.deleteLink, text: confirmed === 1 ? 'Delete Link' : requestor !== $root.user ? 'Deny' : 'Cancel Link Request' , visible: !$root.linkEditing() && (sourceid === $root.user || targetid === $root.user)"></button>
-		            <button id="cancelLinkEdit" class="standardButton" data-bind="visible: $root.linkEditing(), click: function() { $root.linkEditing(false); }">Cancel</button>
+		            <button id="cancelLinkEdit" class="standardButton" data-bind="visible: $root.linkEditing()}">Cancel</button>
 		            <button id="saveLinkEdit" class="standardButton" data-bind="visible: $root.linkEditing()">Save</button>
 		        </div>
 		    </div>
