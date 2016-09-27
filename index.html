@@ -159,7 +159,7 @@
 		    <div id="linkInfoModule" style="display:none;" data-bind="with: activeLinkData()[0]">
 		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
 		        <p class="linkDates" data-bind="text: 'Together since '+startmonth+' '+.startyear, visible: startyear"></p>
-		        <p class="linkDescription" data-bind="text: description, visible: description"></p>
+		        <p class="linkDescription" data-bind="text: description"></p>
 		        <p id="linkConfirmation" data-bind="visible: confirmed === 0">This link is awaiting confirmation</p>
 		        <div class="centerDiv">
 		            <button id="editLinkButton" class="standardButton" data-bind="visible: sourceid === $root.user || targetid === $root.user">Edit Details</button>
