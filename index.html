@@ -160,11 +160,11 @@
 		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
 		        <p class="linkDates" data-bind="visible: !$root.linkEditing() && startyear, text: 'Together since '+startmonth+' '+startyear"></p>
 		        <p class="linkDates" data-bind="visible: $root.linkEditing()">Together since:</p>
-		        <select id="editStartMonth" class="editable" data-bind="visible: $root.linkEditing()"></select>
-		        <select id="editStartYear" class="editable" data-bind="visible: $root.linkEditing()"></select> 
 		        <p class="linkDescription" data-bind="text: description, visible: !$root.linkEditing() && description"></p>
 		        <p id="linkConfirmation" data-bind="visible: !$root.linkEditing() && confirmed !== 1">This link is awaiting confirmation</p>
 		        <div class="centerDiv">
+		        	<select id="editStartMonth" class="editable" data-bind="visible: $root.linkEditing()"></select>
+		            <select id="editStartYear" class="editable" data-bind="visible: $root.linkEditing()"></select> 
 		            <input type="text" id="editLinkDescription" class="editable" data-bind="visible: $root.linkEditing(), value: description" placeholder="Description">
 		            <button id="editLinkButton" class="standardButton" data-bind="visible: !$root.linkEditing() && (sourceid === $root.user || targetid === $root.user), click: function() { $root.linkEditing(true); }">Edit Details</button>
 		            <button id="confirmLinkButton" class="standardButton" data-bind="click: $root.confirmLink, visible: !$root.linkEditing() && confirmed !== 1 && requestor !== $root.user">Confirm</button>
