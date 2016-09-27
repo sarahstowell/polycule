@@ -163,8 +163,8 @@
 		        <p id="linkConfirmation" data-bind="visible: confirmed !== 1">This link is awaiting confirmation</p>
 		        <div class="centerDiv">
 		            <button id="editLinkButton" class="standardButton" data-bind="visible: sourceid === $root.user || targetid === $root.user">Edit Details</button>
-		            <button id="confirmLinkButton" class="standardButton" data-bind="visible: confirmed === 0 && requestor !== user">Confirm</button>
-		            <button id="deleteLinkbutton" class="standardButton" data-bind="text: .confirmed === 1 ? 'Delete Link' : requestor = $root.user ? 'Deny' : 'Cancel Link Request' "></button>
+		            <button id="confirmLinkButton" class="standardButton" data-bind="visible: confirmed !== 1 && requestor !== $root.user">Confirm</button>
+		            <button id="deleteLinkbutton" class="standardButton" data-bind="text: confirmed === 1 ? 'Delete Link' : requestor === $root.user ? 'Deny' : 'Cancel Link Request' "></button>
 		        </div>
 		    </div>
 		    
