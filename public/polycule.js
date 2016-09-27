@@ -203,6 +203,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			//linkind = arrayObjectIndexOf(linkRequests, linkData.id, "id");
 			//linkRequests.splice(linkind, 1);		// Add link to confirmed link data
 	   };
+	   self.deleteLink = function() {
+			socket.emit('linkDelete', self.activeLink());// Send link delete to server
+  		    active_link = null;
+  		    self.activeLink(null);
+  		    hideModules();		// Clear side panel	
+		    restart();
+	   };
     }
     
     var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin);
@@ -255,7 +262,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Update links 
     socket.on('linksUpdate', function(linksUpdate) {
 	    links = linksUpdate;
-	    
 	    //getLinkSource();
 	    getLinkRequests();
 	    restart();
