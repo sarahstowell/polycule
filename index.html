@@ -158,7 +158,7 @@
 		    <!-- Link Display -->
 		    <div id="linkInfoModule" style="display:none;" data-bind="with: activeLinkData()[0]">
 		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
-		        <p class="linkDates" data-bind="visible: !$root.linkEditing && startyear, text: 'Together since '+startmonth+' '+startyear"></p>
+		        <p class="linkDates" data-bind="visible: !$root.linkEditing() && startyear, text: 'Together since '+startmonth+' '+startyear"></p>
 		        <p class="linkDates" data-bind="visible: $root.linkEditing()">Together since:</p>
 		        <select id="editStartMonth" class="editable" data-bind="visible: $root.linkEditing()"></select>
 		        <select id="editStartYear" class="editable" data-bind="visible: $root.linkEditing()"></select> 
