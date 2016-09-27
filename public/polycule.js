@@ -197,6 +197,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
         		});
         });
         self.linksEditing = ko.observable(false);
+        self.confirmLink = function() {
+            //links[arrayObjectIndexOf(links, link, "id")].confirmed = 1;
+			socket.emit("linkConfirm", self.activeLink());
+			//linkind = arrayObjectIndexOf(linkRequests, linkData.id, "id");
+			//linkRequests.splice(linkind, 1);		// Add link to confirmed link data
+	   };
     }
     
     var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin);
