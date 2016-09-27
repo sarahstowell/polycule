@@ -196,7 +196,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         			return d.id === self.activeLink();
         		});
         });
-        self.linksEditing = ko.observable(false);
         self.confirmLink = function() {
             //links[arrayObjectIndexOf(links, link, "id")].confirmed = 1;
 			socket.emit("linkConfirm", self.activeLink());
@@ -210,6 +209,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    hideModules();		// Clear side panel	
 		    restart();
 	   };
+	   self.linksEditing = ko.observable(false);
     }
     
     var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin);
@@ -1170,7 +1170,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    
   		    hideModules("linkInfo");
   		    //hideModules("other");
-  		    
+  		    /*
   		    otherModule.html("");
   		
   		    otherModule.append("h2")
@@ -1238,9 +1238,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
   				    .attr("id", "deleteLinkButton")
   				    .on("click", deleteLink);
   			}
-  	
+  	*/
   	    }	
-
+/*
   	    function deleteLink() {
   		
   		    var deleteLinkIndex = arrayObjectIndexOf(links, active_link, "id");
@@ -1347,6 +1347,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    });
   			
         }
+        */
   	
         force.start();
     }
