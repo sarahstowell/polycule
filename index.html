@@ -158,20 +158,26 @@
 		    <!-- Link Display -->
 		    <div id="linkInfoModule" style="display:none;" data-bind="with: activeLinkData()[0]">
 		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
-		        <p class="linkDates" data-bind="visible: !$root.linkEditing() && startyear, text: 'Together since '+startmonth+' '+startyear"></p>
-		        <p class="linkDates" data-bind="visible: $root.linkEditing()">Together since:</p>
-		        <p class="linkDescription" data-bind="text: description, visible: !$root.linkEditing() && description"></p>
-		        <p id="linkConfirmation" data-bind="visible: !$root.linkEditing() && confirmed !== 1">This link is awaiting confirmation</p>
+		        <p class="linkDates" data-bind="visible: startyear, text: 'Together since '+startmonth+' '+startyear"></p>
+		        <p class="linkDescription" data-bind="text: description, visible: description"></p>
+		        <p id="linkConfirmation" data-bind="visible: confirmed !== 1">This link is awaiting confirmation</p>
 		        <div class="centerDiv">
-		        	<select id="editStartMonth" class="editable" data-bind="visible: $root.linkEditing()"></select>
-		            <select id="editStartYear" class="editable" data-bind="visible: $root.linkEditing()"></select> 
-		            <input type="text" id="editLinkDescription" class="editable" data-bind="visible: $root.linkEditing(), value: description" placeholder="Description">
-		            <button id="editLinkButton" class="standardButton" data-bind="visible: !$root.linkEditing() && (sourceid === $root.user || targetid === $root.user), click: function() { $root.linkEditing(true); }">Edit Details</button>
-		            <button id="confirmLinkButton" class="standardButton" data-bind="click: $root.confirmLink, visible: !$root.linkEditing() && confirmed !== 1 && requestor !== $root.user">Confirm</button>
-		            <button id="deleteLinkbutton" class="standardButton" data-bind="click: $root.deleteLink, text: confirmed === 1 ? 'Delete Link' : requestor !== $root.user ? 'Deny' : 'Cancel Link Request' , visible: !$root.linkEditing() && (sourceid === $root.user || targetid === $root.user)"></button>
-		            <button id="cancelLinkEdit" class="standardButton" data-bind="visible: $root.linkEditing(), click: function() { $root.linkEditing(false); }">Cancel</button>
-		            <button id="saveLinkEdit" class="standardButton" data-bind="visible: $root.linkEditing()">Save</button>
+		            <button id="editLinkButton" class="standardButton" data-bind="visible: (sourceid === $root.user || targetid === $root.user), click: function() { $root.linkEditing(true); }">Edit Details</button>
+		            <button id="confirmLinkButton" class="standardButton" data-bind="click: $root.confirmLink, visible: confirmed !== 1 && requestor !== $root.user">Confirm</button>
+		            <button id="deleteLinkbutton" class="standardButton" data-bind="click: $root.deleteLink, text: confirmed === 1 ? 'Delete Link' : requestor !== $root.user ? 'Deny' : 'Cancel Link Request' , visible: (sourceid === $root.user || targetid === $root.user)"></button>
 		        </div>
+		    </div>
+		    
+		    <div id="linkEditModule" 
+		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
+		        <p class="linkDates" >Together since:</p>
+		        <select id="editStartMonth" class="editable"></select>
+		        <select id="editStartYear" class="editable"></select>
+		        <div class="centerDiv">
+		        	<input type="text" id="editLinkDescription" class="editable" data-bind="value: description" placeholder="Description">
+		            <button id="cancelLinkEdit" class="standardButton" data-bind="click: function() { $root.linkEditing(false); }">Cancel</button>
+		            <button id="saveLinkEdit" class="standardButton" >Save</button>
+		        </div> 
 		    </div>
 		    
 		    <div id="otherModule">
