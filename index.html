@@ -164,7 +164,7 @@
 		        <div class="centerDiv">
 		            <button id="editLinkButton" class="standardButton" data-bind="visible: sourceid === $root.user || targetid === $root.user">Edit Details</button>
 		            <button id="confirmLinkButton" class="standardButton" data-bind="visible: confirmed !== 1 && requestor !== $root.user">Confirm</button>
-		            <button id="deleteLinkbutton" class="standardButton" data-bind="text: confirmed === 1 ? 'Delete Link' : requestor !== $root.user ? 'Cancel Link Request' : 'Deny' "></button>
+		            <button id="deleteLinkbutton" class="standardButton" data-bind="text: confirmed === 1 ? 'Delete Link' : requestor !== $root.user ? 'Cancel Link Request' : 'Deny' , visible: sourceid === $root.user || targetid === $root.user"></button>
 		        </div>
 		    </div>
 		    
