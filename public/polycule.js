@@ -217,10 +217,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         		});
         });
         self.confirmLink = function() {
-            //links[arrayObjectIndexOf(links, link, "id")].confirmed = 1;
 			socket.emit("linkConfirm", self.activeLink());
-			//linkind = arrayObjectIndexOf(linkRequests, linkData.id, "id");
-			//linkRequests.splice(linkind, 1);		// Add link to confirmed link data
 	   };
 	   self.deleteLink = function() {
 			socket.emit('linkDelete', self.activeLink());// Send link delete to server
@@ -673,8 +670,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function displayInfo(node) {
 
         //sidepanel.style("display", "block");
-        
 	    //resizeForceLayout();
+	    
         //hideModules("node");
         hideModules("other");
         
@@ -1103,8 +1100,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         function selectNode() {
         
             if (d3.event.preventDefault) d3.event.preventDefault();  // Prevent default browser ghosting effect
-		
-            d3.event.stopPropagation();
+            d3.event.stopPropagation(); // Prevent events on background objects
 		
             if (active_node !== null) {
                 nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0;		// Release previously selected node  	
@@ -1172,15 +1168,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed = 0; 		// Release selected node
 		    }	
 	    }
-			
+		
+		// User selects a link	
         function selectLink() {
 	
-		    if (d3.event.preventDefault) d3.event.preventDefault();
+		    if (d3.event.preventDefault) d3.event.preventDefault(); // Prevent browser ghosting effect
+		    d3.event.stopPropagation(); // Prevent events for background objects 
 		
-		    d3.event.stopPropagation();
-		
-		    if (active_node !== null) {
-  			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
+		    if (active_node !== null) {   
+  			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0;  // Release selected node		
   			    active_node = null;	
   			    viewModel.activeNode(null);
   			    connect1=null;
@@ -1188,210 +1184,16 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		
   		    // Retrieve data for selected link
   		    active_link_data = d3.select(this)[0][0].__data__;
-  		
   		    // Set active link number
   		    active_link = active_link_data.id;
   		    viewModel.activeLink(active_link);
-  		
-		    
-		    //displayLinkInfo(active_link);
+
 		    hideModules("linkInfo"); // Display link info in side panel
   			
   		    restart();
 	    }	
-	/*
-	    function displayLinkInfo(link) { 
-	    
-		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
-  		    
-  		    hideModules("linkInfo");
-  		    //hideModules("other");
-  		    
-  		    otherModule.html("");
-  		
-  		    otherModule.append("h2")
-  			    .text(linkData.source.name+" & "+linkData.target.name);
-  			
-  		    if ((linkData.startmonth !== null && linkData.startmonth !== undefined) || (linkData.startyear !== null && linkData.startyear !== undefined)) {
-  			    otherModule.append("p")
-  				    .attr("class", "linkDates")
-  				    .text("Together since "+months[linkData.startmonth]+" "+linkData.startyear);
-  		    }
-  		
-  		    if (linkData.description !== null) {
-  			    otherModule.append("p")
-  				    .attr("class", "linkDescription")
-  				    .text(linkData.description);
-            }
-  			
-  		    if (linkData.confirmed === 0) {
-  			    otherModule.append("p")
-  				    .attr("id", "linkConfirmation")
-  				    .text("This link is awaiting confirmation");
-  		    }
-  		    
-  		    var centerDiv = otherModule.append("div")
-  		        .attr("class", "centerDiv");
-  		
-  		    if (linkData.source.id === loggedin || linkData.target.id === loggedin) {
-  		
-  	  		    centerDiv.append("input")
-  				    .attr("type", "button")
-  				    .attr("value", "Edit Details")
-  				    .attr("class", "standardButton")
-  				    .attr("id", "editLinkButton")
-  				    .on("click", editLink);
-  		    }	
-  		
-  		    if (linkData.confirmed === 0 && linkData.requestor !== loggedin) {
-  			
-  			    centerDiv.append("button")
-				    .text("Confirm")
-				    .attr("class", "standardButton")
-				    .attr("id", "confirmLinkButton")
-				    .on("click", function() { 
-		
-					    links[arrayObjectIndexOf(links, link, "id")].confirmed = 1;
-					    socket.emit("linkConfirm", linkData.id);
-					
-					    linkind = arrayObjectIndexOf(linkRequests, linkData.id, "id");
-			
-					    linkRequests.splice(linkind, 1);		// Add link to confirmed link data
-			
-					    displayLinkInfo(link);
-					    
-					    
-		
-				    });
-  		    }
-  		
-  			
-  		    if (linkData.sourceid === loggedin || linkData.targetid === loggedin || nodes[arrayObjectIndexOf(nodes, linkData.sourceid, "id")].member === 0 && nodes[arrayObjectIndexOf(nodes, linkData.targetid, "id")].member === 0 ) {
-  			    centerDiv.append("input")
-  				    .attr("type", "button")
-  				    .attr("value", function(d) { if (linkData.confirmed === 1) { return "Delete Link"; } else if ( linkData.requestor === loggedin) { return "Cancel Link request"; } else { return "Deny"; }})
-  				    .attr("class", "standardButton")
-  				    .attr("id", "deleteLinkButton")
-  				    .on("click", deleteLink);
-  			}
-  	
-  	    }	
 
-  	    function deleteLink() {
-  		
-  		    var deleteLinkIndex = arrayObjectIndexOf(links, active_link, "id");
-  		
-  		    if (deleteLinkIndex >= 0) {
-  			    links.splice(deleteLinkIndex, 1);
-  		    }
-  		    
-  		    var linkToDelete = active_link;
-  		
-  		    active_link = null;
-  		    hideModules();		// Clear side panel	
-		    restart();
-		    
-		    // Send link delete to server
-			socket.emit('linkDelete', linkToDelete);  			
-  	    }
-  	
-  	    function editLink() {
-  	
-  		    var linkIndex = arrayObjectIndexOf(links, active_link, "id");
-
-  		    hideModules("other");
-  		    
-  		    otherModule.html("");
-  		
-  		    centerdiv = otherModule.append("div")
-	            .style("text-align", "center");
-  		
-  		    centerdiv.append("h2")
-  			    .text(links[linkIndex].source.name+" & "+links[linkIndex].target.name);
-  			
-  		    centerdiv.append("span")
-  			    .text("Together since ");
-  		
-  		    var month = centerdiv.append("select")
-  			    .attr("id", "editStartMonth")
-  			    .attr("class", "editable");
-  		
-  		    month.append("option")
-  			    .attr("value", null)
-  			    .text("");
-  		
-  		    for (m=0; m<12; m++) {
-  			    month.append("option")
-  				    .text(months[m])
-  				    .attr("value", m)
-  				    .attr("selected", function() { if (m === parseInt(links[linkIndex].startmonth)) { return "selected"; } else { return null; } });
-		    }
-		
-		    var year = centerdiv.append("select")
-			    .attr("id", "editStartYear")
-			    .attr("class", "editable");
-		
-		    year.append("option")
-		  	    .attr("value", null)
-			    .text("");
-		
-		    var thisYear = new Date().getFullYear();
-		
-		    for (y=thisYear; y>=1900; y--) {
-  			    year.append("option")
-  				    .text(y)
-  				    .attr("value", y)
-  				    .attr("selected", function() { if (y === parseInt(links[linkIndex].startyear)) { return "selected"; } else { return null; } });
-		    }
-  		
-  		    centerdiv.append("br");
-  		
-  		    centerdiv.append("input")
-  			    .attr("id", "editLinkDescription")
-  			    .attr("class", "editable")
-  			    .attr("type", "text")
-  			    .attr("placeholder", "Description")
-  			    .property("defaultValue", links[linkIndex].description);
-
-  		
-  		    otherModule.append("button")
-  			    .text("Cancel")
-  			    .attr("class", "standardButton")
-  			    .attr("id", "cancelLinkEdit")
-  			    .on("click", function() { displayLinkInfo(active_link); });
-  			
-  		    otherModule.append("button")
-  			    .text("Save")
-  			    .attr("id", "saveLinkEdit")
-  			    .attr("class", "standardButton")
-  			    .on("click", function() { 
-  				
-  				    if (document.getElementById("editLinkDescription").value) { var newLinkDescription = document.getElementById("editLinkDescription").value; } else { var newLinkDescription = null; }
-  				    if (document.getElementById("editStartMonth").value) { var newStartMonth = document.getElementById("editStartMonth").value; } else { var newStartMonth = null; }
-  				    if (document.getElementById("editStartYear").value) { var newStartYear = document.getElementById("editStartYear").value; } else { var newStartYear = null; }
-  				
-  				    // Update links dataset
-  				    links[linkIndex].description = newLinkDescription;
-  				    links[linkIndex].startmonth = newStartMonth;
-  				    links[linkIndex].startyear = newStartYear;
-  				
-  				    displayLinkInfo(active_link);
-  				    
-  				    // Send updated info to server
-  				    socket.emit('linkEdit', {"id": active_link, "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
-
-  			    });
-  			
-        }
-        */
-  	
         force.start();
-    }
-    
-  
-
-
-
- 		
+    }	
 
 });
