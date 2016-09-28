@@ -666,8 +666,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         //sidepanel.style("display", "block");
 	    //resizeForceLayout();
 	    
-        //hideModules("node");
-        hideModules("other");
+        hideModules("node");
+        //hideModules("other");
         
         otherModule.html("");
         
