@@ -128,8 +128,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
         self.openThread = function(thread) {
-            socket.emit('emailRead', loggedin, thread);
-            self.currentThread(thread);
+            socket.emit('emailRead', loggedin, thread.thread);
+            self.currentThread(thread.thread);
         };
         self.sendMessage = function() {
             var content = document.getElementById("emailTypeBox").value;
