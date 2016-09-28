@@ -240,7 +240,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		   if (document.getElementById("editStartMonth").value) { var newStartMonth = document.getElementById("editStartMonth").value; } else { var newStartMonth = null; }
   		   if (document.getElementById("editStartYear").value) { var newStartYear = document.getElementById("editStartYear").value; } else { var newStartYear = null; }
   		    // Send updated info to server
-  		   window.alert(newLinkDescription);
   		   socket.emit('linkEdit', {"id": self.activeLink(), "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
   		   hideModules("linkInfo");
 	   }
