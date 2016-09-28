@@ -1193,12 +1193,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    active_link = active_link_data.id;
   		    viewModel.activeLink(active_link);
   		
-		    // Display link info in side panel
-		    displayLinkInfo(active_link);
+		    
+		    //displayLinkInfo(active_link);
+		    hideModules("linkInfo"); // Display link info in side panel
   			
   		    restart();
 	    }	
-	
+	/*
 	    function displayLinkInfo(link) { 
 	    
 		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
@@ -1382,7 +1383,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    });
   			
         }
-        
+        */
   	
         force.start();
     }
