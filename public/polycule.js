@@ -210,6 +210,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    restart();
 	   };
 	   self.linkEditing = ko.observable(false);
+	   self.editLink = function() {
+	       self.linkEditing(true);
+	       hideModules("linkEdit");
+	   }
     }
     
     var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin);
@@ -318,6 +322,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var settingsModule = d3.select("#settingsModule");
     var nodeModule = d3.select("#nodeModule");
     var linkInfoModule = d3.select("#linkInfoModule");
+    var linkEditModule = d3.select("#linkEditModule");
     var otherModule = d3.select("#otherModule");
     
     function hideModules(module) {
@@ -326,6 +331,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
         if (module === "node") { nodeModule.style("display", "block"); } else { nodeModule.style("display", "none"); }
         if (module === "linkInfo") { linkInfoModule.style("display", "block"); } else { linkInfoModule.style("display", "none"); }
+        if (module === "linkEdit") { linkEditModule.style("display", "block"); } else { linkEditModule.style("display", "none"); }
         if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
     }
     
