@@ -104,6 +104,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			.attr("value", y);
 			//.attr("selected", function() { if (y === parseInt(links[linkIndex].startyear)) { return "selected"; } else { return null; } });
 	}
+	
+	var locationInput = document.getElementById('editLocation');
+    var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
     
     // Knockout view model ===============================================================
     function ViewModel(linkData, emailData, nodeData, loggedin, months) {
@@ -208,6 +211,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.messageNode = function() {
             self.currentThread(self.activeNode());
             hideModules("email"); 
+        };
+        self.editNode = function() {
+            hideModules("nodeEdit");
         };
         
         // Links
@@ -352,6 +358,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var emailModule = d3.select("#emailModule");
     var settingsModule = d3.select("#settingsModule");
     var nodeModule = d3.select("#nodeModule");
+    var nodeEditModule = d3.select("#nodeEditModule");
     var linkInfoModule = d3.select("#linkInfoModule");
     var linkEditModule = d3.select("#linkEditModule");
     var otherModule = d3.select("#otherModule");
@@ -361,6 +368,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
         if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
         if (module === "node") { nodeModule.style("display", "block"); } else { nodeModule.style("display", "none"); }
+        if (module === "nodeEdit") { nodeEditModule.style("display", "block"); } else { nodeEditModule.style("display", "none"); }
         if (module === "linkInfo") { linkInfoModule.style("display", "block"); } else { linkInfoModule.style("display", "none"); }
         if (module === "linkEdit") { linkEditModule.style("display", "block"); } else { linkEditModule.style("display", "none"); }
         if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
