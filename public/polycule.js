@@ -238,6 +238,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	   	   self.linkEditing(false);
 	       hideModules("linkInfo");
 	   }
+	   self.saveLinkEdit = function() {
+	       if (document.getElementById("editLinkDescription").value) { var newLinkDescription = document.getElementById("editLinkDescription").value; } else { var newLinkDescription = null; }
+  		   if (document.getElementById("editStartMonth").value) { var newStartMonth = document.getElementById("editStartMonth").value; } else { var newStartMonth = null; }
+  		   if (document.getElementById("editStartYear").value) { var newStartYear = document.getElementById("editStartYear").value; } else { var newStartYear = null; }
+  		    // Send updated info to server
+  		   socket.emit('linkEdit', {"id": self.activeLink(), "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
+  		   self.linkEditing(false);
+  		   hideModules("linkInfo");
+	   }
     }
     
     var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin, months);
