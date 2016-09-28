@@ -554,7 +554,7 @@ canvas {
 /* Link Edit page */
 #editStartMonth, #editStartYear {
     display: inline;
-    width: 50px;
+    width: 80px;
 }
 
 #editLinkDescription {
