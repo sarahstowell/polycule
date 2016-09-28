@@ -92,8 +92,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	for (m=0; m<12; m++) {
 		month.append("option")
 			.text(months[m])
-			.attr("value", m)
-			.attr("selected", function() { if (m === parseInt(links[linkIndex].startmonth)) { return "selected"; } else { return null; } });
+			.attr("value", m);
+			//.attr("selected", function() { if (m === parseInt(links[linkIndex].startmonth)) { return "selected"; } else { return null; } });
 	}
 	
 	var thisYear = new Date().getFullYear();
@@ -101,8 +101,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	for (y=thisYear; y>=1900; y--) {
 		year.append("option")
 			.text(y)
-			.attr("value", y)
-			.attr("selected", function() { if (y === parseInt(links[linkIndex].startyear)) { return "selected"; } else { return null; } });
+			.attr("value", y);
+			//.attr("selected", function() { if (y === parseInt(links[linkIndex].startyear)) { return "selected"; } else { return null; } });
 	}
     
     // Knockout view model
