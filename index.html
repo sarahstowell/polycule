@@ -147,6 +147,7 @@
 		    	    <input id="editName" class="editable" maxlength=10 placeholder="Display Name" data-bind="value: name">
 		            <p class="username" style="margin-top: 5px" data-bind="text: '('+username+')'"></p>
 		            <img class="profilepic" id="profilepic" data-bind="visible: photo, attr: {src: photo ? 'https://polycule.s3.amazonaws.com/final/'+photo+'?' + new Date().getTime() : null}"/>
+		            <br/>
 		            <input id="editLocation" type="text" class="editable" placeholder="Town or City" data-bind="visible: location, value: location">
                     <textarea id="editDescription" data-bind="value: description"></textarea>
                 </div>
