@@ -85,8 +85,26 @@ socket.on('nodesAndLinks', function(dataPackage) {
     };
     getLinkRequests();
     
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+	for (m=0; m<12; m++) {
+		month.append("option")
+			.text(months[m])
+			.attr("value", m)
+			.attr("selected", function() { if (m === parseInt(links[linkIndex].startmonth)) { return "selected"; } else { return null; } });
+	}
+	
+	var thisYear = new Date().getFullYear();
+		
+	for (y=thisYear; y>=1900; y--) {
+		year.append("option")
+			.text(y)
+			.attr("value", y)
+			.attr("selected", function() { if (y === parseInt(links[linkIndex].startyear)) { return "selected"; } else { return null; } });
+	}
+    
     // Knockout view model
-    function ViewModel(linkData, emailData, nodeData, loggedin) {
+    function ViewModel(linkData, emailData, nodeData, loggedin, months) {
         var self = this;
         self.user = loggedin;
         // Link Requests
@@ -189,7 +207,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Links
         self.links = ko.observableArray(links);
         self.activeLink = ko.observable(active_link);
-        self.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        self.months = months;
         self.activeLinkData = ko.computed(function() {
         	return self.links().filter(
         		function(d) {
