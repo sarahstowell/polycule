@@ -552,9 +552,14 @@ canvas {
 }
 
 /* Link Edit page */
-#editStartMonth, #editStartYear {
+#editStartMonth {
     display: inline;
-    width: 80px;
+    width: 100px;
+}
+
+#editStartYear {
+    display: inline;
+    width: 50px;
 }
 
 #editLinkDescription {

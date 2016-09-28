@@ -170,10 +170,10 @@
 		    
 		    <div id="linkEditModule" style="display:none;" data-bind="with: activeLinkData()[0]">
 		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
-		        <span class="linkDates" >Together since:</span>
-		        <select id="editStartMonth" class="editable"></select>
-		        <select id="editStartYear" class="editable"></select>
-		        <div class="centerDiv">
+		        <div class="centerDiv">		        
+		            <span class="linkDates" >Together since:</span>
+		            <select id="editStartMonth" class="editable"></select>
+		            <select id="editStartYear" class="editable"></select>
 		        	<input type="text" id="editLinkDescription" class="editable" data-bind="value: description" placeholder="Description">
 		            <button id="cancelLinkEdit" class="standardButton" data-bind="click: $root.cancelLinkEdit">Cancel</button>
 		            <button id="saveLinkEdit" class="standardButton" data-bind="click: $root.saveLinkEdit">Save</button>
