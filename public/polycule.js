@@ -86,6 +86,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     getLinkRequests();
     
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var month = d3.select("#editStartMonth");
+    var year = d3.select("#editStartYear");
     
 	for (m=0; m<12; m++) {
 		month.append("option")
