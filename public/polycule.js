@@ -207,7 +207,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.messageNode = function() {
             self.currentThread(self.activeNode())
-            hideModules("nodes"); 
+            hideModules("node"); 
         };
         
         // Links
