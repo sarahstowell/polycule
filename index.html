@@ -158,7 +158,7 @@
 		    <!-- Link Display -->
 		    <div id="linkInfoModule" style="display:none;" data-bind="with: activeLinkData()[0]">
 		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
-		        <p class="linkDates" data-bind="visible: startyear, text: 'Together since '+startmonth+' '+startyear"></p>
+		        <p class="linkDates" data-bind="visible: startyear, text: 'Together since '+$root.months[startmonth]+' '+startyear"></p>
 		        <p class="linkDescription" data-bind="text: description, visible: description"></p>
 		        <p id="linkConfirmation" data-bind="visible: confirmed !== 1">This link is awaiting confirmation</p>
 		        <div class="centerDiv">

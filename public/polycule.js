@@ -189,6 +189,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Links
         self.links = ko.observableArray(links);
         self.activeLink = ko.observable(active_link);
+        self.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         self.activeLinkData = ko.computed(function() {
         	return self.links().filter(
         		function(d) {
@@ -1167,8 +1168,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
   		    
-  		    //hideModules("linkInfo");
-  		    hideModules("other");
+  		    hideModules("linkInfo");
+  		    //hideModules("other");
   		    
   		    otherModule.html("");
   		
