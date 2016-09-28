@@ -130,7 +130,7 @@
 		        <img class="profilepic" id="profilepic" data-bind="visible: photo, attr: {src: photo ? 'https://polycule.s3.amazonaws.com/final/'+photo+'?' + new Date().getTime() : null}"/>
 		        <p class="town" data-bind="text: location"></p>
 		        <p class="description" data-bind="visible: description, text: description"></p>
-		        <button id="editnodebutton" class="standardButton" data-bind="visible: id === $root.user">Edit</button>
+		        <button id="editnodebutton" class="standardButton" data-bind="visible: id === $root.user, click: $root.editNode">Edit</button>
 		        <button id="sendMessageButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user, click: $root.messageNode">Message</button>
 		        <button id="requestLinkButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user">Request Link</button>
 		       
