@@ -234,6 +234,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	       self.linkEditing(true);
 	       hideModules("linkEdit");
 	   }
+	   self.cancelLinkEdit = function() {
+	   	   self.linkEditing(false);
+	       hideModules("linkInfo");
+	   }
     }
     
     var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin, months);

@@ -175,7 +175,7 @@
 		        <select id="editStartYear" class="editable"></select>
 		        <div class="centerDiv">
 		        	<input type="text" id="editLinkDescription" class="editable" data-bind="value: description" placeholder="Description">
-		            <button id="cancelLinkEdit" class="standardButton" data-bind="click: function() { $root.linkEditing(false); }">Cancel</button>
+		            <button id="cancelLinkEdit" class="standardButton" data-bind="click: $root.cancelLinkEdit">Cancel</button>
 		            <button id="saveLinkEdit" class="standardButton" >Save</button>
 		        </div> 
 		    </div>
