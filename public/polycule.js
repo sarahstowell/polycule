@@ -205,6 +205,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": self.activeNodeData()[0].name, "from": nodeData[arrayObjectIndexOf(nodeData, self.user, "id")].name});	
 			}
         };
+        self.messageNode = function() {
+            self.currentThread(self.activeNode())
+            hideModules("nodes"); 
+        };
         
         // Links
         self.links = ko.observableArray(links);
