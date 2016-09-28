@@ -84,7 +84,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (viewModel) { viewModel.linkRequests(linkRequests); }
     };
     getLinkRequests();
-    
+    // ===================================================================================
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var month = d3.select("#editStartMonth");
     var year = d3.select("#editStartYear");
@@ -105,7 +105,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			//.attr("selected", function() { if (y === parseInt(links[linkIndex].startyear)) { return "selected"; } else { return null; } });
 	}
     
-    // Knockout view model
+    // Knockout view model ===============================================================
     function ViewModel(linkData, emailData, nodeData, loggedin, months) {
         var self = this;
         self.user = loggedin;
@@ -127,9 +127,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (self.currentThread() === 0) { return self.emails().filter(function(d) { return d.latest === 1; }).reverse(); }
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
-        self.openThread = function(data) {
-            socket.emit('emailRead', loggedin, data.thread);
-            self.currentThread(data.thread);
+        self.openThread = function(thread) {
+            socket.emit('emailRead', loggedin, thread);
+            self.currentThread(thread);
         };
         self.sendMessage = function() {
             var content = document.getElementById("emailTypeBox").value;
