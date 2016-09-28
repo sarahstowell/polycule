@@ -236,7 +236,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	   }
     }
     
-    var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin);
+    var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin, months);
     
     ko.applyBindings(viewModel);
     
