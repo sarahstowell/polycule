@@ -246,7 +246,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     ko.applyBindings(viewModel);
     
-    // Data Updates -------------------------
+    // Data Updates ======================================================================
     
     socket.on('callToUpdateEmail', function() {
 	    socket.emit('emailRequest');
@@ -340,6 +340,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    
 	    restart();
 	});
+	// ===================================================================================
 	
 	// Select sidepanel for later use
     var sidepanel = d3.select("#sidePanel");
@@ -365,7 +366,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
 	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
-    // Data Visualisation ----------------------
+    // Data Visualisation ================================================================
   
     // Setup force layout
     var force = d3.layout.force()
@@ -385,10 +386,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	};
     
     window.addEventListener('resize', resizeForceLayout, true);    
-	
-    var emailColor = d3.scale.ordinal()
-	    .range(["lightgray", "white"])
-	    .domain([0,1]);
 
     // Set up zoom and pan facility
     var zoomguide = 1;
@@ -518,9 +515,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
     restart();
 
     displayInfo(active_node);    // On startup, display current user info in side panel
-
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
 
     var hideSidepanel = function() {
 /*
