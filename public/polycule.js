@@ -229,13 +229,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    hideModules();		// Clear side panel	
 		    restart();
 	   };
-	   self.linkEditing = ko.observable(false);
 	   self.editLink = function() {
-	       self.linkEditing(true);
 	       hideModules("linkEdit");
 	   }
 	   self.cancelLinkEdit = function() {
-	   	   self.linkEditing(false);
 	       hideModules("linkInfo");
 	   }
 	   self.saveLinkEdit = function() {
@@ -244,7 +241,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		   if (document.getElementById("editStartYear").value) { var newStartYear = document.getElementById("editStartYear").value; } else { var newStartYear = null; }
   		    // Send updated info to server
   		   socket.emit('linkEdit', {"id": self.activeLink(), "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
-  		   self.linkEditing(false);
   		   hideModules("linkInfo");
 	   }
     }
