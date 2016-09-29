@@ -216,6 +216,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
 		};
         self.editNode = function() {
+        /*
         	var canvas = document.getElementById('canvas1');
 		    var ctx = canvas.getContext('2d');	  
 	        
@@ -230,6 +231,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				ctx.font = "15px sans-serif";
 				ctx.fillText("Add photo", 80, 120);
 			}
+		*/
             hideModules("nodeEdit");
         };
         self.cancelNodeEdit = function() {
