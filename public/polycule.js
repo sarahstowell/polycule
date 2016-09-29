@@ -256,6 +256,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				}
 				d3.select("#photoEditWindow").style("display",  "block");
         };
+        self.cancelPhotoEdit = function() {
+        
+        };
+        self.scavePhotoEdit = function() {
+        
+        };
         
         
         // Links
