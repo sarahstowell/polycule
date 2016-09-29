@@ -309,6 +309,7 @@ h2 {
 canvas {
     border-radius: 5px;
     border: 2px solid black;
+    cursor: pointer;
 }
 
 #editLocation {

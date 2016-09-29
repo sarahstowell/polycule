@@ -216,11 +216,32 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
 		};
         self.editNode = function() {
+        
+        	var canvas = document.getElementById('canvas1');
+		    var ctx = canvas.getContext('2d');	  
+	        
+	       // Draw database photo onto profile edit canvas
+		   if (self.activeNodeData[0].photo) {     
+				var img1 = document.createElement('img');
+				img1.src="https://polycule.s3.amazonaws.com/final/"+activeNodeData[0].photo+"?" + new Date().getTime();
+				img1.onload = function () {
+					ctx.drawImage(img1, x=0, y=0, width=225, height=225);
+				}
+		
+			} else {
+				ctx.font = "15px sans-serif";
+				ctx.fillText("Add photo", 80, 120);
+			}
+        
+        
             hideModules("nodeEdit");
         };
         self.cancelNodeEdit = function() {
             hideModules("node");
         };
+        self.saveNodeEdit = function() {
+        
+        }
         
         // Links
         self.links = ko.observableArray(links);
