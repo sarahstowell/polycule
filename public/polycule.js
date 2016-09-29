@@ -223,7 +223,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	       // Draw database photo onto profile edit canvas
 		   if (self.activeNodeData()[0].photo) {     
 				var img1 = document.createElement('img');
-				img1.src="https://polycule.s3.amazonaws.com/final/"+activeNodeData()[0].photo+"?" + new Date().getTime();
+				img1.src="https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
 				img1.onload = function () {
 					ctx.drawImage(img1, x=0, y=0, width=225, height=225);
 				}
