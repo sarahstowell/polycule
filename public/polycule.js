@@ -710,7 +710,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // mouseDown function deselect node or link
     function mouseDown() {
-
         if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
 
         if (active_node !== null) {
@@ -718,15 +717,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
             viewModel.activeNode(null);		   
 		    restart();                          // Restart force layout
 	    }		
-	
 	    if (active_link !== null) {
 		    active_link=null;					// Deselect active link
 		    restart();                          // Restart force layout
 	    }
-	    
 	    hideModules(); // Clear sidepanel 
-	    //hideSidepanel();
-
     }
 
 
@@ -911,6 +906,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			    if (nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0 || nodes[arrayObjectIndexOf(nodes, new_node, "id")].member === 0) { confirm = 1; } else {confirm = 0}
 
 			    links.push({"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
+				viewModel.links(links);
 
   			    // Send new link to server
   			    socket.emit('newLink', {"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin});
@@ -947,10 +943,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    connect1=null;
   		    }
   		
-  		    // Retrieve data for selected link
-  		    active_link_data = d3.select(this)[0][0].__data__;
-  		    // Set active link number
-  		    active_link = active_link_data.id;
+  		    active_link_data = d3.select(this)[0][0].__data__;		// Retrieve data for selected link
+  		    active_link = active_link_data.id;						// Set active link number
   		    viewModel.activeLink(active_link);
 
 		    hideModules("linkInfo"); // Display link info in side panel
