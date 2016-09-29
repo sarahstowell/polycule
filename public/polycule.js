@@ -247,9 +247,30 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.cancelNodeEdit = function() {
             hideModules("node");
         };
-        
+        /*
         self.saveNodeEdit = function() {
-			if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
+
+        };
+        */
+        self.openPhotoEdit = function() {
+                if (self.activeNodeData()[0].photo && !(img2)) {
+			        // Draw database photo onto photo edit area
+				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
+				    coords = self.activeNodeData()[0].photocoords;
+				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
+				}
+				d3.select("#photoEditWindow").style("display",  "block");
+        };
+        self.cancelPhotoEdit = function() {
+			d3.select("#photoEditWindow").style("display",  "none");
+			document.getElementById("photoSelect").value = null;
+			document.getElementById("photoTypeCustom").checked = true;
+			document.getElementById("photoSelect").disabled = false;
+			d3.select("#photoArea").style("display", "block");
+			d3.select("#photoArea").html("");
+        };
+        self.savePhotoEdit = function() {
+        	if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
 				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 				reader1.onload = function (oFREvent) {
@@ -282,28 +303,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			d3.select("#photoEditWindow").style("display",  "none");
         };
         
-        self.openPhotoEdit = function() {
-                if (self.activeNodeData()[0].photo && !(img2)) {
-			        // Draw database photo onto photo edit area
-				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
-				    coords = self.activeNodeData()[0].photocoords;
-				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
-				}
-				d3.select("#photoEditWindow").style("display",  "block");
-        };
-        self.cancelPhotoEdit = function() {
-			d3.select("#photoEditWindow").style("display",  "none");
-			document.getElementById("photoSelect").value = null;
-			document.getElementById("photoTypeCustom").checked = true;
-			document.getElementById("photoSelect").disabled = false;
-			d3.select("#photoArea").style("display", "block");
-			d3.select("#photoArea").html("");
-        };
-        /*
-        self.savePhotoEdit = function() {
-        
-        };
-        */
         
         
         // Links
