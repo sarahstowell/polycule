@@ -247,11 +247,70 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.cancelNodeEdit = function() {
             hideModules("node");
         };
-        /*
+        
         self.saveNodeEdit = function() {
-
+  		
+  			    var newName = document.getElementById("editName").value;
+  			    var newLocation = document.getElementById("editLocation").value;
+  			    var newDescription = document.getElementById("editDescription").value;
+  			
+                nodes[arrayObjectIndexOf(nodes, node, "id")].name = newName;
+  			    nodes[arrayObjectIndexOf(nodes, node, "id")].location = newLocation;
+  			    nodes[arrayObjectIndexOf(nodes, node, "id")].description = newDescription;
+  		        
+  		        img2 = null;
+  				
+  				centerdiv.append("p")
+				    .style("color", "red")
+				    .text("Saving...");	
+				    		    
+  			    var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
+  			    
+  			    // Send photo to server
+  			    if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("x1").value) {
+					xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if (xhttp.readyState == 4 && xhttp.status == 200) {
+						}
+					};
+					
+					var data = new FormData();
+					data.append('id', node);
+					data.append('x1', document.getElementById("x1").value);
+					data.append('y1', document.getElementById("y1").value);
+					data.append('x2', document.getElementById("x2").value);
+					data.append('y2', document.getElementById("y2").value);
+					
+					
+					xhttp.addEventListener("load", function() {
+					    socket.emit('nodeEdit', newNodeData);
+						hideModules("node");
+						d3.select("#profilepic").attr("src", "https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo+"?" + new Date().getTime());
+						restart();
+					});
+					
+					if (document.getElementById("photoSelect").files[0]) {
+						data.append('photo', document.getElementById("photoSelect").files[0]);
+				
+						xhttp.open("POST", "/update/photo", true);
+						xhttp.send(data); 
+					} else {
+						data.append('filename', nodes[arrayObjectIndexOf(nodes, node, "id")].photo);
+						
+						xhttp.open("POST", "/update/photocoords", true);
+						xhttp.send(data); 
+					}
+				 
+				} else {
+					if (photoRemove === true) { newNodeData.photoRemove = true; }
+					socket.emit('nodeEdit', newNodeData);
+					socket.on('nodeEditComplete', function() {
+						hideModules("node");
+						restart();
+					});	
+				}
         };
-        */
+        
         self.openPhotoEdit = function() {
                 if (self.activeNodeData()[0].photo && !(img2)) {
 			        // Draw database photo onto photo edit area
