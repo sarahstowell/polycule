@@ -201,6 +201,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Nodes
         self.nodes = ko.observableArray(nodes);
         self.activeNode = ko.observable(active_node);
+        self.linkedWithActiveNode = ko.computed() {
+            var linksWithAN = self.links().filter(function(d) { return (d.sourceid === self.activeNode() && d.targetid === self.user) || (d.targetid === self.activeNode() && d.sourceid === self.user); });
+            if (linksWithAN.length > 0) { return true; } else { return false; }
+        };
         self.activeNodeData = ko.computed(function() {
             return self.nodes().filter(function(d) { return d.id === self.activeNode(); });
         });
@@ -242,11 +246,41 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.cancelNodeEdit = function() {
             hideModules("node");
         };
-        /*
-        self.saveNodeEdit = function() {
         
+        self.saveNodeEdit = function() {
+			if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
+				var reader1 = new FileReader();
+				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
+				reader1.onload = function (oFREvent) {
+					img2 = new Image();
+					img2.src = oFREvent.target.result;
+					if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
+					var sx = Math.round(document.getElementById("x1").value*ratio1);
+					var sy = Math.round(document.getElementById("y1").value*ratio1);
+					var swidth = Math.round((document.getElementById("x2").value-document.getElementById("x1").value)*ratio1);
+					var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
+					ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
+				};		        
+			} else if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
+				img2 = new Image();
+				img2.src = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData[0].photo+"?" + new Date().getTime();
+				if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
+				var sx = Math.round(document.getElementById("x1").value*ratio1);
+				var sy = Math.round(document.getElementById("y1").value*ratio1);
+				var swidth = Math.round((document.getElementById("x2").value-document.getElementById("x1").value)*ratio1);
+				var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
+				ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
+			} else if (document.getElementById("photoTypeNone").checked === true) {
+				ctx.clearRect(0,0,225,225);
+				ctx.font = "15px sans-serif";
+				ctx.fillText("Add photo", 80, 120);
+				photoRemove = true;
+				document.getElementById("photoSelect").value = null;
+			}
+						
+			d3.select("#photoEditWindow").style("display",  "none");
         };
-        */
+        
         self.openPhotoEdit = function() {
                 if (self.activeNodeData()[0].photo && !(img2)) {
 			        // Draw database photo onto photo edit area

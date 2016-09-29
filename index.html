@@ -136,7 +136,7 @@
 		        <p class="description" data-bind="visible: description, text: description"></p>
 		        <button id="editnodebutton" class="standardButton" data-bind="visible: id === $root.user, click: $root.editNode">Edit</button>
 		        <button id="sendMessageButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user, click: $root.messageNode">Message</button>
-		        <button id="requestLinkButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user, click: $root.requestLink">Request Link</button>
+		        <button id="requestLinkButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user && $root.linkedWithActiveNode(), click: $root.requestLink">Request Link</button>
 		       
 		        <p class="description" data-bind="visible: member === 0 && invited === 0, text:  name+' is not yet a member of Polycule. Enter an email address to invite them:'"></p>
 		        <p id="emailInviteError" data-bind="visible: member === 0 && invited === 0 && $root.emailInviteError(), text: $root.emailInviteError()"></p>
@@ -159,7 +159,7 @@
                     <textarea id="editDescription" class="editable" data-bind="value: description"></textarea>
                 </div>
 		        <button id="cancelNodeEdit" class="standardButton" data-bind="click: $root.cancelNodeEdit">Cancel</button>
-		        <button id="saveNodeEdit" class="standardButton" >Save</button>
+		        <button id="saveNodeEdit" class="standardButton" data-bind="click: $root.saveNodeEdit">Save</button>
 		    </div>
 		    
 		    
@@ -213,7 +213,7 @@
     <input type="number" class="hiddenInput" id="height" name="height" />
     
     <input type="button" id="closePhotoEdit" value="Cancel" data-bind="click: cancelPhotoEdit"/>
-    <input type="button" id="savePhotoEdit" value="Save"/>
+    <input type="button" id="savePhotoEdit" value="Save" data-bind="click: savePhotoEdit"/>
 </div>
 
 </body>
