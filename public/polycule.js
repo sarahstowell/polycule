@@ -202,7 +202,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.nodes = ko.observableArray(nodes);
         self.activeNode = ko.observable(active_node);
         //self.linkedWithActiveNode = ko.computed() {
-            return self.links().filter(function(d) { return ((d.sourceid === self.activeNode() && d.targetid === self.user) || (d.targetid === self.activeNode() && d.sourceid === self.user)); });
+        //    return self.links().filter(function(d) { return ((d.sourceid === self.activeNode() && d.targetid === self.user) || (d.targetid === self.activeNode() && d.sourceid === self.user)); });
         //    if (linksWithAN.length > 0) { return true; } else { return false; }
         //};
         self.activeNodeData = ko.computed(function() {
