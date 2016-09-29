@@ -204,7 +204,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.activeNode = ko.observable(active_node);
         self.linkedWithActiveNode = ko.computed(function() {
             var linkWithAN = self.links().filter(function(d) { return ((d.sourceid === self.activeNode() && d.targetid === self.user) || (d.targetid === self.activeNode() && d.sourceid === self.user)); });
-            if (linksWithAN.length > 0) { return true; } else { return false; }
+            if (linkWithAN.length > 0) { return true; } else { return false; }
         });
         self.activeNodeData = ko.computed(function() {
             return self.nodes().filter(function(d) { return d.id === self.activeNode(); });
