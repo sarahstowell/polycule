@@ -108,6 +108,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var locationInput = document.getElementById('editLocation');
     var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
     
+            	var canvas = document.getElementById('canvas1');
+		    var ctx = canvas.getContext('2d');
+    
     // Knockout view model ===============================================================
     function ViewModel(linkData, emailData, nodeData, loggedin, months) {
         var self = this;
@@ -216,8 +219,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
 		};
         self.editNode = function() {
-        	var canvas = document.getElementById('canvas1');
-		    var ctx = canvas.getContext('2d');	  
+        	//var canvas = document.getElementById('canvas1');
+		    //var ctx = canvas.getContext('2d');	  
 	        
 	       // Draw database photo onto profile edit canvas
 		   if (self.activeNodeData()[0].photo) {     
@@ -238,6 +241,17 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.saveNodeEdit = function() {
         
         }
+        /*
+        self.openPhotoEdit = function() {
+                        if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null && !(img2)) {
+			        // Draw database photo onto photo edit area
+				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
+				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
+				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
+				}
+				d3.select("#photoEditWindow").style("display",  "block");
+        }
+        */
         
         // Links
         self.links = ko.observableArray(links);
