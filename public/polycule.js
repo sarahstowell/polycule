@@ -257,11 +257,18 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				d3.select("#photoEditWindow").style("display",  "block");
         };
         self.cancelPhotoEdit = function() {
+			d3.select("#photoEditWindow").style("display",  "none");
+			document.getElementById("photoSelect").value = null;
+			document.getElementById("photoTypeCustom").checked = true;
+			document.getElementById("photoSelect").disabled = false;
+			d3.select("#photoArea").style("display", "block");
+			d3.select("#photoArea").html("");
+        };
+        /*
+        self.savePhotoEdit = function() {
         
         };
-        self.scavePhotoEdit = function() {
-        
-        };
+        */
         
         
         // Links
