@@ -119,6 +119,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function ViewModel(linkData, emailData, nodeData, loggedin, months) {
         var self = this;
         self.user = loggedin;
+        self.links = ko.observableArray(links);
         // Link Requests
         self.linkRequests = ko.observableArray(linkData);
         self.confirmLink = function() { 
@@ -306,7 +307,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
         
         // Links
-        self.links = ko.observableArray(links);
+        
         self.activeLink = ko.observable(active_link);
         self.months = months;
         self.activeLinkData = ko.computed(function() {
