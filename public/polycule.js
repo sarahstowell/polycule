@@ -242,10 +242,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.cancelNodeEdit = function() {
             hideModules("node");
         };
+        /*
         self.saveNodeEdit = function() {
         
-        }
-        
+        };
+        */
         self.openPhotoEdit = function() {
                 if (self.activeNodeData[0].photo && !(img2)) {
 			        // Draw database photo onto photo edit area
@@ -254,7 +255,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
 				}
 				d3.select("#photoEditWindow").style("display",  "block");
-        }
+        };
         
         
         // Links
