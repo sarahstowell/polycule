@@ -248,7 +248,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         */
         self.openPhotoEdit = function() {
-                if (self.activeNode() && self.activeNodeData[0].photo && !(img2)) {
+                if (self.activeNodeData()[0].photo && !(img2)) {
 			        // Draw database photo onto photo edit area
 				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
 				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
