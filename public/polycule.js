@@ -119,7 +119,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function ViewModel(linkData, emailData, nodeData, loggedin, months) {
         var self = this;
         self.user = loggedin;
-        self.links = ko.observableArray(links);
         // Link Requests
         self.linkRequests = ko.observableArray(linkData);
         self.confirmLink = function() { 
@@ -357,10 +356,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			d3.select("#photoEditWindow").style("display",  "none");
         };
         
-        
-        
         // Links
-        
+        self.links = ko.observableArray(links);
         self.activeLink = ko.observable(active_link);
         self.months = months;
         self.activeLinkData = ko.computed(function() {
@@ -881,7 +878,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             active_node = d3.select(this)[0][0].__data__.id;
             viewModel.activeNode(active_node);
 		
-            hideModules("node");
+            hideModules("node"); // Show node profile in side panel
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
 		
