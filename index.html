@@ -157,6 +157,7 @@
 		            <br/>
 		            <input id="editLocation" type="text" class="editable" placeholder="Town or City" data-bind="visible: location, value: location">
                     <textarea id="editDescription" class="editable" data-bind="value: description"></textarea>
+                    <p id="nodeEditError" data-bind="text: $root.nodeEditError()" style="color: red;"></p>
                 </div>
 		        <button id="cancelNodeEdit" class="standardButton" data-bind="click: $root.cancelNodeEdit">Cancel</button>
 		        <button id="saveNodeEdit" class="standardButton" data-bind="click: $root.saveNodeEdit">Save</button>

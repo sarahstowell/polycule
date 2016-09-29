@@ -255,10 +255,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    var newDescription = document.getElementById("editDescription").value;
   		        var newNodeData = {"id": self.activeNode(), "name": newName, "location": newLocation, "description": newDescription};
   		        img2 = null;
-  				
-  				//centerdiv.append("p")
-				//    .style("color", "red")
-				//    .text("Saving...");	
+  					
+				self.nodeEditError("Saving...");
 
   			    // Send photo to server
   			    if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("x1").value) {
@@ -278,7 +276,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					
 					xhttp.addEventListener("load", function() {
 					    socket.emit('nodeEdit', newNodeData);
-						//hideModules("node");
+						hideModules("node");
+						self.nodeEditError(null);
 						d3.select("#profilepic").attr("src", "https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo+"?" + new Date().getTime());
 						restart();
 					});
@@ -299,14 +298,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					if (photoRemove === true) { newNodeData.photoRemove = true; }
 					socket.emit('nodeEdit', newNodeData);
 					socket.on('nodeEditComplete', function() {
-						//hideModules("node");
+						hideModules("node");
+						self.nodeEditError(null);
 						restart();
 					});	
 				}
-				
-				hideModules("node");
+
         };
-        
+        self.nodeEditError = ko.observable();
         self.openPhotoEdit = function() {
                 if (self.activeNodeData()[0].photo && !(img2)) {
 			        // Draw database photo onto photo edit area
