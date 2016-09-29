@@ -253,18 +253,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    var newName = document.getElementById("editName").value;
   			    var newLocation = document.getElementById("editLocation").value;
   			    var newDescription = document.getElementById("editDescription").value;
-  			
-                nodes[arrayObjectIndexOf(nodes, node, "id")].name = newName;
-  			    nodes[arrayObjectIndexOf(nodes, node, "id")].location = newLocation;
-  			    nodes[arrayObjectIndexOf(nodes, node, "id")].description = newDescription;
   		        
   		        img2 = null;
   				
-  				centerdiv.append("p")
-				    .style("color", "red")
-				    .text("Saving...");	
+  				//centerdiv.append("p")
+				//    .style("color", "red")
+				//    .text("Saving...");	
 				    		    
-  			    var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
+  			    var newNodeData = {"id": self.activeNode(), "name": newName, "location": newLocation, "description": newDescription};
   			    
   			    // Send photo to server
   			    if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("x1").value) {
@@ -275,7 +271,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					};
 					
 					var data = new FormData();
-					data.append('id', node);
+					data.append('id', self.user);
 					data.append('x1', document.getElementById("x1").value);
 					data.append('y1', document.getElementById("y1").value);
 					data.append('x2', document.getElementById("x2").value);
@@ -295,7 +291,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						xhttp.open("POST", "/update/photo", true);
 						xhttp.send(data); 
 					} else {
-						data.append('filename', nodes[arrayObjectIndexOf(nodes, node, "id")].photo);
+						data.append('filename', self.activeNodeData()[0].photo);
 						
 						xhttp.open("POST", "/update/photocoords", true);
 						xhttp.send(data); 
