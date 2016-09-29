@@ -215,6 +215,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.editNode = function() {
             hideModules("nodeEdit");
         };
+        self.cancelNodeEdit = function() {
+            hideModules("node");
+        };
         
         // Links
         self.links = ko.observableArray(links);
@@ -238,10 +241,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	   };
 	   self.editLink = function() {
 	       hideModules("linkEdit");
-	   }
+	   };
 	   self.cancelLinkEdit = function() {
 	       hideModules("linkInfo");
-	   }
+	   };
 	   self.saveLinkEdit = function() {
 	       if (document.getElementById("editLinkDescription").value) { var newLinkDescription = document.getElementById("editLinkDescription").value; } else { var newLinkDescription = null; }
   		   if (document.getElementById("editStartMonth").value) { var newStartMonth = document.getElementById("editStartMonth").value; } else { var newStartMonth = null; }
@@ -249,7 +252,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    // Send updated info to server
   		   socket.emit('linkEdit', {"id": self.activeLink(), "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
   		   hideModules("linkInfo");
-	   }
+	   };
+	
     }
     
     var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin, months);
