@@ -108,9 +108,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var locationInput = document.getElementById('editLocation');
     var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
     
-            	var canvas = document.getElementById('canvas1');
-		    var ctx = canvas.getContext('2d');
-		    				var img1 = document.createElement('img');
+    var canvas = document.getElementById('canvas1');
+	var ctx = canvas.getContext('2d');
+	var img1 = document.createElement('img');
+	var img2;
+	var photoRemove = false;
 
     
     // Knockout view model ===============================================================
@@ -243,9 +245,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.saveNodeEdit = function() {
         
         }
-        /*
+        
         self.openPhotoEdit = function() {
-                        if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null && !(img2)) {
+                if (self.activeNodeData[0].photo && !(img2)) {
 			        // Draw database photo onto photo edit area
 				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
 				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
@@ -253,7 +255,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				}
 				d3.select("#photoEditWindow").style("display",  "block");
         }
-        */
+        
         
         // Links
         self.links = ko.observableArray(links);
