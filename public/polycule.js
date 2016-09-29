@@ -212,6 +212,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
             self.currentThread(self.activeNode());
             hideModules("email"); 
         };
+        self.requestLink = function() {
+			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
+		};
         self.editNode = function() {
             hideModules("nodeEdit");
         };
