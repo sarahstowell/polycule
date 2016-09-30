@@ -68,7 +68,7 @@
 		    
 		    <!-- Email -->
 		    <div id="emailModule" style="display: none;">
-		        <h2>Messages</h2>
+		        <h2 data-bind="text: currentThread() ? currentFolderData()[0].threadName : 'Messages'"></h2>
 		        <span id="backToMessages" class="pointy" data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Chats</span>
 		        <!--
 		        <br/>
