@@ -355,6 +355,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.savePhotoEdit = function() {
             // Save coordinates from cropping tool
             
+            window.alert(JSON.stringify(vanilla.get().points));
+            
             var photoCoords = vanilla.get().points;
 	        document.getElementById("x1").value = photoCoords[0];
 	        document.getElementById("y1").value = photoCoords[1];
