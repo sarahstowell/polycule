@@ -220,7 +220,7 @@ d3.select("#photoTypeNone").on("click", photoTypeNone);
 
 var file1    = document.getElementById('photoSelect').files[0];
 var reader1  = new FileReader();
-if (file1) { reader1.readAsDataURL(file); }
+if (file1) { reader1.readAsDataURL(file1); }
 reader1.addEventListener("load", function () { 
     imgsrc1 = reader1.result;
 });
