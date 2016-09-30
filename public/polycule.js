@@ -360,8 +360,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        document.getElementById("y1").value = photoCoords[1];
 	        document.getElementById("x2").value = photoCoords[2];
 	        document.getElementById("y2").value = photoCoords[3];
-	        var swidth = document.getElementById("x2").value = photoCoords[2] - document.getElementById("x2").value = photoCoords[0];
-			var sheight = document.getElementById("x2").value = photoCoords[3] - document.getElementById("x2").value = photoCoords[1];
+	        var swidth = photoCoords[2] - photoCoords[0];
+			var sheight = photoCoords[3] - photoCoords[1];
             
             // If user has uploaded a new photo
         	if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
