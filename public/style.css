@@ -604,8 +604,12 @@ canvas {
     color: red;
 }
 
-/*
+
 @media only screen and (max-device-width: 500px) {
+  #bottomContainer {
+      display: relative;
+  }
+  
   #mainsvg {
      width: 100%;
   }
@@ -617,5 +621,5 @@ canvas {
     max-width: 100%;
     min-height: 100%;
   }
-*/
+
 }
