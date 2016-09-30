@@ -519,11 +519,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
         
         if (sidepanel.style("display") === "none" && module) {
-            window.alert("display side panel");
             sidepanel.style("display", "block");
 	        resizeForceLayout();
 	    } else if (sidepanel.style("display") === "block" && !module) {
-	        window.alert("hide side panel");
 	        sidepanel.style("display", "none");
 	        resizeForceLayout();  
 	    }
