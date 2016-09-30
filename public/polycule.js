@@ -114,8 +114,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var img2;
 	var photoRemove = false;
 	
-	var objDiv = document.getElementById("emailContainer");
-    objDiv.scrollTop = objDiv.scrollHeight;
+	var emailContainer = document.getElementById("emailContainer");
 
     
     // Knockout view model ===============================================================
@@ -141,10 +140,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (self.currentThread() === 0) { return self.emails().filter(function(d) { return d.latest === 1; }).reverse(); }
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
+        myViewModel.currentThread.subscribe(function() {
+           emailContainer.scrollTop = emailContainer.scrollHeight;
+        });
         self.openThread = function(thread) {
             socket.emit('emailRead', loggedin, thread.thread);
             self.currentThread(thread.thread);
-            objDiv.scrollTop = objDiv.scrollHeight;
+            emailContainer.scrollTop = emailContainer.scrollHeight;
         };
         self.sendMessage = function() {
             var content = document.getElementById("emailTypeBox").value;
@@ -523,6 +525,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
         
         if (sidepanel.style("display") === "none" && module) {
+        
+        // For possible animated transition of sidepanel
         /*
         sidepanel.transition()
 	        .style("width", "0px")
