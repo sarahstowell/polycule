@@ -218,7 +218,13 @@ d3.select("#photoTypeFacebook").on("click", photoTypeFacebook);
 d3.select("#photoTypeCustom").on("click", photoTypeCustom);
 d3.select("#photoTypeNone").on("click", photoTypeNone);
 
-
+		var el = document.getElementById('photoDisplay');
+		//if (!vanilla) {
+			var vanilla = new Croppie(el, {
+				viewport: { width: 225, height: 225 },
+				boundary: { width: 300, height: 300 }
+			});
+		//}
 d3.select("#photoSelect").on("change", function() {
 
 	var file1    = document.getElementById('photoSelect').files[0];
@@ -227,13 +233,7 @@ d3.select("#photoSelect").on("change", function() {
 	reader1.addEventListener("load", function () { 
 		imgsrc1 = reader1.result;
 	
-		var el = document.getElementById('photoDisplay');
-		if (!vanilla) {
-			var vanilla = new Croppie(el, {
-				viewport: { width: 225, height: 225 },
-				boundary: { width: 300, height: 300 }
-			});
-		}
+
 		vanilla.bind({
 			url: imgsrc1
 		});   
