@@ -515,9 +515,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
         
         if (sidepanel.style("display") === "none" && module !== null) {
+            window.alert("display side panel");
             sidepanel.style("display", "block");
 	        resizeForceLayout();
 	    } else if (sidepanel.style("display") !== "none" && module  === null) {
+	        window.alert("hide side panel");
 	        sidepanel.style("display", "none");
 	        resizeForceLayout();  
 	    }
