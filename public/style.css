@@ -607,8 +607,7 @@ canvas {
 
 @media only screen and (max-device-width: 500px) {
   #mainsvg {
-     width: 100%;
-     min-width: 0;
+     min-width: 0px;
   }
   
   #sidepanel {
