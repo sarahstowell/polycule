@@ -223,17 +223,20 @@ var reader1  = new FileReader();
 if (file1) { reader1.readAsDataURL(file1); }
 reader1.addEventListener("load", function () { 
     imgsrc1 = reader1.result;
+    
+	var el = document.getElementById('photoDisplay');
+	var vanilla = new Croppie(el, {
+		viewport: { width: 225, height: 225 },
+		boundary: { width: 300, height: 300 }
+	});
+	vanilla.bind({
+		url: imgsrc1
+	});   
+    
 });
 
 
-var el = document.getElementById('photoDisplay');
-var vanilla = new Croppie(el, {
-    viewport: { width: 225, height: 225 },
-    boundary: { width: 300, height: 300 }
-});
-vanilla.bind({
-    url: imgsrc1
-});
+
 //on button click
 //vanilla.result('canvas').then(function(base64Image) {
     // do something with cropped base64 image here
