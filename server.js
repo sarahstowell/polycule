@@ -897,7 +897,7 @@ io.sockets.on('connection', function(socket){
   	// Link details updated --------------------------------------------------------------
   	socket.on('linkEdit', function(linkEdits) {
   	  // Update database
-  	    db.query('UPDATE links SET (startmonth, startyear) = (${startmonth}, ${startyear}) WHERE id = ${id}', linkEdits)
+  	    db.query('UPDATE links SET (startmonth, startyear, description) = (${startmonth}, ${startyear}, ${description}) WHERE id = ${id}', linkEdits)
   	      	.then(function () {
                 console.log("Link updated");
                 io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS

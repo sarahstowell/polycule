@@ -24,6 +24,11 @@ h1 {
     color: black;
     font-family: 'Sarpanch', sans-serif;
     font-size: 50px;
+    margin-bottom: 20px;
+}
+
+#tagline {
+    margin-bttom: 20px;
 }
 
 #logindiv {
@@ -34,9 +39,11 @@ h1 {
     border: 2px solid white;
     border-radius: 10px;
     width: 400px;
-    height: 450px; /*height: 500px;*/
+    height: 470px; /*height: 500px;*/
     text-align: center;
 }
+
+
 
 #remember {
     font-size: 13px;
@@ -120,4 +127,14 @@ span {
     color: red;
     font-weight: bold;
     font-size: 12px;
+}
+
+@media only screen and (max-device-width: 500px) {
+  #logindiv {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+  }
 }

@@ -1,9 +1,6 @@
 // Open websocket connection
 var socket = io();
 
-// Request data from server
-socket.emit('dataRequest'); 
-
 // Get width and height of SVG as displayed, so that force layout can use them
 var width = document.getElementById('mainsvg').getBoundingClientRect().width;
 var height = document.getElementById('mainsvg').getBoundingClientRect().height;
@@ -16,14 +13,11 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
     return -1;
 }
 
-
+// Request data from server
+socket.emit('dataRequest'); 
 
 // On receiving data from the server, build visualisation
 socket.on('nodesAndLinks', function(dataPackage) { 
-
-
-
-
 
     // Node index of current user
     var loggedin = dataPackage.userid;
@@ -37,10 +31,24 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var nodes = dataPackage.nodes;
 	var links = dataPackage.links;
 	
+	// Function for sorting emails into threads and finding most recent message in the thread
 	function emailThreader() {
 	    // Create thread number
 	    emails = emails.map(function(d) { 
 	        if (d.recip === loggedin) { d.thread = d.sender;} else { d.thread = d.recip; }
+	        if (nodes[arrayObjectIndexOf(nodes, d.thread, "id")]) { 
+	            d.threadName = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].name; 
+	            d.threadUsername = nodes[arrayObjectIndexOf(nodes, d.thread, "id")].username; 
+	        } else { 
+	            d.threadName = "Old User";
+	            d.threadUsername = ""; 
+	        }
+	        if (nodes[arrayObjectIndexOf(nodes, d.sender, "id")]) { 
+	            d.senderName = nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name;
+	        } else {
+	            d.senderName = "Old User";
+	        }
+	        d.fromServer = 1; // To flag messages that have reached server to distinguish from new ones written by user
 	        return d;
 	    }); 	    
 	    // Create indicator for most recent message in thread
@@ -50,22 +58,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			if (threads.indexOf(emails[i].thread) === -1) { 
 				threads.push(emails[i].thread);
 				emails[i].latest = 1;
+				if (emails[i].read === 0 && emails[i].recip === loggedin) { emails[i].newFlag = 1; } else {emails[i].newFlag = 0; }
 			} else { 
 				emails[i].latest = 0;
+				emails[i].newFlag = 0;
 			}
 		}
 	}
 	emailThreader();
 	
-	socket.on('callToUpdateEmail', function() {
-	    socket.emit('emailRequest');
-	});
-	
-	socket.on('emailUpdate', function(emailUpdate) { 
-	    emails = emailUpdate; 
-	    checkEmails();
-	});
-  
     // Function for creating source and target variables in links dataset for use with force layout
     var getLinkSource = function() {
         for (i=0; i<links.length; i++) {
@@ -73,8 +74,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
             links[i].target = arrayObjectIndexOf(nodes, links[i].targetid, "id");
         }
     }
-    
-    // Create source and target variables on startup
     getLinkSource();
     
     // Get link requests from links dataset and check for links
@@ -84,12 +83,45 @@ socket.on('nodesAndLinks', function(dataPackage) {
         linkRequests.map(function(d) { d.requestorname = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].name; d.requestorusername = nodes[arrayObjectIndexOf(nodes, d.requestor, "id")].username;});        
         if (viewModel) { viewModel.linkRequests(linkRequests); }
     };
-    
     getLinkRequests();
+    // ===================================================================================
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var month = d3.select("#editStartMonth");
+    var year = d3.select("#editStartYear");
     
-    // Knockout view model
-    function ViewModel(linkData, emailData, loggedin) {
+	for (m=0; m<12; m++) {
+		month.append("option")
+			.text(months[m])
+			.attr("value", m);
+			//.attr("selected", function() { if (m === parseInt(links[linkIndex].startmonth)) { return "selected"; } else { return null; } });
+	}
+	
+	var thisYear = new Date().getFullYear();
+		
+	for (y=thisYear; y>=1900; y--) {
+		year.append("option")
+			.text(y)
+			.attr("value", y);
+			//.attr("selected", function() { if (y === parseInt(links[linkIndex].startyear)) { return "selected"; } else { return null; } });
+	}
+	
+	var locationInput = document.getElementById('editLocation');
+    var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
+    
+    var canvas = document.getElementById('canvas1');
+	var ctx = canvas.getContext('2d');
+	var img1 = document.createElement('img');
+	var img2;
+	var photoRemove = false;
+	
+	var emailContainer = document.getElementById("emailContainer");
+
+    
+    // Knockout view model ===============================================================
+    function ViewModel(linkData, emailData, nodeData, loggedin, months) {
         var self = this;
+        self.user = loggedin;
+        self.links = ko.observableArray(links);
         // Link Requests
         self.linkRequests = ko.observableArray(linkData);
         self.confirmLink = function() { 
@@ -100,20 +132,315 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		};
 		// Emails
 		self.emails = ko.observableArray(emailData);
+		self.newEmails = ko.computed(function() {
+		    return self.emails().filter(function(d) { return d.newFlag === 1; });
+		});
 		self.currentThread = ko.observable(0);
         self.currentFolderData = ko.computed(function() { 
             if (self.currentThread() === 0) { return self.emails().filter(function(d) { return d.latest === 1; }).reverse(); }
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
-        self.openThread = function(data) {
-            self.currentThread(data.thread);
+       self.currentThread.subscribe(function() {
+           emailContainer.scrollTop = emailContainer.scrollHeight;
+        });
+        self.openThread = function(thread) {
+            socket.emit('emailRead', loggedin, thread.thread);
+            self.currentThread(thread.thread);
+            emailContainer.scrollTop = emailContainer.scrollHeight;
         };
+        self.sendMessage = function() {
+            var content = document.getElementById("emailTypeBox").value;
+            if (content) {
+                var newEmail = {"recip": self.currentThread(), "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": content};
+			    self.emails.push(newEmail);
+			    socket.emit("newEmail", newEmail);
+			    document.getElementById("emailTypeBox").value=null;
+			    //document.getElementById("emailContainer").scrollTop = document.getElementById("emailContainer").scrollHeight - document.getElementById("emailContainer").innerHeight;
+			}
+        }
+        // To be added: Thread delete option
+        //socket.emit('threadDelete', loggedin, thread);
+        
+        // Settings
+        self.settings = ko.observable(settings);
+        self.settingsError = ko.observable();
+        self.usernameEditing = ko.observable(false);
+        self.usernameEditClick = function() {
+            if (self.usernameEditing() === false) { 
+                self.usernameEditing(true); 
+            } else {
+				socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value});	
+				self.settingsError("Saving...");
+            }
+        };
+        self.emailEditing = ko.observable(false);
+        self.emailEditClick = function() {
+            if (self.emailEditing() === false) {
+                self.emailEditing(true);
+            } else {
+   				var newSettings = settings;
+   				newSettings.email = document.getElementById("newEmail").value;
+			    socket.emit("settingsEdit", newSettings); 
+				self.settingsError("Saving...");             
+            }
+        };
+        self.passwordEditing = ko.observable(false);
+        self.passwordEditClick = function() {
+            if (self.passwordEditing() === false) {
+                self.passwordEditing(true);
+            } else {
+				 if (!document.getElementById("oldPassword").value || !document.getElementById("newPassword").value || !document.getElementById("newPassword2").value ) {
+					 self.settingsError("Please enter your current and new passwords")
+				 } else if (document.getElementById("newPassword").value !== document.getElementById("newPassword2").value) {
+					 self.settingsError("New passwords do not match");
+				 } else {
+					 socket.emit("newPassword", {"id": loggedin, "oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
+					 self.settingsError("Saving...");
+				 }
+            }
+        };
+        self.emailPrefClick = function() {
+        		settings.messageemail = document.getElementById("emailOnMessage").checked;
+        		settings.linkemail = document.getElementById("emailOnLink").checked;
+				socket.emit('settingsEdit', settings);
+		};
+	
+        // Nodes
+        self.nodes = ko.observableArray(nodes);
+        self.activeNode = ko.observable(active_node);
+        self.linkedWithActiveNode = ko.computed(function() {
+            var linkWithAN = self.links().filter(function(d) { return ((d.sourceid === self.activeNode() && d.targetid === self.user) || (d.targetid === self.activeNode() && d.sourceid === self.user)); });
+            if (linkWithAN.length > 0) { return true; } else { return false; }
+        });
+        self.activeNodeData = ko.computed(function() {
+            return self.nodes().filter(function(d) { return d.id === self.activeNode(); });
+        });
+        self.emailInviteError = ko.observable();
+        self.inviteButtonClick = function() {
+			var inviteEmail = document.getElementById("emailInviteEdit").value;
+			if (!inviteEmail || inviteEmail.indexOf("@")<1 || inviteEmail.lastIndexOf(".")<inviteEmail.indexOf("@")+2 || inviteEmail.lastIndexOf(".")+2>=inviteEmail)
+			{
+				self.emailInviteError("Please enter a valid email address");
+			} else {
+				//nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
+				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": self.activeNodeData()[0].name, "from": nodeData[arrayObjectIndexOf(nodeData, self.user, "id")].name});	
+			}
+        };
+        self.messageNode = function() {
+            self.currentThread(self.activeNode());
+            hideModules("email"); 
+        };
+        self.requestLink = function() {
+			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
+		};
+        self.editNode = function() {
+        	//var canvas = document.getElementById('canvas1');
+		    //var ctx = canvas.getContext('2d');	  
+	        
+	       // Draw database photo onto profile edit canvas
+		   if (self.activeNodeData()[0].photo) {     
+				//var img1 = document.createElement('img');
+				img1.src="https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
+				img1.onload = function () {
+					ctx.drawImage(img1, x=0, y=0, width=225, height=225);
+				}
+			} else {
+				ctx.font = "15px sans-serif";
+				ctx.fillText("Add photo", 80, 120);
+			}
+            hideModules("nodeEdit");
+        };
+        self.cancelNodeEdit = function() {
+            hideModules("node");
+        };
+        
+        self.saveNodeEdit = function() {
+  		
+  			    var newName = document.getElementById("editName").value;
+  			    var newLocation = document.getElementById("editLocation").value;
+  			    var newDescription = document.getElementById("editDescription").value;
+  		        var newNodeData = {"id": self.activeNode(), "name": newName, "location": newLocation, "description": newDescription};
+  		        img2 = null;
+  					
+				self.nodeEditError("Saving...");
+
+  			    // Send photo to server
+  			    if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("x1").value) {
+					xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if (xhttp.readyState == 4 && xhttp.status == 200) {
+						}
+					};
+					
+					var data = new FormData();
+					data.append('id', self.user);
+					data.append('x1', document.getElementById("x1").value);
+					data.append('y1', document.getElementById("y1").value);
+					data.append('x2', document.getElementById("x2").value);
+					data.append('y2', document.getElementById("y2").value);
+					
+					
+					xhttp.addEventListener("load", function() {
+					    socket.emit('nodeEdit', newNodeData);
+						hideModules("node");
+						self.nodeEditError(null);
+						d3.select("#profilepic").attr("src", "https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo+"?" + new Date().getTime());
+						restart();
+					});
+					
+					if (document.getElementById("photoSelect").files[0]) {
+						data.append('photo', document.getElementById("photoSelect").files[0]);
+				
+						xhttp.open("POST", "/update/photo", true);
+						xhttp.send(data); 
+					} else {
+						data.append('filename', self.activeNodeData()[0].photo);
+						
+						xhttp.open("POST", "/update/photocoords", true);
+						xhttp.send(data); 
+					}
+				 
+				} else {
+					if (photoRemove === true) { newNodeData.photoRemove = true; }
+					socket.emit('nodeEdit', newNodeData);
+					socket.on('nodeEditComplete', function() {
+						hideModules("node");
+						self.nodeEditError(null);
+						restart();
+					});	
+				}
+
+        };
+        self.nodeEditError = ko.observable();
+        self.openPhotoEdit = function() {
+                if (self.activeNodeData()[0].photo && !(img2)) {
+			        // Draw database photo onto photo edit area
+				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
+				    coords = self.activeNodeData()[0].photocoords;
+				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
+				}
+				d3.select("#photoEditWindow").style("display",  "block");
+        };
+        self.cancelPhotoEdit = function() {
+			d3.select("#photoEditWindow").style("display",  "none");
+			document.getElementById("photoSelect").value = null;
+			document.getElementById("photoTypeCustom").checked = true;
+			document.getElementById("photoSelect").disabled = false;
+			d3.select("#photoArea").style("display", "block");
+			d3.select("#photoArea").html("");
+        };
+        self.savePhotoEdit = function() {
+        	if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
+				var reader1 = new FileReader();
+				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
+				reader1.onload = function (oFREvent) {
+					img2 = new Image();
+					img2.src = oFREvent.target.result;
+					if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
+					var sx = Math.round(document.getElementById("x1").value*ratio1);
+					var sy = Math.round(document.getElementById("y1").value*ratio1);
+					var swidth = Math.round((document.getElementById("x2").value-document.getElementById("x1").value)*ratio1);
+					var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
+					ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
+				};		        
+			} else if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
+				img2 = new Image();
+				img2.src = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData[0].photo+"?" + new Date().getTime();
+				if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
+				var sx = Math.round(document.getElementById("x1").value*ratio1);
+				var sy = Math.round(document.getElementById("y1").value*ratio1);
+				var swidth = Math.round((document.getElementById("x2").value-document.getElementById("x1").value)*ratio1);
+				var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
+				ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
+			} else if (document.getElementById("photoTypeNone").checked === true) {
+				ctx.clearRect(0,0,225,225);
+				ctx.font = "15px sans-serif";
+				ctx.fillText("Add photo", 80, 120);
+				photoRemove = true;
+				document.getElementById("photoSelect").value = null;
+			}
+						
+			d3.select("#photoEditWindow").style("display",  "none");
+        };
+        
+        // Links
+        self.activeLink = ko.observable(active_link);
+        self.months = months;
+        self.activeLinkData = ko.computed(function() {
+        	return self.links().filter(
+        		function(d) {
+        			return d.id === self.activeLink();
+        		});
+        });
+        self.confirmLink = function() {
+			socket.emit("linkConfirm", self.activeLink());
+	   };
+	   self.deleteLink = function() {
+			socket.emit('linkDelete', self.activeLink());// Send link delete to server
+  		    active_link = null;
+  		    self.activeLink(null);
+  		    hideModules();		// Clear side panel	
+		    restart();
+	   };
+	   self.editLink = function() {
+	       hideModules("linkEdit");
+	   };
+	   self.cancelLinkEdit = function() {
+	       hideModules("linkInfo");
+	   };
+	   self.saveLinkEdit = function() {
+	       if (document.getElementById("editLinkDescription").value) { var newLinkDescription = document.getElementById("editLinkDescription").value; } else { var newLinkDescription = null; }
+  		   if (document.getElementById("editStartMonth").value) { var newStartMonth = document.getElementById("editStartMonth").value; } else { var newStartMonth = null; }
+  		   if (document.getElementById("editStartYear").value) { var newStartYear = document.getElementById("editStartYear").value; } else { var newStartYear = null; }
+  		    // Send updated info to server
+  		   socket.emit('linkEdit', {"id": self.activeLink(), "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
+  		   hideModules("linkInfo");
+	   };
+	
     }
     
-    var viewModel = new ViewModel(linkRequests, emails, loggedin);
+    var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin, months);
     
     ko.applyBindings(viewModel);
-    // -------------------------
+    
+    // Data Updates ======================================================================
+    
+    socket.on('callToUpdateEmail', function() {
+	    socket.emit('emailRequest');
+	});
+	
+	socket.on('emailUpdate', function(emailUpdate) { 
+	    emails = emailUpdate; 
+	    emailThreader();
+	    viewModel.emails(emails);
+	});
+    
+	socket.on('usernameEditOK', function(newSettings) {
+		settings = newSettings;
+		viewModel.settings(settings);
+		viewModel.usernameEditing(false);
+		viewModel.settingsError(null);
+	});
+	
+	socket.on('settingsUpdate', function(settingsUpdate) {
+		settings = settingsUpdate;
+		viewModel.settings(settings);
+		viewModel.emailEditing(false);
+		viewModel.settingsError(null);	
+	});
+	
+	socket.on('usernameTaken', function() {
+		viewModel.settingsError('That username is already taken');
+	});
+	
+    socket.on('passwordUpdated', function() {
+		viewModel.passwordEditing(false);
+		viewModel.settingsError(null);
+	});
+	 
+	socket.on('incorrectPassword', function() {
+		settingsError.text("Original password is incorrect");
+	});	
     
     socket.on('callToUpdateLinks', function() {
         socket.emit('linksRequest');
@@ -125,6 +452,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    //getLinkSource();
 	    getLinkRequests();
 	    restart();
+	    viewModel.links(links);
 	});
 	
 	socket.on('callToUpdateNodes', function() {
@@ -143,6 +471,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    } 
 	    
 	    nodes = nodesUpdate;
+	    viewModel.nodes(nodes);
 	    restart();
 	});
 	
@@ -163,13 +492,72 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }    
 	    
 	    nodes = nodesUpdate;
+	    viewModel.nodes(nodes);
 	    
 	    links = nodesLinksUpdate.links;
+	    viewModel.links(links);
 	    getLinkRequests();
 	    
 	    restart();
 	});
+	// ===================================================================================
+	
+	// Select sidepanel for later use
+    var sidepanel = d3.select("#sidePanel");
+    var linksModule = d3.select("#linksModule");
+    var emailModule = d3.select("#emailModule");
+    var settingsModule = d3.select("#settingsModule");
+    var nodeModule = d3.select("#nodeModule");
+    var nodeEditModule = d3.select("#nodeEditModule");
+    var linkInfoModule = d3.select("#linkInfoModule");
+    var linkEditModule = d3.select("#linkEditModule");
+    var otherModule = d3.select("#otherModule");
+    
+    function hideModules(module) {
+        if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
+        if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
+        if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
+        if (module === "node") { nodeModule.style("display", "block"); } else { nodeModule.style("display", "none"); }
+        if (module === "nodeEdit") { nodeEditModule.style("display", "block"); } else { nodeEditModule.style("display", "none"); }
+        if (module === "linkInfo") { linkInfoModule.style("display", "block"); } else { linkInfoModule.style("display", "none"); }
+        if (module === "linkEdit") { linkEditModule.style("display", "block"); } else { linkEditModule.style("display", "none"); }
+        if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
+        
+        
+        if (sidepanel.style("display") === "none" && module) {
+        
+        // For possible animated transition of sidepanel
+        /*
+        sidepanel.transition()
+	        .style("width", "0px")
+	        .style("min-width", "0px")
+	        .style("padding", "0px")
+	        .style("border", "none")
+	        .duration(500)
+	      .transition()
+	        .style("margin-left", "0px")
+	        .duration(30)
+	        .delay(470);
+	    */
+            sidepanel.style("display", "block");
+	        resizeForceLayout();
+	    } else if (sidepanel.style("display") === "block" && !module) {
+	        sidepanel.style("display", "none");
+	        resizeForceLayout();  
+	    }
+	    
+    }
+    
+    d3.select("#linkButton").on("click", function() { hideModules("links"); });
+	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
+	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
+    hideModules("node"); // Display user profile on startup
+    
+    d3.select("#polyculeHeader").on("click", hideModules);
+  
+    // Data Visualisation ================================================================
+    
     // Setup force layout
     var force = d3.layout.force()
         .size([width, height])
@@ -180,20 +568,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
         .on("tick", tick);
         
     // Change size of force layout when window is resized
-    window.addEventListener('resize', function() {
-
+    var resizeForceLayout = function() {
         var width = document.getElementById('mainsvg').getBoundingClientRect().width;
         var height = document.getElementById('mainsvg').getBoundingClientRect().height;
-	
 	    force.size([width, height]);
-	
 	    restart();
-
-    } , true);    
-	
-    var emailColor = d3.scale.ordinal()
-	    .range(["lightgray", "white"])
-	    .domain([0,1]);
+	};
+    
+    window.addEventListener('resize', resizeForceLayout, true);    
 
     // Set up zoom and pan facility
     var zoomguide = 1;
@@ -262,17 +644,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
      
     /*zoom1.event(zoomin);*/
     
-    // Select sidepanel for later use
-    var sidepanel = d3.select("#sidePanel");
-    var linksModule = d3.select("#linksModule");
-    var emailModule = d3.select("#emailModule");
-    var otherModule = d3.select("#otherModule");
-    
-    function hideModules(module) {
-        if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
-        if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
-        if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
-    }
+
     
     // Add container for use with zoom function
     var container = d3.select("#container")
@@ -332,26 +704,20 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     restart();
 
-    displayInfo(active_node);    // On startup, display current user info in side panel
-
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
     // mouseDown function deselect node or link
     function mouseDown() {
-
         if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
 
         if (active_node !== null) {
             active_node = null;                 // Deselect active node
-		    hideModules();						// Clear sidepanel
+            viewModel.activeNode(null);		   
 		    restart();                          // Restart force layout
 	    }		
-	
 	    if (active_link !== null) {
 		    active_link=null;					// Deselect active link
-		    hideModules();						// Clear sidepanel
 		    restart();                          // Restart force layout
 	    }
+	    hideModules(); // Clear sidepanel 
     }
 
 
@@ -365,10 +731,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    // Undo current zoom level
 		    translatea=d3.transform(container.attr("transform")).translate;
 		    scalea=d3.transform(container.attr("transform")).scale;
-            // move temporary line
             
-            //sidepanel.html(JSON.stringify(d3.mouse(this))); TEST CODE
-            
+            // move temporary line            
 		    active_line					
 			    .attr("x2", (d3.mouse(this)[0]-translatea[0])/scalea[0])
 			    .attr("y2", (d3.mouse(this)[1]-translatea[1])/scalea[1]);
@@ -406,8 +770,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    var old_node = active_node;
   			    
   			    active_node = new_node;					// Clear active node
+                viewModel.activeNode(active_node);
 
-  			    displayInfo(active_node);
+  			    hideModules("node");
 
   			    connect1=null;						// Cancel connector status
   			    active_line.attr("visibility", "hidden") // Hide connector line
@@ -437,382 +802,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     }
 
-    // Display user info
-    function displayInfo(node) {
-    
-        hideModules("other");
-        
-        otherModule.html("");
-        
-        displayNodeData = nodes[arrayObjectIndexOf(nodes, node, "id")]
-
-        otherModule.html("");
-	
-        // Add Name
-        otherModule.append("h2")
-            .attr("class", "name")
-            .text(displayNodeData.name);
-		
-        // Display user info for members
-        if (displayNodeData.member === 1) {
-        
-            otherModule.append("p")
-                .attr("class", "username")
-                .text("("+displayNodeData.username+")");
-            
-            // Add user photo if one is provided
-            if (displayNodeData.photo !== null) {
-                otherModule.append("img")
-                    .attr("class", "profilepic")
-                    .attr("id", "profilepic")
-                    .attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo+"?" + new Date().getTime());
-            }
-
-            // Add user location
-            otherModule.append("p")
-                .attr("class", "town")
-                .text(displayNodeData.location);
-
-            // Add user description	
-            otherModule.append("p")
-                .attr("class", "description")
-                .text(displayNodeData.description);
-	
-            if (node === loggedin) {
-	
-                otherModule.append("button")
-                    .attr("id", "editnodebutton")
-                    .text("Edit")
-                    .attr("class", "standardButton")
-                    .on("click", function() { editNode(node); });
-	
-            } else {
-            
-                otherModule.append("button")
-                    .attr("id", "sendMessageButton")
-                    .attr("class", "standardButton")
-                    .text("Message")
-                    .on("click", function() { writeEmail(node); });
-
-                // ADD LINK REQUEST BUTTON
-                
-                var currentLink = links.filter(function(d) { return ((d.sourceid === loggedin && d.targetid === node) || (d.targetid === loggedin && d.sourceid === node)); });
-                
-                if (currentLink.length === 0) {
-                
-                	d3.select("#sendMessageButton")
-                	    .style("left", "75px");
-                
-					otherModule.append("button")
-						.attr("id", "requestLinkButton")
-						.attr("class", "standardButton")
-						.text("Request Link")
-						.on("click", function() {
-							links.push({"sourceid": loggedin, "targetid": node, "confirmed": 0, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
-							restart();
-							// Send new link to server
-							socket.emit('newLink', {"sourceid": loggedin, "targetid": node, "confirmed": 0, "requestor": loggedin});
-							displayInfo(node);
-						});
-                }
-                
-            }
-
-	    } else {
-	
-		    if (displayNodeData.invited === 0) {
-	
-                otherModule.append("p")
-			        .attr("class", "description")
-			        .text(displayNodeData.name+" is not yet a member of Polycule. Enter an email address to invite them:");
-		
-				var centerDiv = otherModule.append("div")
-				    .attr("class", "centerDiv");
-				    
-				centerDiv.append("p")
-				    .attr("id", "emailInviteError");
-		
-               centerDiv.append("input")
-                    .attr("id", "emailInviteEdit")
-			        .attr("type", "email");
-		
-               centerDiv.append("input")
-			        .attr("type", "submit")
-			        .attr("value", "Invite")
-			        .attr("id", "emailInviteButton")
-			        .attr("class", "standardButton")
-			        .on("click", function() { 
-			        
-			            var inviteEmail = document.getElementById("emailInviteEdit").value;
-			            
-			            if (!inviteEmail || inviteEmail.indexOf("@")<1 || inviteEmail.lastIndexOf(".")<inviteEmail.indexOf("@")+2 || inviteEmail.lastIndexOf(".")+2>=inviteEmail)
-		                {
-		                    d3.select("#emailInviteEdit").style("border", "1px solid red");
-		                    d3.select("#emailInviteError").text("Please enter a valid email address");
-		                } else {
-				            nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
-				        
-				            socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": nodes[arrayObjectIndexOf(nodes, node, "id")].name, "from": nodes[arrayObjectIndexOf(nodes, loggedin, "id")].name});	
-		                    
-				            otherModule.html("");
-
-				            otherModule.append("h2")
-					            .text(displayNodeData.name);
-				
-				            otherModule.append("p")
-					            .text(displayNodeData.name+" has been invited to join Polycule")
-					            .attr("id", "invitedText");
-					    }
-
-			        });
-	
-		    } else if (displayNodeData.invited === 1) {
-	
-			    otherModule.html("");
-
-			    otherModule.append("h2")
-				    .text(displayNodeData.name);
-				
-			    otherModule.append("p")
-				    .text(displayNodeData.name+" has been invited to join Polycule")
-				    .attr("id", "invitedText");
-	
-		    }
-	    }
-    }
-
-    function editNode(node) {
-  	
-	    hideModules("other");
-	    
-	    otherModule.html("");
-	
-	    centerdiv = otherModule.append("div")
-	        .style("text-align", "center");
-	
-	    // Add Name
-	    centerdiv.append("input")
-            .attr("id", "editName")
-            .attr("class", "editable")
-            .attr("type", "text")
-            .attr("maxlength", 10)
-            .attr("placeholder", "Display Name")
-	        .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].name);
-	    
-	    
-	    centerdiv.append("p")
-            .attr("class", "username")
-            .style("margin-top", "5px")
-            .text("("+displayNodeData.username+")");
-	    
-	    /*
-	    centerdiv.append("input")
-            .attr("id", "editUsername")
-            .attr("class", "editable")
-            .attr("type", "text")
-            .attr("maxlength", 20)
-            .attr("placeholder", "Unique Username")
-	        .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].username);
-		*/	
-		
-		var photoRemove = false;
-		var img2;
-		
-	    // Add user photo
-		centerdiv.append("canvas")
-			.attr("id", "canvas1")
-			.attr("width", 225)
-			.attr("height", 225)
-			.style("cursor", "pointer")
-			.on("click", function() {
-                if (nodes[arrayObjectIndexOf(nodes, node, "id")].photo !== null && !(img2)) {
-			        // Draw database photo onto photo edit area
-				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
-				    coords = nodes[arrayObjectIndexOf(nodes, node, "id")].photocoords;
-				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
-				}
-				d3.select("#photoEditWindow").style("display",  "block");
-			}); 
-			
-		var canvas = document.getElementById('canvas1');
-		var ctx = canvas.getContext('2d');	  
-	        
-	   // Draw database photo onto profile edit canvas     
-	   if (nodes[arrayObjectIndexOf(nodes, loggedin, "id")].photo !== null) {     
-			var img1=document.createElement('img');
-			img1.src="https://polycule.s3.amazonaws.com/final/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
-			img1.onload = function () {
-				ctx.drawImage(img1, x=0, y=0, width=225, height=225);
-			}
-		
-		} else {
-		    ctx.font = "15px sans-serif";
-		    ctx.fillText("Add photo", 80, 120);
-		}
-		
-	    d3.select("#closePhotoEdit")
-	    	.attr("class", "standardButton")
-		    .on("click", function() {
-    		    d3.select("#photoEditWindow").style("display",  "none");
-    		    document.getElementById("photoSelect").value = null;
-    		    document.getElementById("photoTypeCustom").checked = true;
-    		    document.getElementById("photoSelect").disabled = false;
-    		    d3.select("#photoArea").style("display", "block");
-    		    d3.select("#photoArea").html("");
-		    });
-		    
-		d3.select("#savePhotoEdit")
-			.attr("class", "standardButton")
-		    .on("click", function() {
-		        if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
-				    var reader1 = new FileReader();
-					reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
-					reader1.onload = function (oFREvent) {
-						img2 = new Image();
-						img2.src = oFREvent.target.result;
-						if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
-						var sx = Math.round(document.getElementById("x1").value*ratio1);
-						var sy = Math.round(document.getElementById("y1").value*ratio1);
-						var swidth = Math.round((document.getElementById("x2").value-document.getElementById("x1").value)*ratio1);
-						var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
-						ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
-				    };		        
-				} else if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
-					img2 = new Image();
-					img2.src = "https://polycule.s3.amazonaws.com/original/"+nodes[arrayObjectIndexOf(nodes, node, "id")].photo+"?" + new Date().getTime();
-					if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
-					var sx = Math.round(document.getElementById("x1").value*ratio1);
-					var sy = Math.round(document.getElementById("y1").value*ratio1);
-					var swidth = Math.round((document.getElementById("x2").value-document.getElementById("x1").value)*ratio1);
-					var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
-					ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
-				} else if (document.getElementById("photoTypeNone").checked === true) {
-				    ctx.clearRect(0,0,225,225);
-				    ctx.font = "15px sans-serif";
-		            ctx.fillText("Add photo", 80, 120);
-		            photoRemove = true;
-		            document.getElementById("photoSelect").value = null;
-				}
-						    
-    		    d3.select("#photoEditWindow").style("display",  "none");
-		    });
-		
-        /*
-	    window.onclick = function(event) {
-            if (event.target == photoEditWindow) {
-                photoEditWindow.style.display("none");
-            }
-        }
-        */
-
-	    centerdiv.append("br");
-	
-	    var editLocation = centerdiv.append("input")
-            .attr("id", "editLocation")
-		    .attr("class", "editable")
-		    .attr("type", "text")
-		    .attr("placeholder", "Location")
-		    .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].location);
-		    
-		// Google town/city autocomplete
-		var locationInput = document.getElementById('editLocation');
-        var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
-				
-	    var editDescription = centerdiv.append("textarea")
-		    .attr("id", "editDescription")
-		    .attr("class", "editable")
-		    .property("defaultValue", nodes[arrayObjectIndexOf(nodes, node, "id")].description);
-
-  	    otherModule.append("button")
-  	    	.attr("class", "standardButton")
-  	    	.attr("id", "cancelNodeEdit")
-  		    .text("Cancel")
-  		    .on("click", function() {
-  		        document.getElementById("photoSelect").value = null;
-    		    document.getElementById("photoTypeCustom").checked = true;
-    		    document.getElementById("photoSelect").disabled = false;
-    		    img2 = null; 
-  		        displayInfo(node); 
-  		    });
-  			
-  	    otherModule.append("button")
-  	    	.attr("class", "standardButton")
-  	    	.attr("id", "saveNodeEdit")
-  		    .text("Save")
-  		    .on("click", function() {
-  		
-  			    var newName = document.getElementById("editName").value;
-  			    var newLocation = document.getElementById("editLocation").value;
-  			    var newDescription = document.getElementById("editDescription").value;
-  			
-                nodes[arrayObjectIndexOf(nodes, node, "id")].name = newName;
-  			    nodes[arrayObjectIndexOf(nodes, node, "id")].location = newLocation;
-  			    nodes[arrayObjectIndexOf(nodes, node, "id")].description = newDescription;
-  		        
-  		        img2 = null;
-  				
-  				centerdiv.append("p")
-				    .style("color", "red")
-				    .text("Saving...");	
-				    		    
-  			    var newNodeData = {"id": node, "name": newName, "location": newLocation, "description": newDescription};
-  			    
-  			    // Send photo to server
-  			    if (document.getElementById("photoTypeCustom").checked === true /*&& document.getElementById("photoSelect").files[0]*/ && document.getElementById("x1").value) {
-					xhttp = new XMLHttpRequest();
-					xhttp.onreadystatechange = function() {
-						if (xhttp.readyState == 4 && xhttp.status == 200) {
-						}
-					};
-					
-					var data = new FormData();
-					data.append('id', node);
-					data.append('x1', document.getElementById("x1").value);
-					data.append('y1', document.getElementById("y1").value);
-					data.append('x2', document.getElementById("x2").value);
-					data.append('y2', document.getElementById("y2").value);
-					
-					
-					xhttp.addEventListener("load", function() {
-					    socket.emit('nodeEdit', newNodeData);
-					    //socket.on('nodeEditComplete', function() {
-						    displayInfo(node);
-						    d3.select("#profilepic").attr("src", "https://polycule.s3.amazonaws.com/final/"+displayNodeData.photo+"?" + new Date().getTime());
-						    restart();
-					    //});	
-					});
-					
-					if (document.getElementById("photoSelect").files[0]) {
-						data.append('photo', document.getElementById("photoSelect").files[0]);
-				
-						xhttp.open("POST", "/update/photo", true);
-						xhttp.send(data); 
-					} else {
-						data.append('filename', nodes[arrayObjectIndexOf(nodes, node, "id")].photo);
-					
-						xhttp.open("POST", "/update/photocoords", true);
-						xhttp.send(data); 
-					}
-					
-					
-										 
-				} else {
-				/*
-				    if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
-				        newNodeData.photocoords = {"x1": document.getElementById("x1").value, "y1": document.getElementById("y1").value, "x2": document.getElementById("x2").value, "y2": document.getElementById("y2").value};
-				    }
-				    */
-					if (photoRemove === true) { newNodeData.photoRemove = true; }
-					socket.emit('nodeEdit', newNodeData);
-					socket.on('nodeEditComplete', function() {
-						displayInfo(node);
-						restart();
-					});	
-				
-				}		    
-  		    
-  		    });
-    }
 
     // To start animation
     function restart() {
@@ -865,8 +854,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         function selectNode() {
         
             if (d3.event.preventDefault) d3.event.preventDefault();  // Prevent default browser ghosting effect
-		
-            d3.event.stopPropagation();
+            d3.event.stopPropagation(); // Prevent events on background objects
 		
             if (active_node !== null) {
                 nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0;		// Release previously selected node  	
@@ -877,8 +865,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    }
 				
             active_node = d3.select(this)[0][0].__data__.id;
+            viewModel.activeNode(active_node);
 		
-            displayInfo(active_node);		// Display user info in side panel
+            hideModules("node"); // Show node profile in side panel
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
 		
@@ -911,13 +900,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			    if (nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0 || nodes[arrayObjectIndexOf(nodes, new_node, "id")].member === 0) { confirm = 1; } else {confirm = 0}
 
 			    links.push({"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});
+				viewModel.links(links);
 
   			    // Send new link to server
   			    socket.emit('newLink', {"sourceid": active_node, "targetid": new_node, "confirmed": confirm, "requestor": loggedin});
   			    			
   			    active_line.attr("visibility", "hidden"); // Hide temporary line
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
-  			    active_node = null;					// 
+  			    active_node = null;
+  			    viewModel.activeNode(null);					// 
   			    hideModules(); 						// Clear side panel
   
 			    connect1=null;		// Cancel connector line	
@@ -932,721 +923,30 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed = 0; 		// Release selected node
 		    }	
 	    }
-			
+		
+		// User selects a link	
         function selectLink() {
 	
-		    if (d3.event.preventDefault) d3.event.preventDefault();
+		    if (d3.event.preventDefault) d3.event.preventDefault(); // Prevent browser ghosting effect
+		    d3.event.stopPropagation(); // Prevent events for background objects 
 		
-		    d3.event.stopPropagation();
-		
-		    if (active_node !== null) {
-  			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
+		    if (active_node !== null) {   
+  			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0;  // Release selected node		
   			    active_node = null;	
+  			    viewModel.activeNode(null);
   			    connect1=null;
   		    }
   		
-  		    // Retrieve data for selected link
-  		    active_link_data = d3.select(this)[0][0].__data__;
-  		
-  		    // Set active link number
-  		    active_link = active_link_data.id;
-  		
-		    // Display link info in side panel
-		    displayLinkInfo(active_link);
+  		    active_link_data = d3.select(this)[0][0].__data__;		// Retrieve data for selected link
+  		    active_link = active_link_data.id;						// Set active link number
+  		    viewModel.activeLink(active_link);
+
+		    hideModules("linkInfo"); // Display link info in side panel
   			
   		    restart();
 	    }	
-	
-	    function displayLinkInfo(link) { 
-	    
-		    var linkData = links[arrayObjectIndexOf(links, link, "id")];
-  		
-  		    hideModules("other");
-  		    
-  		    otherModule.html("");
-  		
-  		    otherModule.append("h2")
-  			    .text(linkData.source.name+" & "+linkData.target.name);
-  			
-  		    if ((linkData.startmonth !== null && linkData.startmonth !== undefined) || (linkData.startyear !== null && linkData.startyear !== undefined)) {
-  			    otherModule.append("p")
-  				    .attr("class", "linkDates")
-  				    .text("Together since "+months[linkData.startmonth]+" "+linkData.startyear);
-  		    }
-  		
-  		    if (linkData.description !== null) {
-  			    otherModule.append("p")
-  				    .attr("class", "linkDescription")
-  				    .text(linkData.description);
-            }
-  			
-  		    if (linkData.confirmed === 0) {
-  			    otherModule.append("p")
-  				    .attr("id", "linkConfirmation")
-  				    .text("This link is awaiting confirmation");
-  		    }
-  		    
-  		    var centerDiv = otherModule.append("div")
-  		        .attr("class", "centerDiv");
-  		
-  		    if (linkData.source.id === loggedin || linkData.target.id === loggedin) {
-  		
-  	  		    centerDiv.append("input")
-  				    .attr("type", "button")
-  				    .attr("value", "Edit Details")
-  				    .attr("class", "standardButton")
-  				    .attr("id", "editLinkButton")
-  				    .on("click", editLink);
-  		    }	
-  		
-  		    if (linkData.confirmed === 0 && linkData.requestor !== loggedin) {
-  			
-  			    centerDiv.append("button")
-				    .text("Confirm")
-				    .attr("class", "standardButton")
-				    .attr("id", "confirmLinkButton")
-				    .on("click", function() { 
-		
-					    links[arrayObjectIndexOf(links, link, "id")].confirmed = 1;
-					    socket.emit("linkConfirm", linkData.id);
-					
-					    linkind = arrayObjectIndexOf(linkRequests, linkData.id, "id");
-			
-					    linkRequests.splice(linkind, 1);		// Add link to confirmed link data
-			
-					    displayLinkInfo(link);
-					    
-					    
-		
-				    });
-  		    }
-  		
-  			
-  		    if (linkData.sourceid === loggedin || linkData.targetid === loggedin || nodes[arrayObjectIndexOf(nodes, linkData.sourceid, "id")].member === 0 && nodes[arrayObjectIndexOf(nodes, linkData.targetid, "id")].member === 0 ) {
-  			    centerDiv.append("input")
-  				    .attr("type", "button")
-  				    .attr("value", function(d) { if (linkData.confirmed === 1) { return "Delete Link"; } else if ( linkData.requestor === loggedin) { return "Cancel Link request"; } else { return "Deny"; }})
-  				    .attr("class", "standardButton")
-  				    .attr("id", "deleteLinkButton")
-  				    .on("click", deleteLink);
-  			}
-  	
-  	    }	
 
-  	    function deleteLink() {
-  		
-  		    var deleteLinkIndex = arrayObjectIndexOf(links, active_link, "id");
-  		
-  		    if (deleteLinkIndex >= 0) {
-  			    links.splice(deleteLinkIndex, 1);
-  		    }
-  		    
-  		    var linkToDelete = active_link;
-  		
-  		    active_link = null;
-  		    hideModules();		// Clear side panel	
-		    restart();
-		    
-		    // Send link delete to server
-			socket.emit('linkDelete', linkToDelete);  			
-  	    }
-  	
-  	    function editLink() {
-  	
-  		    var linkIndex = arrayObjectIndexOf(links, active_link, "id");
-
-  		    hideModules("other");
-  		    
-  		    otherModule.html("");
-  		
-  		    centerdiv = otherModule.append("div")
-	            .style("text-align", "center");
-  		
-  		    centerdiv.append("h2")
-  			    .text(links[linkIndex].source.name+" & "+links[linkIndex].target.name);
-  			
-  		    centerdiv.append("span")
-  			    .text("Together since ");
-  		
-  		    var month = centerdiv.append("select")
-  			    .attr("id", "editStartMonth")
-  			    .attr("class", "editable");
-  		
-  		    month.append("option")
-  			    .attr("value", null)
-  			    .text("");
-  		
-  		    for (m=0; m<12; m++) {
-  			    month.append("option")
-  				    .text(months[m])
-  				    .attr("value", m)
-  				    .attr("selected", function() { if (m === parseInt(links[linkIndex].startmonth)) { return "selected"; } else { return null; } });
-		    }
-		
-		    var year = centerdiv.append("select")
-			    .attr("id", "editStartYear")
-			    .attr("class", "editable");
-		
-		    year.append("option")
-		  	    .attr("value", null)
-			    .text("");
-		
-		    var thisYear = new Date().getFullYear();
-		
-		    for (y=thisYear; y>=1900; y--) {
-  			    year.append("option")
-  				    .text(y)
-  				    .attr("value", y)
-  				    .attr("selected", function() { if (y === parseInt(links[linkIndex].startyear)) { return "selected"; } else { return null; } });
-		    }
-  		
-  		    centerdiv.append("br");
-  		
-  		    centerdiv.append("input")
-  			    .attr("id", "editLinkDescription")
-  			    .attr("class", "editable")
-  			    .attr("type", "text")
-  			    .attr("placeholder", "Description")
-  			    .property("defaultValue", links[linkIndex].description);
-
-  		
-  		    otherModule.append("button")
-  			    .text("Cancel")
-  			    .attr("class", "standardButton")
-  			    .attr("id", "cancelLinkEdit")
-  			    .on("click", function() { displayLinkInfo(active_link); });
-  			
-  		    otherModule.append("button")
-  			    .text("Save")
-  			    .attr("id", "saveLinkEdit")
-  			    .attr("class", "standardButton")
-  			    .on("click", function() { 
-  				
-  				    if (document.getElementById("editLinkDescription").value) { var newLinkDescription = document.getElementById("editLinkDescription").value; } else { var newLinkDescription = null; }
-  				    if (document.getElementById("editStartMonth").value) { var newStartMonth = document.getElementById("editStartMonth").value; } else { var newStartMonth = null; }
-  				    if (document.getElementById("editStartYear").value) { var newStartYear = document.getElementById("editStartYear").value; } else { var newStartYear = null; }
-  				
-  				    // Update links dataset
-  				    links[linkIndex].description = newLinkDescription;
-  				    links[linkIndex].startmonth = newStartMonth;
-  				    links[linkIndex].startyear = newStartYear;
-  				
-  				    displayLinkInfo(active_link);
-  				    
-  				    // Send updated info to server
-  				    socket.emit('linkEdit', {"id": active_link, "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
-
-  			    });
-  			
-        }
-  	
         force.start();
-    }
-    
-    
-
-
-    // ===== Link Requests =====
-    d3.select("#linkButton").on("click", openLinkRequests);
-	
-    function openLinkRequests() { 
-	    hideModules("links");
-    }
-
-    // ===== Email facility ======
-
-	// For checking if there are any unread messages and if so, highlight mail symbol red
-	var checkEmails = function () {
-
-		d3.select("#mailButton")
-			.on("click", function() { openEmails("Inbox"); })
-			.attr("fill", function(d) { 
-				newEmails = emails.filter(function(d) { if (d.recip === loggedin && d.read === 0) { return true; } else { return false; }});
-				if (newEmails.length > 0) { return "red"; } else { return "black"; } 
-			});
-	}
-
-	// check for unread mails on loading
-	checkEmails();
-
-	// For opening inbox or sent box
-	var openEmails = function (box) {
-/*
-		if (active_node !== null || active_link !== null) {
-			active_node = null;
-			active_link = null;
-			restart();
-		}
-*/
-        viewModel.currentThread(0);
-        hideModules("email");
-
-		emailModule.html("");
-
-		emailModule.append("h2")
-			.text("Messages");
-	
-		var inboxButton = emailModule.append("button")
-			.attr("class", "menubutton")
-			.text("Inbox")
-			.on("click", function() { openEmails("Inbox"); });
-	
-		var sentButton = emailModule.append("button")
-			.attr("class", "menubutton")
-			.text("Sent")
-			.on("click", function() { openEmails("Sent"); });
-	
-		if (box === "Inbox") {
-
-			inboxButton.attr("class", "menubuttonSelected");
-
-			myEmails = emails.filter(function(d) { if (d.recip === loggedin){ return true; } else { return false; }});	// Get emails for current user only NEEDS TO BE MADE SECURE
-
-			myEmails2 = [];
-
-			for (i=0; i<myEmails.length; i++) {
-
-				var arr1 = arrayObjectIndexOf(myEmails2, myEmails[i].sender, "sender");
-		
-				if (arr1 === -1) { 
-					myEmails2.push(myEmails[i]);
-				} else { 
-					myEmails2[arr1] = myEmails[i]; 
-				}
-
-			}
-
-		} else if (box === "Sent") {
-
-			sentButton.attr("class", "menubuttonSelected");
-
-			myEmails = emails.filter(function(d) { if (d.sender === loggedin){ return true; } else { return false; }});	
-	
-			myEmails2 = [];
-
-			for (i=0; i<myEmails.length; i++) {
-
-				var arr1 = arrayObjectIndexOf(myEmails2, myEmails[i].recip, "recip");
-
-				if (arr1 === -1) { 
-					myEmails2.push(myEmails[i]);
-				} else { 
-					myEmails2[arr1] = myEmails[i]; 
-				}
-			}
-		}
-
-		var emailContainer = emailModule.append("div")
-			.attr("class", "emailContainer");
-
-		var emailLine = emailContainer.selectAll("div")
-			.data(myEmails2)
-		.enter().insert("div", ":first-child")
-			.attr("class", "email")
-			.style("background-color", function(d) { if (box === "Inbox" && d.read === 0) { return "lightgray"; } else { return null; }})
-		.on("click", function(d) { if (box === "Inbox") { openThread(d.sender); } else if (box === "Sent") { openThread(d.recip); }});
-
-		if (box === "Inbox") {
-			emailLine.append("h3")
-				.text(function(d) { if (arrayObjectIndexOf(nodes, d.sender, "id") !== -1) { return nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name; } else { return "Old User"; } });
-			emailLine.append("span")
-				.text(function(d) { if (arrayObjectIndexOf(nodes, d.sender, "id") !== -1) { return " ("+nodes[arrayObjectIndexOf(nodes, d.sender, "id")].username+")"; } else { return ""; } });
-		} else if (box === "Sent") {
-			emailLine.append("h3")
-				.text(function(d) { if (arrayObjectIndexOf(nodes, d.recip, "id") !== -1) { return nodes[arrayObjectIndexOf(nodes, d.recip, "id")].name; } else { return "Old User"; } });
-			emailLine.append("span")
-				.text(function(d) { if (arrayObjectIndexOf(nodes, d.recip, "id") !== -1) { return " ("+nodes[arrayObjectIndexOf(nodes, d.recip, "id")].username+")"; } else { return ""; } });
-		}
-	
-		emailLine.append("p")
-			.text(function(d) { return d.content; });
-
-	}
-
-	// ===== Opening selected email thread =====
-	var openThread = function(thread) {
-
-		var threadEmails  = emails.filter(function(d) { if ((d.sender === thread && d.recip === loggedin) || (d.sender === loggedin && d.recip === thread)) { return true; } else { return false; } });
-		
-		// Update read status of emails on database
-		socket.emit('emailRead', loggedin, thread);
-
-		hideModules("other");
-		
-		otherModule.html("");
-	
-		otherModule.append("h2")
-			.text("Messages");
-	
-		otherModule.append("button")
-			.attr("class", "menubutton")
-			.text("Inbox")
-			.on("click", function() { openEmails("Inbox"); });
-	
-		otherModule.append("button")
-			.attr("class", "menubutton")
-			.text("Sent")
-			.on("click", function() { openEmails("Sent"); });
-	
-		var emailContainer = otherModule.append("div")
-			.attr("class", "emailContainer");
-
-		var emailLine = emailContainer.selectAll("div")
-			.data(threadEmails)
-		.enter().insert("div", ":first-child")
-			.attr("class", "fullEmail");
-
-		emailLine.append("h3")
-			.text(function(d) { if (arrayObjectIndexOf(nodes, d.sender, "id") !== -1) { return nodes[arrayObjectIndexOf(nodes, d.sender, "id")].name; } else { return "Old User"; } } );
-	
-		emailLine.append("p")
-			.text(function(d) { return d.content; });
-
-        if (arrayObjectIndexOf(nodes, thread, "id") !== -1) {
-			otherModule.append("button")
-				.attr("id", "replyButton")
-				.text("Reply")
-				.attr("class", "standardButton")
-				.on("click", function() { writeEmail(thread); });
-		}
-
-		otherModule.append("button")
-			.attr("id", "deleteButton")
-			.text("Delete thread")
-			.attr("class", "standardButton")
-			.on("click", function() {
-				for (i=0; i<threadEmails.length; i++) {
-					emails.splice(arrayObjectIndexOf(emails, threadEmails[i].id, "id"), 1);
-				}
-				socket.emit('threadDelete', loggedin, thread);
-				openEmails("Inbox");
-	
-			});
-	
-	}
-
-	// ====== Write email =====
-	var writeEmail = function (recipient) {
-	
-	    hideModules("other");
-
-		otherModule.html("");
-	
-		otherModule.append("h2")
-			.text("Messages");
-	
-		otherModule.append("button")
-			.attr("class", "menubutton")
-			.text("Inbox")
-			.on("click", function() { openEmails("Inbox"); });
-	
-		otherModule.append("button")
-			.attr("class", "menubutton")
-			.text("Sent")
-			.on("click", function() { openEmails("Sent"); });
-			
-		otherModule.append("br");
-		otherModule.append("br");
-	
-		otherModule.append("h3")
-			.attr("id", "newEmailRecipName")
-			.text(nodes[arrayObjectIndexOf(nodes, recipient, "id")].name);
-		
-		otherModule.append("span")
-			.attr("id", "newEmailRecipUsername")
-			.text(" ("+nodes[arrayObjectIndexOf(nodes, recipient, "id")].username+")");
-		
-		otherModule.append("textarea")
-			.attr("id", "newEmailContent");
-
-		otherModule.append("button")
-			.text("Cancel")
-			.attr("class", "standardButton")
-			.on("click", function(d) {
-				if (active_node !== null) { displayInfo(active_node); } else { openEmails("Inbox"); }
-			});
-	
-		otherModule.append("button")
-			.text("Send")
-			.attr("class", "standardButton")
-			.on("click", function() {
-				
-				// Add new email to local emails database
-				//emails.push({"id": emails[emails.length-1].id+1, "recip": recipient, "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": document.getElementById("newEmailContent").value});
-	
-				// Send new email to server
-				var newEmail = {"recip": recipient, "sender": loggedin, "read": 0, "delrecip": 0, "delsender": 0, "content": document.getElementById("newEmailContent").value};
-				socket.emit("newEmail", newEmail);
-				
-				// After sending, open inbox or go back to active node
-				//if (active_node !== null) { displayInfo(active_node); } else { openEmails("Inbox"); }
-				openEmails("Inbox");
-	
-			});
-	};
-
-    // ====== Settings ======
- 
-	d3.select("#settingsButton").on("click", openSettings); 		
-
-	function openSettings() {
-	
-	    hideModules("other");
-
-		otherModule.html("");
-
-		otherModule.append("h2")
-			.text("Settings");
-			
-		var settingsError = otherModule.append("p")
-		    .attr("id", "settingsError");
-		
-		var changeUsername = otherModule.append("div")
-			.attr("class", "settingsLine");
-		
-		changeUsername.append("h3")
-			.text("Unique Username");
-		
-		changeUsername.append("html")
-			.text(settings.username);
-		
-		changeUsername.append("input")
-			.attr("class", "changeButton")
-			.attr("type", "button")
-			.attr("value", "Edit")
-			.on("click", function() {
-		
-				changeUsername.html("");
-		
-				changeUsername.append("h3")
-					.text("Unique Username");
-		
-				changeUsername.append("input")
-					.attr("id", "newUsername")
-					.attr("type", "text")
-					.attr("placeholder", "New username")
-					.property("defaultValue", settings.username);
-		
-				changeUsername.append("input")
-					.attr("class", "changeButton")
-					.attr("type", "button")
-					.attr("value", "Save")
-					.on("click", function() {
-				
-						//settings.username = document.getElementById("newUsername").value;
-						socket.emit('usernameEdit', {"id": loggedin, "username": document.getElementById("newUsername").value});
-						
-						settingsError.text("Saving...");
-						
-						socket.on('usernameEditOK', function(newSettings) {
-							settings = newSettings;
-							openSettings();
-						});
-						
-						socket.on('usernameTaken', function() {
-						    settingsError.text('That username is already taken');
-						});				
-					});
-				
-			});
-	
-		var changeEmail = otherModule.append("div")
-			.attr("class", "settingsLine");
-		
-		changeEmail.append("h3")
-			.text("Contact Email");
-		
-		changeEmail.append("html")
-			.text(settings.email);
-		
-		changeEmail.append("input")
-			.attr("class", "changeButton")
-			.attr("type", "button")
-			.attr("value", "Edit")
-			.on("click", function() {
-		
-				changeEmail.html("");
-		
-				changeEmail.append("h3")
-					.text("Contact Email");
-		
-				changeEmail.append("input")
-					.attr("type", "email")
-					.property("defaultValue", settings.email)
-					.attr("id", "newEmail");
-		
-				changeEmail.append("input")
-					.attr("class", "changeButton")
-					.attr("type", "button")
-					.attr("value", "Save")
-					.on("click", function() {
-					    
-					    var newSettings = settings;
-					    newSettings.email = document.getElementById("newEmail").value;
-					    
-					    socket.emit("settingsEdit", newSettings);
-					    
-					    settingsError.text("Saving...");
-					    
-						socket.on('settingsUpdate', function(settingsUpdate) {
-							settings = settingsUpdate;
-							openSettings();	
-						});
-						
-					});
-		
-			});	
-	
-		var changePassword = otherModule.append("div")
-			.attr("class", "settingsLine");
-		
-		changePassword.append("h3")
-			.text("Password");
-		
-		changePassword.append("html")
-			.text("**********");
-		
-		changePassword.append("input")
-			.attr("class", "changeButton")
-			.attr("type", "button")
-			.attr("value", "Edit")
-			.on("click", function() {
-		
-				changePassword.html("");
-		
-				changePassword.append("h3")
-					.text("Password");
-				
-				changePassword.append("input")
-					.attr("placeholder", "Old password")
-					.attr("type", "password")
-					.attr("id", "oldPassword")
-					.attr("name", "oldPassword");
-				
-				changePassword.append("br");
-				
-				changePassword.append("input")
-					.attr("placeholder", "New password")
-					.attr("type", "password")
-					.attr("id", "newPassword")
-					.attr("name", "newPassword");
-				
-				changePassword.append("br");
-				
-				changePassword.append("input")
-					.attr("placeholder", "Re-enter new password")
-					.attr("type", "password")
-					.attr("id", "newPassword2")
-					.attr("name", "newPassword2");
-				
-				changePassword.append("input")
-					.attr("class", "changeButton")
-					.attr("type", "button")
-					.attr("value", "Save")
-					.on("click", function() {
-						 // TO BE ADDED - send new password to server
-						 if (!document.getElementById("oldPassword").value || !document.getElementById("newPassword").value || !document.getElementById("newPassword2").value ) {
-						     settingsError.text("Please enter your current  and new passwords")
-						 } else if (document.getElementById("newPassword").value !== document.getElementById("newPassword2").value) {
-						     settingsError.text("New passwords do not match");
-						 } else {
-						     socket.emit("newPassword", {"id": loggedin, "oldPassword": document.getElementById("oldPassword").value, "newPassword": document.getElementById("newPassword").value});
-						     
-						     settingsError.text("Saving...");
-						     
-						     socket.on('passwordUpdated', function() {
-						        openSettings();
-						     });
-						     
-						     socket.on('incorrectPassword', function() {
-						         settingsError.text("Original password is incorrect");
-						     });
-						
-						 }
-					});
-			});
-	
-		var changeContactPrefs = otherModule.append("div")
-			.attr("class", "settingsLine");
-		
-		changeContactPrefs.append("h3")
-			.text("Contact Preferences");
-		
-		changeContactPrefs.append("input")
-			.attr("type", "checkbox")
-			.property("checked", settings.messageemail)
-			.attr("id", "emailOnMessage")
-			.on("change", function() { 
-				settings.messageemail = document.getElementById("emailOnMessage").checked;
-				socket.emit('settingsEdit', settings);
-			});
-		
-		changeContactPrefs.append("span")
-			.text("Send email when message received");
-		
-		changeContactPrefs.append("br");	
-		
-		changeContactPrefs.append("input")
-			.attr("type", "checkbox")
-			.property("checked", settings.linkemail)
-			.attr("id", "emailOnLink")
-			.on("change", function() { 
-				settings.linkemail = document.getElementById("emailOnLink").checked;
-				socket.emit('settingsEdit', settings);
-			});
-		
-		changeContactPrefs.append("span")
-			.text("Send email when link requested");
-			
-		otherModule.append("input")
-			.attr("type", "button")
-			.attr("id", "deleteAccount")
-			.attr("value", "Delete account")
-			.attr("class", "standardButton")
-			.on("click", function() {
-				if (window.confirm("Are you sure you want to delete your account? This action cannot be reversed.")) {
-				    //socket.emit('nodeDelete');
-				    window.location = '/delete';
-				}
-			});
-			
-		otherModule.append("input")
-			.attr("type", "button")
-			.attr("id", "logout")
-			.attr("value", "Sign out")
-			.attr("class", "standardButton")
-			.on("click", function() {
-			    window.location = '/logout';
-			});
-			
-			
-	}	
-	
-	
-
-/* ===== Help Facility ===== */
-/*
-    d3.select("#helpButton").on("click", openContact); 
-
-    function openContact() {
-    
-    	sidepanel.html("");
-
-        sidepanel.append("h2")
-    	    .text("Help");
-    	
-        sidepanel.append("textarea")
-        	.attr("width", "100%");
-        	
-        sidepanel.append("br");
-    
-        sidepanel.append("input")
-    	    .attr("type", "button")
-    	    .attr("value", "Send");    	
-
-    }
-*/
+    }	
 
 });
-
-

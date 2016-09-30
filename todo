@@ -3,12 +3,24 @@ High Priority (Before Poly Day):
 	!!! If user adjusts coordinates of profile pic?
 	!!! Safari animation issue
 	!!! Fix www.
-	Check invite button bug
 	
 	Phone friendly version
 	
+	Check bugs:
+	
+	size of scroll conversation box
+	get scroll to stay at bottom
+
+	
+	default value for month/year drop-downs
+	
+	google maps issue (if user goes to edit location then taps main screen)
+	
+		
+	
 
 Medium Priority (Hopefully before Poly Day):
+	Delete conversation option in messages
     Make so that selecting location from list is compulsory
 	Make emails more attractive
 	Standard signups

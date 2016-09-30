@@ -34,6 +34,10 @@ body {
     flex-direction: row;
 }
 
+.pointy:hover { 
+    cursor: pointer; 
+}
+
 /* ===== Top Banner ===== */
 #topBanner {
     position: relative;
@@ -49,6 +53,7 @@ h1 {
     color: black;
     font-family: 'Sarpanch', sans-serif;
     font-size: 50px;
+    cursor: pointer;
 }
 
 #linkButton {
@@ -99,9 +104,14 @@ h1 {
     min-width: 425px;
     margin-left: 10px;
     margin-bottom: 10px;
+    margin-right: 10px;
     border-radius: 10px;
     border: 2px solid white;
     background-color: white;
+}
+
+.node:hover {
+    cursor: pointer;
 }
 
 .node text {
@@ -141,6 +151,10 @@ h1 {
     stroke-dasharray: 2,2;
 }
 
+.link:hover, .unselectedLink:hover, .selectedLink:hover, .unconfirmedLink:hover {
+    cursor:pointer;
+}
+
 #connectorLine {
     stroke-width: 4;
     stroke: red;
@@ -161,7 +175,6 @@ h1 {
     border-radius: 10px;
     border: 2px solid white;
     padding: 10px;
-    margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
     padding-top: 1px;
@@ -186,6 +199,7 @@ h2 {
 
 .standardButton:hover {
     background-color: darkgray;
+    cursor: pointer;
 }
 
 /* ===== Profile display page ===== */
@@ -217,7 +231,7 @@ h2 {
 #sendMessageButton {
     position: absolute;
     bottom: 10px;
-    left: 125px;
+    left: 75px;
 }
 
 #requestLinkButton {
@@ -296,6 +310,7 @@ h2 {
 canvas {
     border-radius: 5px;
     border: 2px solid black;
+    cursor: pointer;
 }
 
 #editLocation {
@@ -388,9 +403,43 @@ canvas {
 }
 
 .emailContainer {
+    border-top: 2px solid black;
     margin-top: 10px;
     overflow-y: auto;
-    height: 450px;
+	height: 400px;
+
+}
+
+.emailTypeBox {
+    position: absolute;
+    bottom: 40px;
+    width: 300px;
+    resize: none;
+    font-family: sans-serif;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.emailSendButton {
+    position: absolute;
+    bottom: 10px;
+    width: 300px;
+    height: 25px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    /*margin-bottom: 10px;*/
+    font-size: 12px;
+    font-weight: bold;
+    background-color: lightgray;
+}
+
+.emailSendButton:hover {
+    background-color: gray;
+}
+
+#backToMessages {
+    font-weight: bold;
+    font-size: 14px;
 }
 
 /* ===== Inbox and Sent Box ===== */
@@ -405,6 +454,7 @@ canvas {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .email h3 {
     font-size: 14px;
     display: inline;
@@ -446,6 +496,17 @@ canvas {
 
 #replyButton, #deleteButton {
     margin-top: 10px;
+}
+
+.threadName {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.threadUsername {
+     font-size: 14px;
+     text-align: center;
 }
 
 
@@ -493,8 +554,14 @@ canvas {
 }
 
 /* Link Edit page */
-#editStartMonth, #editStartYear {
+#editStartMonth {
     display: inline;
+    width: 90px;
+}
+
+#editStartYear {
+    display: inline;
+    width: 50px;
 }
 
 #editLinkDescription {
@@ -517,6 +584,10 @@ canvas {
     margin-top: 5px;
 }
 
+.settingsLine p {
+    margin-bottom: 5px;
+}
+
 .changeButton {
     position: absolute;
     right: 5px;
@@ -531,4 +602,35 @@ canvas {
     text-align: center;
     font-size: 12px;
     color: red;
+}
+
+
+@media only screen and (max-device-width: 500px) {
+  #mainsvg {
+     min-width: 0px;
+     min-height: 100%;
+     max-width: 100%;
+     border-radius: 0px;
+     border: none;
+     margin: 0px;
+  }
+  
+  #sidePanel {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+    min-height: 100%;
+    margin: 0px;
+    border-radius: 0px;
+  }
+  
+  .emailTypeBox {
+    width: 90%;
+  }
+  
+  .emailSendBox {
+    width: 90%;
+  }
+  
+
 }

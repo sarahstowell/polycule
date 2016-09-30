@@ -2,6 +2,7 @@
 <meta charset="utf-8">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Sarpanch:900' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
@@ -20,7 +21,7 @@
 
 <div id="wrapper">
 	<div id="topBanner">
-		<h1>polycule</h1>
+		<h1 id="polyculeHeader">polycule</h1>
 
 		<!-- For when help facility is added
 		<svg id="helpButton" width="30" height="30" viewBox="0 0 8 8">
@@ -28,15 +29,15 @@
 		</svg>
 		-->
 
-		<svg id="settingsButton" class="topButtons" width="30" height="30" viewBox="0 0 8 8">
+		<svg id="settingsButton" class="topButtons, pointy" width="30" height="30" viewBox="0 0 8 8" >
 		  <path d="M3.5 0l-.5 1.19c-.1.03-.19.08-.28.13l-1.19-.5-.72.72.5 1.19c-.05.1-.09.18-.13.28l-1.19.5v1l1.19.5c.04.1.08.18.13.28l-.5 1.19.72.72 1.19-.5c.09.04.18.09.28.13l.5 1.19h1l.5-1.19c.09-.04.19-.08.28-.13l1.19.5.72-.72-.5-1.19c.04-.09.09-.19.13-.28l1.19-.5v-1l-1.19-.5c-.03-.09-.08-.19-.13-.28l.5-1.19-.72-.72-1.19.5c-.09-.04-.19-.09-.28-.13l-.5-1.19h-1zm.5 2.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
 		</svg>
 
-		<svg id="mailButton" class="topButtons" width="30" height="30" viewBox="0 0 8 8">
-		  <path d="M0 0v1l4 2 4-2v-1h-8zm0 2v4h8v-4l-4 2-4-2z" transform="translate(0 1)" />
+		<svg id="mailButton" class="topButtons, pointy" width="30" height="30" viewBox="0 0 8 8" >
+		  <path d="M0 0v1l4 2 4-2v-1h-8zm0 2v4h8v-4l-4 2-4-2z" transform="translate(0 1)" data-bind="style: { fill: newEmails().length > 0 ? 'red' : 'black' }" />
 		</svg>
 
-		<svg id="linkButton" class="topButtons" width="30" height="30" viewBox="0 0 8 8" data-bind="style: { fill: linkRequests().length > 0 ? 'red' : 'black' }">
+		<svg id="linkButton" class="topButtons, pointy" width="30" height="30" viewBox="0 0 8 8" data-bind="style: { fill: linkRequests().length > 0 ? 'red' : 'black' }" >
 		  <path d="M5.88.03c-.18.01-.36.03-.53.09-.27.1-.53.25-.75.47a.5.5 0 1 0 .69.69c.11-.11.24-.17.38-.22.35-.12.78-.07 1.06.22.39.39.39 1.04 0 1.44l-1.5 1.5c-.44.44-.8.48-1.06.47-.26-.01-.41-.13-.41-.13a.5.5 0 1 0-.5.88s.34.22.84.25c.5.03 1.2-.16 1.81-.78l1.5-1.5c.78-.78.78-2.04 0-2.81-.28-.28-.61-.45-.97-.53-.18-.04-.38-.04-.56-.03zm-2 2.31c-.5-.02-1.19.15-1.78.75l-1.5 1.5c-.78.78-.78 2.04 0 2.81.56.56 1.36.72 2.06.47.27-.1.53-.25.75-.47a.5.5 0 1 0-.69-.69c-.11.11-.24.17-.38.22-.35.12-.78.07-1.06-.22-.39-.39-.39-1.04 0-1.44l1.5-1.5c.4-.4.75-.45 1.03-.44.28.01.47.09.47.09a.5.5 0 1 0 .44-.88s-.34-.2-.84-.22z"/>
 		</svg>
 	</div>
@@ -46,8 +47,10 @@
 		    <g id="container"></g>
 		    <g id="zoomin"></g>
 		</svg>
-
+		
 		<div id="sidePanel">
+		
+			<!-- Link Requests -->
 		    <div id="linksModule" style="display: none;">
 		        <h2>Link Confirmation Requests</h2>
 		        <p id="noLinkRequests" data-bind="visible: linkRequests().length === 0">You have no requests at this time</p>
@@ -62,16 +65,126 @@
 		            
 		        </div>
 		    </div>
+		    
+		    <!-- Email -->
 		    <div id="emailModule" style="display: none;">
-		        <h2>Messages</h2>
-		        <div class="emailContainer" data-bind="foreach: currentFolderData">
-		            <div class="email" data-bind="style: {backgroundColor: read === 0 ? 'lightgray' : null }, click: $parent.openThread.bind($data)">
-		                <h3 data-bind="text: sender"></h3>
-		                <span data-bind="text: sender"></span>
+		        <h2 data-bind="text: currentThread() ? currentFolderData()[0].threadName : 'Messages'"></h2>
+		        <span id="backToMessages" class="pointy" data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Chats</span>
+		        <div id="emailContainer" class="emailContainer" data-bind="foreach: currentFolderData">
+		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? '#F0F0F0' : null, color: fromServer === 1 ? 'black' : 'gray' }, click: $parent.openThread.bind($data)">
+		                <h3 data-bind="text: $root.currentThread() === 0 ? threadName : senderName"></h3>
+		                <span data-bind="visible: $root.currentThread() === 0, text: threadUsername === '' ? '' : '('+threadUsername+')'"></span>
 		                <p data-bind="text: content"></p>
 		            </div>
 		        </div>
+		        <textarea id="emailTypeBox" class="emailTypeBox" data-bind="visible: currentThread() !== 0"></textarea>
+		        <br/>
+		        <button class="emailSendButton" data-bind="visible: currentThread() !== 0, click: sendMessage">Send</button>
 		    </div>
+		    
+		    <!-- Settings -->
+		    <div id="settingsModule" style="display: none">
+		        <h2>Settings</h2>
+		        <p id="settingsError" data-bind="text: settingsError()"></p>
+		        <div class="settingsLine">
+		            <h3>Unique Username</h3>
+		            <p data-bind="text: settings().username, visible: !usernameEditing()"></p>
+		            <input type="text" id="newUsername" placeholder="New Username" data-bind="value: settings().username, visible: usernameEditing()">
+		            <input type="button" class="changeButton" value="Edit" data-bind="value: usernameEditing() ? 'Save' : 'Edit', click: usernameEditClick">
+		        </div>
+		        <div class="settingsLine">
+		            <h3>Contact Email</h3>
+		            <p data-bind="text: settings().email, visible: !emailEditing()"></p>
+		            <input type="email" id="newEmail" placeholder="New Email Address" data-bind="value: settings().email, visible: emailEditing()">
+		            <input type="button" class="changeButton" value="Edit" data-bind="value: emailEditing() ? 'Save' : 'Edit', click: emailEditClick">
+		        </div>
+		        <div class="settingsLine">
+		            <h3>Password</h3>
+		            <p data-bind="visible: !passwordEditing()">***</p>
+		            <input type="password" id="oldPassword" placeholder="Old Password" data-bind="visible: passwordEditing() && !settings().facebookid">
+		            <br data-bind="visible: passwordEditing()">
+		            <input type="password" id="newPassword" placeholder="New Password" data-bind="visible: passwordEditing()">
+		            <br data-bind="visible: passwordEditing()">
+		            <input type="password" id="newPassword2" placeholder="Confirm New Password" data-bind="visible: passwordEditing()">
+		            <input type="button" class="changeButton" value="Edit" data-bind="value: passwordEditing() ? 'Save' : 'Edit', click: passwordEditClick">
+		        </div>
+		        <div class="settingsLine">
+		            <h3>Contact Preferences</h3>
+		            <input type="checkbox" id="emailOnMessage" data-bind="checked: settings().messageemail, click: emailPrefClick">
+		            <span>Send email when message received</span>
+		            <br/>
+		            <input type="checkbox" id="emailOnLink" data-bind="checked: settings().linkemail, click: emailPrefClick">
+		            <span>Send email when link requested</span>
+		        </div>
+		        <input type="button" id="deleteAccount" class="standardButton" value="Delete Account" onclick="
+		            if (window.confirm('Are you sure you want to delete your account? This action cannot be reversed.')) {
+				        window.location = '/delete';
+				    }">
+		        <input type="button" id="logout" class="standardButton" value="Logout" onclick="window.location = '/logout';">
+		    </div>
+		    
+		    <!-- Node Display -->
+		    <div id="nodeModule" style="display: none;" data-bind="with: activeNodeData()[0]">
+		        <h2 class="name" data-bind="text: name"></h2>
+		        <p class="username" data-bind="text: '('+username+')'"></p>
+		        <img class="profilepic" id="profilepic" data-bind="visible: photo, attr: {src: photo ? 'https://polycule.s3.amazonaws.com/final/'+photo+'?' + new Date().getTime() : null}"/>
+		        <p class="town" data-bind="text: location"></p>
+		        <p class="description" data-bind="visible: description, text: description"></p>
+		        <button id="editnodebutton" class="standardButton" data-bind="visible: id === $root.user, click: $root.editNode">Edit</button>
+		        <button id="sendMessageButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user, click: $root.messageNode">Message</button>
+		        <button id="requestLinkButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user && !$root.linkedWithActiveNode(), click: $root.requestLink">Request Link</button>
+		       
+		        <p class="description" data-bind="visible: member === 0 && invited === 0, text:  name+' is not yet a member of Polycule. Enter an email address to invite them:'"></p>
+		        <p id="emailInviteError" data-bind="visible: member === 0 && invited === 0 && $root.emailInviteError(), text: $root.emailInviteError()"></p>
+		        <input type="email" id="emailInviteEdit" data-bind="visible: member === 0 && invited === 0, style: {border: $root.emailInviteError() ? '1px solid red' : '1px solid gray'}"/>
+		        <input type="submit" id="emailInviteButton" class="standardButton" value="Invite" data-bind="visible: member === 0 && invited === 0, click: $root.inviteButtonClick"/>
+		      
+		        <p id="invitedText" data-bind="visible: member === 0 && invited === 1, text: name+' has been invited to join Polycule'"></p>
+		    </div>
+            
+		    <div id="nodeEditModule" style="display: none;" data-bind="with: activeNodeData()[0]">
+		        <div class="centerDiv">
+		    	    <input id="editName" class="editable" maxlength=10 placeholder="Display Name" data-bind="value: name">
+		            <p class="username" style="margin-top: 5px" data-bind="text: '('+username+')'"></p>
+		            <!--
+		            <img class="profilepic" id="profilepic" data-bind="visible: photo, attr: {src: photo ? 'https://polycule.s3.amazonaws.com/final/'+photo+'?' + new Date().getTime() : null}"/>    
+		            -->
+		            <canvas id="canvas1" width=225 height=225 data-bind="click: $root.openPhotoEdit"></canvas>
+		            <br/>
+		            <input id="editLocation" type="text" class="editable" placeholder="Town or City" data-bind="visible: location, value: location">
+                    <textarea id="editDescription" class="editable" data-bind="value: description"></textarea>
+                    <p id="nodeEditError" data-bind="text: $root.nodeEditError()" style="color: red;"></p>
+                </div>
+		        <button id="cancelNodeEdit" class="standardButton" data-bind="click: $root.cancelNodeEdit">Cancel</button>
+		        <button id="saveNodeEdit" class="standardButton" data-bind="click: $root.saveNodeEdit">Save</button>
+		    </div>
+		    
+		    
+		    <!-- Link Display -->
+		    <div id="linkInfoModule" style="display:none;" data-bind="with: activeLinkData()[0]">
+		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
+		        <p class="linkDates" data-bind="visible: startyear, text: 'Together since '+$root.months[startmonth]+' '+startyear"></p>
+		        <p class="linkDescription" data-bind="text: description, visible: description"></p>
+		        <p id="linkConfirmation" data-bind="visible: confirmed !== 1">This link is awaiting confirmation</p>
+		        <div class="centerDiv">
+		            <button id="editLinkButton" class="standardButton" data-bind="visible: (sourceid === $root.user || targetid === $root.user), click: $root.editLink">Edit Details</button>
+		            <button id="confirmLinkButton" class="standardButton" data-bind="click: $root.confirmLink, visible: confirmed !== 1 && requestor !== $root.user">Confirm</button>
+		            <button id="deleteLinkbutton" class="standardButton" data-bind="click: $root.deleteLink, text: confirmed === 1 ? 'Delete Link' : requestor !== $root.user ? 'Deny' : 'Cancel Link Request' , visible: (sourceid === $root.user || targetid === $root.user)"></button>
+		        </div>
+		    </div>
+		    
+		    <div id="linkEditModule" style="display:none;" data-bind="with: activeLinkData()[0]">
+		        <h2 data-bind="text: source.name+' & '+target.name"></h2>
+		        <div class="centerDiv">		        
+		            <span class="linkDates" >Together since:</span>
+		            <select id="editStartMonth" class="editable"></select>
+		            <select id="editStartYear" class="editable"></select>
+		        	<input type="text" id="editLinkDescription" class="editable" data-bind="value: description" placeholder="Description">
+		            <button id="cancelLinkEdit" class="standardButton" data-bind="click: $root.cancelLinkEdit">Cancel</button>
+		            <button id="saveLinkEdit" class="standardButton" data-bind="click: $root.saveLinkEdit">Save</button>
+		        </div> 
+		    </div>
+		    
 		    <div id="otherModule">
 		    </div>
 		</div>
@@ -96,8 +209,8 @@
     <input type="number" class="hiddenInput" id="width" name="width" />
     <input type="number" class="hiddenInput" id="height" name="height" />
     
-    <input type="button" id="closePhotoEdit" value="Cancel"/>
-    <input type="button" id="savePhotoEdit" value="Save"/>
+    <input type="button" id="closePhotoEdit" value="Cancel" data-bind="click: cancelPhotoEdit"/>
+    <input type="button" id="savePhotoEdit" value="Save" data-bind="click: savePhotoEdit"/>
 </div>
 
 </body>

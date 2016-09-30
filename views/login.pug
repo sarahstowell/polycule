@@ -1,6 +1,7 @@
 doctype html
 html
 	head
+		meta(name="viewport" content="width=device-width, initial-scale=1")
 		script(type="text/javascript" src="//d3js.org/d3.v3.min.js")
 		link(href='https://fonts.googleapis.com/css?family=Sarpanch:900' rel='stylesheet' type='text/css')
 		link(href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css')
@@ -9,9 +10,11 @@ html
 		svg(id="backsvg")
 		div(id="logindiv")
 			h1 polycule
+			p(id="tagline") The Social Network for Polyamorous People
 			form(action="/login" method="post" name="loginForm")
 				p(id="errorMessage")=error
 				input(id="username" type="text" name="username" placeholder="Username or Email" class="inputBox")
+				br
 				input(id="password" type="password" name="password" placeholder="Password" class="inputBox")
 				br
 				input(type="submit" value="Login" class="submitButton")
