@@ -611,11 +611,9 @@ canvas {
   }
   
   #sidepanel {
-    position: absolute;
-    left: 0px;
-    top: 0px;
     min-width: 100%;
     max-width: 100%;
+    width: 100%;
     min-height: 100%;
   }
 
