@@ -128,7 +128,7 @@
 		    </div>
 		    
 		    <!-- Node Display -->
-		    <div id="nodeModule" data-bind="with: activeNodeData()[0]">
+		    <div id="nodeModule" style="display: none;" data-bind="with: activeNodeData()[0]">
 		        <h2 class="name" data-bind="text: name"></h2>
 		        <p class="username" data-bind="text: '('+username+')'"></p>
 		        <img class="profilepic" id="profilepic" data-bind="visible: photo, attr: {src: photo ? 'https://polycule.s3.amazonaws.com/final/'+photo+'?' + new Date().getTime() : null}"/>

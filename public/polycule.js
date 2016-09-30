@@ -519,8 +519,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
 	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
+    hideModules("node");
+  
     // Data Visualisation ================================================================
   
+    
+    
     // Setup force layout
     var force = d3.layout.force()
         .size([width, height])
