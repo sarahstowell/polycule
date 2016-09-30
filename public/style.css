@@ -110,7 +110,7 @@ h1 {
     background-color: white;
 }
 
-.node:hover {
+.node circle:hover {
     cursor: pointer;
 }
 
