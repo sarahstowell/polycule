@@ -606,12 +606,9 @@ canvas {
 
 
 @media only screen and (max-device-width: 500px) {
-  #bottomContainer {
-      display: relative;
-  }
-  
   #mainsvg {
      width: 100%;
+     min-width: 0;
   }
   
   #sidepanel {
@@ -621,10 +618,6 @@ canvas {
     min-width: 100%;
     max-width: 100%;
     min-height: 100%;
-  }
-  
-  h1 {
-     color: red;
   }
 
 }
