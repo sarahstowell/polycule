@@ -156,6 +156,8 @@ function photoSelect() {
 var validateForm = function(formtype) {
 
     var photoCoords = vanilla.get().points;
+    
+    window.alert(JSON.stringify(photoCoords));
 
 	document.getElementById("x1").value = photoCoords[1];
 	document.getElementById("y1").value = photoCoords[2];
