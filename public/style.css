@@ -604,7 +604,12 @@ canvas {
     color: red;
 }
 
+/*
 @media only screen and (max-device-width: 500px) {
+  #mainsvg {
+     width: 100%;
+  }
+  
   #sidepanel {
     left: 0px;
     top: 0px;
@@ -612,4 +617,5 @@ canvas {
     max-width: 100%;
     min-height: 100%;
   }
+*/
 }
