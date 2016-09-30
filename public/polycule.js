@@ -115,6 +115,23 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var photoRemove = false;
 	
 	var emailContainer = document.getElementById("emailContainer");
+	
+	var el = document.getElementById('photoArea');
+	var vanilla = new Croppie(el, {
+		viewport: { width: 225, height: 225 },
+		boundary: { width: 300, height: 300 }
+	});
+	d3.select("#photoSelect").on("change", function() {
+		var file1    = document.getElementById('photoSelect').files[0];
+		var reader1  = new FileReader();
+		if (file1) { reader1.readAsDataURL(file1); }
+		reader1.addEventListener("load", function () { 
+			imgsrc1 = reader1.result;
+			vanilla.bind({
+				url: imgsrc1
+			});   
+		});
+	});
 
     
     // Knockout view model ===============================================================

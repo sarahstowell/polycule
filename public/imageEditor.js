@@ -160,7 +160,7 @@ function photoSelect() {
   if (file) { reader.readAsDataURL(file); }
 }
 */
-
+/*
 var el = document.getElementById('photoArea');
 var vanilla = new Croppie(el, {
 	viewport: { width: 225, height: 225 },
@@ -177,6 +177,6 @@ d3.select("#photoSelect").on("change", function() {
 		});   
 	});
 });
-
+*/
 
 
