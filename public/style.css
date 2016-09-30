@@ -53,6 +53,7 @@ h1 {
     color: black;
     font-family: 'Sarpanch', sans-serif;
     font-size: 50px;
+    cursor: pointer;
 }
 
 #linkButton {
