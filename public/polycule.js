@@ -518,7 +518,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             window.alert("display side panel");
             sidepanel.style("display", "block");
 	        resizeForceLayout();
-	    } else if (document.getElementById("sidePanel").style.display !== "block" && module  === null) {
+	    } else if (document.getElementById("sidePanel").style.display === "block" && module  === null) {
 	        window.alert("hide side panel");
 	        sidepanel.style("display", "none");
 	        resizeForceLayout();  
