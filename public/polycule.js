@@ -519,6 +519,18 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
         
         if (sidepanel.style("display") === "none" && module) {
+        /*
+        sidepanel.transition()
+	        .style("width", "0px")
+	        .style("min-width", "0px")
+	        .style("padding", "0px")
+	        .style("border", "none")
+	        .duration(500)
+	      .transition()
+	        .style("margin-left", "0px")
+	        .duration(30)
+	        .delay(470);
+	    */
             sidepanel.style("display", "block");
 	        resizeForceLayout();
 	    } else if (sidepanel.style("display") === "block" && !module) {
@@ -683,48 +695,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
          .attr("visibility", "hidden");
 
     restart();
-
-    var hideSidepanel = function() {
-/*
-	    sidepanel.transition()
-	        .style("width", "0px")
-	        .style("min-width", "0px")
-	        .style("padding", "0px")
-	        .style("border", "none")
-	        .duration(500)
-	      .transition()
-	        .style("margin-left", "0px")
-	        .duration(30)
-	        .delay(470);
-*/
-        if (sidepanel.style("display") === "none") {
-            sidepanel.style("display", "none");
-	        resizeForceLayout();
-	    }
-	};
-	
-	var showSidepanel = function() {
-	/*
-		sidepanel.transition()
-		    .style("margin-left", "10px")
-	        .duration(30)
-	     .transition()
-	        .style("width", "324px")
-	        .style("min-width", "324px")
-	        .style("padding", "10px")
-	        .style("border", "2px solid white")
-	        .duration(1000);
-*/
-
-        if (sidepanel.style("display") === "none") {
-            sidepanel.style("display", "block");
-            resizeForceLayout();
-        }
-	};
-	
-	
-	
-
 
     // mouseDown function deselect node or link
     function mouseDown() {
