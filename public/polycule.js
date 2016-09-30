@@ -530,6 +530,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
     hideModules("node"); // Display user profile on startup
+    
+    window.alert(sidepanel.style("display"));
   
     // Data Visualisation ================================================================
     
