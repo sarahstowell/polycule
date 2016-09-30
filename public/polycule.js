@@ -144,6 +144,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.openThread = function(thread) {
             socket.emit('emailRead', loggedin, thread.thread);
             self.currentThread(thread.thread);
+            objDiv.scrollTop = objDiv.scrollHeight;
         };
         self.sendMessage = function() {
             var content = document.getElementById("emailTypeBox").value;
