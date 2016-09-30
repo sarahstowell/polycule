@@ -2,6 +2,8 @@
 var locationInput = document.getElementById('location');
 var autocomplete = new google.maps.places.Autocomplete(locationInput, { types: ['(cities)'], region:'EU' });
 
+/*
+
 d3.select("#photoSelect")
 	.on("change", photoSelect);
 
@@ -148,8 +150,17 @@ function photoSelect() {
   if (file) { reader.readAsDataURL(file); }
 }
 
+*/
+
 // Signup form validation
 var validateForm = function(formtype) {
+
+    var photoCoords = vanilla.get().points;
+
+	document.getElementById("x1").value = photoCoords[1];
+	document.getElementById("y1").value = photoCoords[2];
+	document.getElementById("x2").value = photoCoords[3];
+	document.getElementById("y2").value = photoCoords[4];
     
 	d3.selectAll(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
@@ -235,11 +246,6 @@ d3.select("#photoSelect").on("change", function() {
 			url: imgsrc1
 		});   
 	});
-});
-
-d3.select("#photor").on("click", function() {
-    var var1 = vanilla.get().points;
-    window.alert(JSON.stringify(var1));
 });
 
 
