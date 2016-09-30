@@ -218,21 +218,26 @@ d3.select("#photoTypeFacebook").on("click", photoTypeFacebook);
 d3.select("#photoTypeCustom").on("click", photoTypeCustom);
 d3.select("#photoTypeNone").on("click", photoTypeNone);
 
-var file1    = document.getElementById('photoSelect').files[0];
-var reader1  = new FileReader();
-if (file1) { reader1.readAsDataURL(file1); }
-reader1.addEventListener("load", function () { 
-    imgsrc1 = reader1.result;
-    
-	var el = document.getElementById('photoDisplay');
-	var vanilla = new Croppie(el, {
-		viewport: { width: 225, height: 225 },
-		boundary: { width: 300, height: 300 }
+
+d3.select("#photoSelect").on("change", function() {
+
+	var file1    = document.getElementById('photoSelect').files[0];
+	var reader1  = new FileReader();
+	if (file1) { reader1.readAsDataURL(file1); }
+	reader1.addEventListener("load", function () { 
+		imgsrc1 = reader1.result;
+	
+		var el = document.getElementById('photoDisplay');
+		var vanilla = new Croppie(el, {
+			viewport: { width: 225, height: 225 },
+			boundary: { width: 300, height: 300 }
+		});
+		vanilla.bind({
+			url: imgsrc1
+		});   
+	
 	});
-	vanilla.bind({
-		url: imgsrc1
-	});   
-    
+
 });
 
 
