@@ -155,8 +155,6 @@ function photoSelect() {
 // Signup form validation
 var validateForm = function(formtype) {
 
-    window.alert(JSON.stringify(vanilla.get().points));
-
     var photoCoords = vanilla.get().points;
 
 	document.getElementById("x1").value = photoCoords[1];
@@ -231,7 +229,7 @@ d3.select("#photoTypeFacebook").on("click", photoTypeFacebook);
 d3.select("#photoTypeCustom").on("click", photoTypeCustom);
 d3.select("#photoTypeNone").on("click", photoTypeNone);
 
-var el = document.getElementById('photoDisplay');
+var el = document.getElementById('photoArea');
 
 var vanilla = new Croppie(el, {
 	viewport: { width: 225, height: 225 },
