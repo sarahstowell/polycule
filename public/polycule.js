@@ -465,6 +465,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    } 
 	    
 	    nodes = nodesUpdate;
+	    viewModel.nodes(nodes);
 	    restart();
 	});
 	
@@ -485,8 +486,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }    
 	    
 	    nodes = nodesUpdate;
+	    viewModel.nodes(nodes);
 	    
 	    links = nodesLinksUpdate.links;
+	    viewModel.links(links);
 	    getLinkRequests();
 	    
 	    restart();
