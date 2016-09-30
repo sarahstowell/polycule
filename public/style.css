@@ -413,7 +413,8 @@ canvas {
 .emailTypeBox {
     position: absolute;
     bottom: 40px;
-    width: 300px;
+    /*width: 300px;*/
+    width: 100%;
     resize: none;
     font-family: sans-serif;
     border: 1px solid gray;
@@ -423,7 +424,8 @@ canvas {
 .emailSendButton {
     position: absolute;
     bottom: 10px;
-    width: 300px;
+    /*width: 300px;*/
+    width: 100%;
     height: 25px;
     border-radius: 5px;
     border: 1px solid gray;
