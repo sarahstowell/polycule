@@ -612,7 +612,6 @@ canvas {
      max-width: 100%;
      border-radius: 0px;
      border: none;
-     padding: 0px;
      margin: 0px;
   }
   
@@ -621,7 +620,6 @@ canvas {
     max-width: 100%;
     width: 100%;
     min-height: 100%;
-    padding: 0px;
     margin: 0px;
     border-radius: 0px;
   }
