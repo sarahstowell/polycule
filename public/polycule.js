@@ -519,11 +519,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
 	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
-    hideModules("node");
+    hideModules("node"); // Display user profile on startup
   
     // Data Visualisation ================================================================
-  
-    
     
     // Setup force layout
     var force = d3.layout.force()
@@ -671,8 +669,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     restart();
 
-    //displayInfo(active_node);    // On startup, display current user info in side panel
-
     var hideSidepanel = function() {
 /*
 	    sidepanel.transition()
@@ -709,6 +705,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    resizeForceLayout();
 	};
 	
+	window.alert(sidepanel.style("display"));
+	
 	
 
 
@@ -739,10 +737,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    // Undo current zoom level
 		    translatea=d3.transform(container.attr("transform")).translate;
 		    scalea=d3.transform(container.attr("transform")).scale;
-            // move temporary line
             
-            //sidepanel.html(JSON.stringify(d3.mouse(this))); TEST CODE
-            
+            // move temporary line            
 		    active_line					
 			    .attr("x2", (d3.mouse(this)[0]-translatea[0])/scalea[0])
 			    .attr("y2", (d3.mouse(this)[1]-translatea[1])/scalea[1]);
