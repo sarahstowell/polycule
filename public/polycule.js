@@ -723,6 +723,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // mousemove for when user is drawing a connection
     function mousemove() {
+        if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
 
 	    if (active_node !== null & connect1 === 1) {
 
@@ -741,6 +742,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
     }
 
     function mouseup() {
+    
+        if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
 
 	     // For when user is creating a new node
 	    if (connect1===1) {
