@@ -1,4 +1,4 @@
-
+/*
 var addPhotoEdit = function(imgsrc, x1, y1, x2, y2) {
 
 	var width=null, height=null, minsize = null;
@@ -131,7 +131,7 @@ var addPhotoEdit = function(imgsrc, x1, y1, x2, y2) {
 
 d3.select("#photoSelect")
 	.on("change", photoSelect);
-	
+*/
 d3.select("#photoTypeCustom").on("click", function() {
 	d3.select("#photoArea").style("display", "inline");
 	d3.select("#photoSelect").property("disabled", false);
@@ -141,7 +141,7 @@ d3.select("#photoTypeNone").on("click",  function() {
 	d3.select("#photoArea").style("display", "none");
 	d3.select("#photoSelect").property("disabled", true);
 });
-
+/*
 function photoSelect() {
 
   var imgsrc  = null;
@@ -159,5 +159,24 @@ function photoSelect() {
 
   if (file) { reader.readAsDataURL(file); }
 }
+*/
+
+var el = document.getElementById('photoArea');
+var vanilla = new Croppie(el, {
+	viewport: { width: 225, height: 225 },
+	boundary: { width: 300, height: 300 }
+});
+d3.select("#photoSelect").on("change", function() {
+	var file1    = document.getElementById('photoSelect').files[0];
+	var reader1  = new FileReader();
+	if (file1) { reader1.readAsDataURL(file1); }
+	reader1.addEventListener("load", function () { 
+		imgsrc1 = reader1.result;
+		vanilla.bind({
+			url: imgsrc1
+		});   
+	});
+});
+
 
 

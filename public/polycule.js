@@ -317,7 +317,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			        // Draw database photo onto photo edit area
 				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
 				    coords = self.activeNodeData()[0].photocoords;
-				    addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
+				    //addPhotoEdit(imgsrc, coords.x1, coords.y1, coords.x2, coords.y2);
+				    
+				    vanilla.bind({
+			            url: imgsrc,
+			            points: [coords.x1, coords.y1, coords.x2, coords.y2]
+		            });
+		            
 				}
 				d3.select("#photoEditWindow").style("display",  "block");
         };
@@ -330,6 +336,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			d3.select("#photoArea").html("");
         };
         self.savePhotoEdit = function() {
+            // Save coordinates from cropping tool
+            /*
+            var photoCoords = vanilla.get().points;
+	        document.getElementById("x1").value = photoCoords[0];
+	        document.getElementById("y1").value = photoCoords[1];
+	        document.getElementById("x2").value = photoCoords[2];
+	        document.getElementById("y2").value = photoCoords[3];
+            */
+            // If user has uploaded a new photo
         	if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
 				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
@@ -343,15 +358,19 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
 					ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 				};		        
+			// If user has adjusted the cropping of their existing photo
 			} else if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
 				img2 = new Image();
 				img2.src = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData[0].photo+"?" + new Date().getTime();
+				// Can be removed
 				if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
 				var sx = Math.round(document.getElementById("x1").value*ratio1);
 				var sy = Math.round(document.getElementById("y1").value*ratio1);
 				var swidth = Math.round((document.getElementById("x2").value-document.getElementById("x1").value)*ratio1);
 				var sheight = Math.round((document.getElementById("y2").value-document.getElementById("y1").value)*ratio1);
+				// can use photo coords from croppie
 				ctx.drawImage(img2,sx=sx,sy=sy,swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
+			// If user has removed their photo
 			} else if (document.getElementById("photoTypeNone").checked === true) {
 				ctx.clearRect(0,0,225,225);
 				ctx.font = "15px sans-serif";
