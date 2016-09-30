@@ -608,13 +608,15 @@ canvas {
 @media only screen and (max-device-width: 500px) {
   #mainsvg {
      min-width: 0px;
+     min-height: 100%;
   }
-  
+  /*
   #sidePanel {
     min-width: 100%;
     max-width: 100%;
     width: 100%;
     min-height: 100%;
   }
+  */
 
 }
