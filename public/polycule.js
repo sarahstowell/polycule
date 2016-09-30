@@ -589,9 +589,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
     }
 
     var svg = d3.select("#mainsvg")
-        .on("mousedown", mouseDown)
-        .on("mousemove", mousemove)
-        .on("mouseup", mouseup)
+        .on("mousedown touchstart", mouseDown)
+        .on("mousemove touchmove", mousemove)
+        .on("mouseup touchend", mouseup)
         .call(zoom);
     
     
