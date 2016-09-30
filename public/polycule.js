@@ -514,11 +514,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (module === "linkEdit") { linkEditModule.style("display", "block"); } else { linkEditModule.style("display", "none"); }
         if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
         
-        if (sidepanel.style("display") === "none" && module !== null) {
+        if (document.getElementById("sidePanel").style.display === "none" && module !== null) {
             window.alert("display side panel");
             sidepanel.style("display", "block");
 	        resizeForceLayout();
-	    } else if (sidepanel.style("display") !== "block" && module  === null) {
+	    } else if (document.getElementById("sidePanel").style.display !== "block" && module  === null) {
 	        window.alert("hide side panel");
 	        sidepanel.style("display", "none");
 	        resizeForceLayout();  
