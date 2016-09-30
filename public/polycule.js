@@ -517,6 +517,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (module === "linkEdit") { linkEditModule.style("display", "block"); } else { linkEditModule.style("display", "none"); }
         if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
         
+        if (sidepanel.style("display") === "block") { window.alert("Yes block"); }
+        /*
         if (document.getElementById("sidePanel").style.display === "none" && module !== null) {
             window.alert("display side panel");
             sidepanel.style("display", "block");
@@ -526,6 +528,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        sidepanel.style("display", "none");
 	        resizeForceLayout();  
 	    }
+	    */
     }
     
     d3.select("#linkButton").on("click", function() { hideModules("links"); });
