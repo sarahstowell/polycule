@@ -531,7 +531,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   
     hideModules("node"); // Display user profile on startup
     
-    window.alert(sidepanel.style("display"));
+
   
     // Data Visualisation ================================================================
     
