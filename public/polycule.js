@@ -828,7 +828,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .classed("selectedLink", function(d) { if (d.id === active_link) { return true; } else { return false; } })
             .classed("unselectedLink", function(d) { if (d.id !== active_link) { return true; } else { return false; } })
             .classed("unconfirmedLink", function(d) { if (d.confirmed === 0) { return true; } else { return false; } }) 
-            .on("mousedown touchstart", selectLink);
+            .on("mousedown", selectLink);
     
         link.exit().remove(); 
 
@@ -843,8 +843,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .attr("r", 7)
             .attr("class", function(d) { if (d.id === loggedin) { return "myNode"; } else if (d.member === 1) { return "userNode"; } else { return "nonUserNode"; } })
             .classed("selectedNode", function(d) { if (d.id === active_node) { return true; } else { return false; } })
-            .on("mousedown touchstart", selectNode)
-            .on("mouseup touchend", joinNode);      
+            .on("mousedown", selectNode)
+            .on("mouseup", joinNode);      
 
         node.select("text").remove();       
         node.append("text")
