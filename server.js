@@ -386,6 +386,8 @@ app.get('/signup', function(req, res) {
 // Process signup request ----------------------------------------------------------------
 app.post('/signup', upload.single('profilePic'), function (req, res, next) {
 
+    console.log("photo coords x1: "+req.body.x1);
+    
     console.log("Last page: "+req.session.lastPage);
 
 	if (req.body.photoType === 'custom' && req.file) { 
