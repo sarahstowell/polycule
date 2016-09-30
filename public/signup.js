@@ -238,7 +238,7 @@ d3.select("#photoSelect").on("change", function() {
 });
 
 d3.select("#photor").on("click", function() {
-    var var1 = vanilla.get();
+    var var1 = vanilla.get().points;
     window.alert(JSON.stringify(var1));
 });
 
