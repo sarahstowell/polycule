@@ -602,3 +602,13 @@ canvas {
     font-size: 12px;
     color: red;
 }
+
+@media only screen and (max-device-width: 500px) {
+  #sidepanel {
+    left: 0px;
+    top: 0px;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+  }
+}
