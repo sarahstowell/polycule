@@ -354,9 +354,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.savePhotoEdit = function() {
             // Save coordinates from cropping tool
-            
-            window.alert(JSON.stringify(vanilla.get().points));
-            
+                        
             var photoCoords = vanilla.get().points;
 	        document.getElementById("x1").value = photoCoords[0];
 	        document.getElementById("y1").value = photoCoords[1];
@@ -372,6 +370,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				reader1.onload = function (oFREvent) {
 					img2 = new Image();
 					img2.src = oFREvent.target.result;
+					window.alert("logic passed");
 					//if (img2.width > 540 || img2.height > 1000) { var ratio1 = Math.max(img2.width/540, img2.height/1000); } else { var ratio1 = 1; }
 					//var sx = Math.round(document.getElementById("x1").value*ratio1);
 					//var sy = Math.round(document.getElementById("y1").value*ratio1);
