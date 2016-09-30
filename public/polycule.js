@@ -140,7 +140,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             if (self.currentThread() === 0) { return self.emails().filter(function(d) { return d.latest === 1; }).reverse(); }
             else { return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); }
         });
-        myViewModel.currentThread.subscribe(function() {
+       self.currentThread.subscribe(function() {
            emailContainer.scrollTop = emailContainer.scrollHeight;
         });
         self.openThread = function(thread) {
