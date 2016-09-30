@@ -414,7 +414,6 @@ canvas {
     position: absolute;
     bottom: 40px;
     width: 300px;
-    width: 100%;
     resize: none;
     font-family: sans-serif;
     border: 1px solid gray;
@@ -626,11 +625,11 @@ canvas {
   }
   
   .emailTypeBox {
-    width: 100%;
+    width: 90%;
   }
   
   .emailSendBox {
-    width: 100%;
+    width: 90%;
   }
   
 
