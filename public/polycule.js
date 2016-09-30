@@ -113,6 +113,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var img1 = document.createElement('img');
 	var img2;
 	var photoRemove = false;
+	
+	var objDiv = document.getElementById("emailContainer");
+    objDiv.scrollTop = objDiv.scrollHeight;
 
     
     // Knockout view model ===============================================================
