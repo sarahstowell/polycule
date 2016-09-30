@@ -163,7 +163,7 @@ var profilePicEdit = function(photo, filename, facebookid, x1, y1, x2, y2) {
 					uploadFile('original/'+filename, oldImage);			    
 			    });
 			    //
-				image.scaleToFit(540, 1000).crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
+				image.crop(x1, y1, x2-x1, y2-y1).resize(225, 225).quality(100).getBuffer("image/jpeg", function(err, newImage) { 
 					if (err) { throw err; }
 					if (newImage) { console.log("New Image sent to buffer"); }
 					uploadFile('final/'+filename, newImage);
@@ -385,8 +385,6 @@ app.get('/signup', function(req, res) {
 
 // Process signup request ----------------------------------------------------------------
 app.post('/signup', upload.single('profilePic'), function (req, res, next) {
-
-    console.log("photo coords x1: "+req.body.x1);
     
     console.log("Last page: "+req.session.lastPage);
 
