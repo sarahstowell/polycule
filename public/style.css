@@ -623,6 +623,7 @@ canvas {
     min-height: 100%;
     padding: 0px;
     margin: 0px;
+    border-radius: 0px;
   }
   
 
