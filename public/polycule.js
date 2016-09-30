@@ -513,6 +513,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (module === "linkInfo") { linkInfoModule.style("display", "block"); } else { linkInfoModule.style("display", "none"); }
         if (module === "linkEdit") { linkEditModule.style("display", "block"); } else { linkEditModule.style("display", "none"); }
         if (module === "other") { otherModule.style("display", "block"); } else { otherModule.style("display", "none"); }
+        
+        if (sidepanel.style("display") === "none" && module !== null) {
+            sidepanel.style("display", "block");
+	        resizeForceLayout();
+	    } else if (sidepanel.style("display") !== "none" && module  === null) {
+	        sidepanel.style("display", "none");
+	        resizeForceLayout();  
+	    }
     }
     
     d3.select("#linkButton").on("click", function() { hideModules("links"); });
@@ -682,9 +690,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .duration(30)
 	        .delay(470);
 */
-        sidepanel.style("display", "none");
-	        
-	    resizeForceLayout();
+        if (sidepanel.style("display") === "none") {
+            sidepanel.style("display", "none");
+	        resizeForceLayout();
+	    }
 	};
 	
 	var showSidepanel = function() {
@@ -700,12 +709,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        .duration(1000);
 */
 
-        sidepanel.style("display", "block");
-        
-	    resizeForceLayout();
+        if (sidepanel.style("display") === "none") {
+            sidepanel.style("display", "block");
+            resizeForceLayout();
+        }
 	};
 	
-	window.alert(sidepanel.style("display"));
 	
 	
 
