@@ -145,6 +145,16 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		d3.select("#photoArea").style("display", "none");
 		d3.select("#photoSelect").property("disabled", true);
 	});
+	
+	var resetPhotoEditor = function() {
+		document.getElementById("photoSelect").value = null;
+		document.getElementById("photoTypeCustom").checked = true;
+		document.getElementById("photoSelect").disabled = false;
+		d3.select("#photoArea").style("display", "block");
+		document.getElementById("photoSelect").value = null;
+		vanilla.bind({ url: null, points: null });
+		img2 = null;
+	};
 
     
     // Knockout view model ===============================================================
@@ -278,6 +288,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.cancelNodeEdit = function() {
             hideModules("node");
+            resetPhotoEditor();
         };
         
         self.saveNodeEdit = function() {
@@ -360,14 +371,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.cancelPhotoEdit = function() {
 			d3.select("#photoEditWindow").style("display",  "none");
-			document.getElementById("photoSelect").value = null;
-			document.getElementById("photoTypeCustom").checked = true;
-			document.getElementById("photoSelect").disabled = false;
-			d3.select("#photoArea").style("display", "block");
-			document.getElementById("photoSelect").value = null;
-			vanilla.bind({ url: null, points: null });
-			img2 = null;
-			//d3.select("#photoArea").html("");
+			resetPhotoEditor();
+			//document.getElementById("photoSelect").value = null;
+			//document.getElementById("photoTypeCustom").checked = true;
+			//document.getElementById("photoSelect").disabled = false;
+			//d3.select("#photoArea").style("display", "block");
+			//document.getElementById("photoSelect").value = null;
+			//vanilla.bind({ url: null, points: null });
+			//img2 = null;
         };
         self.savePhotoEdit = function() {
             // Save coordinates from cropping tool
