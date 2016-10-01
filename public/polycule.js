@@ -395,12 +395,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
         	if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
 				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
-				reader1.onload = function (oFREvent) {
-				    window.alert("file loaded");
-				    
+				reader1.onload = function (oFREvent) {				    
 					img2 = new Image();
 					img2.src = oFREvent.target.result;
-					window.alert(photoCoords+", "+swidth+", "+sheight);
 					ctx.drawImage(img2,sx=photoCoords[0],sy=photoCoords[1],swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 				};		        
 			// If user has adjusted the cropping of their existing photo
