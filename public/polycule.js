@@ -380,6 +380,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             
             // If user has uploaded a new photo
         	if (document.getElementById("photoTypeCustom").checked === true && document.getElementById("photoSelect").files[0]) {
+        	    window.alert("logic passed");
 				var reader1 = new FileReader();
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 				reader1.onload = function (oFREvent) {
