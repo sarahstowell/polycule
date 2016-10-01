@@ -137,8 +137,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 	d3.select("#photoTypeCustom").on("click", function() {
 		d3.select("#photoArea").style("display", "inline");
-		vanilla.bind();
 		d3.select("#photoSelect").property("disabled", false);
+		vanilla.bind();
 	});
 
 	d3.select("#photoTypeNone").on("click",  function() {
@@ -332,7 +332,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 				 
 				} else {
-				    window.alert("logic passed");
 					if (photoRemove === true) { newNodeData.photoRemove = true; }
 					socket.emit('nodeEdit', newNodeData);
 					socket.on('nodeEditComplete', function() {
