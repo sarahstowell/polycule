@@ -363,7 +363,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			document.getElementById("photoTypeCustom").checked = true;
 			document.getElementById("photoSelect").disabled = false;
 			d3.select("#photoArea").style("display", "block");
-			document.getElementById("photoSelect").files = null;
+			document.getElementById("photoSelect").value = null;
 			img2 = null;
 			//d3.select("#photoArea").html("");
         };
