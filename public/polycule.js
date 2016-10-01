@@ -325,17 +325,19 @@ socket.on('nodesAndLinks', function(dataPackage) {
 						restart();
 					});
 					
-					if (document.getElementById("photoSelect").files[0]) {
+					//if (document.getElementById("photoSelect").files[0]) {
 						data.append('photo', document.getElementById("photoSelect").files[0]);
 				
 						xhttp.open("POST", "/update/photo", true);
 						xhttp.send(data); 
+					/*	
 					} else {
 						data.append('filename', self.activeNodeData()[0].photo);
 						
 						xhttp.open("POST", "/update/photocoords", true);
 						xhttp.send(data); 
 					}
+					*/
 				 
 				} else {
 					if (photoRemove === true) { newNodeData.photoRemove = true; }
@@ -401,11 +403,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					ctx.drawImage(img2,sx=photoCoords[0],sy=photoCoords[1],swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 				};		        
 			// If user has adjusted the cropping of their existing photo
+			/*
 			} else if (document.getElementById("photoTypeCustom").checked === true && !(document.getElementById("photoSelect").files[0]) && document.getElementById("x1").value) {
 				img2 = new Image();
 				img2.src = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData[0].photo+"?" + new Date().getTime();
 				ctx.drawImage(img2,sx=photoCoords[0],sy=photoCoords[1],swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 			// If user has removed their photo
+			*/
 			} else if (document.getElementById("photoTypeNone").checked === true) {
 				ctx.clearRect(0,0,225,225);
 				ctx.font = "15px sans-serif";

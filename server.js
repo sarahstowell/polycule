@@ -590,6 +590,7 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
         });	
 });
 
+/*
 app.post('/update/photocoords', upload.single('photo'), function(req, res) { // Alternative to upload???
     console.log("Updated photocoords received");
     
@@ -622,6 +623,7 @@ app.post('/update/photocoords', upload.single('photo'), function(req, res) { // 
             console.log(err); 
         });	
 });
+*/
 
 app.get('/', function (req, res) {
 
