@@ -28,15 +28,15 @@ var validateForm = function(formtype) {
 	document.getElementById("y1").value = photoCoords[1];
 	document.getElementById("x2").value = photoCoords[2];
 	document.getElementById("y2").value = photoCoords[3];
-	
+	/*
 	vanilla.result('canvas').then(function(base64Image) {
     // do something with cropped base64 image here
         //document.getElementById("croppedPhoto").value = base64Image;
-        window.alert(base64Image);
         var blob = new Blob([base64Image], { type: "image/png,base64"});
         var fd = new FormData(document.forms[0]);
         fd.append("croppedPhoto", blob);
     });
+    */
     
     
 	d3.selectAll(".inputBox").style("border", "1px solid gray");
