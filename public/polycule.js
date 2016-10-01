@@ -356,7 +356,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				   vanilla.bind();
 				}
 				*/
-				vanilla.bind();
+				//vanilla.bind();
 				
 				d3.select("#photoEditWindow").style("display",  "block");
         };
