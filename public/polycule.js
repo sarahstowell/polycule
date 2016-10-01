@@ -384,7 +384,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				reader1.readAsDataURL(document.getElementById("photoSelect").files[0]);
 				reader1.onload = function (oFREvent) {
 				    window.alert("file loaded");
-					img2 = new Image();
+				    
+					var img2 = new Image();
 					img2.src = oFREvent.target.result;
 					ctx.drawImage(img2,sx=photoCoords[0],sy=photoCoords[1],swidth=swidth,sheight=sheight,x=0,y=0,width=225,height=225);
 				};		        
