@@ -116,6 +116,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 	var emailContainer = document.getElementById("emailContainer");
 	
+	document.getElementById('photoSelect').value = null;
+	
 	var el = document.getElementById('photoArea');
 	var vanilla = new Croppie(el, {
 		viewport: { width: 225, height: 225 },
@@ -261,13 +263,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.requestLink = function() {
 			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
 		};
-        self.editNode = function() {
-        	//var canvas = document.getElementById('canvas1');
-		    //var ctx = canvas.getContext('2d');	  
-	        
+        self.editNode = function() {	  
 	       // Draw database photo onto profile edit canvas
 		   if (self.activeNodeData()[0].photo) {     
-				//var img1 = document.createElement('img');
 				img1.src="https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
 				img1.onload = function () {
 					ctx.drawImage(img1, x=0, y=0, width=225, height=225);
