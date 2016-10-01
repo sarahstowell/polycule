@@ -28,6 +28,12 @@ var validateForm = function(formtype) {
 	document.getElementById("y1").value = photoCoords[1];
 	document.getElementById("x2").value = photoCoords[2];
 	document.getElementById("y2").value = photoCoords[3];
+	/*
+	vanilla.result('canvas').then(function(base64Image) {
+    // do something with cropped base64 image here
+        document.getElementById("croppedPhoto").value = base64Image;
+    });
+    */
     
 	d3.selectAll(".inputBox").style("border", "1px solid gray");
 	d3.select("#errorMessage").text("");		
@@ -95,13 +101,3 @@ var photoTypeNone = function() {
 d3.select("#photoTypeFacebook").on("click", photoTypeFacebook);
 d3.select("#photoTypeCustom").on("click", photoTypeCustom);
 d3.select("#photoTypeNone").on("click", photoTypeNone);
-
-
-
-
-
-
-//on button click
-//vanilla.result('canvas').then(function(base64Image) {
-    // do something with cropped base64 image here
-//});
