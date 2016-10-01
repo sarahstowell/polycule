@@ -365,6 +365,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			document.getElementById("photoSelect").disabled = false;
 			d3.select("#photoArea").style("display", "block");
 			document.getElementById("photoSelect").value = null;
+			vanilla.bind({ url: null, points: null });
 			img2 = null;
 			//d3.select("#photoArea").html("");
         };
