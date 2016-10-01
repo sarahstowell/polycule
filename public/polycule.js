@@ -346,10 +346,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				    imgsrc = "https://polycule.s3.amazonaws.com/original/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
 				    coords = self.activeNodeData()[0].photocoords;
 				    
-				    vanilla.bind({
-			            url: imgsrc,
-			            points: [coords.x1, coords.y1, coords.x2, coords.y2]
-		            });
+				    //vanilla.bind({
+			        //    url: imgsrc,
+			        //    points: [coords.x1, coords.y1, coords.x2, coords.y2]
+		            //});
+		            vanilla.bind();
 		            
 				}
 				d3.select("#photoEditWindow").style("display",  "block");
