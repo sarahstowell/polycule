@@ -384,7 +384,7 @@ app.get('/signup', function(req, res) {
 });
 
 // Process signup request ----------------------------------------------------------------
-app.post('/signup', upload.single('croppedPhoto'),  
+app.post('/signup', upload.single('profilePic'),  
        /*
          upload.fields([{
            name: 'profilePic', maxCount: 1
@@ -398,7 +398,7 @@ app.post('/signup', upload.single('croppedPhoto'),
     //console.log(JSON.stringify("file2: "+req.files['croppedPhoto'].filename));
 
 	if (req.body.photoType === 'custom' && req.file) { 
-		//profilePicEdit(photo=req.session.profilePic, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
+		profilePicEdit(photo=req.session.profilePic, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
 		var photourl = req.file.filename; 
 	} else {
 		var photourl = null;
