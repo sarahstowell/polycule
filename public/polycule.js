@@ -285,8 +285,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	       // Draw database photo onto profile edit canvas
 	       
 		   if (self.activeNodeData()[0].photo) {     
-				img1.src="https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
-				window.alert(img1.src);
+				img1.src="https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo/*+"?" + new Date().getTime()*/;
+				//window.alert(img1.src);
 				img1.onload = function () {
 					ctx.drawImage(img1, x=0, y=0, width=225, height=225);
 				}
