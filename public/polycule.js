@@ -894,7 +894,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
       
         node.select("circle")      
             //.call(force.drag)
-            .attr("r", 10)
+            .attr("r", 7)
             .attr("class", function(d) { if (d.id === loggedin) { return "myNode"; } else if (d.member === 1) { return "userNode"; } else { return "nonUserNode"; } })
             .classed("selectedNode", function(d) { if (d.id === active_node) { return true; } else { return false; } })
             .on("mousedown", selectNode)
