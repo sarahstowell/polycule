@@ -635,7 +635,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	};
 
     hideModules("node");
-    if (mobileUser) { sidepanel.style("background-color", "red"); }
+    if (mobileUser) { hideModules(null); }
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
