@@ -35,7 +35,7 @@ var validateForm = function(formtype) {
         document.getElementById("croppedPhoto").value = base64Image;
         var blob = new Blob([base64Image], { type: "image/png,base64"});
         var fd = new FormData(document.forms[0]);
-        fd.append("croppedPhoto", blob);
+        fd.append("croppedPhoto", blob, 'image.png');
     });
     
     
