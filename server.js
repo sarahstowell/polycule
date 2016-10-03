@@ -384,14 +384,15 @@ app.get('/signup', function(req, res) {
 });
 
 // Process signup request ----------------------------------------------------------------
-app.post('/signup', /*upload.single('profilePic'),*/          
+app.post('/signup', upload.single('profilePic'),  
+       /*
          upload.fields([{
            name: 'profilePic', maxCount: 1
          }, {
            name: 'croppedPhoto', maxCount: 1
-         }]), function (req, res, next) {
-    
-    console.log("Last page: "+req.session.lastPage);
+         }]), 
+         */
+         function (req, res, next) {
     
     console.log(JSON.stringify("file1: "+req.files['profilePic'].filename));
     console.log(JSON.stringify("file2: "+req.files['croppedPhoto'].filename));
