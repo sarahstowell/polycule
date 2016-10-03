@@ -29,6 +29,7 @@ var validateForm = function(formtype) {
 	document.getElementById("x2").value = photoCoords[2];
 	document.getElementById("y2").value = photoCoords[3];
 	
+	/*
 	vanilla.result('canvas').then(function(base64Image) {
     // do something with cropped base64 image here
         
@@ -37,7 +38,7 @@ var validateForm = function(formtype) {
         var fd = new FormData(document.forms[0]);
         fd.append("croppedPhoto", blob, 'image.png');
     });
-    
+    */
     
     
 	d3.selectAll(".inputBox").style("border", "1px solid gray");
