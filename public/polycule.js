@@ -296,7 +296,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.cancelNodeEdit = function() {
             hideModules("node");
-            resetPhotoEditor();
+            //resetPhotoEditor();
         };
         
         self.saveNodeEdit = function() {
@@ -368,7 +368,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				}
 				*/
 				//vanilla.bind();
-				
+				resetPhotoEditor();
 				d3.select("#photoEditWindow").style("display",  "block");
         };
         self.cancelPhotoEdit = function() {
