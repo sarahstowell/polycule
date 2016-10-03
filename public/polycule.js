@@ -628,27 +628,14 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Change size of force layout when window is resized
     
     var resizeForceLayout = function() {
-        //if (mobileUser) {
-        //    var width = document.getElementById('mainsvg').clientWidth;
-        //    var height = document.getElementById('mainsvg').clientHeight;
-        //} else {
-            var width = document.getElementById('mainsvg').getBoundingClientRect().width;
-            var height = document.getElementById('mainsvg').getBoundingClientRect().height;
-	    //}
+        var width = document.getElementById('mainsvg').getBoundingClientRect().width;
+        var height = document.getElementById('mainsvg').getBoundingClientRect().height;
 	    force.size([width, height]);
 	    restart();
 	};
 
-/*
-    if (mobileUser) {
-        sidepanel.style("display", "none");
-        resizeForceLayout();
-    } else {
-        hideModules("node"); // Display user profile on startup
-    }
-  */
     hideModules("node");
-    if (mobileUser) { hideModules(); }
+    if (mobileUser) { sidepanel.style("background-color", "red"); }
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
