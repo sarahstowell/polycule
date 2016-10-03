@@ -1,3 +1,11 @@
+// Detect mobile user
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+    var mobileUser = true;
+} else {
+    var mobileUser = false;
+}
+
+
 // Open websocket connection
 var socket = io();
 
@@ -894,7 +902,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
       
         node.select("circle")      
             //.call(force.drag)
-            .attr("r", 7)
+            //.attr("r", 7)
+            .attr("r", function() { if (mobileUser) { return 10; } else { return 7; }})
             .attr("class", function(d) { if (d.id === loggedin) { return "myNode"; } else if (d.member === 1) { return "userNode"; } else { return "nonUserNode"; } })
             .classed("selectedNode", function(d) { if (d.id === active_node) { return true; } else { return false; } })
             .on("mousedown", selectNode)
