@@ -601,7 +601,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        resizeForceLayout();
 	    } else if (sidepanel.style("display") === "block" && !module) {
 	        sidepanel.style("display", "none");
-	        //resizeForceLayout();  
+	        resizeForceLayout();  
 	    }
 	    
     }
@@ -635,7 +635,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	};
 
     hideModules("node");
-    if (mobileUser) { hideModules(null); }
+    //if (mobileUser) { hideModules(null); }
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
