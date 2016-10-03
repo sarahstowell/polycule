@@ -612,6 +612,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   
     if (mobileUser) {
         sidepanel.style("display", "none");
+        resizeForceLayout();
     } else {
         hideModules("node"); // Display user profile on startup
     }
