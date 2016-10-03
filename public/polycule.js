@@ -634,8 +634,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    restart();
 	};
 
-    hideModules("node");
-    if (mobileUser) { hideModules(null); }
+
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
@@ -1023,5 +1022,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
         force.start();
     }	
+    
+    hideModules("node");
+    if (mobileUser) { hideModules(null); }
 
 });
