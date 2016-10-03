@@ -638,7 +638,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    restart();
 	};
 	
-	if (mobileUser) {
+	if (mobileUser === true) {
         sidepanel.style("display", "none");
         //resizeForceLayout();
     } else {
