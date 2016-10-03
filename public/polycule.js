@@ -626,24 +626,28 @@ socket.on('nodesAndLinks', function(dataPackage) {
         .on("tick", tick);
         
     // Change size of force layout when window is resized
+    
     var resizeForceLayout = function() {
-        if (mobileUser) {
-            var width = document.getElementById('mainsvg').clientWidth;
-            var height = document.getElementById('mainsvg').clientHeight;
-        } else {
+        //if (mobileUser) {
+        //    var width = document.getElementById('mainsvg').clientWidth;
+        //    var height = document.getElementById('mainsvg').clientHeight;
+        //} else {
             var width = document.getElementById('mainsvg').getBoundingClientRect().width;
             var height = document.getElementById('mainsvg').getBoundingClientRect().height;
-	    }
+	    //}
 	    force.size([width, height]);
 	    restart();
 	};
 
+/*
     if (mobileUser) {
         sidepanel.style("display", "none");
         resizeForceLayout();
     } else {
         hideModules("node"); // Display user profile on startup
     }
+  */
+    hideModules("node");
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
