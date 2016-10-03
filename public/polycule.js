@@ -129,7 +129,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var el = document.getElementById('photoArea');
 	var vanilla = new Croppie(el, {
 		viewport: { width: 225, height: 225 },
-		boundary: { width: 300, height: 300 }
+		boundary: { width: 300, height: 300 },
+		enableEfix: true
 	});
 	d3.select("#photoSelect").on("change", function() {
 		var file1    = document.getElementById('photoSelect').files[0];
@@ -285,7 +286,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	       // Draw database photo onto profile edit canvas
 	       
 		   if (self.activeNodeData()[0].photo) {     
-				img1.src="https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo/*+"?" + new Date().getTime()*/;
+				img1.src="https://polycule.s3.amazonaws.com/final/"+self.activeNodeData()[0].photo+"?" + new Date().getTime();
 				//window.alert(img1.src);
 				img1.onload = function () {
 					ctx.drawImage(img1, x=0, y=0, width=225, height=225);
