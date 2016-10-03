@@ -1,5 +1,5 @@
 // Detect mobile user
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+if (/Android|webOS|iPhone|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) { // iPad removed
     var mobileUser = true;
 } else {
     var mobileUser = false;
@@ -610,7 +610,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
 	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
-    hideModules("node"); // Display user profile on startup
+    if (mobileUser) {
+        hideModules();
+    } else {
+        hideModules("node"); // Display user profile on startup
+    }
     
     d3.select("#polyculeHeader").on("click", hideModules);
   
