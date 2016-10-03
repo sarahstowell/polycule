@@ -648,6 +648,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     }
   */
     hideModules("node");
+    if (mobileUser) { hideModules(); }
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
