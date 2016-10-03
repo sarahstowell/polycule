@@ -384,11 +384,11 @@ app.get('/signup', function(req, res) {
 });
 
 // Process signup request ----------------------------------------------------------------
-app.post('/signup', upload.single('profilePic'), function (req, res, next) {
+app.post('/signup', upload.single('profilePic'), /*upload.array('photos', 2),*/ function (req, res, next) {
     
     console.log("Last page: "+req.session.lastPage);
     
-    console.log(JSON.stringify(req.body));
+    console.log(JSON.stringify(req.files));
 
 	if (req.body.photoType === 'custom' && req.file) { 
 		profilePicEdit(photo=req.session.profilePic, filename=req.file.filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
