@@ -632,5 +632,9 @@ canvas {
     width: 90%;
   }
   
+  .link {
+    stroke-width: 7;
+  }
+  
 
 }

@@ -601,7 +601,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        resizeForceLayout();
 	    } else if (sidepanel.style("display") === "block" && !module) {
 	        sidepanel.style("display", "none");
-	        resizeForceLayout();  
+	        //resizeForceLayout();  
 	    }
 	    
     }
