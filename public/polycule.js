@@ -611,7 +611,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
     if (mobileUser) {
-        hideModules();
+        sidepanel.style("display", "none");
     } else {
         hideModules("node"); // Display user profile on startup
     }
