@@ -627,15 +627,20 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
     // Change size of force layout when window is resized
     var resizeForceLayout = function() {
-        var width = document.getElementById('mainsvg').getBoundingClientRect().width;
-        var height = document.getElementById('mainsvg').getBoundingClientRect().height;
+        if (mobileUser) {
+            var width = document.getElementById('mainsvg').clientWidth;
+            var height = document.getElementById('mainsvg').clientHeight;
+        } else {
+            var width = document.getElementById('mainsvg').getBoundingClientRect().width;
+            var height = document.getElementById('mainsvg').getBoundingClientRect().height;
+	    }
 	    force.size([width, height]);
 	    restart();
 	};
 
     if (mobileUser) {
         sidepanel.style("display", "none");
-        //resizeForceLayout();
+        resizeForceLayout();
     } else {
         hideModules("node"); // Display user profile on startup
     }
