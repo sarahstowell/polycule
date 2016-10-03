@@ -637,14 +637,15 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    force.size([width, height]);
 	    restart();
 	};
-	
+	/*
 	if (mobileUser) {
         //sidepanel.style("display", "none");
         //resizeForceLayout();
         hideModules("node");
     } else {
         hideModules("node"); // Display user profile on startup
-    }
+    }*/
+    hideModules("node");
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
