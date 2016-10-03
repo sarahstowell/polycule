@@ -610,12 +610,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	d3.select("#mailButton").on("click", function() { viewModel.currentThread(0); hideModules("email"); });
 	d3.select("#settingsButton").on("click", function() { hideModules("settings"); });
   
-    if (mobileUser) {
-        sidepanel.style("display", "none");
-        resizeForceLayout();
-    } else {
-        hideModules("node"); // Display user profile on startup
-    }
+
     
     d3.select("#polyculeHeader").on("click", hideModules);
   
@@ -637,15 +632,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    force.size([width, height]);
 	    restart();
 	};
-	/*
-	if (mobileUser) {
-        //sidepanel.style("display", "none");
-        //resizeForceLayout();
-        hideModules("node");
+
+    if (mobileUser) {
+        sidepanel.style("display", "none");
+        resizeForceLayout();
     } else {
         hideModules("node"); // Display user profile on startup
-    }*/
-    hideModules("node");
+    }
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
