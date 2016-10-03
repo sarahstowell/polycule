@@ -637,6 +637,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    force.size([width, height]);
 	    restart();
 	};
+	
+	if (mobileUser) {
+        sidepanel.style("display", "none");
+        resizeForceLayout();
+    } else {
+        hideModules("node"); // Display user profile on startup
+    }
     
     window.addEventListener('resize', resizeForceLayout, true);    
 
