@@ -639,8 +639,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	};
 	
 	if (mobileUser) {
-        sidepanel.style("display", "none");
-        resizeForceLayout();
+        //sidepanel.style("display", "none");
+        //resizeForceLayout();
         window.alert("hello");
     } else {
         hideModules("node"); // Display user profile on startup
