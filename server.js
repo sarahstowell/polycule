@@ -384,7 +384,7 @@ app.get('/signup', function(req, res) {
 });
 
 // Process signup request ----------------------------------------------------------------
-app.post('/signup', /*upload.single('profilePic'),*/ upload.array('photos', 2), function (req, res, next) {
+app.post('/signup', upload.single('profilePic'), /*upload.array('photos', 2),*/ function (req, res, next) {
     
     console.log("Last page: "+req.session.lastPage);
     
