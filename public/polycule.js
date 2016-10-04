@@ -962,10 +962,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
             // Add ghost node
             if (active_node === loggedin) {
                 if (arrayObjectIndexOf(nodes, 9999, "id") === -1) {
-                    nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "plusNode": 1 });
+                    nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
                 }
                 if (arrayObjectIndexOf(links, 9999, "id") === -1) {
-                    links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1}); 
+                    links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1}); 
                 }
                 restart();
             }
