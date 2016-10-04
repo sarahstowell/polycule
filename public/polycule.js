@@ -783,7 +783,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function mouseDown() {
         //if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
         d3.event.preventDefault();
-        d3.event.stopPropagation();
+        //d3.event.stopPropagation();
 
         if (active_node !== null) {
             active_node = null;                 // Deselect active node
@@ -802,7 +802,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     function mousemove() {
         //if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
         d3.event.preventDefault();
-        d3.event.stopPropagation();
+        //d3.event.stopPropagation();
 
 	    if (active_node !== null & connect1 === 1) {
 
@@ -824,7 +824,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
         //if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
         d3.event.preventDefault();
-        d3.event.stopPropagation();
+        //d3.event.stopPropagation();
 
 	     // For when user is creating a new node
 	    if (connect1===1) {
