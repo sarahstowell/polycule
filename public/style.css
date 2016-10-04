@@ -156,7 +156,7 @@ h1 {
 }
 
 .ghostLink {
-    fill-opacity: 0.5;
+    stroke-opacity: 0.5;
 }
 
 .link:hover, .unselectedLink:hover, .selectedLink:hover, .unconfirmedLink:hover {
