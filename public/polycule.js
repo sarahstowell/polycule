@@ -514,6 +514,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Update links 
     socket.on('linksUpdate', function(linksUpdate) {
 	    links = linksUpdate;
+        links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
 	    //getLinkSource();
 	    getLinkRequests();
 	    restart();
@@ -536,6 +537,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    } 
 	    
 	    nodes = nodesUpdate;
+	    nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
 	    viewModel.nodes(nodes);
 	    restart();
 	});
@@ -557,9 +559,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }    
 	    
 	    nodes = nodesUpdate;
+	    nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
 	    viewModel.nodes(nodes);
 	    
 	    links = nodesLinksUpdate.links;
+	    links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
+
 	    viewModel.links(links);
 	    getLinkRequests();
 	    
