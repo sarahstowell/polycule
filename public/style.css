@@ -118,6 +118,10 @@ h1 {
     font-size: 12px;
 }
 
+.ghostNode {
+    fill-opacity: 0.5;
+}
+
 .myNode {
     fill: purple;
 }
@@ -149,6 +153,10 @@ h1 {
 
 .unconfirmedLink {
     stroke-dasharray: 2,2;
+}
+
+.ghostLink {
+    fill-opacity: 0.5;
 }
 
 .link:hover, .unselectedLink:hover, .selectedLink:hover, .unconfirmedLink:hover {

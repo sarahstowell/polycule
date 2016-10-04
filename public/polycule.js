@@ -575,7 +575,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var otherModule = d3.select("#otherModule");
     
     function hideModules(module) {
-    /*
+        // Hide ghost node
         if (!module || !(module === "node" && active_node === loggedin)) {
             if (arrayObjectIndexOf(nodes, 9999, "id") !== -1) {
                 nodes.splice(arrayObjectIndexOf(nodes, 9999, "id"), 1);
@@ -585,7 +585,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             }
             restart();
         }
-        */
+        
         if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
         if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
         if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
@@ -905,7 +905,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .attr("class", "link")
             .classed("selectedLink", function(d) { if (d.id === active_link) { return true; } else { return false; } })
             .classed("unselectedLink", function(d) { if (d.id !== active_link) { return true; } else { return false; } })
-            .classed("unconfirmedLink", function(d) { if (d.confirmed === 0) { return true; } else { return false; } }) 
+            .classed("unconfirmedLink", function(d) { if (d.confirmed === 0) { return true; } else { return false; } })
+            .classed("ghostLink", function(d) { if (d.newLink === 1) { return true ; } else { return false; } })
             .on("mousedown", selectLink)
             .on("touchstart", selectLink);
     
@@ -923,6 +924,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             .attr("r", function() { if (mobileUser) { return 10; } else { return 7; }})
             .attr("class", function(d) { if (d.id === loggedin) { return "myNode"; } else if (d.member === 1) { return "userNode"; } else { return "nonUserNode"; } })
             .classed("selectedNode", function(d) { if (d.id === active_node) { return true; } else { return false; } })
+            .classed("ghostNode", function(d) { if (d.newNode === 1) { return true ; } else { return false; } })
             .on("mousedown", selectNode)
             .on("mouseup", joinNode)
             .on("touchstart", selectNode)
@@ -957,12 +959,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
             hideModules("node"); // Show node profile in side panel
             
-            /*
+            // Add ghost node
             if (active_node === loggedin) {
                 nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "plusNode": 1 });
                 links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1}); 
             }
-            */
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
 		
