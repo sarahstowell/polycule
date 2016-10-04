@@ -794,7 +794,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		    active_link=null;					// Deselect active link
 		    restart();                          // Restart force layout
 	    }
-	    hideModules(); // Clear sidepanel 
+	    hideModules(null); // Clear sidepanel 
     }
 
 
