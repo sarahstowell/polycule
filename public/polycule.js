@@ -960,7 +960,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
             active_node = d3.select(this)[0][0].__data__.id;
             viewModel.activeNode(active_node);
             
+            window.alert(active_node);
+            
             if (active_node === 9999) {
+
                var name = prompt("New person name:", "New Person");		// Prompt for new person name
   		
    		        // 	For when user cancels new node creation 		
