@@ -575,6 +575,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var otherModule = d3.select("#otherModule");
     
     function hideModules(module) {
+    /*
         if (!module || !(module === "node" && active_node === loggedin)) {
             if (arrayObjectIndexOf(nodes, 9999, "id") !== -1) {
                 nodes.splice(arrayObjectIndexOf(nodes, 9999, "id"), 1);
@@ -584,6 +585,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             }
             restart();
         }
+        */
         if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
         if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
         if (module === "settings") { settingsModule.style("display", "block"); } else { settingsModule.style("display", "none"); }
@@ -955,10 +957,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		
             hideModules("node"); // Show node profile in side panel
             
+            /*
             if (active_node === loggedin) {
                 nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "plusNode": 1 });
                 links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1}); 
             }
+            */
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
 		
