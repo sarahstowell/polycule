@@ -947,7 +947,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             hideModules("node"); // Show node profile in side panel
             
             if (active_node === loggedin) {
-                nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0});
+                nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "plusNode": 1 });
                 links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed" 1}); 
             }
 		
