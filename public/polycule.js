@@ -576,7 +576,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     function hideModules(module) {
         if (!module || !(module === "node" && active_node === loggedin)) {
-            if ((arrayObjectIndexOf(nodes, 9999, "id") !== -1) {
+            if (arrayObjectIndexOf(nodes, 9999, "id") !== -1) {
                 nodes.splice(arrayObjectIndexOf(nodes, 9999, "id"), 1);
             }
             if (arrayObjectIndexOf(links, 9999, "id") !== -1) {
