@@ -129,8 +129,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var el = document.getElementById('photoArea');
 	var vanilla = new Croppie(el, {
 		viewport: { width: 225, height: 225 },
-		boundary: { width: 300, height: 300 },
-		enableEfix: true
+		boundary: { width: 300, height: 300 }
+		/*enableEfix: true*/
 	});
 	d3.select("#photoSelect").on("change", function() {
 		var file1    = document.getElementById('photoSelect').files[0];
@@ -945,6 +945,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
             viewModel.activeNode(active_node);
 		
             hideModules("node"); // Show node profile in side panel
+            
+            if (active_node === loggedin) {
+                nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0});
+                linkes.push({"id": 9999, "sourceid": loggedin, "targetid": 9999}); 
+            }
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
 		
