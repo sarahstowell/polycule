@@ -576,6 +576,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     function hideModules(module) {
         if (!(module === "node" && active_node === loggedin)) {
+            window.alert("logic passed");
             nodes.splice(arrayObjectIndexOf(nodes, 9999, "id"), 1);
             links.splice(arrayObjectIndexOf(links, 9999, "id"), 1);
         }
