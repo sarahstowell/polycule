@@ -948,7 +948,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             
             if (active_node === loggedin) {
                 nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "plusNode": 1 });
-                links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed" 1}); 
+                links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1}); 
             }
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
