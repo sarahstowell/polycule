@@ -992,7 +992,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					//connect1=null;						// Cancel connector status
 					//active_line.attr("visibility", "hidden") // Hide connector line
 			
-					restart();
+		//			restart();
 				
 					// Send new node data to server (server will also add link)
 			//		socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
