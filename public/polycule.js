@@ -39,6 +39,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var nodes = dataPackage.nodes;
 	var links = dataPackage.links;
 	
+	nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
+    links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
+	
 	// Function for sorting emails into threads and finding most recent message in the thread
 	function emailThreader() {
 	    // Create thread number
@@ -576,6 +579,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     function hideModules(module) {
         // Hide ghost node
+        /*
         if (!module || !(module === "node" && active_node === loggedin)) {
             if (arrayObjectIndexOf(nodes, 9999, "id") !== -1) {
                 nodes.splice(arrayObjectIndexOf(nodes, 9999, "id"), 1);
@@ -585,6 +589,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             }
             restart();
         }
+        */
         
         if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
         if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
@@ -846,9 +851,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			    new_node=nodes[nodes.length-1].id+1;	// Collect new node index number	
 			    
 			    nodes.push({"id": new_node, "name": name, "member": 0, "invited": 0, "x":point[0], "y": point[1]});	// Add new node to dataset
-		
 			    links.push({"sourceid": active_node, "targetid": new_node, "confirmed": 1, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});	// Add new link to dataset
-  			
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
   		
   			    var old_node = active_node;
@@ -956,10 +959,44 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
             active_node = d3.select(this)[0][0].__data__.id;
             viewModel.activeNode(active_node);
-		
-            hideModules("node"); // Show node profile in side panel
             
+            if (active_node === 9999) {
+               var name = prompt("New person name:", "New Person");		// Prompt for new person name
+  		
+   		        // 	For when user cancels new node creation 		
+				if (name === null || name === '' /*&& isSafari && confirm('was that cancel?')*/) {
+					nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
+					restart();
+				} else {
+			
+					//new_node=nodes[nodes.length-1].id+1;	// Collect new node index number	
+				
+					//nodes.push({"id": new_node, "name": name, "member": 0, "invited": 0 });	// Add new node to dataset
+					//links.push({"sourceid": loggedi, "targetid": new_node, "confirmed": 1, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});	// Add new link to dataset
+					//nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
+		
+					//var old_node = active_node;
+				
+					//active_node = new_node;					// Clear active node
+					//viewModel.activeNode(active_node);
+
+					//hideModules("node");
+
+					//connect1=null;						// Cancel connector status
+					//active_line.attr("visibility", "hidden") // Hide connector line
+			
+					//restart();
+				
+					// Send new node data to server (server will also add link)
+					socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
+			
+				}
+            } else {
+		
+                hideModules("node"); // Show node profile in side panel
+            }
             // Add ghost node
+            /*
             if (active_node === loggedin) {
                 if (arrayObjectIndexOf(nodes, 9999, "id") === -1) {
                     nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
@@ -969,6 +1006,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
                 }
                 restart();
             }
+            */
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
 		
