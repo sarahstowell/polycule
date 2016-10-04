@@ -973,7 +973,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
 					//nodes.push({"id": new_node, "name": name, "member": 0, "invited": 0 });	// Add new node to dataset
 					//links.push({"sourceid": loggedi, "targetid": new_node, "confirmed": 1, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});	// Add new link to dataset
-					//nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
+					nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
 		
 					//var old_node = active_node;
 				
@@ -985,7 +985,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 					//connect1=null;						// Cancel connector status
 					//active_line.attr("visibility", "hidden") // Hide connector line
 			
-					//restart();
+					restart();
 				
 					// Send new node data to server (server will also add link)
 					socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
