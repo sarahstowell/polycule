@@ -119,7 +119,10 @@ h1 {
 }
 
 .ghostNode {
+/*
     fill-opacity: 0.5;
+    */
+    fill: #EEEEEE;
 }
 
 .myNode {
@@ -156,7 +159,10 @@ h1 {
 }
 
 .ghostLink {
+    /*
     stroke-opacity: 0.5;
+    */
+    stroke: #EEEEEE;
 }
 
 .link:hover, .unselectedLink:hover, .selectedLink:hover, .unconfirmedLink:hover {
