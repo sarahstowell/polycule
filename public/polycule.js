@@ -576,9 +576,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
     
     function hideModules(module) {
         if (!module || !(module === "node" && active_node === loggedin)) {
-            window.alert("logic passed");
             nodes.splice(arrayObjectIndexOf(nodes, 9999, "id"), 1);
             links.splice(arrayObjectIndexOf(links, 9999, "id"), 1);
+            restart();
         }
         if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
         if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
