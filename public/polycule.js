@@ -40,8 +40,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var links = dataPackage.links;
 	
 	// For ghost node
-	//nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
-    //links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
+	nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
+    links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
 	
 	// Function for sorting emails into threads and finding most recent message in the thread
 	function emailThreader() {
