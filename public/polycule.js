@@ -298,6 +298,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.requestLink = function() {
 			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
 		};
+		self.addNewNode = function() {
+		    var name = prompt("New partner name:", "New Person");		// Prompt for new person name
+	
+		    if (name && name !== '' /*&& isSafari && confirm('was that cancel?')*/) {
+  		        socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
+  		    }
+		}
         self.editNode = function() {	  
 	       // Draw database photo onto profile edit canvas
 	       
