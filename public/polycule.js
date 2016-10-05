@@ -902,12 +902,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			    links.push({"sourceid": active_node, "targetid": new_node, "confirmed": 1, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});	// Add new link to dataset
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
   		
-  			    var old_node = active_node;
+  			    //var old_node = active_node;
   			    
-  			    active_node = new_node;					// Clear active node
-                viewModel.activeNode(active_node);
+  			    //active_node = new_node;					// Clear active node
+  			    
+                //viewModel.activeNode(active_node);
 
-  			    hideModules("node");
+  			    //hideModules("node");
 
   			    connect1=null;						// Cancel connector status
   			    active_line.attr("visibility", "hidden") // Hide connector line
