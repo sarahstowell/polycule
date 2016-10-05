@@ -898,12 +898,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    
 			    new_node=nodes[nodes.length-1].id+1;	// Collect new node index number	
 			    
-			    nodes.push({"id": new_node, "name": name, "member": 0, "invited": 0, "x":point[0], "y": point[1]});	// Add new node to dataset
+			    nodes.push({"id": new_node, "username": null, "name": name, "member": 0, "invited": 0, "x":point[0], "y": point[1]});	// Add new node to dataset
 			    links.push({"sourceid": active_node, "targetid": new_node, "confirmed": 1, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});	// Add new link to dataset
   			    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
   		
-  		        window.alert(new_node+", "+active_node);
-  		
+  		        
+  		        
   			    var old_node = active_node;
   			    
   			    active_node = new_node;					// Clear active node
