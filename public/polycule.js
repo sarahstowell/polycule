@@ -853,12 +853,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 	    if (active_node !== null & connect1 === 1) {
 
-		    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=1; // Hold selected node in place
+		    //nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=1; // Hold selected node in place
 		
 		    // Undo current zoom level
 		    translatea=d3.transform(container.attr("transform")).translate;
 		    scalea=d3.transform(container.attr("transform")).scale;
             
+           
             // move temporary line            
 		    active_line					
 			    .attr("x2", (d3.mouse(this)[0]-translatea[0])/scalea[0])
@@ -1001,6 +1002,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
             active_node = d3.select(this)[0][0].__data__.id;
             viewModel.activeNode(active_node);
+		
+		    window.alert(active_node);
 		
             hideModules("node"); // Show node profile in side panel
 		
