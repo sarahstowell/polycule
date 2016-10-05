@@ -853,7 +853,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
 	    if (active_node !== null & connect1 === 1) {
 
-		    //nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=1; // Hold selected node in place
+		    nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=1; // Hold selected node in place
 		
 		    // Undo current zoom level
 		    translatea=d3.transform(container.attr("transform")).translate;
