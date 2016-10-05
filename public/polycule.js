@@ -1003,11 +1003,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
             active_node = d3.select(this)[0][0].__data__.id;
             viewModel.activeNode(active_node);
 		
-		    window.alert(active_node);
-		
             hideModules("node"); // Show node profile in side panel
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
+            
+            window.alert("initiate connector line");
 		
                 connect1=1;
                 nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=1; // Prevent node from moving while connecting is occuring
