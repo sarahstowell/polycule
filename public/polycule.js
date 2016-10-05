@@ -93,7 +93,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     };
     getLinkRequests();
     
-    
+    /*
     var addGhostNode = function() {
 		for (i=0; i<links.length; i++) {
 			links.ghostNode === false;
@@ -106,6 +106,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
 		links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
     }
+    */
     
     // ===================================================================================
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
