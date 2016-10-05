@@ -694,6 +694,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         
     var newNodeButton = svg.append("circle")
         .attr("radius", 10)
+        .attr("cx", 30)
+        .attr("cy", 30)
         .attr("fill", "gray")
         .on("click", function() {
             var name = prompt("New person name:", "New Person");		// Prompt for new person name
