@@ -39,10 +39,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var nodes = dataPackage.nodes;
 	var links = dataPackage.links;
 	
-	// For ghost node
-	nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
-    links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
-	
 	// Function for sorting emails into threads and finding most recent message in the thread
 	function emailThreader() {
 	    // Create thread number
@@ -96,6 +92,21 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (viewModel) { viewModel.linkRequests(linkRequests); }
     };
     getLinkRequests();
+    
+    
+    var addGhostNode = function() {
+		for (i=0; i<links.length; i++) {
+			links.ghostNode === false;
+		}  
+		for (i=0; i<nodes.length; i++) {
+			nodes.ghostNode === false;
+		}
+	
+		// For ghost node
+		nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
+		links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
+    }
+    
     // ===================================================================================
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var month = d3.select("#editStartMonth");
