@@ -750,7 +750,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var container = d3.select("#container")
         .attr("class", "container");
         
-    var newNodeButton = container.append("circle")
+    var newNodeButton = svg.append("circle")
         .attr("radius", 10)
         .attr("cx", 30)
         .attr("cy", 30)
