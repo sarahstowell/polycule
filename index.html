@@ -23,6 +23,7 @@
 <div id="wrapper">
 	<div id="topBanner">
 		<h1 id="polyculeHeader">polycule</h1>
+		<span>Beta</span>
 
 		<!-- For when help facility is added
 		<svg id="helpButton" width="30" height="30" viewBox="0 0 8 8">
@@ -127,7 +128,6 @@
 		    <!-- Node Display -->
 		    <div id="nodeModule" style="display: none;" data-bind="with: activeNodeData()[0]">
 		        <h2 class="name" data-bind="text: name"></h2>
-		        <span>Beta</span>
 		        <p class="username" data-bind="visible: username, text: '('+username+')'"></p>
 		        <img class="profilepic" id="profilepic" data-bind="visible: photo, attr: {src: photo ? 'https://polycule.s3.amazonaws.com/final/'+photo+'?' + new Date().getTime() : null}"/>
 		        <p class="town" data-bind="text: location"></p>
