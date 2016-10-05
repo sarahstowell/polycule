@@ -526,7 +526,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Update links 
     socket.on('linksUpdate', function(linksUpdate) {
 	    links = linksUpdate;
-        links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
+        //links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
 	    //getLinkSource();
 	    getLinkRequests();
 	    restart();
@@ -549,7 +549,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    } 
 	    
 	    nodes = nodesUpdate;
-	    nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
+	    //nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
 	    viewModel.nodes(nodes);
 	    restart();
 	});
@@ -571,11 +571,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }    
 	    
 	    nodes = nodesUpdate;
-	    nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
+	    //nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
 	    viewModel.nodes(nodes);
 	    
 	    links = nodesLinksUpdate.links;
-	    links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
+	    //links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
 
 	    viewModel.links(links);
 	    getLinkRequests();
@@ -977,55 +977,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 				
             active_node = d3.select(this)[0][0].__data__.id;
             viewModel.activeNode(active_node);
-            
-       //     if (active_node === 9999) {
-
-         //      var name = prompt("New person name:", "New Person");		// Prompt for new person name
-  		
-   		        // 	For when user cancels new node creation 		
-		//		if (name === null || name === '' /*&& isSafari && confirm('was that cancel?')*/) {
-		//			nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
-		//			restart();
-		//		} else {
-			
-					//new_node=nodes[nodes.length-1].id+1;	// Collect new node index number	
-				
-					//nodes.push({"id": new_node, "name": name, "member": 0, "invited": 0 });	// Add new node to dataset
-					//links.push({"sourceid": loggedi, "targetid": new_node, "confirmed": 1, "id": links[links.length-1].id+1, "startmonth": null, "startyear": null});	// Add new link to dataset
-		//			nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
 		
-					//var old_node = active_node;
-				
-					//active_node = new_node;					// Clear active node
-					//viewModel.activeNode(active_node);
-
-					//hideModules("node");
-
-					//connect1=null;						// Cancel connector status
-					//active_line.attr("visibility", "hidden") // Hide connector line
-			
-		//			restart();
-				
-					// Send new node data to server (server will also add link)
-			//		socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
-			
-			//	}
-       //     } else {
-		
-                hideModules("node"); // Show node profile in side panel
-         //   }
-            // Add ghost node
-            /*
-            if (active_node === loggedin) {
-                if (arrayObjectIndexOf(nodes, 9999, "id") === -1) {
-                    nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
-                }
-                if (arrayObjectIndexOf(links, 9999, "id") === -1) {
-                    links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1}); 
-                }
-                restart();
-            }
-            */
+            hideModules("node"); // Show node profile in side panel
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
 		
