@@ -855,8 +855,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
         //d3.event.preventDefault();
         //d3.event.stopPropagation();
-        
-        window.alert(active_node+", "+connect1);
 
 	    if (active_node !== null & connect1 === 1) {
 
