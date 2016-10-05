@@ -1006,9 +1006,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             hideModules("node"); // Show node profile in side panel
 		
             if (loggedin === active_node || nodes[arrayObjectIndexOf(nodes, active_node, "id")].member === 0) {
-            
-            window.alert("initiate connector line");
-		
+            		
                 connect1=1;
                 nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=1; // Prevent node from moving while connecting is occuring
 		
