@@ -754,14 +754,16 @@ socket.on('nodesAndLinks', function(dataPackage) {
         .attr("radius", 10)
         .attr("cx", 30)
         .attr("cy", 30)
-        .attr("fill", "gray")
-        .on("click", function() {
-            var name = prompt("New person name:", "New Person");		// Prompt for new person name
+        .attr("fill", "gray");
+        
+        //.on("click", function() {
+        //    var name = prompt("New person name:", "New Person");		// Prompt for new person name
 	
-		    if (name && name !== '' /*&& isSafari && confirm('was that cancel?')*/) {
-  			    socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
-  		    }
-        });
+		//    if (name && name !== '' /*&& isSafari && confirm('was that cancel?')*/) {
+  		//	    socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
+  		//    }
+        //});
+        
         
 /*
 	// Create zoom in/out buttons    
