@@ -691,6 +691,34 @@ socket.on('nodesAndLinks', function(dataPackage) {
         .on("mousemove touchmove", mousemove)
         .on("mouseup touchend", mouseup)
         .call(zoom);
+        
+    var newNodeButton = svg.append("circle")
+        .attr("radius", 10)
+        .attr("fill", "gray")
+        .on("click", function() {
+            var name = prompt("New person name:", "New Person");		// Prompt for new person name
+  		
+   		    // 	For when user cancels new node creation 		
+		    if (name && name !== '' /*&& isSafari && confirm('was that cancel?')*/) {
+  			    //nodes[arrayObjectIndexOf(nodes, active_node, "id")].fixed=0; 		// Release selected node
+  		
+  			    //var old_node = active_node;
+  			    
+  			    //active_node = new_node;					// Clear active node
+                //viewModel.activeNode(active_node);
+
+  			    //hideModules("node");
+
+  			    //connect1=null;						// Cancel connector status
+  			    //active_line.attr("visibility", "hidden") // Hide connector line
+  			
+  			    //restart();
+  			    
+  			    // Send new node data to server (server will also add link)
+  			    socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
+  			
+  		    }
+        });
     
     
     /* FOR MAKING ZOOM BUTTONS WORK
