@@ -847,6 +847,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     // mousemove for when user is drawing a connection
     function mousemove() {
+        window.alert(active_node+", "+connect1);
+    
         if (d3.event.preventDefault) d3.event.preventDefault(); // prevent default browser ghosting effect
         //d3.event.preventDefault();
         //d3.event.stopPropagation();
@@ -875,7 +877,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         //d3.event.stopPropagation();
 
 	     // For when user is creating a new node
-	    if (connect1===1) {
+	    if (connect1 === 1) {
 
   		    var point = d3.mouse(this);		// Collect coordinates of current mouse location
   	
