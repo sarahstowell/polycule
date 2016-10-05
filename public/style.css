@@ -257,7 +257,13 @@ h2 {
 #editnodebutton {
     position: absolute;
     bottom: 10px;
-    left: 135px;
+    left: 70px;
+}
+
+#addNodeButton {
+    position: absolute;
+    bottom: 10px;
+    left: 160px;
 }
 
 #emailInviteError {
