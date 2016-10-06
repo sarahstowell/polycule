@@ -92,22 +92,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (viewModel) { viewModel.linkRequests(linkRequests); }
     };
     getLinkRequests();
-    window.alert(JSON.stringify(linkRequests[0]));
-    
-    /*
-    var addGhostNode = function() {
-		for (i=0; i<links.length; i++) {
-			links.ghostNode === false;
-		}  
-		for (i=0; i<nodes.length; i++) {
-			nodes.ghostNode === false;
-		}
-	
-		// For ghost node
-		nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
-		links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
-    }
-    */
     
     // ===================================================================================
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -147,7 +131,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	var vanilla = new Croppie(el, {
 		viewport: { width: 225, height: 225 },
 		boundary: { width: 300, height: 300 }
-		/*enableEfix: true*/
 	});
 	d3.select("#photoSelect").on("change", function() {
 		var file1    = document.getElementById('photoSelect').files[0];

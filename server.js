@@ -811,7 +811,7 @@ io.sockets.on('connection', function(socket){
   	socket.on("linkConfirm", function(id) {
   	    console.log("Link confirmation received");
   	    // Update database
-  	    db.query("UPDATE links SET confirmed = 1 WHERE id = "+id)
+  	    db.query("UPDATE links SET confirmed = $1 WHERE id = $2", [1,id])
   	      	.then(function () {
                 console.log("Link confirmed");
 				io.sockets.emit('callToUpdateLinks'); // MAKE IT SO IT ONLY EMITS TO RELEVANT USERS
