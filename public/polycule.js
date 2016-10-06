@@ -172,11 +172,20 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.links = ko.observableArray(links);
         // Link Requests
         self.linkRequests = ko.observableArray(linkData);
+        /*
         self.confirmLink = function() { 
 			socket.emit('linkConfirm', this.id);
 		};
 		self.denyLink = function() { 
 			socket.emit('linkDelete', this.id);
+		};
+		*/
+		self.linkRequestRespond = function(response) {
+		    if (response === 'confirm') {
+		        socket.emit('linkConfirm', this.id);
+		    } else if (response === 'deny') {
+		        socket.emit('linkDelete', this.id);
+		    }
 		};
 		// Emails
 		self.emails = ko.observableArray(emailData);
