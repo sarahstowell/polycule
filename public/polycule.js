@@ -293,7 +293,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.messageNode = function() {
             self.currentThread(self.activeNode());
-            hideModules("email"); 
+            sidepanel.html(self.currentThread());
+            //hideModules("email"); 
         };
         self.requestLink = function() {
 			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
