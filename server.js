@@ -810,6 +810,7 @@ io.sockets.on('connection', function(socket){
   	// Link Confirmed --------------------------------------------------------------------
   	socket.on("linkConfirm", function(id) {
   	    console.log("Link confirmation received");
+  	    console.log(id);
   	    // Update database
   	    db.query("UPDATE links SET confirmed = $1 WHERE id = $2", [1,id])
   	      	.then(function () {
