@@ -278,11 +278,8 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
         };
         self.messageNode = function() {
-            
-
             self.currentThread(self.activeNode());
-            window.alert(self.currentThread());
-            //hideModules("email"); 
+            hideModules("email"); 
         };
         self.requestLink = function() {
 			socket.emit('newLink', {"sourceid": self.user, "targetid": self.activeNode(), "confirmed": 0, "requestor": self.user});
@@ -468,6 +465,17 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		    // Send updated info to server
   		   socket.emit('linkEdit', {"id": self.activeLink(), "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
   		   hideModules("linkInfo");
+	   };
+	   self.emailThreadTitle = ko.computed() {
+	       if (self.currentThread()) {
+	           if (self.currentFolderData()[0]) {
+	               return self.currentFolderData()[0].threadName;
+	           } else {
+	               return self.activeNodeData().name;
+               }
+            else {
+               return 'Messages';
+            }	            
 	   };
 	
     }
