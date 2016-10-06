@@ -61,9 +61,8 @@
 						<h3 data-bind="text: requestorname"></h3>
 						<span data-bind="text: requestorusername"></span>
 						<br/>
-						<button id="denyButton" class="standardButton" data-bind="click: $root.denyLink">Deny</button>
 						<button id="confirmButton" class="standardButton" data-bind="click: $root.confirmLink">Confirm</button>
-						
+						<button id="denyButton" class="standardButton" data-bind="click: $root.denyLink">Deny</button>
 		            </div>
 		        </div>
 		    </div>
@@ -171,7 +170,7 @@
 		        <p id="linkConfirmation" data-bind="visible: confirmed !== 1">This link is awaiting confirmation</p>
 		        <div class="centerDiv">
 		            <button id="editLinkButton" class="standardButton" data-bind="visible: (sourceid === $root.user || targetid === $root.user), click: $root.editLink">Edit Details</button>
-		            <button id="confirmLinkButton" class="standardButton" data-bind="click: $root.confirmLink, visible: confirmed !== 1 && requestor !== $root.user">Confirm</button>
+		            <button id="confirmLinkButton" class="standardButton" data-bind="click: $root.confirmLink2, visible: confirmed !== 1 && requestor !== $root.user">Confirm</button>
 		            <button id="deleteLinkbutton" class="standardButton" data-bind="click: $root.deleteLink, text: confirmed === 1 ? 'Delete Link' : requestor !== $root.user ? 'Deny' : 'Cancel Link Request' , visible: (sourceid === $root.user || targetid === $root.user)"></button>
 		        </div>
 		    </div>

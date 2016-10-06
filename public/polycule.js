@@ -443,7 +443,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         			return d.id === self.activeLink();
         		});
         });
-        self.confirmLink = function() {
+        self.confirmLink2 = function() {
 			socket.emit("linkConfirm", self.activeLink());
 	   };
 	   self.deleteLink = function() {
