@@ -472,7 +472,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	        } else if (self.currentFolderData()[0]) {
 			   return self.currentFolderData()[0].threadName;
 		    } else {
-			   return self.activeNodeData().name;
+			   return self.activeNodeData()[0].name;
 		    }   
 	   });
 	
