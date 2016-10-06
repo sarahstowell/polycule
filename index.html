@@ -61,8 +61,8 @@
 						<h3 data-bind="text: requestorname"></h3>
 						<span data-bind="text: requestorusername"></span>
 						<br/>
-						<button id="confirmButton" class="standardButton" data-bind="click: $parent.confirmLink">Confirm</button>
-						<button id="denyButton" class="standardButton" data-bind="click: $parent.denyLink">Deny</button>
+						<button id="confirmButton" class="standardButton" data-bind="click: $parent.confirmLink.bind($data)">Confirm</button>
+						<button id="denyButton" class="standardButton" data-bind="click: $parent.denyLink.bind($data)">Deny</button>
 		            </div>
 		        </div>
 		    </div>
