@@ -188,11 +188,11 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.currentFolderData = ko.computed(function() { 
             if (self.currentThread() === 0) { 
                 return self.emails().filter(function(d) { return d.latest === 1; }).reverse(); 
-            } else if (self.emails().filter(function(d){ return d.thread === self.currentThread(); }).length > 0) {
-                return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); 
-            } else {
+            } else /*if (self.emails().filter(function(d){ return d.thread === self.currentThread(); }).length > 0) {
+                */return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); 
+            /*} else {
                 return null;
-            }
+            }*/
         });
        self.currentThread.subscribe(function() {
            emailContainer.scrollTop = emailContainer.scrollHeight;
