@@ -134,7 +134,7 @@
 		        <p class="description" data-bind="visible: description, text: description"></p>
 		        <button id="editnodebutton" class="standardButton" data-bind="visible: id === $root.user, click: $root.editNode">Edit</button>
 		        <button id="addNodeButton" class="standardButton" data-bind="visible: id === $root.user, click: $root.addNewNode">Add Partner</button>
-		        <button id="sendMessageButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user, click: $root.messageNode">Message</button>
+		        <button id="sendMessageButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user, click: function() { $root.currentThread($root.activeNode()); $root.currentFolderData(); }">Message</button>
 		        <button id="requestLinkButton" class="standardButton" data-bind="visible: member === 1 && id !== $root.user && !$root.linkedWithActiveNode(), click: $root.requestLink">Request Link</button>
 		       
 		        <p class="description" data-bind="visible: member === 0 && invited === 0, text:  name+' is not yet a member of Polycule. Enter an email address to invite them:'"></p>

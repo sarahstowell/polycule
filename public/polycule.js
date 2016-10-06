@@ -293,7 +293,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.messageNode = function() {
             self.currentThread(self.activeNode());
-            window.alert(JSON.stringify(self.currentFolderData()));
             hideModules("email"); 
         };
         self.requestLink = function() {
