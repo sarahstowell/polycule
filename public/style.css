@@ -552,12 +552,13 @@ canvas {
 /* ====== Link Requests Page ====== */
 
 /* Display Link Requests */
+/*
 #linkRequestsContainer {
     border-top: 2px solid black;
     margin-top: 10px;
     overflow-y: auto;
-	
 }
+*/
 
 .linkDates {
     text-align: center;
