@@ -466,7 +466,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		   socket.emit('linkEdit', {"id": self.activeLink(), "startmonth": newStartMonth, "startyear": newStartYear, "description": newLinkDescription});
   		   hideModules("linkInfo");
 	   };
-	   self.emailThreadTitle = ko.computed() {
+	   self.emailThreadTitle = ko.computed(function() {
 	       if (self.currentThread()) {
 	           if (self.currentFolderData()[0]) {
 	               return self.currentFolderData()[0].threadName;
@@ -476,7 +476,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             else {
                return 'Messages';
             }	            
-	   };
+	   });
 	
     }
     
