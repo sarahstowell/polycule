@@ -92,6 +92,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         if (viewModel) { viewModel.linkRequests(linkRequests); }
     };
     getLinkRequests();
+    window.alert(JSON.stringify(linkRequests));
     
     /*
     var addGhostNode = function() {
