@@ -467,15 +467,13 @@ socket.on('nodesAndLinks', function(dataPackage) {
   		   hideModules("linkInfo");
 	   };
 	   self.emailThreadTitle = ko.computed(function() {
-	       if (self.currentThread()) {
-	           if (self.currentFolderData()[0]) {
-	               return self.currentFolderData()[0].threadName;
-	           } else {
-	               return self.activeNodeData().name;
-               }
-            else {
-               return 'Messages';
-            }	            
+	       if (!self.currentThread()) {
+	           return 'Messages';
+	        } else if (self.currentFolderData()[0]) {
+			   return self.currentFolderData()[0].threadName;
+		    } else {
+			   return self.activeNodeData().name;
+		    }   
 	   });
 	
     }
