@@ -166,10 +166,10 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	};
 
     // Knockout view model ===============================================================
-    function ViewModel(linkData, emailData, nodeData, loggedin, months) {
+    function ViewModel(links1, linkData, emailData, nodeData, loggedin, months) {
         var self = this;
         self.user = loggedin;
-        self.links = ko.observableArray(links);
+        self.links = ko.observableArray(links1);
         // Link Requests
         self.linkRequests = ko.observableArray(linkData);
         self.denyLink = function() { 
@@ -479,7 +479,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
     }
     
-    var viewModel = new ViewModel(linkRequests, emails, nodes, loggedin, months);
+    var viewModel = new ViewModel(links, linkRequests, emails, nodes, loggedin, months);
     
     ko.applyBindings(viewModel);
     
