@@ -292,7 +292,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
         };
         self.messageNode = function() {
-            window.alert(self.currentThread());
+            window.alert(self.activeNode());
 
             //self.currentThread(self.activeNode());
             //hideModules("email"); 
