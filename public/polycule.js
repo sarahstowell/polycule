@@ -293,6 +293,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
         };
         self.messageNode = function() {
             self.currentThread(self.activeNode());
+            window.alert(JSON.stringify(self.activeNodeData));
             hideModules("email"); 
         };
         self.requestLink = function() {
@@ -533,7 +534,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
     // Update links 
     socket.on('linksUpdate', function(linksUpdate) {
 	    links = linksUpdate;
-        //links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
 	    //getLinkSource();
 	    getLinkRequests();
 	    restart();
@@ -556,7 +556,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    } 
 	    
 	    nodes = nodesUpdate;
-	    //nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
 	    viewModel.nodes(nodes);
 	    restart();
 	});
@@ -578,11 +577,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	    }    
 	    
 	    nodes = nodesUpdate;
-	    //nodes.push({"id": 9999, "name": "+", "member": 0, "invited": 0, "ghostNode": 1 });
 	    viewModel.nodes(nodes);
 	    
 	    links = nodesLinksUpdate.links;
-	    //links.push({"id": 9999, "sourceid": loggedin, "targetid": 9999, "confirmed": 1, "ghostNode": 1});
 
 	    viewModel.links(links);
 	    getLinkRequests();
@@ -603,18 +600,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
     var otherModule = d3.select("#otherModule");
     
     function hideModules(module) {
-        // Hide ghost node
-        /*
-        if (!module || !(module === "node" && active_node === loggedin)) {
-            if (arrayObjectIndexOf(nodes, 9999, "id") !== -1) {
-                nodes.splice(arrayObjectIndexOf(nodes, 9999, "id"), 1);
-            }
-            if (arrayObjectIndexOf(links, 9999, "id") !== -1) {
-                links.splice(arrayObjectIndexOf(links, 9999, "id"), 1);
-            }
-            restart();
-        }
-        */
         
         if (module === "links") { linksModule.style("display", "block"); } else { linksModule.style("display", "none"); }
         if (module === "email") { emailModule.style("display", "block"); } else { emailModule.style("display", "none"); }
@@ -905,9 +890,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
   			    var old_node = active_node;
   			    
   			    //active_node = new_node;					// Clear active node
-  			    
                 //viewModel.activeNode(active_node);
-
   			    //hideModules("node");
 
   			    connect1=null;						// Cancel connector status
@@ -925,7 +908,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 
     function tick() {
 
-	    // To fix logged in user in centre:
+	    // To fix current user in centre:
         //nodes[loggedin].x = width / 2;
         //nodes[loggedin].y = height / 2;
 
