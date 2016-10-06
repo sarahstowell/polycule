@@ -290,7 +290,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 	
 		    if (name && name !== '' /*&& isSafari && confirm('was that cancel?')*/) {
   		        socket.emit('newNode', {"name": name, "member": 0, "invited": 0, "sourceid": loggedin});
+  		        if (mobileUser) { hideModules(); }
   		    }
+  		    
 		}
         self.editNode = function() {	  
 	       // Draw database photo onto profile edit canvas
