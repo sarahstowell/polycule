@@ -190,7 +190,6 @@ socket.on('nodesAndLinks', function(dataPackage) {
         // Link Requests
         self.linkRequests = ko.observableArray(linkData);
         self.confirmLink = function() { 
-            window.alert("function called");
 			socket.emit('linkConfirm', this.id);
 		};
 		self.denyLink = function() { 
