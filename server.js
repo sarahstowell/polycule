@@ -825,6 +825,7 @@ io.sockets.on('connection', function(socket){
   	// Link Deleted / Confirmation denied ------------------------------------------------
 	socket.on("linkDelete", function(id) {
   	    console.log("Link delete received");
+  	    console.log(id);
   	    // Update database
   	    db.query("DELETE from links WHERE id = "+id)
   	      	.then(function () {

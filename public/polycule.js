@@ -191,7 +191,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
             } else if (self.emails().filter(function(d){ return d.thread === self.currentThread(); }).length > 0) {
                 return self.emails().filter(function(d){ return d.thread === self.currentThread(); }); 
             } else {
-                return [{}];
+                return null;
             }
         });
        self.currentThread.subscribe(function() {
