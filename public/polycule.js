@@ -292,8 +292,9 @@ socket.on('nodesAndLinks', function(dataPackage) {
 			}
         };
         self.messageNode = function() {
-            self.currentThread(self.activeNode());
-            sidepanel.html(self.currentThread());
+            window.alert(self.currentThread());
+
+            //self.currentThread(self.activeNode());
             //hideModules("email"); 
         };
         self.requestLink = function() {
