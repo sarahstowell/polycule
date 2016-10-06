@@ -165,7 +165,7 @@ socket.on('nodesAndLinks', function(dataPackage) {
 		img2 = null;
 	};
 
-    
+    window.alert(linkRequests);
     // Knockout view model ===============================================================
     function ViewModel(linkData, emailData, nodeData, loggedin, months) {
         var self = this;
