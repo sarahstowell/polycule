@@ -270,12 +270,12 @@ socket.on('nodesAndLinks', function(dataPackage) {
         self.emailInviteError = ko.observable();
         self.inviteButtonClick = function() {
 			var inviteEmail = document.getElementById("emailInviteEdit").value;
-			if (!inviteEmail || inviteEmail.indexOf("@")<1 || inviteEmail.lastIndexOf(".")<inviteEmail.indexOf("@")+2 || inviteEmail.lastIndexOf(".")+2>=inviteEmail)
+			if (!inviteEmail || inviteEmail.indexOf("@")<1 || inviteEmail.lastIndexOf(".")<inviteEmail.indexOf("@")+2 || inviteEmail.lastIndexOf(".")+2 >= inviteEmail)
 			{
 				self.emailInviteError("Please enter a valid email address");
 			} else {
 				//nodes[arrayObjectIndexOf(nodes, node, "id")].invited = 1;
-				socket.emit('nodeInvited', {"id": node, "email": document.getElementById("emailInviteEdit").value, "name": self.activeNodeData()[0].name, "from": nodeData[arrayObjectIndexOf(nodeData, self.user, "id")].name});	
+				socket.emit('nodeInvited', {"id": self.activeNode(), "email": document.getElementById("emailInviteEdit").value, "name": self.activeNodeData()[0].name, "from": nodeData[arrayObjectIndexOf(nodeData, self.user, "id")].name});	
 			}
         };
         self.messageNode = function() {
