@@ -471,8 +471,8 @@ canvas {
     padding-left: 3px;
     /*height: 50px;*/
     white-space: nowrap;
-    /*overflow: hidden;*/
-    text-overflow: ellipsis;
+    overflow: hidden;
+    /*text-overflow: ellipsis;*/
 }
 
 .email h3 {
