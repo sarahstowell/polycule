@@ -472,7 +472,21 @@ canvas {
     /*height: 50px;*/
     white-space: nowrap;
     overflow: hidden;
-    /*text-overflow: ellipsis;*/
+    text-overflow: ellipsis;
+}
+
+.emailThread {
+    /*background-color: lightgray;*/
+    border-bottom: 1px solid gray;
+    margin: 0px;
+    padding: 2px;
+    padding-left: 3px;
+    /*height: 50px;*/
+    /*
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    */
 }
 
 .email h3 {
