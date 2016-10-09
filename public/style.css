@@ -489,18 +489,18 @@ canvas {
     */
 }
 
-.email h3 {
+.email h3, .emailThread h3 {
     font-size: 14px;
     display: inline;
     margin-top: 5px;
 }
 
-.email p {
+.email p, .emailThread p {
     font-size: 12px;
     margin-bottom: 5px;
 }
 
-.email span {
+.email span, .emailThread span {
     font-size: 14px;
 }
 
