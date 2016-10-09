@@ -57,7 +57,7 @@
 		        <h2>Link Confirmation Requests</h2>
 		        <p id="noLinkRequests" data-bind="visible: linkRequests().length === 0">You have no requests at this time</p>
 		        <div id="linkRequestsContainer" class="email" data-bind="foreach: linkRequests">
-		            <div class="email">
+		            <div class="email" style="overflow: hidden;">
 						<h3 data-bind="text: requestorname"></h3>
 						<span data-bind="text: requestorusername"></span>
 						<br/>
@@ -72,7 +72,7 @@
 		        <h2 data-bind="text: emailThreadTitle"></h2>
 		        <span id="backToMessages" class="pointy" data-bind="visible: currentThread() !== 0, click: function() { currentThread(0); }">< Chats</span>
 		        <div id="emailContainer" class="emailContainer" data-bind="foreach: currentFolderData">
-		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? '#F0F0F0' : null, color: fromServer === 1 ? 'black' : 'gray'}, click: $parent.openThread.bind($data)">
+		            <div class="email" data-bind="style: {backgroundColor: newFlag === 1 ? '#F0F0F0' : null, color: fromServer === 1 ? 'black' : 'gray', overflow: $root.currentThread() !== 0 ? hidden}, click: $parent.openThread.bind($data)">
 		                <h3 data-bind="text: $root.currentThread() === 0 ? threadName : senderName"></h3>
 		                <span data-bind="visible: $root.currentThread() === 0, text: threadUsername === '' ? '' : '('+threadUsername+')'"></span>
 		                <p data-bind="text: content"></p>

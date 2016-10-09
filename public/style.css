@@ -471,7 +471,7 @@ canvas {
     padding-left: 3px;
     /*height: 50px;*/
     white-space: nowrap;
-    overflow: hidden;
+    /*overflow: hidden;*/
     text-overflow: ellipsis;
 }
 
