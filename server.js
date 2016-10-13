@@ -399,7 +399,7 @@ app.post('/signup', /*upload.single('profilePic'), */
     //console.log("file2a: "+JSON.stringify(req.files['croppedPhoto'].filename));
     //console.log("file1b: "+JSON.stringify(req.files[0].filename));
     //console.log("file2b: "+JSON.stringify(req.files[1].filename));
-    if (req.files.croppedPhoto[0]) { console.log(req.files.croppedPhoto[0].filename) }
+    if (req.files.croppedPhoto && req.files.croppedPhoto[0]) { console.log(req.files.croppedPhoto[0].filename) }
 
 	if (req.body.photoType === 'custom' && req.files.profilePic[0]) { 
 		profilePicEdit(photo=req.session.profilePic, filename=/*req.file.filename*/req.files.profilePic[0].filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
