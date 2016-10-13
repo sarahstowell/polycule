@@ -38,7 +38,7 @@ var validateForm = function(formtype) {
         var fd = new FormData(document.forms[0]);
         fd.append("croppedPhoto", blob, 'image.png');
         fd.append("hello", "hello!!!");
-        document.forms[0].append("hello", "hello!!!");
+        document.getElementById("signup").append("hello", "hello!!!");
     });
     
     
