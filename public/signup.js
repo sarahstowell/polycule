@@ -34,9 +34,18 @@ var validateForm = function(formtype) {
     // do something with cropped base64 image here
         
         //document.getElementById("croppedPhoto").value = base64Image;
-        var blob = new Blob([base64Image], { type: "image/png,base64"});
+        //var blob = new Blob([base64Image], { type: "image/png,base64"});
+        function dataURItoBlob(dataURI) {
+			var binary = atob(dataURI.split(',')[1]);
+			var array = [];
+			for(var i = 0; i < binary.length; i++) {
+				array.push(binary.charCodeAt(i));
+			}
+			return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+		}
+		var blob = dataURItoBlob(base64Image);
         var fd = new FormData(document.forms[0]);
-        fd.append("croppedPhoto", blob, 'image.png');
+        fd.append("croppedPhoto", blob, 'image.jpeg');
     });
     
     
