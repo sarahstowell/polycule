@@ -37,8 +37,8 @@ var validateForm = function(formtype) {
         var blob = new Blob([base64Image], { type: "image/png,base64"});
         var fd = new FormData(document.forms[0]);
         fd.append("croppedPhoto", blob, 'image.png');
-        fd.append("hello", "hello!!!");
-        document.getElementById("signup").append("hello", "hello!!!");
+        //fd.append("hello", "hello!!!");
+        //document.getElementById("signup").append("hello", "hello!!!");
     });
     
     
