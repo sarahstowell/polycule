@@ -600,7 +600,6 @@ app.post('/update/photo', upload.single('photo'), function(req, res) {
 });
 
 app.get('/', function (req, res) {
-
    if (req.isAuthenticated()) {
        res.sendFile(__dirname+'/index.html');
    } else {
