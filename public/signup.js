@@ -33,7 +33,7 @@ var validateForm = function(formtype) {
 	vanilla.result('canvas').then(function(base64Image) {
     // do something with cropped base64 image here
         
-        document.getElementById("croppedPhoto").value = base64Image;
+        document.getElementById("croppedPhoto").value = "hello"; //base64Image;
         //var blob = new Blob([base64Image], { type: "image/png,base64"});
         //var fd = new FormData(document.forms[0]);
         //fd.append("croppedPhoto", blob, 'image.png');
