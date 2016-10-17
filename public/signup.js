@@ -34,10 +34,10 @@ var validateForm = function(formtype) {
     // do something with cropped base64 image here
         
         //document.getElementById("croppedPhoto").value = base64Image;
-        var blob = new Blob([base64Image], { type: "image/png,base64"});
+        //var blob = new Blob([base64Image], { type: "image/png,base64"});
         var fd = new FormData(document.forms[0]);
-        fd.append("croppedPhoto", blob, 'image.png');
-        //fd.append("hello", "hello!!!");
+        //fd.append("croppedPhoto", blob, 'image.png');
+        fd.append("hello", "hello!!!");
         //document.getElementById("signup").append("hello", "hello!!!");
     });
     
