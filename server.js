@@ -384,8 +384,8 @@ app.get('/signup', function(req, res) {
 });
 
 // Process signup request ----------------------------------------------------------------
-app.post('/signup', /*upload.single('profilePic'), */ 
-       
+app.post('/signup', upload.single('profilePic'),  
+       /*
          upload.fields([{
            name: 'profilePic', maxCount: 1
          }, {
@@ -393,15 +393,15 @@ app.post('/signup', /*upload.single('profilePic'), */
          }]), 
          
          function (req, res, next) {
-    
+    */
     //if (req.body.croppedPhoto1) { console.log(JSON.stringify(req.body.croppedPhoto1)); }
     //if (req.body.hello) { console.log(req.body.hello); }
     //console.log("file1a: "+JSON.stringify(req.files.profilePic[0].filename));
     //if (req.files.croppedPhoto && req.files.croppedPhoto[0]) { console.log(req.files.croppedPhoto[0].filename) }
 
 	if (req.body.photoType === 'custom' && req.files.profilePic[0]) { 
-		profilePicEdit(photo=req.session.profilePic, filename=/*req.file.filename*/req.files.profilePic[0].filename, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
-		var photourl = req.files.profilePic[0].filename; 
+		profilePicEdit(photo=req.session.profilePic, filename=req.file.filename/*req.files.profilePic[0].filename*/, facebookid=null, x1=parseInt(req.body.x1), y1=parseInt(req.body.y1), x2=parseInt(req.body.x2), y2=parseInt(req.body.y2));
+		var photourl = req.file.filename/*s.profilePic[0].filename*/; 
 	} else {
 		var photourl = null;
 	}
