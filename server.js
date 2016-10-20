@@ -391,9 +391,9 @@ app.post('/signup', upload.single('profilePic'),
          }, {
            name: 'croppedPhoto', maxCount: 1
          }]), 
-         
+    */     
          function (req, res, next) {
-    */
+    
     //if (req.body.croppedPhoto1) { console.log(JSON.stringify(req.body.croppedPhoto1)); }
     //if (req.body.hello) { console.log(req.body.hello); }
     //console.log("file1a: "+JSON.stringify(req.files.profilePic[0].filename));
