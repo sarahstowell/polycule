@@ -5,7 +5,7 @@ var pgSession = require('connect-pg-simple')(session);
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var pgp = require("pg-promise")(/*options*/);
-var db = pgp(process.env.POSTGRES_CONNECTION_STRING);
+var db = pgp(process.env.POSTGRES_CONNECTION_STRING, ssl=require);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
